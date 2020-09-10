@@ -62,7 +62,7 @@
                   <el-menu-item index="5-1" @click="clickJump('/ninehome/money')">资金信息</el-menu-item>
                   <el-menu-item index="5-2" @click="clickJump('/ninehome/topup')">充值审核</el-menu-item>
                   <el-menu-item index="5-3" @click="clickJump('/ninehome/withdrawal')">提现审核</el-menu-item>
-                  <el-menu-item index="5-3" @click="clickJump('/ninehome/water')">资金流水</el-menu-item>
+                  <el-menu-item index="5-4" @click="clickJump('/ninehome/water')">资金流水</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
             </el-menu>
