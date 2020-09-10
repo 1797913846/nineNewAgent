@@ -1,14 +1,14 @@
 <template>
-    <div class="topnav">
-        <div class="navname">代理商后台管理系统</div>
-        <div class="rightnav">
-            <img class="r1" src="../assets/nine/tou.png" alt="">
-            <span class="r2">
-                <span>WPDeveloper</span><img src="../assets/nine/arr_b.png" /></span>
-            <span class="r3">|</span>
-            <img class="r4" src="../assets/nine/chi.png" alt="">
-        </div>
+  <div class="topnav">
+    <div class="navname">代理商后台管理系统</div>
+    <div class="rightnav">
+      <img class="r1" src="../assets/nine/tou.png" alt="">
+      <span class="r2">
+        <span>WPDeveloper</span><img src="../assets/nine/arr_b.png" /></span>
+      <span class="r3">|</span>
+      <img class="r4" src="../assets/nine/chi.png" alt="">
     </div>
+  </div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@ export default {
 .navname {
   color: #5b5b65;
   font-size: 20px;
-  margin-left: 230px;
+  margin-left: 27px;
   line-height: 75px;
   float: left;
 }

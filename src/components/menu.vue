@@ -5,7 +5,7 @@
         <div class="logo">LOGO</div>
         <el-row class="tac">
           <el-col>
-            <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+            <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
               <el-submenu index="1">
                 <template slot="title">
                   <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m2-2.png" alt=""></i>
@@ -91,15 +91,67 @@ export default {
       BorkerID: "",
       AdminID: "",
       showQrcode: false,
-      InviteCode: ""
+      InviteCode: "",
+      where: "",
+      whichIndex: ""
     };
   },
   created: function() {
     eventBus.$on("modifyUserName", newName => {
       this.userName = newName;
     });
+    //获取当前路由
+    this.where = this.$route.path;
+    console.log("我是当前路由", this.where);
   },
-  watch: {},
+  watch: {
+    where: {
+      handler(newVal, oldVal) {
+        switch (newVal) {
+          case "/ninehome/commission":
+            this.whichIndex = "1-1";
+            break;
+          case "/ninehome/financing":
+            this.whichIndex = "1-2";
+            break;
+          case "/ninehome/blacklist":
+            this.whichIndex = "1-3";
+            break;
+          case "/ninehome/other":
+            this.whichIndex = "1-4";
+            break;
+          case "/ninehome/agents":
+            this.whichIndex = "2-1";
+            break;
+          case "/ninehome/assets":
+            this.whichIndex = "4-1";
+            break;
+          case "/ninehome/pool":
+            this.whichIndex = "4-2";
+            break;
+          case "/ninehome/account":
+            this.whichIndex = "3-1";
+            break;
+          case "/ninehome/stocks":
+            this.whichIndex = "3-2";
+            break;
+          case "/ninehome/money":
+            this.whichIndex = "5-1";
+            break;
+          case "/ninehome/topup":
+            this.whichIndex = "5-2";
+            break;
+          case "/ninehome/withdrawal":
+            this.whichIndex = "5-3";
+            break;
+          case "/ninehome/water":
+            this.whichIndex = "5-4";
+            break;
+        }
+      },
+      deep: true
+    }
+  },
   mounted: function() {
     this.listenResize();
     this.navHeight = $(".contentheight").height();
@@ -174,6 +226,10 @@ export default {
 .el-submenu.is-active .menu-icon-show {
   display: block;
 }
+
+.el-submenu .el-menu-item {
+  padding-left: 72px !important;
+}
 </style>
 
 <style scoped>
@@ -183,15 +239,17 @@ export default {
   height: 20px;
   float: left;
   margin-top: 18px;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .logo {
   width: 230px;
   height: 75px;
   border-bottom: 1px solid #ccc;
-  text-align: center;
   line-height: 75px;
-  font-size: 30px;
+  font-size: 20px;
+  font-weight: bold;
   color: #2662ee;
+  box-sizing: border-box;
+  padding-left: 60px;
 }
 </style>
