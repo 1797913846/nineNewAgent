@@ -22,20 +22,31 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="packageName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dailyPlan" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" prop="sharingScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="statementScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="signup" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
+          <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
               <div class="operation">
                 <span>修改</span>
-                <span>删除</span>
-                <span>置为默认</span>
+                <span>重置密码</span>
+                <span>查看</span>
+                <span>资金</span>
               </div>
             </template>
           </el-table-column>
+          <el-table-column show-overflow-tooltip label="序号" prop="serial" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="等级" prop="level" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="等级名称" prop="name" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理ID" prop="id" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理名称" prop="agent" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理状态" prop="state" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品" prop="product" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="邀请码" prop="code" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人ID" prop="referees" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" prop="rname" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="初期规模" prop="initial" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" prop="available" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" prop="margin" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -55,53 +66,55 @@ export default {
     return {
       tableData: [
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          level: "1",
+          name: "admin",
+          id: "13878674736",
+          agent: "测试",
+          state: "正常",
+          product: "0",
+          commission: "0",
+          code: "查看",
+          referees: "-6.225",
+          rname: "0",
+          balance: "-761.00",
+          initial: "25250.52",
+          available: "-3.107",
+          margin: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          level: "1",
+          name: "admin",
+          id: "13878674736",
+          agent: "测试",
+          state: "正常",
+          product: "0",
+          commission: "0",
+          code: "查看",
+          referees: "-6.225",
+          rname: "0",
+          balance: "-761.00",
+          initial: "25250.52",
+          available: "-3.107",
+          margin: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          level: "1",
+          name: "admin",
+          id: "13878674736",
+          agent: "测试",
+          state: "正常",
+          product: "0",
+          commission: "0",
+          code: "查看",
+          referees: "-6.225",
+          rname: "0",
+          balance: "-761.00",
+          initial: "25250.52",
+          available: "-3.107",
+          margin: "14500"
         }
       ],
       colorBool: false,

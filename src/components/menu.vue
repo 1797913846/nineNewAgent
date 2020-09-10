@@ -36,7 +36,7 @@
                   <span>资产管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="4-1" @click="clickJump('/ninehome/account')">资产管理</el-menu-item>
+                  <el-menu-item index="4-1" @click="clickJump('/ninehome/assets')">资产管理</el-menu-item>
                   <el-menu-item index="4-2" @click="clickJump('/ninehome/account')">资金池管理</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
@@ -48,8 +48,8 @@
                   <span>风控管理</span>
                 </template>
                 <el-menu-item-group>
-                  <el-menu-item index="4-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
-                  <el-menu-item index="4-2" @click="clickJump('/ninehome/account')">股票黑名单</el-menu-item>
+                  <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
+                  <el-menu-item index="3-2" @click="clickJump('/ninehome/stocks')">股票黑名单</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="5">

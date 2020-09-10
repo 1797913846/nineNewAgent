@@ -146,7 +146,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  window.document.title = to.meta.title + '  V1.0.76';
+  window.document.title = to.meta.title;
   window.scrollTo(0, 0);
   // var userName = localStorage.getItem("userName");
   // var token = sessionStorage.getItem("token" + userName) || localStorage.getItem("token" + userName);

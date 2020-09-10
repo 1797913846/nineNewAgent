@@ -3,33 +3,57 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">添加</div>
+        <div class="title">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="keyword" />
+            <input type="text" placeholder="请输入产品编号" v-model="keyword" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入产品名称" v-model="keyword" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入资金账号" v-model="keyword" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="券商名称" v-model="keyword" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
+          <div class="search-user">导出</div>
         </div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="packageName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dailyPlan" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" prop="sharingScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="statementScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="signup" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
+          <el-table-column label="操作" align="center" width="250">
             <template slot-scope="scope">
               <div class="operation">
                 <span>修改</span>
-                <span>删除</span>
-                <span>置为默认</span>
+                <span>重置密码</span>
+                <span>查看</span>
+                <span>资金</span>
               </div>
             </template>
           </el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" prop="serial" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品名称" prop="name" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金账号" prop="accout" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="状态" prop="state" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账号类型" prop="type" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="开仓控制" prop="control" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="amount" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" prop=" jname" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" prop="jmoney" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总可用" prop="juse" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总期初" prop="jamount" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总可用" prop="jall" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="剩余资产" prop="jalluse" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -49,53 +73,72 @@ export default {
     return {
       tableData: [
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          name: "1",
+          accout: "200001",
+          priority: "0",
+          state: "在线",
+          type: "普通户",
+          control: "允许操作",
+          commission: "0.0002",
+          amount: "1000000",
+          jname: "同花顺模拟",
+          jmoney: "988897878.76",
+          juse: "988897878.76",
+          jamount: "159958",
+          jall: "-3.107",
+          jalluse: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          name: "1",
+          accout: "200001",
+          priority: "0",
+          state: "在线",
+          type: "普通户",
+          control: "允许操作",
+          commission: "0.0002",
+          amount: "1000000",
+          jname: "同花顺模拟",
+          jmoney: "988897878.76",
+          juse: "988897878.76",
+          jamount: "159958",
+          jall: "-3.107",
+          jalluse: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          name: "1",
+          accout: "200001",
+          priority: "0",
+          state: "在线",
+          type: "普通户",
+          control: "允许操作",
+          commission: "0.0002",
+          amount: "1000000",
+          jname: "同花顺模拟",
+          jmoney: "988897878.76",
+          juse: "988897878.76",
+          jamount: "159958",
+          jall: "-3.107",
+          jalluse: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          name: "1",
+          accout: "200001",
+          priority: "0",
+          state: "在线",
+          type: "普通户",
+          control: "允许操作",
+          commission: "0.0002",
+          amount: "1000000",
+          jname: "同花顺模拟",
+          jmoney: "988897878.76",
+          juse: "988897878.76",
+          jamount: "159958",
+          jall: "-3.107",
+          jalluse: "14500"
         }
       ],
       colorBool: false,

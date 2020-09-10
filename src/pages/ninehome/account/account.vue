@@ -3,33 +3,44 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">添加</div>
+        <div class="title">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="keyword" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
+          <div class="search-user">导出</div>
         </div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="packageName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dailyPlan" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" prop="sharingScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="statementScheme" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="signup" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
+          <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span>修改</span>
-                <span>删除</span>
-                <span>置为默认</span>
+                <span>操作</span>
+                <span>持仓</span>
+                <span>平仓</span>
               </div>
             </template>
           </el-table-column>
+          <el-table-column show-overflow-tooltip label="序号" width="100" prop="serial" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="母账户ID" prop="mom" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户ID" prop="id" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户名称" prop="name" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" prop="margin" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="借款额" prop="borrowing" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="期初金额" prop="money" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="总资产" prop="assets" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏额" prop="loss" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏率" prop="rate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓数" prop="house" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票市值" prop="smoeny" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" prop="funds" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓率%" prop="position" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线" prop="cordon" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -49,53 +60,55 @@ export default {
     return {
       tableData: [
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          mom: "200001",
+          id: "13898988463",
+          name: "yy",
+          margin: "13000",
+          borrowing: "13000",
+          money: "26000",
+          assets: "24489.52",
+          loss: "-1,524.70",
+          rate: "-6.225",
+          house: "0",
+          smoney: "-761.00",
+          funds: "25250.52",
+          position: "-3.107",
+          cordon: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          mom: "200001",
+          id: "13898988463",
+          name: "yy",
+          margin: "13000",
+          borrowing: "13000",
+          money: "26000",
+          assets: "24489.52",
+          loss: "-1,524.70",
+          rate: "-6.225",
+          house: "0",
+          smoney: "-761.00",
+          funds: "25250.52",
+          position: "-3.107",
+          cordon: "14500"
         },
         {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
-        },
-        {
-          packageName: "总部(平台)",
-          dailyPlan: "交易佣金率：0‰；管理费成交率：0%",
-          sharingScheme: "交易佣金率：0‰；管理费成交率：0%；盈利分成成交率：0%",
-          statementScheme: "交易佣金率：0‰；管理费成交率：0%",
-          signup: "-"
+          serial: "1",
+          mom: "200001",
+          id: "13898988463",
+          name: "yy",
+          margin: "13000",
+          borrowing: "13000",
+          money: "26000",
+          assets: "24489.52",
+          loss: "-1,524.70",
+          rate: "-6.225",
+          house: "0",
+          smoney: "-761.00",
+          funds: "25250.52",
+          position: "-3.107",
+          cordon: "14500"
         }
       ],
       colorBool: false,
