@@ -71,6 +71,28 @@ input:-ms-input-placeholder {
     margin-right: 24px;
 }
 
+.el-menu-item-group__title {
+    padding: 0px 0 7px 20px!important;
+}
+
+.el-menu-item:hover {
+    background-color: transparent!important;
+    color: #2662ee!important;
+}
+
+.el-menu-item:focus {
+    background-color: transparent!important;
+}
+
+.el-menu-item.is-active {
+    background-color: transparent!important;
+    color: #2662ee!important;
+}
+
+.el-menu-item.is-active:hover {
+    background-color: transparent!important;
+}
+
 .bigestbox {
     flex: 1;
 }
