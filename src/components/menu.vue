@@ -37,7 +37,7 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="4-1" @click="clickJump('/ninehome/assets')">资产管理</el-menu-item>
-                  <el-menu-item index="4-2" @click="clickJump('/ninehome/account')">资金池管理</el-menu-item>
+                  <el-menu-item index="4-2" @click="clickJump('/ninehome/pool')">资金池管理</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="4">

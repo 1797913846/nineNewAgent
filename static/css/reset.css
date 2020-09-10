@@ -133,7 +133,7 @@ input:-ms-input-placeholder {
 }
 
 .el-table--border::after {
-    background-color:transparent!important;
+    background-color: transparent!important;
 }
 
 /* 排序按钮 */
@@ -471,6 +471,7 @@ input:-ms-input-placeholder {
     float: left;
     width: 251px;
     height: 41px;
+    line-height: 41px;
     box-sizing: border-box;
     border-radius: 5px;
     margin-right: 20px;
