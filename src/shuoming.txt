@@ -1,0 +1,4 @@
+1、login.vue 登录界面
+2、router>index.js路由文件
+3、/ninehome/regulatory主页>分账户监管
+4、components>menu导航
