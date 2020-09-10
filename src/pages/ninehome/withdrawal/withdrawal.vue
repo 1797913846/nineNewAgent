@@ -16,7 +16,7 @@
             <input type="text" placeholder="请输入资金账号" v-model="keyword" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-box">
+          <div class="search-box1">
             <el-date-picker v-model="value1" type="date">
             </el-date-picker>
           </div>

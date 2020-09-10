@@ -12,14 +12,14 @@
             <input type="text" placeholder="请输入会员名称" v-model="keyword" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-box">
-            <el-select v-model="value" placeholder="请选择审核状态">
+          <div class="search-box1">
+            <el-select v-model="value1" placeholder="请选择审核状态" :clearable="true">
               <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </div>
-          <div class="search-box">
-            <el-date-picker v-model="value1" type="date">
+          <div class="search-box1">
+            <el-date-picker v-model="value2" type="date">
             </el-date-picker>
           </div>
           <div class="search-user">查询</div>
@@ -56,6 +56,7 @@ export default {
   data() {
     return {
       value1: "",
+      value2: "",
       options: [
         {
           value: "选项1",

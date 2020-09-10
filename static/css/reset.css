@@ -480,6 +480,18 @@ input:-ms-input-placeholder {
     background: #FFFFFF;
 }
 
+.template-top .search-box1 {
+    float: left;
+    height: 41px;
+    line-height: 41px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-right: 20px;
+    position: relative;
+    border: 1px solid #E7E7E7;
+    background: #FFFFFF;
+}
+
 .template-top .search-box input {
     width: 100%;
     height: 100%;
