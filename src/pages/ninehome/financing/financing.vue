@@ -1,3 +1,4 @@
+<!--融资方案配置-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -177,15 +178,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

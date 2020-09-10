@@ -1,3 +1,4 @@
+<!--提现审核-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -5,15 +6,15 @@
       <div class="template-top">
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入产品编号" v-model="keyword" />
+            <input type="text" placeholder="请输入产品编号" v-model="proId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入产品名称" v-model="keyword" />
+            <input type="text" placeholder="请输入产品名称" v-model="proName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入资金账号" v-model="keyword" />
+            <input type="text" placeholder="请输入资金账号" v-model="account" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box1">
@@ -107,6 +108,9 @@ export default {
         }
       ],
       colorBool: false,
+      proId: "",
+      proName: "",
+      account: "",
       keyword: "",
       pageSzie: 31,
       currentPage: 1,
@@ -183,15 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

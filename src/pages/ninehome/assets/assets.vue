@@ -1,3 +1,4 @@
+<!--资产管理-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -6,19 +7,19 @@
         <div class="title">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入产品编号" v-model="keyword" />
+            <input type="text" placeholder="请输入产品编号" v-model="proId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入产品名称" v-model="keyword" />
+            <input type="text" placeholder="请输入产品名称" v-model="proName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入资金账号" v-model="keyword" />
+            <input type="text" placeholder="请输入资金账号" v-model="account" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="券商名称" v-model="keyword" />
+            <input type="text" placeholder="券商名称" v-model="gname" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -143,6 +144,10 @@ export default {
       ],
       colorBool: false,
       keyword: "",
+      proId: "",
+      proName: "",
+      account: "",
+      gname: "",
       pageSzie: 31,
       currentPage: 1,
       total: 10,
@@ -218,15 +223,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

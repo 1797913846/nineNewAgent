@@ -1,3 +1,4 @@
+<!--股票黑名单-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -8,11 +9,11 @@
         <div class="title" style="margin-left:10px;">导入</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入证券代码" v-model="keyword" />
+            <input type="text" placeholder="请输入证券代码" v-model="code" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入证券名称" v-model="keyword" />
+            <input type="text" placeholder="请输入证券名称" v-model="name" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -49,6 +50,8 @@ export default {
       ],
       colorBool: false,
       keyword: "",
+      code:"",
+      name:"",
       pageSzie: 31,
       currentPage: 1,
       total: 10,
@@ -124,15 +127,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

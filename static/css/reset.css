@@ -61,6 +61,16 @@ input:-ms-input-placeholder {
     color: #ccc;
 }
 
+/***9**/
+
+.operation span {
+    color: #586880;
+    font-weight: bold;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 24px;
+}
+
 .bigestbox {
     flex: 1;
 }

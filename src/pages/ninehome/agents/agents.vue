@@ -1,3 +1,4 @@
+<!--代理商列表-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -7,11 +8,11 @@
         <div class="title" style="margin-left:7px;">我的二维码</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入代理商名称" v-model="keyword" />
+            <input type="text" placeholder="请输入代理商名称" v-model="agentName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入代理商ID" v-model="keyword" />
+            <input type="text" placeholder="请输入代理商ID" v-model="agentId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -118,7 +119,8 @@ export default {
         }
       ],
       colorBool: false,
-      keyword: "",
+      agentName: "",
+      agentId: "",
       pageSzie: 31,
       currentPage: 1,
       total: 10,
@@ -145,7 +147,14 @@ export default {
     }
   },
   watch: {
-    keyword: {
+    agentName: {
+      handler(newVal, oldVal) {
+        this.currentPage = 1;
+        this.getFundAccount();
+      },
+      deep: true
+    },
+    agentId: {
       handler(newVal, oldVal) {
         this.currentPage = 1;
         this.getFundAccount();
@@ -194,15 +203,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

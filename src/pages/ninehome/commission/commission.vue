@@ -1,3 +1,4 @@
+<!--佣金方案配置-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -6,7 +7,7 @@
         <div class="title">添加</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="keyword" />
+            <input type="text" placeholder="请输入会员ID" v-model="memberId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -15,7 +16,6 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="packageName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="日结方案" prop="dailyPlan" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="合作分成方案" prop="sharingScheme" align="center"></el-table-column>
@@ -99,7 +99,7 @@ export default {
         }
       ],
       colorBool: false,
-      keyword: "",
+      memberId: "",
       pageSzie: 31,
       currentPage: 1,
       total: 10,
@@ -126,10 +126,10 @@ export default {
     }
   },
   watch: {
-    keyword: {
+    memberId: {
       handler(newVal, oldVal) {
         this.currentPage = 1;
-        this.getFundAccount();
+        // this.getFundAccount();
       },
       deep: true
     }
@@ -142,7 +142,7 @@ export default {
       this.axios
         .get("account/fund", {
           params: {
-            search: this.keyword,
+            search: this.memberId,
             size: this.pageSzie,
             page: this.currentPage
           }
@@ -175,15 +175,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 

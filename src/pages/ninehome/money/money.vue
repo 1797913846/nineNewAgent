@@ -1,3 +1,4 @@
+<!--资金信息-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -5,7 +6,7 @@
       <div class="template-top">
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="keyword" />
+            <input type="text" placeholder="请输入会员ID" v-model="id" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -98,6 +99,7 @@ export default {
         }
       ],
       colorBool: false,
+      id:"",
       keyword: "",
       pageSzie: 31,
       currentPage: 1,
@@ -174,15 +176,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.operation {
-}
-.operation span {
-  color: #586880;
-  font-weight: bold;
-  display: inline-block;
-  cursor: pointer;
-  margin-right: 24px;
-}
 </style>
 
 
