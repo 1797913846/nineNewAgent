@@ -12,11 +12,11 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-          target: "https://eduapi.smartqmx.com/api", 
-          changeOrigin: true,
-          pathRewrite: {
-              '^/api': ''
-          }
+        target: "http://10.10.1.26:8080",
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
       }
     },
 

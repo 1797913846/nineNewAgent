@@ -148,31 +148,29 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   window.document.title = to.meta.title;
   window.scrollTo(0, 0);
-  // var userName = localStorage.getItem("userName");
-  // var token = sessionStorage.getItem("token" + userName) || localStorage.getItem("token" + userName);
-  // if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
-  //   if (token) {
-  //     next();
-  //   } else {
-  //     next({
-  //       path: '/login',
-  //       query: { redirect: to.fullPath }  // 将跳转的路由path作为参数，登录成功后跳转到该路由
-  //     })
-  //   }
-  // }
-  // else {
-  //   if (token) {
-  //     if (to.path == '/login' || to.path == '/signup') {
-  //       window.document.title = "首页";
-  //       next({ path: '/' })
-  //     } else {
-  //       next();
-  //     }
-  //   } else {
-  //     next();
-  //   }
-  // }
-  next();
+  var token = localStorage.getItem("Authorization");
+  if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
+    if (token) {
+      next();
+    } else {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }  // 将跳转的路由path作为参数，登录成功后跳转到该路由
+      })
+    }
+  }
+  else {
+    if (token) {
+      if (to.path == '/login' || to.path == '/signup') {
+        window.document.title = "首页";
+        next({ path: '/' })
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  }
 })
 
 export default router;
