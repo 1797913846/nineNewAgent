@@ -34,6 +34,7 @@ import md5 from "js-md5";
 export default {
   data() {
     return {
+      userName: "",
       form: {
         username: localStorage.getItem("remenberUsername") || "",
         pwd: "",
@@ -66,9 +67,24 @@ export default {
         $(".login-container").css("height", height + "px");
       });
     },
+    getMsg() {
+      this.axios
+        .get("/tn/mgr-api/account-info")
+        .then(res => {
+          console.log("login>>", res.data);
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("userName", data.userName);
+            localStorage.setItem("loginName", data.loginName);
+          } else {
+          }
+        })
+        .catch(() => {});
+    },
     login() {
       this.axios
-        .post("api/tn/mgr-api/login", {
+        .post("/tn/mgr-api/login", {
           username: this.form.username,
           password: md5(this.form.pwd)
         })
@@ -77,9 +93,13 @@ export default {
           if (res.data.code == 200) {
             let Authorization = res.data.data;
             localStorage.setItem("Authorization", Authorization);
-            this.$router.push({
-              path: "/ninehome/commission"
-            });
+            this.getMsg();
+            let that=this;
+            setTimeout(function() {
+              that.$router.push({
+                path: "/ninehome/commission"
+              });
+            }, 800);
           } else {
             this.errMsg = res.data.info;
             // this.$alert(res.data.msg, "提示", {
