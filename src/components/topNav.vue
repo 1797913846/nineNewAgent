@@ -4,7 +4,10 @@
     <div class="rightnav">
       <img class="r1" src="../assets/nine/tou.png" alt="">
       <span class="r2">
-        <span>WPDeveloper</span><img src="../assets/nine/arr_b.png" /></span>
+        <span>{{userName}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <!-- <img src="../assets/nine/arr_b.png" /> -->
+        <span style="cursor: pointer;" @click="loginOut">退出</span>
+      </span>
       <span class="r3">|</span>
       <img class="r4" src="../assets/nine/chi.png" alt="">
     </div>
@@ -14,9 +17,31 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      userName: localStorage.getItem("userName")
+    };
   },
-  methods: {}
+  created() {},
+  mounted() {
+    this.userName = localStorage.getItem("userName");
+  },
+  methods: {
+    loginOut() {
+      this.axios
+        .post("/tn/mgr-api/logout")
+        .then(res => {
+          console.log("login>>", res.data);
+          if (res.data.code == 200) {
+            localStorage.clear();
+            this.$router.push({
+              path: "/login"
+            });
+          } else {
+          }
+        })
+        .catch(() => {});
+    }
+  }
 };
 </script>
 
