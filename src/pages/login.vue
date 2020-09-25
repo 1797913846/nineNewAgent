@@ -21,7 +21,7 @@
             <img src="../assets/loginimg/error.png" alt="">
             <div>{{errMsg}}</div>
           </div>
-          <div class="loginbtn">登录</div>
+          <div class="loginbtn" @click="login()">登录</div>
         </div>
       </div>
     </el-form>
@@ -30,13 +30,14 @@
 
 <script>
 import eventBus from "../eventBus.js";
+import md5 from "js-md5";
 export default {
   data() {
     return {
       form: {
         username: localStorage.getItem("remenberUsername") || "",
         pwd: "",
-        url: "http://47.102.136.48"
+        url: "http://10.10.1.26:8080"
       },
       isLogin: true,
       errMsg: "",
@@ -67,23 +68,20 @@ export default {
     },
     login() {
       this.axios
-        .post("admin/auth/login", {
-          Account: this.form.username,
-          Password: this.form.pwd
+        .post("api/tn/mgr-api/login", {
+          username: this.form.username,
+          password: md5(this.form.pwd)
         })
         .then(res => {
-          console.log("login>>", res.data.data);
-          if (res.data.code == 1) {
-            // this.getDict();
-            // this.getExchange();
-            // this.getBroker();
-            // this.getRisk();
-            //console.log("大大"+menuPath)
-            // this.$router.push({
-            //   path: menuPath
-            // });
+          console.log("login>>", res.data);
+          if (res.data.code == 200) {
+            let Authorization = res.data.data;
+            localStorage.setItem("Authorization", Authorization);
+            this.$router.push({
+              path: "/ninehome/commission"
+            });
           } else {
-            this.errMsg = res.data.msg;
+            this.errMsg = res.data.info;
             // this.$alert(res.data.msg, "提示", {
             //   confirmButtonText: "确定",
             //   center: true,
