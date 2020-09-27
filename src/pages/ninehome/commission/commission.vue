@@ -26,7 +26,8 @@
               <div class="operation">
                 <span>修改</span>
                 <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
-                <span>置为默认</span>
+                <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">置为默认</span>
+                <span v-if="scope.row.isDefault==1">默认方案</span>
               </div>
             </template>
           </el-table-column>
@@ -226,6 +227,25 @@ export default {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
             this.getFundAccount();
+          } else {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    setIt(index, row) {
+      console.log(222);
+      console.log("13点", index, row);
+      this.id = row.id;
+      this.axios
+        .post("/tn/mgr-api/commissionCfgs/markAsDefault", {
+          id: this.id
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            // this.getFundAccount();
           } else {
           }
         })
