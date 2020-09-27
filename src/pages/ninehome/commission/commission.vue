@@ -25,7 +25,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span>修改</span>
-                <span>删除</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
                 <span>置为默认</span>
               </div>
             </template>
@@ -125,7 +125,6 @@ export default {
         dayCommission: [
           { required: true, message: "请输入交易佣金率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -134,7 +133,6 @@ export default {
         dayManageFeeDealRate: [
           { required: true, message: "请输入管理费成交率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -143,7 +141,6 @@ export default {
         singleCommission: [
           { required: true, message: "请输入交易佣金率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -152,7 +149,6 @@ export default {
         singleManageFeeDealRate: [
           { required: true, message: "请输入管理费成交率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -161,7 +157,6 @@ export default {
         singleDividedRate: [
           { required: true, message: "请输入盈利分成成交率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -170,7 +165,6 @@ export default {
         monthCommission: [
           { required: true, message: "请输入交易佣金率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
@@ -179,13 +173,13 @@ export default {
         monthManageFeeDealRate: [
           { required: true, message: "请输入管理费成交率", trigger: "blur" },
           {
-            type: "number",
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
           }
         ]
-      }
+      },
+      id: ""
     };
   },
   computed: {
@@ -220,6 +214,25 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    deleteNow(index, row) {
+      console.log(222);
+      console.log("13点", index, row);
+      this.id = row.id;
+      this.axios
+        .post("/tn/mgr-api/commissionCfgs/delete", {
+          id: this.id
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.getFundAccount();
+          } else {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     showAddNow() {
       this.showAdd = true;
     },
@@ -249,6 +262,8 @@ export default {
             .then(res => {
               console.log("getFundAccount>>", res.data);
               if (res.data.code == 200) {
+                this.showAdd = false;
+                this.getFundAccount();
               } else {
               }
             })
