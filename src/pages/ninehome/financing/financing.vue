@@ -4,38 +4,52 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">刷新</div>
+        <div class="title" @click="refresh">刷新</div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financing" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="递延周期" prop="deferred" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资倍率" prop="ratio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资费率" prop="rate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="利润分成比例" width="100" prop="Divided" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="建仓费率" width="100" prop="positions" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="警戒线比率" width="100" prop="cordon" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="平仓线比率" width="100" prop="open" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="stocks" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" prop="entrepreneurship" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" prop="kechuang" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <div class="operation">
-                <span>修改</span>
-                <span>删除</span>
-                <span>应用到用户</span>
-              </div>
-            </template>
-          </el-table-column>
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="融资周期" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="递延周期" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资倍率" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资费率" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="利润分成比例" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="建仓费率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线比率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线比率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
+      <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+        <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financePeriod" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="递延周期" prop="financePeriod" :formatter="formatter" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="融资倍率" prop="financeRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="融资费率" prop="financeFeeRate" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="利润分成比例" width="100" prop="separateFeeRate" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="建仓费率" width="100" prop="makeFeeRate" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="警戒线比率" width="100" prop="cordonLineRate" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="平仓线比率" width="100" prop="flatLineRate" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="positionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" prop="secondBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <div class="operation">
+              <span>修改</span>
+              <span>删除</span>
+              <span>应用到用户</span>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
+    <div class="pagination">
+      <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -47,60 +61,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        }
-      ],
+      tableData: [],
       colorBool: false,
       keyword: "",
       pageSzie: 31,
@@ -129,31 +90,53 @@ export default {
     }
   },
   watch: {
-    keyword: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    }
+    // keyword: {
+    //   handler(newVal, oldVal) {
+    //     this.currentPage = 1;
+    //     this.getFundAccount();
+    //   },
+    //   deep: true
+    // }
   },
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
+    formatter(row, column) {
+      if (row) {
+        let financePeriod = row.financePeriod;
+        switch (financePeriod) {
+          case "day":
+            return "T+1";
+          case "week":
+            return "T+7";
+          case "month":
+            return "T+30";
+          case "single":
+            return "T+5";
+          default:
+            return "T+0";
+        }
+      }
+    },
+    refresh() {
+      this.getFundAccount();
+    },
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSzie,
-            page: this.currentPage
-          }
+        .post("/tn/mgr-api/tntg/financeScheme/list", {
+          pageSize: this.pageSzie,
+          pageNo: this.currentPage
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData = res.data.data.rows;
+            } else {
+              this.tableData = [];
+            }
             this.total = res.data.data.total;
           } else {
             this.tableData = [];
@@ -164,6 +147,8 @@ export default {
           } else {
             this.nullTable = false;
           }
+
+          console.log("我是最终结果", this.tableData);
         })
         .catch(err => {
           console.log(err);
