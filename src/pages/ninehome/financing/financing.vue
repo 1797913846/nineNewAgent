@@ -24,7 +24,7 @@
       </div>
       <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
         <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-        <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financePeriod" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financePeriod" :formatter="formatter1" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="递延周期" prop="financePeriod" :formatter="formatter" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="融资倍率" prop="financeRatio" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="融资费率" prop="financeFeeRate" align="center"></el-table-column>
@@ -49,7 +49,6 @@
     <div class="pagination">
       <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
     </div>
-  </div>
   </div>
 </template>
 
@@ -116,6 +115,23 @@ export default {
             return "T+5";
           default:
             return "T+0";
+        }
+      }
+    },
+    formatter1(row, column) {
+      if (row) {
+        let financePeriod = row.financePeriod;
+        switch (financePeriod) {
+          case "day":
+            return "天";
+          case "week":
+            return "周";
+          case "month":
+            return "月";
+          case "single":
+            return "单";
+          default:
+            return "默认";
         }
       }
     },
