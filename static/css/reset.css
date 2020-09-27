@@ -35,7 +35,6 @@ html {
 
 textarea, input[type="button"], input[type="text"] {
     resize: none;
-    border: 0px;
     outline: none;
     -webkit-appearance: none;
     /*静止默认渲染*/
@@ -339,8 +338,8 @@ input:-ms-input-placeholder {
 }
 
 .el-input__inner {
-    height: 25px;
-    line-height: 25px;
+    height: 30px;
+    line-height: 30px;
     border-radius: 0px;
 }
 

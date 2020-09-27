@@ -4,7 +4,7 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">添加</div>
+        <div class="title" @click="showAddNow">添加</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入方案名称" v-model="cfgName" />
@@ -43,6 +43,54 @@
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
+    <!--表单-->
+    <div class="addForm" v-if="showAdd==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">新增</span>
+          <span class="tr" @click="closeAdd">X</span>
+        </div>
+        <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
+          <el-form-item label="方案名称：">
+            <el-input v-model="formInline.cfgName" placeholder="方案名称"></el-input>
+          </el-form-item>
+          <div class="bt">
+            <div class="smallTitle">日结方案：</div>
+            <el-form-item label="交易佣金率：" prop="dayCommission">
+              <el-input v-model="formInline.dayCommission" placeholder="交易佣金率"></el-input>
+            </el-form-item>
+            <el-form-item label="管理费成交率：" prop="dayManageFeeDealRate">
+              <el-input v-model="formInline.dayManageFeeDealRate" placeholder="管理费成交率"></el-input>
+            </el-form-item>
+          </div>
+          <div class="bt">
+            <div class="smallTitle">合作分成方案：</div>
+            <el-form-item label="交易佣金率：" prop="singleCommission">
+              <el-input v-model="formInline.singleCommission" placeholder="交易佣金率"></el-input>
+            </el-form-item>
+            <el-form-item label="管理费成交率：" prop="singleManageFeeDealRate">
+              <el-input v-model="formInline.singleManageFeeDealRate" placeholder="管理费成交率"></el-input>
+            </el-form-item>
+            <el-form-item label="盈利分成成交率：" prop="singleDividedRate">
+              <el-input v-model="formInline.singleDividedRate" placeholder="管理费成交率"></el-input>
+            </el-form-item>
+          </div>
+          <div class="bt">
+            <div class="smallTitle">月结方案：</div>
+            <el-form-item label="交易佣金率：" prop="monthCommission">
+              <el-input v-model="formInline.monthCommission" placeholder="交易佣金率"></el-input>
+            </el-form-item>
+            <el-form-item label="管理费成交率：" prop="monthManageFeeDealRate">
+              <el-input v-model="formInline.monthManageFeeDealRate" placeholder="管理费成交率"></el-input>
+            </el-form-item>
+          </div>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -60,7 +108,84 @@ export default {
       pageSzie: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+
+      showAdd: false,
+      formInline: {
+        cfgName: "",
+        dayCommission: "",
+        dayManageFeeDealRate: "",
+        singleCommission: "",
+        singleManageFeeDealRate: "",
+        singleDividedRate: "",
+        monthCommission: "",
+        monthManageFeeDealRate: ""
+      },
+      rules: {
+        dayCommission: [
+          { required: true, message: "请输入交易佣金率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        dayManageFeeDealRate: [
+          { required: true, message: "请输入管理费成交率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        singleCommission: [
+          { required: true, message: "请输入交易佣金率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        singleManageFeeDealRate: [
+          { required: true, message: "请输入管理费成交率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        singleDividedRate: [
+          { required: true, message: "请输入盈利分成成交率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        monthCommission: [
+          { required: true, message: "请输入交易佣金率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        monthManageFeeDealRate: [
+          { required: true, message: "请输入管理费成交率", trigger: "blur" },
+          {
+            type: "number",
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   computed: {
@@ -95,6 +220,47 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    showAddNow() {
+      this.showAdd = true;
+    },
+    closeAdd() {
+      this.showAdd = false;
+    },
+    closeAdd1(formName) {
+      this.$refs[formName].resetFields();
+      this.showAdd = false;
+    },
+    onSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log("submit!");
+          this.axios
+            .post("/tn/mgr-api/commissionCfgs/saveOrUpdate", {
+              id: this.formInline.id,
+              cfgName: this.formInline.cfgName,
+              dayCommission: this.formInline.dayCommission,
+              dayManageFeeDealRate: this.formInline.dayManageFeeDealRate,
+              singleCommission: this.formInline.singleCommission,
+              singleManageFeeDealRate: this.formInline.singleManageFeeDealRate,
+              singleDividedRate: this.formInline.singleDividedRate,
+              monthCommission: this.formInline.monthCommission,
+              monthManageFeeDealRate: this.formInline.monthManageFeeDealRate
+            })
+            .then(res => {
+              console.log("getFundAccount>>", res.data);
+              if (res.data.code == 200) {
+              } else {
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     formatter(row, column) {
       if (row) {
         if (row.isDefault == 0) {
@@ -150,6 +316,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addForm {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.addContent {
+  background-color: #fff;
+  width: 800px;
+  height: 530px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.addContent .title {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.addContent .title .tl {
+  float: left;
+}
+.addContent .title .tr {
+  float: right;
+  cursor: pointer;
+}
+.addContent .smallTitle {
+  margin-bottom: 10px;
+  color: #000;
+  font-size: 20px;
+}
+.addContent .bt {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
+}
 </style>
 
 
