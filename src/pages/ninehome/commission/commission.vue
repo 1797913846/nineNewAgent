@@ -24,7 +24,7 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span>修改</span>
+                <span @click.stop="getContent(scope.$index, scope.row)">修改</span>
                 <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
                 <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">置为默认</span>
                 <span v-if="scope.row.isDefault==1">默认方案</span>
@@ -48,7 +48,7 @@
     <div class="addForm" v-if="showAdd==true">
       <div class="addContent">
         <div class="title">
-          <span class="tl">新增</span>
+          <span class="tl">{{addTitle}}</span>
           <span class="tr" @click="closeAdd">X</span>
         </div>
         <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
@@ -180,7 +180,8 @@ export default {
           }
         ]
       },
-      id: ""
+      id: "",
+      addTitle: "新增"
     };
   },
   computed: {
@@ -215,6 +216,39 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    getContent(index, row) {
+      this.id = row.id;
+      this.axios
+        .get("/tn/mgr-api/commissionCfgs/getById", {
+          params: {
+            id: this.id
+          }
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            this.showAdd = true;
+            this.addTitle = "修改";
+            this.id = data.id;
+            this.formInline.id = data.id;
+            this.formInline.cfgName = data.cfgName;
+            this.formInline.dayCommission = data.dayCommission;
+            this.formInline.dayManageFeeDealRate = data.dayManageFeeDealRate;
+            this.formInline.singleCommission = data.singleCommission;
+            this.formInline.singleManageFeeDealRate =
+              data.singleManageFeeDealRate;
+            this.formInline.singleDividedRate = data.singleDividedRate;
+            this.formInline.monthCommission = data.monthCommission;
+            this.formInline.monthManageFeeDealRate =
+              data.monthManageFeeDealRate;
+          } else {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     deleteNow(index, row) {
       console.log(222);
       console.log("13点", index, row);
@@ -228,6 +262,11 @@ export default {
           if (res.data.code == 200) {
             this.getFundAccount();
           } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
           }
         })
         .catch(err => {
@@ -247,6 +286,11 @@ export default {
           if (res.data.code == 200) {
             // this.getFundAccount();
           } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
           }
         })
         .catch(err => {
@@ -254,6 +298,7 @@ export default {
         });
     },
     showAddNow() {
+      this.addTitle = "新增";
       this.showAdd = true;
     },
     closeAdd() {
