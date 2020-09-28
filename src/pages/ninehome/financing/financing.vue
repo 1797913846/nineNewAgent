@@ -39,8 +39,8 @@
           <template slot-scope="scope">
             <div class="operation">
               <span>修改</span>
-              <span>删除</span>
-              <span>应用到用户</span>
+              <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+              <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
             </div>
           </template>
         </el-table-column>
@@ -66,7 +66,8 @@ export default {
       pageSzie: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+      id: ""
     };
   },
   computed: {
@@ -101,6 +102,54 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    setIt(index, row) {
+      console.log(222);
+      console.log("13点", index, row);
+      this.id = row.id;
+      this.axios
+        .post("/tn/mgr-api/tntg/financeScheme/applyToUser", {
+          id: this.id
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            // this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    deleteNow(index, row) {
+      console.log(222);
+      console.log("13点", index, row);
+      this.id = row.id;
+      this.axios
+        .post("/tn/mgr-api/tntg/financeScheme/delete", {
+          id: this.id
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     formatter(row, column) {
       if (row) {
         let financePeriod = row.financePeriod;
