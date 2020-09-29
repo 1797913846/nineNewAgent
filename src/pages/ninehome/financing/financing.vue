@@ -58,7 +58,12 @@
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="融资周期：">
-            <el-input v-model="formInline.financePeriod" placeholder="融资周期"></el-input>
+            <el-select v-model="formInline.financePeriod">
+              <el-option label="天" value="day"></el-option>
+              <el-option label="周" value="week"></el-option>
+              <el-option label="月" value="month"></el-option>
+              <el-option label="单" value="single"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="融资倍率：">
             <el-input v-model="formInline.financeRatio" placeholder="融资倍率"></el-input>
@@ -71,7 +76,7 @@
             <el-input v-model="formInline.makeFeeRate" placeholder="建仓费率"></el-input>
           </el-form-item>
           <el-form-item label="利润分成比例：">
-            <el-input v-model="formInline.separateFeeRate" placeholder="利润分成比例"></el-input>
+            <el-input v-model="formInline.separateFeeRate" :disabled="true" placeholder="利润分成比例"></el-input>
           </el-form-item>
           <el-form-item label="警戒线比率：">
             <el-input v-model="formInline.cordonLineRate" placeholder="警戒线比率"></el-input>
@@ -115,7 +120,7 @@ export default {
       total: 10,
       nullTable: false,
       id: "",
-      showAdd: true,
+      showAdd: false,
       addTitle: "修改",
       formInline: {
         financePeriod: "", //融资周期
