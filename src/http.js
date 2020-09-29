@@ -12,7 +12,7 @@ import router from './router'
 //设置请求超时时间，现在，在超时前，所有请求都会等待 2.5 秒
 axios.defaults.timeout = 5000;
 //设置接口的域名
-let burl = 'http://10.10.1.26:8080';
+let burl = 'http://120.26.187.19:8081';
 axios.defaults.baseURL = burl;
 
 console.log('axios', axios.defaults.baseURL)

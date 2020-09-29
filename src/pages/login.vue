@@ -38,7 +38,7 @@ export default {
       form: {
         username: localStorage.getItem("remenberUsername") || "",
         pwd: "",
-        url: "http://10.10.1.26:8080"
+        url: "http://120.26.187.19:8081"
       },
       isLogin: true,
       errMsg: "",
