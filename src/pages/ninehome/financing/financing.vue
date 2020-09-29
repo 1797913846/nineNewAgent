@@ -38,7 +38,7 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <div class="operation">
-              <span>修改</span>
+              <span @click.stop="getContent(scope.$index, scope.row)">修改</span>
               <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
               <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
             </div>
@@ -48,6 +48,53 @@
     </div>
     <div class="pagination">
       <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+    </div>
+    <!--表单-->
+    <div class="addForm" v-if="showAdd==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeAdd">X</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="融资周期：">
+            <el-input v-model="formInline.financePeriod" placeholder="融资周期"></el-input>
+          </el-form-item>
+          <el-form-item label="融资倍率：">
+            <el-input v-model="formInline.financeRatio" placeholder="融资倍率"></el-input>
+          </el-form-item>
+          <el-form-item label="融资费率：">
+            <el-input v-model="formInline.financeFeeRate" placeholder="融资费率"></el-input>
+          </el-form-item>
+
+          <el-form-item label="建仓费率：">
+            <el-input v-model="formInline.makeFeeRate" placeholder="建仓费率"></el-input>
+          </el-form-item>
+          <el-form-item label="利润分成比例：">
+            <el-input v-model="formInline.separateFeeRate" placeholder="利润分成比例"></el-input>
+          </el-form-item>
+          <el-form-item label="警戒线比率：">
+            <el-input v-model="formInline.cordonLineRate" placeholder="警戒线比率"></el-input>
+          </el-form-item>
+          <el-form-item label="平仓线比率：">
+            <el-input v-model="formInline.flatLineRate" placeholder="平仓线比率"></el-input>
+          </el-form-item>
+          <el-form-item label="个股持仓比率：">
+            <el-input v-model="formInline.positionRatio" placeholder="个股持仓比率"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板持仓比率：">
+            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比率"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板持仓比率：">
+            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比率"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -67,7 +114,21 @@ export default {
       currentPage: 1,
       total: 10,
       nullTable: false,
-      id: ""
+      id: "",
+      showAdd: true,
+      addTitle: "修改",
+      formInline: {
+        financePeriod: "", //融资周期
+        financeRatio: "", //融资倍率
+        separateFeeRate: "", //分成比例
+        makeFeeRate: "", //建仓费率
+        financeFeeRate: "", //融资费率
+        cordonLineRate: "", //警戒线比率
+        flatLineRate: "", //平仓线比率
+        positionRatio: "", //个股持仓比率
+        secondBoardPositionRatio: "", //创业板持仓比率
+        thirdBoardPositionRatio: "" //科创板持仓比率
+      }
     };
   },
   computed: {
@@ -102,6 +163,87 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    closeAdd1(formName) {
+      this.$refs[formName].resetFields();
+      this.showAdd = false;
+    },
+    closeAdd() {
+      this.showAdd = false;
+    },
+    onSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log("submit!");
+          this.axios
+            .post("/tn/mgr-api/tntg/financeScheme/saveOrUpdate", {
+              id: this.id,
+              financePeriod: this.formInline.financePeriod, //融资周期
+              financeRatio: this.formInline.financeRatio, //融资倍率
+              separateFeeRate: this.formInline.separateFeeRate, //分成比例
+              makeFeeRate: this.formInline.makeFeeRate, //建仓费率
+              financeFeeRate: this.formInline.financeFeeRate, //融资费率
+              cordonLineRate: this.formInline.cordonLineRate, //警戒线比率
+              flatLineRate: this.formInline.flatLineRate, //平仓线比率
+              positionRatio: this.formInline.positionRatio, //个股持仓比率
+              secondBoardPositionRatio: this.formInline
+                .secondBoardPositionRatio, //创业板持仓比率
+              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio //科创板持仓比率
+            })
+            .then(res => {
+              console.log("getFundAccount>>", res.data);
+              if (res.data.code == 200) {
+                this.showAdd = false;
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    getContent(index, row) {
+      this.id = row.id;
+      this.axios
+        .get("/tn/mgr-api/tntg/financeScheme/getById", {
+          params: {
+            id: this.id
+          }
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            this.showAdd = true;
+            this.addTitle = "修改";
+            this.formInline.financePeriod = data.financePeriod; //融资周期
+            this.formInline.financeRatio = data.financeRatio; //融资倍率
+            this.formInline.financeFeeRate = data.financeFeeRate; //融资费率
+            this.formInline.makeFeeRate = data.makeFeeRate; //建仓费率
+            this.formInline.separateFeeRate = data.separateFeeRate; //分成比例
+            this.formInline.cordonLineRate = data.cordonLineRate; //警戒线比率
+            this.formInline.flatLineRate = data.flatLineRate; //平仓线比率
+            this.formInline.positionRatio = data.positionRatio; //个股持仓比率
+            this.formInline.secondBoardPositionRatio =
+              data.secondBoardPositionRatio; //创业板持仓比率
+            this.formInline.thirdBoardPositionRatio =
+              data.thirdBoardPositionRatio; //科创板持仓比率
+          } else {
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     setIt(index, row) {
       console.log(222);
       console.log("13点", index, row);
@@ -228,6 +370,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addForm {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.addContent {
+  background-color: #fff;
+  width: 500px;
+  height: 590px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.addContent .title {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.addContent .title .tl {
+  float: left;
+}
+.addContent .title .tr {
+  float: right;
+  cursor: pointer;
+}
 </style>
 
 
