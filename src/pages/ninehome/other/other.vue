@@ -1,40 +1,72 @@
 <!--其他配置-->
 <template>
-  <div class="bigestbox">
+  <div class="bigestbox" style="background-color:#fff;">
     <topNav></topNav>
-    <div class="container" @click="colorBool = false">
-      <div class="template-top">
-        <div class="title">刷新</div>
-      </div>
-      <!--表格-->
-      <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financing" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="递延周期" prop="deferred" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资倍率" prop="ratio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资费率" prop="rate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="利润分成比例" width="100" prop="Divided" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="建仓费率" width="100" prop="positions" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="警戒线比率" width="100" prop="cordon" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="平仓线比率" width="100" prop="open" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="stocks" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" prop="entrepreneurship" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" prop="kechuang" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <div class="operation">
-                <span>修改</span>
-                <span>删除</span>
-                <span>应用到用户</span>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-      <div class="pagination">
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
+    <div>
+      <div class="reset-scroll-style"></div>
+    </div>
+    <!--表单-->
+    <div class="addContent">
+      <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+        <el-form-item label="沪深主板涨幅买入限制：">
+          <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板涨幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="沪深主板跌幅买入限制：">
+          <el-input v-model="formInline.stockDropBuyLimit" placeholder="沪深主板跌幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="创业板新票禁止交易天数：">
+          <el-input v-model="formInline.secondRejectTradeDays" placeholder="创业板新票禁止交易天数"></el-input>
+        </el-form-item>
+        <el-form-item label="创业板涨幅买入限制：">
+          <el-input v-model="formInline.secondStockIncreaseBuyLimit" placeholder="创业板涨幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="创业板跌幅买入限制：">
+          <el-input v-model="formInline.secondStockDropBuyLimit" placeholder="创业板跌幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="科创板新票禁止交易天数：">
+          <el-input v-model="formInline.thirdRejectTradeDays" placeholder="科创板新票禁止交易天数"></el-input>
+        </el-form-item>
+        <el-form-item label="科创板涨幅买入限制：">
+          <el-input v-model="formInline.thirdStockIncreaseBuyLimit" placeholder="科创板涨幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="科创板跌幅买入限制：">
+          <el-input v-model="formInline.thirdStockDropBuyLimit" placeholder="科创板跌幅买入限制"></el-input>
+        </el-form-item>
+        <el-form-item label="单客户单支股票市值规模限制：">
+          <el-input v-model="formInline.singlestockHoldLimit" placeholder="单客户单支股票市值规模限制"></el-input>
+        </el-form-item>
+        <el-form-item label="全平台单支股票市值规模限制：">
+          <el-input v-model="formInline.singlestockAllHoldLimit" placeholder="全平台单支股票市值规模限制"></el-input>
+        </el-form-item>
+        <el-form-item label="交易股票限制：">
+          <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
+        </el-form-item>
+        <el-form-item label="管理费清算模式：">
+          <el-input v-model="formInline.manageFeeMode" placeholder="管理费清算模式"></el-input>
+        </el-form-item>
+        <el-form-item label="自动强平模式：">
+          <el-input v-model="formInline.autoClosePosition" placeholder="自动强平模式"></el-input>
+        </el-form-item>
+        <el-form-item label="产品下单随机算法配置：">
+          <el-input v-model="formInline.ctrlRoundRobinNumber" placeholder="产品下单随机算法配置"></el-input>
+        </el-form-item>
+        <el-form-item label="开启交易佣金自动结算到账户余额：">
+          <el-input v-model="formInline.autoClear" placeholder="开启交易佣金自动结算到账户余额"></el-input>
+        </el-form-item>
+        <el-form-item label="开启券商账户资金轮询：">
+          <el-input v-model="formInline.autoPolling" placeholder="开启券商账户资金轮询"></el-input>
+        </el-form-item>
+        <el-form-item label="委托间隔时效（秒）：">
+          <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
+        </el-form-item>
+        <el-form-item label="开启创业板注册制：">
+          <el-input v-model="formInline.isRegBoard" placeholder="开启创业板注册制"></el-input>
+        </el-form-item>
+        <br />
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -47,66 +79,33 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        },
-        {
-          financing: "天",
-          deferred: "T+1",
-          ratio: "3",
-          rate: "0.001",
-          Divided: "0",
-          positions: "0.001",
-          cordon: "0.88",
-          open: "0.85",
-          stocks: "0.7",
-          entrepreneurship: "0.7",
-          kechuang: "0.7"
-        }
-      ],
+      tableData: [],
       colorBool: false,
       keyword: "",
       pageSize: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+      formInline: {
+        stockIncreaseBuyLimit: "",
+        stockDropBuyLimit: "",
+        secondRejectTradeDays: "",
+        secondStockIncreaseBuyLimit: "",
+        secondStockDropBuyLimit: "",
+        thirdRejectTradeDays: "",
+        thirdStockIncreaseBuyLimit: "",
+        thirdStockDropBuyLimit: "",
+        singlestockHoldLimit: "",
+        singlestockAllHoldLimit: "",
+        stockPrefixLimit: "",
+        manageFeeMode: "",
+        autoClosePosition: "",
+        ctrlRoundRobinNumber: "",
+        autoClear: "",
+        autoPolling: "",
+        appointReqExpire: "",
+        isRegBoard: ""
+      }
     };
   },
   computed: {
@@ -128,41 +127,17 @@ export default {
       };
     }
   },
-  watch: {
-    keyword: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    }
-  },
+  watch: {},
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSize,
-            page: this.currentPage
-          }
-        })
+        .get("/tn/mgr-api/tntg/compSet")
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
-            this.total = res.data.data.total;
-          } else {
-            this.tableData = [];
-          }
-          if (this.tableData.length <= 0) {
-            this.nullTable = true;
-            this.tableData = new Array(this.pageSize);
-          } else {
-            this.nullTable = false;
+          if (res.data.code == 200) {
+            this.formInline = res.data.data;
           }
         })
         .catch(err => {
@@ -178,6 +153,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addContent {
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 1%);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.addContent .title {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.addContent .title .tl {
+  float: left;
+}
+.addContent .title .tr {
+  float: right;
+  cursor: pointer;
+}
 </style>
 
 
