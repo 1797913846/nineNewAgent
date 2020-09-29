@@ -42,27 +42,48 @@
           <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
         </el-form-item>
         <el-form-item label="管理费清算模式：">
-          <el-input v-model="formInline.manageFeeMode" placeholder="管理费清算模式"></el-input>
+          <el-select v-model="formInline.manageFeeMode">
+            <el-option label="按持仓市值计算：股票总市值*管理费率/天" :value="Number(1)"></el-option>
+            <el-option label="按优先资金计算：(保证金*融资倍率-可用资金)*管理费率/天" :value="Number(2)"></el-option>
+            <el-option label="按融资金额计算：(保证金*融资倍率)*管理费率/天" :value="Number(3)"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="自动强平模式：">
-          <el-input v-model="formInline.autoClosePosition" placeholder="自动强平模式"></el-input>
+          <el-select v-model="formInline.autoClosePosition">
+            <el-option label="关闭" :value="Number(0)"></el-option>
+            <el-option label="开启" :value="Number(1)"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="产品下单随机算法配置：">
           <el-input v-model="formInline.ctrlRoundRobinNumber" placeholder="产品下单随机算法配置"></el-input>
         </el-form-item>
+        <el-form-item label="产品下单随机算法配置：">
+          <el-select v-model="formInline.ctrlRoundRobinNumber">
+            <el-option label="【随机方式】匹配券商账户" :value="Number(1)"></el-option>
+            <el-option label="【可用资金方式】匹配券商账户" :value="Number(2)"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="开启交易佣金自动结算到账户余额：">
-          <el-input v-model="formInline.autoClear" placeholder="开启交易佣金自动结算到账户余额"></el-input>
+          <el-select v-model="formInline.autoClear">
+            <el-option label="关闭" :value="Number(0)"></el-option>
+            <el-option label="开启" :value="Number(1)"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="开启券商账户资金轮询：">
-          <el-input v-model="formInline.autoPolling" placeholder="开启券商账户资金轮询"></el-input>
+          <el-select v-model="formInline.autoPolling">
+            <el-option label="关闭" :value="Number(0)"></el-option>
+            <el-option label="开启" :value="Number(1)"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="委托间隔时效（秒）：">
           <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
         </el-form-item>
         <el-form-item label="开启创业板注册制：">
-          <el-input v-model="formInline.isRegBoard" placeholder="开启创业板注册制"></el-input>
+          <el-select v-model="formInline.autoPolling">
+            <el-option label="关闭" :value="Number(0)"></el-option>
+            <el-option label="开启" :value="Number(1)"></el-option>
+          </el-select>
         </el-form-item>
-        <br />
         <el-form-item>
           <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
         </el-form-item>
@@ -132,6 +153,54 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    onSubmit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          console.log("submit!");
+          this.axios
+            .post("/tn/mgr-api/tntg/compSet/config", {
+              stockIncreaseBuyLimit: this.formInline.stockIncreaseBuyLimit,
+              stockDropBuyLimit: this.formInline.stockDropBuyLimit,
+              secondRejectTradeDays: this.formInline.secondRejectTradeDays,
+              secondStockIncreaseBuyLimit: this.formInline
+                .secondStockIncreaseBuyLimit,
+              secondStockDropBuyLimit: this.formInline.secondStockDropBuyLimit,
+              thirdRejectTradeDays: this.formInline.thirdRejectTradeDays,
+              thirdStockIncreaseBuyLimit: this.formInline
+                .thirdStockIncreaseBuyLimit,
+              thirdStockDropBuyLimit: this.formInline.thirdStockDropBuyLimit,
+              singlestockHoldLimit: this.formInline.singlestockHoldLimit,
+              singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit,
+              stockPrefixLimit: this.formInline.stockPrefixLimit,
+              manageFeeMode: this.formInline.manageFeeMode,
+              autoClosePosition: this.formInline.autoClosePosition,
+              ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,
+              autoClear: this.formInline.autoClear,
+              autoPolling: this.formInline.autoPolling,
+              appointReqExpire: this.formInline.appointReqExpire,
+              isRegBoard: this.formInline.isRegBoard
+            })
+            .then(res => {
+              console.log("getFundAccount>>", res.data);
+              if (res.data.code == 200) {
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     getFundAccount() {
       this.axios
         .get("/tn/mgr-api/tntg/compSet")
