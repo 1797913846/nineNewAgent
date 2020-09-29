@@ -58,7 +58,7 @@
         </el-table>
       </div>
       <div class="pagination">
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
   </div>
@@ -148,7 +148,7 @@ export default {
       proName: "",
       account: "",
       gname: "",
-      pageSzie: 31,
+      pageSize: 31,
       currentPage: 1,
       total: 10,
       nullTable: false
@@ -191,7 +191,7 @@ export default {
         .get("account/fund", {
           params: {
             search: this.keyword,
-            size: this.pageSzie,
+            size: this.pageSize,
             page: this.currentPage
           }
         })
@@ -205,7 +205,7 @@ export default {
           }
           if (this.tableData.length <= 0) {
             this.nullTable = true;
-            this.tableData = new Array(this.pageSzie);
+            this.tableData = new Array(this.pageSize);
           } else {
             this.nullTable = false;
           }

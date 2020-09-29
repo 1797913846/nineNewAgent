@@ -47,7 +47,7 @@
       </el-table>
     </div>
     <div class="pagination">
-      <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSzie" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
     </div>
     <!--表单-->
     <div class="addForm" v-if="showAdd==true">
@@ -115,7 +115,7 @@ export default {
       tableData: [],
       colorBool: false,
       keyword: "",
-      pageSzie: 31,
+      pageSize: 31,
       currentPage: 1,
       total: 10,
       nullTable: false,
@@ -337,7 +337,7 @@ export default {
     getFundAccount() {
       this.axios
         .post("/tn/mgr-api/tntg/financeScheme/list", {
-          pageSize: this.pageSzie,
+          pageSize: this.pageSize,
           pageNo: this.currentPage
         })
         .then(res => {
@@ -355,7 +355,7 @@ export default {
           }
           if (this.tableData.length <= 0) {
             this.nullTable = true;
-            this.tableData = new Array(this.pageSzie);
+            this.tableData = new Array(this.pageSize);
           } else {
             this.nullTable = false;
           }
