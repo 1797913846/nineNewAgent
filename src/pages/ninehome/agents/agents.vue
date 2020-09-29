@@ -33,21 +33,21 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="序号" prop="serial" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="序号" prop="serial" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="等级" prop="level" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="等级名称" prop="name" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理ID" prop="id" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理名称" prop="agent" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理状态" prop="state" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品" prop="product" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="等级名称" prop="levelName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理ID" prop="accountId" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="邀请码" prop="code" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人ID" prop="referees" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人名称" prop="rname" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="邀请码" prop="code" align="center"></el-table-column> -->
+          <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="初期规模" prop="initial" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" prop="available" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" prop="margin" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -65,59 +65,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          serial: "1",
-          level: "1",
-          name: "admin",
-          id: "13878674736",
-          agent: "测试",
-          state: "正常",
-          product: "0",
-          commission: "0",
-          code: "查看",
-          referees: "-6.225",
-          rname: "0",
-          balance: "-761.00",
-          initial: "25250.52",
-          available: "-3.107",
-          margin: "14500"
-        },
-        {
-          serial: "1",
-          level: "1",
-          name: "admin",
-          id: "13878674736",
-          agent: "测试",
-          state: "正常",
-          product: "0",
-          commission: "0",
-          code: "查看",
-          referees: "-6.225",
-          rname: "0",
-          balance: "-761.00",
-          initial: "25250.52",
-          available: "-3.107",
-          margin: "14500"
-        },
-        {
-          serial: "1",
-          level: "1",
-          name: "admin",
-          id: "13878674736",
-          agent: "测试",
-          state: "正常",
-          product: "0",
-          commission: "0",
-          code: "查看",
-          referees: "-6.225",
-          rname: "0",
-          balance: "-761.00",
-          initial: "25250.52",
-          available: "-3.107",
-          margin: "14500"
-        }
-      ],
+      tableData: [],
       colorBool: false,
       agentName: "",
       agentId: "",
@@ -146,39 +94,41 @@ export default {
       };
     }
   },
-  watch: {
-    agentName: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    },
-    agentId: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    }
-  },
+  watch: {},
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
+    formatter(row, column) {
+      if (row) {
+        let accountStatus = row.accountStatus;
+        switch (accountStatus) {
+          case -1:
+            return "删除";
+          case 0:
+            return "失效";
+          case 1:
+            return "正常";
+          case 2:
+            return "停机";
+        }
+      }
+    },
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSize,
-            page: this.currentPage
-          }
+        .post("/tn/mgr-api/account/agent/agentList", {
+          pageSize: this.pageSize,
+          pageNo: this.currentPage
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData = res.data.data.rows;
+            } else {
+              this.tableData = [];
+            }
             this.total = res.data.data.total;
           } else {
             this.tableData = [];
@@ -189,6 +139,8 @@ export default {
           } else {
             this.nullTable = false;
           }
+
+          console.log("我是最终结果", this.tableData);
         })
         .catch(err => {
           console.log(err);
