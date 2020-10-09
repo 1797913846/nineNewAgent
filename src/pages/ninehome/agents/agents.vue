@@ -15,7 +15,7 @@
             <input type="text" placeholder="请输入代理商ID" v-model="agentId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-user">查询</div>
+          <div class="search-user" @click="search">查询</div>
           <div class="search-user">导出</div>
         </div>
       </div>
@@ -27,7 +27,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span>修改</span>
-                <span>重置密码</span>
+                <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
                 <span>查看</span>
                 <span>资金</span>
               </div>
@@ -114,9 +114,47 @@ export default {
         }
       }
     },
-    getFundAccount() {
+    resetPassWord(index, row) {
+      console.log("谁", row);
+      let accountId = row.accountId;
       this.axios
         .post("/tn/mgr-api/account/agent/agentList", {
+          accountId: accountId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert("重置密码成功", "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    search() {
+      this.getFundAccount(this.agentName, this.agentId);
+    },
+    getFundAccount(agentName, agentId) {
+      if (!agentName) {
+        agentName = "";
+      }
+      if (!agentId) {
+        agentId = "";
+      }
+      this.axios
+        .post("/tn/mgr-api/account/agent/agentList", {
+          accountId: agentId,
+          accountName: agentName,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })
