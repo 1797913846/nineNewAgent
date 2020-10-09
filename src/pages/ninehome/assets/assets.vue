@@ -40,21 +40,21 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="产品编号" prop="serial" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品名称" prop="name" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="资金账号" prop="accout" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="状态" prop="state" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账号类型" prop="type" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="开仓控制" prop="control" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="amount" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商名称" prop=" jname" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总资产" prop="jmoney" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商总可用" prop="juse" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="客户总期初" prop="jamount" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="客户总可用" prop="jall" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="剩余资产" prop="jalluse" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总期初" prop="allottedScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -72,76 +72,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          serial: "1",
-          name: "1",
-          accout: "200001",
-          priority: "0",
-          state: "在线",
-          type: "普通户",
-          control: "允许操作",
-          commission: "0.0002",
-          amount: "1000000",
-          jname: "同花顺模拟",
-          jmoney: "988897878.76",
-          juse: "988897878.76",
-          jamount: "159958",
-          jall: "-3.107",
-          jalluse: "14500"
-        },
-        {
-          serial: "1",
-          name: "1",
-          accout: "200001",
-          priority: "0",
-          state: "在线",
-          type: "普通户",
-          control: "允许操作",
-          commission: "0.0002",
-          amount: "1000000",
-          jname: "同花顺模拟",
-          jmoney: "988897878.76",
-          juse: "988897878.76",
-          jamount: "159958",
-          jall: "-3.107",
-          jalluse: "14500"
-        },
-        {
-          serial: "1",
-          name: "1",
-          accout: "200001",
-          priority: "0",
-          state: "在线",
-          type: "普通户",
-          control: "允许操作",
-          commission: "0.0002",
-          amount: "1000000",
-          jname: "同花顺模拟",
-          jmoney: "988897878.76",
-          juse: "988897878.76",
-          jamount: "159958",
-          jall: "-3.107",
-          jalluse: "14500"
-        },
-        {
-          serial: "1",
-          name: "1",
-          accout: "200001",
-          priority: "0",
-          state: "在线",
-          type: "普通户",
-          control: "允许操作",
-          commission: "0.0002",
-          amount: "1000000",
-          jname: "同花顺模拟",
-          jmoney: "988897878.76",
-          juse: "988897878.76",
-          jamount: "159958",
-          jall: "-3.107",
-          jalluse: "14500"
-        }
-      ],
+      tableData: [],
       colorBool: false,
       keyword: "",
       proId: "",
@@ -183,22 +114,23 @@ export default {
     }
   },
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSize,
-            page: this.currentPage
-          }
+        .post("/tn/mgr-api/productInfo/list", {
+          pageSize: this.pageSize,
+          pageNo: this.currentPage
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData = res.data.data.rows;
+            } else {
+              this.tableData = [];
+            }
             this.total = res.data.data.total;
           } else {
             this.tableData = [];
