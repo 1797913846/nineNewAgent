@@ -30,13 +30,13 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center" width="250">
+          <el-table-column label="操作" align="center" width="330">
             <template slot-scope="scope">
               <div class="operation">
                 <span>修改</span>
-                <span>重置密码</span>
-                <span>查看</span>
-                <span>资金</span>
+                <span>删除</span>
+                <span> 获取券商资金</span>
+                <span> 获取券商持仓</span>
               </div>
             </template>
           </el-table-column>
@@ -45,13 +45,13 @@
           <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总可用" prop="juse" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总可用" prop="availableBnc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总期初" prop="allottedScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center"></el-table-column>
@@ -117,6 +117,21 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    formatter(row, column) {
+      if (row) {
+        let usertype = row.usertype;
+        switch (usertype) {
+          case 0:
+            return "普通户";
+          case 1:
+            return "担保品";
+          case 2:
+            return "融资融券";
+          default:
+            return "未知";
+        }
+      }
+    },
     getFundAccount() {
       this.axios
         .post("/tn/mgr-api/productInfo/list", {
