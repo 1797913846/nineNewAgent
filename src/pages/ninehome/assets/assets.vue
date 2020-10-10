@@ -7,22 +7,22 @@
         <div class="title">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入产品编号" v-model="proId" />
+            <input type="text" placeholder="请输入产品编号" v-model="productcodeLike" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入产品名称" v-model="proName" />
+            <input type="text" placeholder="请输入产品名称" v-model="productname" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入资金账号" v-model="account" />
+            <input type="text" placeholder="请输入资金账号" v-model="userid" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="券商名称" v-model="gname" />
+            <input type="text" placeholder="券商名称" v-model="brokerName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-user">查询</div>
+          <div class="search-user" @click="search">查询</div>
           <div class="search-user">导出</div>
         </div>
       </div>
@@ -75,10 +75,10 @@ export default {
       tableData: [],
       colorBool: false,
       keyword: "",
-      proId: "",
-      proName: "",
-      account: "",
-      gname: "",
+      productcodeLike: "",
+      productname: "",
+      userid: "",
+      brokerName: "",
       pageSize: 31,
       currentPage: 1,
       total: 10,
@@ -132,9 +132,16 @@ export default {
         }
       }
     },
+    search(){
+      this.getFundAccount();
+    },
     getFundAccount() {
       this.axios
         .post("/tn/mgr-api/productInfo/list", {
+          productcodeLike: this.productcodeLike,
+          productname: this.productname,
+          userid: this.userid,
+          brokerName: this.brokerName,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })
