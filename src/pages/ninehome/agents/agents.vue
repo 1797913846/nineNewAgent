@@ -264,6 +264,8 @@
           </el-form-item>
         </el-form>
       </div>
+      <!--邀请码二维码-->
+
     </div>
 
     <!--添加表单-->
@@ -377,6 +379,7 @@
 
 <script>
 import topNav from "@/components/topNav";
+import QRCode from "qrcodejs2"; // 引入qrcode
 export default {
   components: {
     topNav
@@ -438,7 +441,10 @@ export default {
       changeNow: false,
       jia: false,
       userId: "",
-      userName: ""
+      userName: "",
+      inviteCode: "",
+      inviteCodeUrl: "",
+      showQrcode: false
     };
   },
   computed: {
@@ -504,6 +510,8 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+            this.inviteCode = res.data.data.inviteCode;
+            this.inviteCodeUrl = res.data.inviteCodeUrl;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
