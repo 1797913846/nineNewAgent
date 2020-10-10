@@ -79,13 +79,19 @@
             <el-input v-model="formInline.accountName" :disabled="true" placeholder="代理名称"></el-input>
           </el-form-item>
           <el-form-item label="产品：">
-            <el-input v-model="formInline.productCode" :disabled="true" placeholder="产品"></el-input>
+            <el-select v-model="formInline.productCode" :disabled="true">
+              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="代理等级：">
-            <el-input v-model="formInline.levelName" :disabled="true" placeholder="代理等级"></el-input>
+            <el-select v-model="formInline.level" :disabled="true">
+              <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="佣金方案(单边)：">
-            <el-input v-model="formInline.commissionCfgId" :disabled="true" placeholder="佣金方案"></el-input>
+            <el-select v-model="formInline.commissionCfgId" :disabled="true">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="代理管理权限：">
             <el-input v-model="formInline.ableCrud" :disabled="true" placeholder="代理管理权限"></el-input>
@@ -135,10 +141,14 @@
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：">
-            <el-input v-model="formInline.orderPermission" :disabled="true" placeholder="下单权限"></el-input>
+            <el-select v-model="formInline.orderPermission" :disabled="true">
+              <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="代理状态：">
-            <el-input v-model="formInline.accountStatus" :disabled="true" placeholder="代理状态"></el-input>
+            <el-select v-model="formInline.accountStatus" :disabled="true">
+              <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="创建时间：">
             <el-input v-model="formInline.createTime" :disabled="true" placeholder="创建时间"></el-input>
@@ -192,8 +202,22 @@ export default {
         financePeriod: "",
         orderPermission: "",
         accountStatus: "",
-        createTime: ""
-      }
+        createTime: "",
+        commissionCfgList: [],
+        productList: [],
+        agentLevel: []
+      },
+      orderPermissionList: [
+        { key: 0, value: "可买卖" },
+        { key: 1, value: "禁买" },
+        { key: 2, value: "禁卖" },
+        { key: 3, value: "禁买卖" }
+      ],
+      accountStatusList: [
+        { key: 0, value: "失效" },
+        { key: 1, value: "正常" },
+        { key: 2, value: "停机" }
+      ]
     };
   },
   computed: {
@@ -218,6 +242,7 @@ export default {
   watch: {},
   created() {
     this.getFundAccount();
+    this.getMsg();
   },
   methods: {
     formatter(row, column) {
@@ -234,6 +259,26 @@ export default {
             return "停机";
         }
       }
+    },
+    getMsg() {
+      this.axios
+        .post("/tn/mgr-api/account/agent/edit-pre")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.commissionCfgList = res.data.data.commissionCfgList;
+            this.productList = res.data.data.productList;
+            this.agentLevel = res.data.data.agentLevel;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     closeAdd() {
       this.showAdd = false;
