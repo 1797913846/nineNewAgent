@@ -4,7 +4,7 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">添加</div>
+        <div class="title" @click="jiaNow">添加</div>
         <div class="title" style="margin-left:7px;">我的二维码</div>
         <div class="operate-btn">
           <div class="search-box">
@@ -26,7 +26,7 @@
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
               <div class="operation">
-                <span>修改</span>
+                <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
                 <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
                 <span @click.stop="look(scope.$index,scope.row)">查看</span>
                 <span>资金</span>
@@ -59,7 +59,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">X</span>
+          <span class="tr" @click="closeAdd">关闭</span>
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -94,7 +94,9 @@
             </el-select>
           </el-form-item>
           <el-form-item label="代理管理权限：">
-            <el-input v-model="formInline.ableCrud" :disabled="true" placeholder="代理管理权限"></el-input>
+            <el-select v-model="formInline.ableCrud" :disabled="true">
+              <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
           </el-form-item>
           <el-form-item label="账户余额：">
             <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
@@ -152,6 +154,220 @@
           </el-form-item>
           <el-form-item label="创建时间：">
             <el-input v-model="formInline.createTime" :disabled="true" placeholder="创建时间"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+
+    <!--修改表单-->
+    <div class="addForm" v-if="changeNow==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeChange">关闭</span>
+        </div>
+        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="推荐人ID：">
+            <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
+          </el-form-item>
+          <el-form-item label="推荐人名称：">
+            <el-input v-model="formInline.parentAccountName" :disabled="true" placeholder="推荐人名称"></el-input>
+          </el-form-item>
+          <el-form-item label="推荐人佣金：">
+            <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
+          </el-form-item>
+          <el-form-item label="代理ID：">
+            <el-input v-model="formInline.accountId" :disabled="true" placeholder="代理ID"></el-input>
+          </el-form-item>
+          <el-form-item label="代理名称：">
+            <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
+          </el-form-item>
+          <el-form-item label="产品：">
+            <el-select v-model="formInline.productCode">
+              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理等级：">
+            <el-select v-model="formInline.level">
+              <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="佣金方案(单边)：">
+            <el-select v-model="formInline.commissionCfgId">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理管理权限：">
+            <el-select v-model="formInline.ableCrud">
+              <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="账户余额：">
+            <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
+          </el-form-item>
+          <el-form-item label="初期规模：">
+            <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
+          </el-form-item>
+          <el-form-item label="保证金：">
+            <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
+          </el-form-item>
+          <el-form-item label="手动冻结金额：">
+            <el-input v-model="formInline.freezeScale" placeholder="手动冻结金额"></el-input>
+          </el-form-item>
+          <el-form-item label="平仓线(金额)：">
+            <el-input v-model="formInline.flatLine" placeholder="平仓线(金额)"></el-input>
+          </el-form-item>
+          <el-form-item label="警戒线(金额)：">
+            <el-input v-model="formInline.cordonLine" placeholder="警戒线(金额)"></el-input>
+          </el-form-item>
+          <el-form-item label="个股持仓比例：">
+            <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板持仓比例：">
+            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板持仓比例：">
+            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="融资比例：">
+            <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
+          </el-form-item>
+          <el-form-item label="管理费率：">
+            <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
+          </el-form-item>
+          <el-form-item label="建仓费率：">
+            <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
+          </el-form-item>
+          <el-form-item label="融资周期：">
+            <el-select v-model="formInline.financePeriod" :disabled="true">
+              <el-option label="天" value="day"></el-option>
+              <el-option label="周" value="week"></el-option>
+              <el-option label="月" value="month"></el-option>
+              <el-option label="单" value="single"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="下单权限：">
+            <el-select v-model="formInline.orderPermission">
+              <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理状态：">
+            <el-select v-model="formInline.accountStatus">
+              <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+
+    <!--添加表单-->
+    <div class="addForm" v-if="jia==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeJia">关闭</span>
+        </div>
+        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="推荐人ID：">
+            <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
+          </el-form-item>
+          <el-form-item label="推荐人名称：">
+            <el-input v-model="formInline.parentAccountName" :disabled="true" placeholder="推荐人名称"></el-input>
+          </el-form-item>
+          <el-form-item label="推荐人佣金：">
+            <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
+          </el-form-item>
+          <el-form-item label="代理ID：">
+            <el-input v-model="formInline.accountId" placeholder="代理ID"></el-input>
+          </el-form-item>
+          <el-form-item label="代理名称：">
+            <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
+          </el-form-item>
+          <el-form-item label="产品：">
+            <el-select v-model="formInline.productCode">
+              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理等级：">
+            <el-select v-model="formInline.level">
+              <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="佣金方案(单边)：">
+            <el-select v-model="formInline.commissionCfgId">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理管理权限：">
+            <el-select v-model="formInline.ableCrud">
+              <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="账户余额：">
+            <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
+          </el-form-item>
+          <el-form-item label="初期规模：">
+            <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
+          </el-form-item>
+          <el-form-item label="保证金：">
+            <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
+          </el-form-item>
+          <el-form-item label="手动冻结金额：">
+            <el-input v-model="formInline.freezeScale" :disabled="true" placeholder="手动冻结金额"></el-input>
+          </el-form-item>
+          <el-form-item label="平仓线(金额)：">
+            <el-input v-model="formInline.flatLine" :disabled="true" placeholder="平仓线(金额)"></el-input>
+          </el-form-item>
+          <el-form-item label="警戒线(金额)：">
+            <el-input v-model="formInline.cordonLine" :disabled="true" placeholder="警戒线(金额)"></el-input>
+          </el-form-item>
+          <el-form-item label="个股持仓比例：">
+            <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板持仓比例：">
+            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板持仓比例：">
+            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="融资比例：">
+            <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
+          </el-form-item>
+          <el-form-item label="管理费率：">
+            <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
+          </el-form-item>
+          <el-form-item label="建仓费率：">
+            <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
+          </el-form-item>
+          <el-form-item label="融资周期：">
+            <el-select v-model="formInline.financePeriod" :disabled="true">
+              <el-option label="天" value="day"></el-option>
+              <el-option label="周" value="week"></el-option>
+              <el-option label="月" value="month"></el-option>
+              <el-option label="单" value="single"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="下单权限：">
+            <el-select v-model="formInline.orderPermission">
+              <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理状态：">
+            <el-select v-model="formInline.accountStatus">
+              <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit2('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd2('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -217,7 +433,12 @@ export default {
         { key: 0, value: "失效" },
         { key: 1, value: "正常" },
         { key: 2, value: "停机" }
-      ]
+      ],
+      productCodeList: [{ key: 0, value: "否" }, { key: 1, value: "是" }],
+      changeNow: false,
+      jia: false,
+      userId: "",
+      userName: ""
     };
   },
   computed: {
@@ -243,6 +464,8 @@ export default {
   created() {
     this.getFundAccount();
     this.getMsg();
+    this.userId = localStorage.getItem("userId");
+    this.userName = localStorage.getItem("userName");
   },
   methods: {
     formatter(row, column) {
@@ -260,6 +483,19 @@ export default {
         }
       }
     },
+    jiaNow() {
+      this.jia = true;
+      this.addTitle = "添加";
+      this.formInline.parentAccountCode = this.userId;
+      this.formInline.parentAccountName = this.userName;
+      this.formInline.balance = 0;
+      this.formInline.allottedScale = 0;
+      this.formInline.cashScale = 0;
+      this.formInline.freezeScale = 0;
+      this.formInline.flatLine = 0;
+      this.formInline.cordonLine = 0;
+      this.formInline.financeRatio = 0;
+    },
     getMsg() {
       this.axios
         .post("/tn/mgr-api/account/agent/edit-pre")
@@ -268,6 +504,121 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    changeMsg(index, row) {
+      this.addTitle = "修改";
+      let accountId = row.accountId;
+      this.axios
+        .get("/tn/mgr-api/account/getAccount", {
+          params: {
+            accountId: accountId
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.changeNow = true;
+            this.formInline = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    closeJia() {
+      this.jia = false;
+    },
+    closeChange() {
+      this.changeNow = false;
+    },
+    closeAdd1(formName) {
+      this.$refs[formName].resetFields();
+      this.changeNow = false;
+    },
+    closeAdd2(formName) {
+      this.$refs[formName].resetFields();
+      this.jia = false;
+    },
+    onSubmit2(formName) {
+      this.axios
+        .post("/tn/mgr-api/account/save", {
+          accountId: this.formInline.accountId,
+          accountName: this.formInline.accountName,
+          productCode: this.formInline.productCode,
+          level: this.formInline.level,
+          commissionCfgId: this.formInline.commissionCfgId,
+          ableCrud: this.formInline.ableCrud,
+          positionRatio: this.formInline.positionRatio,
+          secondBoardPositionRatio: this.formInline.secondBoardPositionRatio,
+          thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
+          manageFeeRate: this.formInline.manageFeeRate,
+          manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+          orderPermission: this.formInline.orderPermission,
+          accountStatus: this.formInline.accountStatus
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.jia = false;
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    onSubmit(formName) {
+      this.axios
+        .post("/tn/mgr-api/account/update", {
+          accountId: this.formInline.accountId,
+          accountName: this.formInline.accountName,
+          productCode: this.formInline.productCode,
+          level: this.formInline.level,
+          commissionCfgId: this.formInline.commissionCfgId,
+          ableCrud: this.formInline.ableCrud,
+          positionRatio: this.formInline.positionRatio,
+          secondBoardPositionRatio: this.formInline.secondBoardPositionRatio,
+          thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
+          manageFeeRate: this.formInline.manageFeeRate,
+          manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+          orderPermission: this.formInline.orderPermission,
+          accountStatus: this.formInline.accountStatus
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.changeNow = false;
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
