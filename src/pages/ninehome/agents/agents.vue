@@ -5,7 +5,7 @@
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="title" @click="jiaNow">添加</div>
-        <div class="title" style="margin-left:7px;">我的二维码</div>
+        <div class="title" style="margin-left:7px;" @mouseover="mouseOver" @mouseout="mouseOut">我的二维码</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入代理商名称" v-model="agentName" />
@@ -266,11 +266,9 @@
       </div>
     </div>
     <!--邀请码二维码-->
-    <div class="addForm">
-      <div class="qrbox">
-        <span>邀请码：</span>
-        <div id="qrcode" ref="qrcode" class="qrcode"></div>
-      </div>
+    <div :class="{'show-qrcode': showQrcode==true,'qrcode':true,'qrbox':true}">
+      <span>邀请码：</span>
+      <div id="qrcode" ref="qrcode"></div>
     </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
@@ -515,6 +513,12 @@ export default {
         colorDark: "#000",
         colorLight: "#fff"
       });
+    },
+    mouseOver() {
+      this.showQrcode = true;
+    },
+    mouseOut() {
+      this.showQrcode = false;
     },
     getMsg() {
       this.axios
@@ -767,15 +771,16 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .qrbox {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 300px);
   background-color: #fff;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 300px);
+  top: 0px;
 }
 .qrbox span {
   font-size: 20px;
@@ -784,6 +789,10 @@ export default {
   padding: 10px 0px;
 }
 .qrcode {
+  display: none;
+}
+.show-qrcode {
+  display: block;
 }
 .addContent {
   background-color: #fff;
