@@ -4,7 +4,7 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">刷新</div>
+        <div class="title" @click="jiaNow">添加</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入产品编号" v-model="productcodeLike" />
@@ -61,6 +61,65 @@
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
+    <!--添加表单-->
+    <div class="addForm" v-if="jia==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeJia">关闭</span>
+        </div>
+        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="产品编号：">
+            <el-input v-model="formInline.productcode" placeholder="产品编号"></el-input>
+          </el-form-item>
+          <el-form-item label="产品名称：">
+            <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
+          </el-form-item>
+          <el-form-item label="优先级：">
+            <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
+          </el-form-item>
+          <el-form-item label="资金账号：">
+            <el-input v-model="formInline.userid" placeholder="资金账号"></el-input>
+          </el-form-item>
+          <el-form-item label="资金账号类型：">
+            <el-select v-model="formInline.usertype">
+              <el-option v-for="(item,index) in usertypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开仓控制：">
+            <el-select v-model="formInline.operateStatus">
+              <el-option v-for="(item,index) in operateStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="交易密码：">
+            <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
+          </el-form-item>
+          <el-form-item label="通讯密码：">
+            <el-input v-model="formInline.passwordcom" placeholder="交易密码"></el-input>
+          </el-form-item>
+          <el-form-item label="券商：">
+            <el-select v-model="formInline.brokerid">
+              <el-option v-for="(item,index) in brokerList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="产品佣金：">
+            <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
+          </el-form-item>
+          <el-form-item label="期初可分配金额：">
+            <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
+          </el-form-item>
+          <el-form-item label="备注：">
+            <el-input v-model="formInline.memo" placeholder="备注"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -82,7 +141,42 @@ export default {
       pageSize: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+      jia: false,
+      addTitle: "添加",
+      formInline: {
+        productcode: "",
+        productname: "",
+        priority: "",
+        userid: "",
+        usertype: "",
+        operateStatus: "",
+        passwordtrade: "",
+        passwordcom: "",
+        brokerid: "",
+        commission: "",
+        marketcap: "",
+        memo: ""
+      },
+      usertypeList: [
+        {
+          key: 0,
+          value: "普通户"
+        },
+        {
+          key: 1,
+          value: "担保品"
+        },
+        {
+          key: 0,
+          value: "融资融券"
+        }
+      ],
+      operateStatusList: [
+        { key: 0, value: "允许操作" },
+        { key: 1, value: "禁止操作" }
+      ],
+      brokerList: []
     };
   },
   computed: {
@@ -114,9 +208,13 @@ export default {
     }
   },
   created() {
+    this.getMsg();
     this.getFundAccount();
   },
   methods: {
+    closeJia() {
+      this.jia = false;
+    },
     formatter(row, column) {
       if (row) {
         let usertype = row.usertype;
@@ -132,7 +230,68 @@ export default {
         }
       }
     },
-    search(){
+    jiaNow() {
+      this.jia = true;
+    },
+    closeAdd(formName) {
+      this.$refs[formName].resetFields();
+      this.jia = false;
+    },
+    getMsg() {
+      this.axios
+        .post("/tn/mgr-api/productInfo/edit-pre")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.brokerList = res.data.data.brokerList;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    onSubmit(formName) {
+      this.axios
+        .post("/tn/mgr-api/productInfo/save", {
+          productcode: this.formInline.productcode,
+          productname: this.formInline.productname,
+          priority: this.formInline.priority,
+          userid: this.formInline.userid,
+          usertype: this.formInline.usertype,
+          operateStatus: this.formInline.operateStatus,
+          passwordtrade: this.formInline.passwordtrade,
+          passwordcom: this.formInline.passwordcom,
+          brokerid: this.formInline.brokerid,
+          commission: this.formInline.commission,
+          marketcap: this.formInline.marketcap,
+          memo: this.formInline.memo
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    search() {
       this.getFundAccount();
     },
     getFundAccount() {
@@ -177,6 +336,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addForm {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.addContent {
+  background-color: #fff;
+  width: 500px;
+  height: 700px;
+  overflow-y: scroll;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.addContent .title {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.addContent .title .tl {
+  float: left;
+}
+.addContent .title .tr {
+  float: right;
+  cursor: pointer;
+}
 </style>
 
 
