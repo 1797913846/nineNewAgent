@@ -44,7 +44,7 @@ axios.interceptors.response.use(
     },
     error => {
         console.log(error.response.status);  // 对响应错误做点什么
-        if (error.response.status == 401) {
+        if (error.response.status == 400) {
             // 401 清除token信息并跳转到登录页面
             router.replace({
                 path: '/login',
