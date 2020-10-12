@@ -264,10 +264,14 @@
           </el-form-item>
         </el-form>
       </div>
-      <!--邀请码二维码-->
-
     </div>
-
+    <!--邀请码二维码-->
+    <div class="addForm">
+      <div class="qrbox">
+        <span>邀请码：</span>
+        <div id="qrcode" ref="qrcode" class="qrcode"></div>
+      </div>
+    </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
       <div class="addContent">
@@ -502,6 +506,16 @@ export default {
       this.formInline.cordonLine = 0;
       this.formInline.financeRatio = 0;
     },
+    creatQrCode(url) {
+      console.log("我是地址", url);
+      var qrcode = new QRCode("qrcode", {
+        width: 250,
+        height: 250,
+        text: url,
+        colorDark: "#000",
+        colorLight: "#fff"
+      });
+    },
     getMsg() {
       this.axios
         .post("/tn/mgr-api/account/agent/edit-pre")
@@ -511,7 +525,8 @@ export default {
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
             this.inviteCode = res.data.data.inviteCode;
-            this.inviteCodeUrl = res.data.inviteCodeUrl;
+            this.inviteCodeUrl = res.data.data.inviteCodeUrl;
+            this.creatQrCode(this.inviteCodeUrl);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -750,6 +765,25 @@ export default {
   top: 0px;
   bottom: 0px;
   background-color: rgba(0, 0, 0, 0.5);
+}
+.qrbox {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 300px);
+  background-color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.qrbox span {
+  font-size: 20px;
+  color: #000;
+  display: inline-block;
+  padding: 10px 0px;
+}
+.qrcode {
 }
 .addContent {
   background-color: #fff;
