@@ -103,14 +103,6 @@ const router = new Router({
       component: ninehomeAccount
     },
     {
-      path: '/ninehome/stocks',
-      meta: {
-        title: '股票黑名单',
-        requireAuth: true
-      },
-      component: ninehomeStocks
-    },
-    {
       path: '/ninehome/money',
       meta: {
         title: '资金信息',

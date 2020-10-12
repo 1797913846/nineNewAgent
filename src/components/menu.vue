@@ -49,7 +49,6 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
-                  <el-menu-item index="3-2" @click="clickJump('/ninehome/stocks')">股票黑名单</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="5">
