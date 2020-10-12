@@ -1,11 +1,11 @@
 <!--代理商列表-->
 <template>
-  <div class="bigestbox">
+  <div class="bigestbox" @click="hideEveryCode">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="title" @click="jiaNow">添加</div>
-        <div class="title" style="margin-left:7px;" @mouseover="mouseOver" @mouseout="mouseOut">我的二维码</div>
+        <div class="title" style="margin-left:7px;" @click="mouseOver">我的二维码</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入代理商名称" v-model="agentName" />
@@ -41,7 +41,11 @@
           <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
-          <!-- <el-table-column show-overflow-tooltip label="邀请码" prop="code" align="center"></el-table-column> -->
+          <el-table-column label="邀请码" align="center">
+            <template slot-scope="scope">
+              <img class="smallcode" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
@@ -266,9 +270,15 @@
       </div>
     </div>
     <!--邀请码二维码-->
-    <div :class="{'show-qrcode': showQrcode==true,'qrcode':true,'qrbox':true}">
+    <div :class="{'show-qrcode': showQrcode==true,addForm:true,'qrcode':true,}" @click="mouseOut">
+      <div :class="{'qrbox':true}">
+        <span>邀请码：</span>
+        <div id="qrcode" ref="qrcode"></div>
+      </div>
+    </div>
+    <div :class="{'qrbox1':true,'show-qrcode1': showQrcode1==true,'qrcode1':true}" id="qrcode2">
       <span>邀请码：</span>
-      <div id="qrcode" ref="qrcode"></div>
+      <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
@@ -446,7 +456,8 @@ export default {
       userName: "",
       inviteCode: "",
       inviteCodeUrl: "",
-      showQrcode: false
+      showQrcode: false,
+      showQrcode1: false
     };
   },
   computed: {
@@ -504,9 +515,32 @@ export default {
       this.formInline.cordonLine = 0;
       this.formInline.financeRatio = 0;
     },
+    showEveryCode(index, row) {
+      console.log("index2", index);
+      let inviteCode = row.inviteCode;
+      this.showQrcode1 = true;
+      document.getElementById("qrcode1").innerHTML = "";
+      document.getElementById("qrcode2").style.top = 220 + 35 * index + "px";
+      let inviteCodeUrl = localStorage.getItem("inviteCodeUrl") + inviteCode;
+      this.creatQrCode1(inviteCodeUrl);
+    },
+    hideEveryCode() {
+      document.getElementById("qrcode1").innerHTML = "";
+      this.showQrcode1 = false;
+    },
     creatQrCode(url) {
       console.log("我是地址", url);
       var qrcode = new QRCode("qrcode", {
+        width: 250,
+        height: 250,
+        text: url,
+        colorDark: "#000",
+        colorLight: "#fff"
+      });
+    },
+    creatQrCode1(url) {
+      console.log("我是地址1", url);
+      var qrcode = new QRCode("qrcode1", {
         width: 250,
         height: 250,
         text: url,
@@ -530,6 +564,7 @@ export default {
             this.agentLevel = res.data.data.agentLevel;
             this.inviteCode = res.data.data.inviteCode;
             this.inviteCodeUrl = res.data.data.inviteCodeUrl;
+            localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);
             this.creatQrCode(this.inviteCodeUrl);
           } else {
             this.$alert(res.data.info, "提示", {
@@ -770,6 +805,14 @@ export default {
   bottom: 0px;
   background-color: rgba(0, 0, 0, 0.5);
 }
+.addForm1 {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0);
+}
 .qrbox {
   background-color: #fff;
   padding-left: 20px;
@@ -782,6 +825,7 @@ export default {
   transform: translate(-50%, 300px);
   top: 0px;
 }
+
 .qrbox span {
   font-size: 20px;
   color: #000;
@@ -791,8 +835,58 @@ export default {
 .qrcode {
   display: none;
 }
+.qrbox1 {
+  background-color: #fff;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  position: absolute;
+  left: 920px;
+  top: 0px;
+}
+
+/*小三角形*/
+.qrbox1 :before,
+.qrbox1 :after {
+  width: 0;
+  height: 0;
+  border: solid transparent;
+  position: absolute;
+  left: 100%;
+  /*该属性一定要有*/
+  content: "";
+}
+.qrbox1 :before {
+  border-width: 10px;
+  border-left-color: #2662ee;
+  top: 20px;
+}
+.qrbox1 :after {
+  border-width: 8px;
+  border-left-color: #fff;
+  top: 22px;
+}
+.qrbox1 span {
+  font-size: 20px;
+  color: #000;
+  display: inline-block;
+  padding: 10px 0px;
+}
 .show-qrcode {
   display: block;
+}
+.qrcode1 {
+  display: none;
+}
+.show-qrcode1 {
+  display: block;
+}
+.smallcode {
+  width: 10px;
+  height: 10px;
+  margin-left: 36px;
 }
 .addContent {
   background-color: #fff;
