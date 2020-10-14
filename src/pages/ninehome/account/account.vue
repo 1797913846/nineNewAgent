@@ -21,7 +21,7 @@
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span>操作</span>
+                <span>资金</span>
                 <span>持仓</span>
                 <span>平仓</span>
               </div>
@@ -106,18 +106,17 @@ export default {
         data: {}
       }).then(
         res => {
-          if (res.status === 200 && res.data) {
-            var disposition = res.headers["content-disposition"];
-            var fileName = decodeURI(disposition.split("filename=")[1]);
-            fileName = fileName.substr(0, fileName.length - 1);
-            fileName = fileName.substr(1, fileName.length - 1);
-            let blob = new Blob([res.data], { type: "application/.xls" });
-            let link = document.createElement("a");
-            link.href = window.URL.createObjectURL(blob);
-            link.download = fileName;
-            link.click();
-            link.remove();
-          }
+          var disposition = res.headers["content-disposition"];
+          console.log("我是名字", decodeURI(disposition));
+          var fileName = decodeURI(disposition.split("filename=")[1]);
+          fileName = fileName.substr(0, fileName.length - 1);
+          fileName = fileName.substr(1, fileName.length - 1);
+          let blob = new Blob([res.data], { type: "application/.xls" });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          link.remove();
         },
         err => {
           var enc = new TextDecoder("utf-8");
