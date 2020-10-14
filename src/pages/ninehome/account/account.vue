@@ -23,7 +23,7 @@
               <div class="operation">
                 <span>资金</span>
                 <span>持仓</span>
-                <span>平仓</span>
+                <span v-if="(scope.row.totalScale - scope.row.cordonLine) < 0 || (scope.row.totalScale - scope.row.flatLine) < 0">平仓</span>
               </div>
             </template>
           </el-table-column>
