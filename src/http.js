@@ -51,6 +51,13 @@ axios.interceptors.response.use(
                 query: { redirect: router.currentRoute.fullPath }
             });
         }
+        if (error.response.status == 401) {
+            // 401 清除token信息并跳转到登录页面
+            router.replace({
+                path: '/login',
+                query: { redirect: router.currentRoute.fullPath }
+            });
+        }
         if (error.response.status == 403) {
             // 401 清除token信息并跳转到登录页面
             Vue.prototype.$alert('您没有访问权限', '提示', {

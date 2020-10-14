@@ -12,6 +12,10 @@ Vue.use(VueDND)
 // 无限加载
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
+//Excel
+
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
 
 //引入axios
 import axios from './http'

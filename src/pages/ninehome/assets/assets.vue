@@ -23,7 +23,7 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user" @click="search">查询</div>
-          <div class="search-user">导出</div>
+          <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
       <!--表格-->
@@ -272,6 +272,47 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    exportExcel() {
+      // this.axios
+      //   .post("/tn/mgr-api/productInfo/export",{})
+      //   .then(res => {
+      //     if (res.data.code == 200) {
+
+      //     } else {
+      //       this.$alert(res.data.info, "提示", {
+      //         confirmButtonText: "确定",
+      //         center: true,
+      //         type: "error"
+      //       });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      this.axios({
+        method: "post",
+        responseType: "arraybuffer",
+        url: "/tn/mgr-api/productInfo/export",
+        data: {}
+      }).then(
+        res => {
+          if (res.status === 200 && res.data) {
+            var disposition = res.headers["Content-Disposition"];
+            var fileName = decodeURI(disposition.split("filename=")[1]);
+            let blob = new Blob([res.data], { type: "application/.xls" });
+            let link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            link.remove();
+          }
+        },
+        err => {
+          var enc = new TextDecoder("utf-8");
+          var res = JSON.parse(enc.decode(new Uint8Array(err.data))); //转化成json对象
+        }
+      );
+    },
     getBalanceRefresh(index, row) {
       let productCode = row.productcode;
       this.axios
