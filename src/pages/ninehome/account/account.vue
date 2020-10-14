@@ -7,7 +7,7 @@
         <div class="title">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="id" />
+            <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user">查询</div>
@@ -28,20 +28,20 @@
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="序号" width="100" prop="serial" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="母账户ID" prop="mom" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="子账户ID" prop="id" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="子账户名称" prop="name" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" prop="margin" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="母账户ID" prop="productCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="借款额" prop="borrowing" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初金额" prop="money" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" prop="assets" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="盈亏额" prop="loss" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="盈亏率" prop="rate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="持仓数" prop="house" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" prop="smoeny" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" prop="funds" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="持仓率%" prop="position" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="警戒线" prop="cordon" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="期初金额" prop="allottedScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏额" prop="profit" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏率" prop="profitRate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓数" prop="stockCnt" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票市值" prop="stockScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓率%" prop="stockRate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线" prop="cordonLineDiff" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -59,66 +59,14 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          serial: "1",
-          mom: "200001",
-          id: "13898988463",
-          name: "yy",
-          margin: "13000",
-          borrowing: "13000",
-          money: "26000",
-          assets: "24489.52",
-          loss: "-1,524.70",
-          rate: "-6.225",
-          house: "0",
-          smoney: "-761.00",
-          funds: "25250.52",
-          position: "-3.107",
-          cordon: "14500"
-        },
-        {
-          serial: "1",
-          mom: "200001",
-          id: "13898988463",
-          name: "yy",
-          margin: "13000",
-          borrowing: "13000",
-          money: "26000",
-          assets: "24489.52",
-          loss: "-1,524.70",
-          rate: "-6.225",
-          house: "0",
-          smoney: "-761.00",
-          funds: "25250.52",
-          position: "-3.107",
-          cordon: "14500"
-        },
-        {
-          serial: "1",
-          mom: "200001",
-          id: "13898988463",
-          name: "yy",
-          margin: "13000",
-          borrowing: "13000",
-          money: "26000",
-          assets: "24489.52",
-          loss: "-1,524.70",
-          rate: "-6.225",
-          house: "0",
-          smoney: "-761.00",
-          funds: "25250.52",
-          position: "-3.107",
-          cordon: "14500"
-        }
-      ],
+      tableData: [],
       colorBool: false,
-      id:"",
       keyword: "",
       pageSize: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+      accountCode: ""
     };
   },
   computed: {
@@ -150,22 +98,22 @@ export default {
     }
   },
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSize,
-            page: this.currentPage
-          }
+        .post("/tn/mgr-api/risk/management/list", {
+          accountCode: this.accountCode
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData = res.data.data.rows;
+            } else {
+              this.tableData = [];
+            }
             this.total = res.data.data.total;
           } else {
             this.tableData = [];
