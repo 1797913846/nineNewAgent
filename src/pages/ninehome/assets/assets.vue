@@ -33,10 +33,10 @@
           <el-table-column label="操作" align="center" width="330">
             <template slot-scope="scope">
               <div class="operation">
-                <span>修改</span>
-                <span>删除</span>
-                <span> 获取券商资金</span>
-                <span> 获取券商持仓</span>
+                <span @click.stop="getEdit(scope.$index,scope.row)">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+                <span @click.stop="getBalanceRefresh(scope.$index,scope.row)"> 获取券商资金</span>
+                <span @click.stop="getHoldRefresh(scope.$index,scope.row)"> 获取券商持仓</span>
               </div>
             </template>
           </el-table-column>
@@ -120,6 +120,65 @@
         </el-form>
       </div>
     </div>
+    <!--修改表单-->
+    <div class="addForm" v-if="changeNow==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeChange1">关闭</span>
+        </div>
+        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="产品编号：">
+            <el-input v-model="formInline.productcode" :disabled="true" placeholder="产品编号"></el-input>
+          </el-form-item>
+          <el-form-item label="产品名称：">
+            <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
+          </el-form-item>
+          <el-form-item label="优先级：">
+            <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
+          </el-form-item>
+          <el-form-item label="资金账号：">
+            <el-input v-model="formInline.userid" :disabled="true" placeholder="资金账号"></el-input>
+          </el-form-item>
+          <el-form-item label="资金账号类型：">
+            <el-select v-model="formInline.usertype">
+              <el-option v-for="(item,index) in usertypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开仓控制：">
+            <el-select v-model="formInline.operateStatus">
+              <el-option v-for="(item,index) in operateStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="交易密码：">
+            <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
+          </el-form-item>
+          <el-form-item label="通讯密码：">
+            <el-input v-model="formInline.passwordcom" placeholder="交易密码"></el-input>
+          </el-form-item>
+          <el-form-item label="券商：">
+            <el-select v-model="formInline.brokerid">
+              <el-option v-for="(item,index) in brokerList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="产品佣金：">
+            <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
+          </el-form-item>
+          <el-form-item label="期初可分配金额：">
+            <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
+          </el-form-item>
+          <el-form-item label="备注：">
+            <el-input v-model="formInline.memo" placeholder="备注"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -176,7 +235,8 @@ export default {
         { key: 0, value: "允许操作" },
         { key: 1, value: "禁止操作" }
       ],
-      brokerList: []
+      brokerList: [],
+      changeNow: false
     };
   },
   computed: {
@@ -212,6 +272,60 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    getBalanceRefresh(index, row) {
+      let productCode = row.productcode;
+      this.axios
+        .get("/tn/mgr-api/itg/product/balance/refresh", {
+          params: {
+            productCode: productCode
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getHoldRefresh(index, row) {
+      let productCode = row.productcode;
+      this.axios
+        .get("/tn/mgr-api/itg/product/hold/refresh", {
+          params: {
+            productCode: productCode
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     closeJia() {
       this.jia = false;
     },
@@ -237,6 +351,9 @@ export default {
       this.$refs[formName].resetFields();
       this.jia = false;
     },
+    closeChange1() {
+      this.changeNow = false;
+    },
     getMsg() {
       this.axios
         .post("/tn/mgr-api/productInfo/edit-pre")
@@ -254,6 +371,101 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    getEdit(index, row) {
+      console.log("我啊", row);
+      this.addTitle = "修改";
+      this.changeNow = true;
+      let productCode = row.productcode;
+      this.axios
+        .get("/tn/mgr-api/productInfo/detail", {
+          params: {
+            productCode: productCode
+          }
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.formInline = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    deleteNow(index, row) {
+      let productCode = row.productcode;
+      this.axios
+        .post("/tn/mgr-api/productInfo/delete", {
+          productcode: productCode
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    onSubmitChange(formName) {
+      this.axios
+        .post("/tn/mgr-api/productInfo/update", {
+          productcode: this.formInline.productcode,
+          productname: this.formInline.productname,
+          priority: this.formInline.priority,
+          userid: this.formInline.userid,
+          usertype: this.formInline.usertype,
+          operateStatus: this.formInline.operateStatus,
+          passwordtrade: this.formInline.passwordtrade,
+          passwordcom: this.formInline.passwordcom,
+          brokerid: this.formInline.brokerid,
+          commission: this.formInline.commission,
+          marketcap: this.formInline.marketcap,
+          memo: this.formInline.memo
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.changeNow = false;
+            this.getFundAccount();
+          } else {
+            this.changeNow = false;
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    closeChange(formName) {
+      this.$refs[formName].resetFields();
+      this.changeNow = false;
     },
     onSubmit(formName) {
       this.axios
@@ -278,8 +490,10 @@ export default {
               center: true,
               type: "success"
             });
+            this.jia = false;
             this.getFundAccount();
           } else {
+            this.jia = false;
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
               center: true,
