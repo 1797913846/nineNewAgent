@@ -281,8 +281,10 @@ export default {
       }).then(
         res => {
           if (res.status === 200 && res.data) {
-            var disposition = res.headers["Content-Disposition"];
+            var disposition = res.headers["content-disposition"];
             var fileName = decodeURI(disposition.split("filename=")[1]);
+            fileName = fileName.substr(0, fileName.length - 1);
+            fileName = fileName.substr(1, fileName.length - 1);
             let blob = new Blob([res.data], { type: "application/.xls" });
             let link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
