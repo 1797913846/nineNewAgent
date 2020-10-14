@@ -10,8 +10,8 @@
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-user">查询</div>
-          <div class="search-user">导出</div>
+          <div class="search-user" @click="search">查询</div>
+          <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
       <!--表格-->
@@ -43,9 +43,6 @@
           <el-table-column show-overflow-tooltip label="持仓率%" prop="stockRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="警戒线" prop="cordonLineDiff" align="center"></el-table-column>
         </el-table>
-      </div>
-      <div class="pagination">
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
   </div>
@@ -101,6 +98,34 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    exportExcel() {
+      this.axios({
+        method: "post",
+        responseType: "arraybuffer",
+        url: "/tn/mgr-api/risk/management/export",
+        data: {}
+      }).then(
+        res => {
+          if (res.status === 200 && res.data) {
+            var disposition = res.headers["Content-Disposition"];
+            var fileName = decodeURI(disposition.split("filename=")[1]);
+            let blob = new Blob([res.data], { type: "application/.xls" });
+            let link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            link.remove();
+          }
+        },
+        err => {
+          var enc = new TextDecoder("utf-8");
+          var res = JSON.parse(enc.decode(new Uint8Array(err.data))); //转化成json对象
+        }
+      );
+    },
+    search() {
+      this.getFundAccount();
+    },
     getFundAccount() {
       this.axios
         .post("/tn/mgr-api/risk/management/list", {
