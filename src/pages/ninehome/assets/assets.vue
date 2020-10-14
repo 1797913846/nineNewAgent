@@ -273,22 +273,6 @@ export default {
   },
   methods: {
     exportExcel() {
-      // this.axios
-      //   .post("/tn/mgr-api/productInfo/export",{})
-      //   .then(res => {
-      //     if (res.data.code == 200) {
-
-      //     } else {
-      //       this.$alert(res.data.info, "提示", {
-      //         confirmButtonText: "确定",
-      //         center: true,
-      //         type: "error"
-      //       });
-      //     }
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
       this.axios({
         method: "post",
         responseType: "arraybuffer",
