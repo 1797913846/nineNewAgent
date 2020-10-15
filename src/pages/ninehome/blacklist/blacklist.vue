@@ -5,6 +5,7 @@
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="title" @click="showAddNow">添加</div>
+        <div class="title" @click="deleteAll" style="margin-left:20px;">批量删除</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入证券代码" v-model="stockNo" />
@@ -23,7 +24,9 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55" align="center">
+          </el-table-column>
           <el-table-column label="序号" type="index" width="50" align="center">
           </el-table-column>
           <el-table-column show-overflow-tooltip label="证券代码" prop="stockNo" align="center"></el-table-column>
@@ -37,8 +40,6 @@
           </el-table-column>
         </el-table>
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="序号" type="index" width="50" align="center">
-          </el-table-column>
           <el-table-column show-overflow-tooltip label="证券代码" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="证券名称" align="center"></el-table-column>
         </el-table>
@@ -90,7 +91,8 @@ export default {
       id: "",
       showAdd: false,
       addTitle: "新增",
-      formInline: {}
+      formInline: {},
+      blackIds: ""
     };
   },
   computed: {
@@ -132,8 +134,49 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    handleSelectionChange(val) {
+      console.log(val);
+      let blackIds = [];
+      val.map(item => {
+        blackIds.push(item.id);
+      });
+      console.log("我是数组", blackIds);
+      this.blackIds = blackIds;
+    },
+    deleteAll() {
+      if (this.blackIds.length <= 0) {
+        this.$alert("请先勾选黑名单", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
+        });
+      } else {
+        this.axios
+          .post("/tn/mgr-api/tntg/stockBlack/batch-delete", {
+            blackIds: this.blackIds
+          })
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "sucess"
+              });
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
     handleAvatarSuccess(res, file) {
-      console.log("是我啊", res);
       if (res.code == 200) {
         this.$alert("导入成功", "提示", {
           confirmButtonText: "确定",
