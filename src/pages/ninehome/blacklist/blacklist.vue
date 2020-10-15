@@ -15,12 +15,17 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user" @click="search()">查询</div>
+          <div class="search-user" @click="exportExcel">下载</div>
+          <el-upload class="upload-demo" action="http://10.10.1.26:8080/tn/mgr-api/tntg/stockBlack/batch-add" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
+            <div class="search-user">导入</div>
+          </el-upload>
         </div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column show-overflow-tooltip label="ID" prop="id" align="center"></el-table-column>
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column label="序号" type="index" width="50" align="center">
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="证券代码" prop="stockNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="证券名称" prop="stockName" align="center"></el-table-column>
           <el-table-column label="操作" align="center">
@@ -30,6 +35,12 @@
               </div>
             </template>
           </el-table-column>
+        </el-table>
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column label="序号" type="index" width="50" align="center">
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="证券代码" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="证券名称" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -121,6 +132,48 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      console.log("是我啊", res);
+      if (res.code == 200) {
+        this.$alert("导入成功", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "sucess"
+        });
+        this.getFundAccount();
+      } else {
+        this.$alert(res.info, "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
+        });
+      }
+    },
+    exportExcel() {
+      this.axios({
+        method: "post",
+        responseType: "arraybuffer",
+        url: "/tn/mgr-api/tntg/stockBlack/batch-example",
+        data: {}
+      }).then(
+        res => {
+          var disposition = res.headers["content-disposition"];
+          var fileName = decodeURI(disposition.split("filename=")[1]);
+          fileName = fileName.substr(0, fileName.length - 1);
+          fileName = fileName.substr(1, fileName.length - 1);
+          let blob = new Blob([res.data], { type: "application/.xls" });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          link.remove();
+        },
+        err => {
+          var enc = new TextDecoder("utf-8");
+          var res = JSON.parse(enc.decode(new Uint8Array(err.data))); //转化成json对象
+        }
+      );
+    },
     showAddNow() {
       console.log(3333);
       this.addTitle = "新增";
@@ -269,6 +322,9 @@ export default {
 .addContent .title .tr {
   float: right;
   cursor: pointer;
+}
+.operate-btn {
+  width: 900px;
 }
 </style>
 
