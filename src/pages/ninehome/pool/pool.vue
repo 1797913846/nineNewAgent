@@ -8,7 +8,7 @@
         <div class="title" style="margin-left:10px;">编辑</div>
         <div class="title" style="margin-left:10px;">删除</div>
         <div class="operate-btn">
-          <div class="search-box">
+          <!-- <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="id" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
@@ -26,19 +26,19 @@
             <el-date-picker v-model="value2" type="date">
             </el-date-picker>
           </div>
-          <div class="search-user">查询</div>
-          <div class="search-user">导出</div>
+          <div class="search-user">查询</div> -->
+          <!-- <div class="search-user">导出</div> -->
         </div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="分组名称" prop="name" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="资金账户" prop="accout" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用金额" prop="money" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考市值" prop="much" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="余额" prop="lost" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="分组名称" prop="groupName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金账户" prop="productCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="参考市值" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="余额" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -80,29 +80,7 @@ export default {
           label: "北京烤鸭"
         }
       ],
-      tableData: [
-        {
-          name: "-",
-          accout: "-",
-          money: "-",
-          much: "-",
-          lost: "-"
-        },
-        {
-          name: "-",
-          accout: "-",
-          money: "-",
-          much: "-",
-          lost: "-"
-        },
-        {
-          name: "-",
-          accout: "-",
-          money: "-",
-          much: "-",
-          lost: "-"
-        }
-      ],
+      tableData: [],
       colorBool: false,
       keyword: "",
       id: "",
@@ -142,22 +120,23 @@ export default {
     }
   },
   created() {
-    // this.getFundAccount();
+    this.getFundAccount();
   },
   methods: {
     getFundAccount() {
       this.axios
-        .get("account/fund", {
-          params: {
-            search: this.keyword,
-            size: this.pageSize,
-            page: this.currentPage
-          }
+        .post("/tn/mgr-api/fund-pool/list", {
+          pageSize: this.pageSize,
+          pageNo: this.currentPage
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data.data);
-          if (res.data.code == 1) {
-            this.tableData = res.data.data.data;
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData = res.data.data.rows;
+            } else {
+              this.tableData = [];
+            }
             this.total = res.data.data.total;
           } else {
             this.tableData = [];

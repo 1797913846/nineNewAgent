@@ -4,7 +4,7 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title">刷新</div>
+        <div class="title" @click="refresh">刷新</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
@@ -27,7 +27,8 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="序号" width="100" prop="serial" align="center"></el-table-column>
+          <el-table-column label="序号" type="index" width="50" align="center">
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="母账户ID" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center"></el-table-column>
@@ -125,6 +126,9 @@ export default {
       );
     },
     search() {
+      this.getFundAccount();
+    },
+    refresh() {
       this.getFundAccount();
     },
     getFundAccount() {

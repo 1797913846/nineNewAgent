@@ -16,7 +16,7 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user" @click="search">查询</div>
-          <div class="search-user">导出</div>
+          <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
       <!--表格-->
@@ -487,6 +487,31 @@ export default {
     this.userName = localStorage.getItem("userName");
   },
   methods: {
+    exportExcel() {
+      this.axios({
+        method: "post",
+        responseType: "arraybuffer",
+        url: "/tn/mgr-api/account/accountList/export",
+        data: {}
+      }).then(
+        res => {
+          var disposition = res.headers["content-disposition"];
+          var fileName = decodeURI(disposition.split("filename=")[1]);
+          fileName = fileName.substr(0, fileName.length - 1);
+          fileName = fileName.substr(1, fileName.length - 1);
+          let blob = new Blob([res.data], { type: "application/.xls" });
+          let link = document.createElement("a");
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          link.remove();
+        },
+        err => {
+          var enc = new TextDecoder("utf-8");
+          var res = JSON.parse(enc.decode(new Uint8Array(err.data))); //转化成json对象
+        }
+      );
+    },
     formatter(row, column) {
       if (row) {
         let accountStatus = row.accountStatus;
