@@ -533,7 +533,9 @@ input:-ms-input-placeholder {
     position: relative;
     background: #FFFFFF;
 }
-
+.template-top .search-boxv .el-date-editor.el-input{
+    width:140px;
+}
 .template-top .search-box input {
     width: 100%;
     height: 100%;
