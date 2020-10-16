@@ -104,8 +104,7 @@ export default {
       showQrcode: false,
       InviteCode: "",
       where: "",
-      whichIndex: "",
-      formInline:{}
+      whichIndex: ""
     };
   },
   created: function() {
