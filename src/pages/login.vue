@@ -77,6 +77,7 @@ export default {
             localStorage.setItem("userId", data.userId);
             localStorage.setItem("userName", data.userName);
             localStorage.setItem("loginName", data.loginName);
+            localStorage.setItem("isAdminGroup", data.isAdminGroup);
           } else {
           }
         })
@@ -94,7 +95,7 @@ export default {
             let Authorization = res.data.data;
             localStorage.setItem("Authorization", Authorization);
             this.getMsg();
-            let that=this;
+            let that = this;
             setTimeout(function() {
               that.$router.push({
                 path: "/ninehome/commission"
