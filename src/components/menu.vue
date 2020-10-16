@@ -64,6 +64,18 @@
                   <el-menu-item index="5-4" @click="clickJump('/ninehome/water')">资金流水</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
+              <el-submenu index="6">
+                <template slot="title">
+                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
+                  <span>账户管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="6-1" @click="clickJump('/ninehome/huiyuan')">会员列表</el-menu-item>
+                  <el-menu-item index="6-2" @click="clickJump('/ninehome/hy1')">会员绑卡信息</el-menu-item>
+                  <el-menu-item index="6-3" @click="clickJump('/ninehome/hy2')">等级列表</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
@@ -92,7 +104,8 @@ export default {
       showQrcode: false,
       InviteCode: "",
       where: "",
-      whichIndex: ""
+      whichIndex: "",
+      formInline:{}
     };
   },
   created: function() {
@@ -145,6 +158,15 @@ export default {
             break;
           case "/ninehome/water":
             this.whichIndex = "5-4";
+            break;
+          case "/ninehome/huiyuan":
+            this.whichIndex = "6-1";
+            break;
+          case "/ninehome/hy1":
+            this.whichIndex = "6-2";
+            break;
+          case "/ninehome/hy2":
+            this.whichIndex = "6-3";
             break;
         }
       },

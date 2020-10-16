@@ -16,7 +16,9 @@ import ninehomeMoney from '@/pages/ninehome/money/money'
 import ninehomeTopup from '@/pages/ninehome/topup/topup'
 import ninehomeWithdrawal from '@/pages/ninehome/withdrawal/withdrawal'
 import ninehomeWater from '@/pages/ninehome/water/water'
-
+import ninehomeHuiyuan from '@/pages/ninehome/huiyuan/huiyuan'
+import ninehomeHy1 from '@/pages/ninehome/hy1/hy1'
+import ninehomeHy2 from '@/pages/ninehome/hy2/hy2'
 
 Vue.use(Router)
 
@@ -134,6 +136,30 @@ const router = new Router({
       },
       component: ninehomeWater
     },
+    {
+      path: '/ninehome/huiyuan',
+      meta: {
+        title: '会员列表',
+        requireAuth: true
+      },
+      component: ninehomeHuiyuan
+    },
+    {
+      path: '/ninehome/hy1',
+      meta: {
+        title: '会员绑卡信息',
+        requireAuth: true
+      },
+      component: ninehomeHy1
+    },
+    {
+      path: '/ninehome/hy2',
+      meta: {
+        title: '等级列表',
+        requireAuth: true
+      },
+      component: ninehomeHy2
+    }
   ]
 })
 
