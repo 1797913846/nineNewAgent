@@ -6,7 +6,7 @@
       <div class="template-top">
         <div class="title">新增</div>
         <div class="title" style="margin-left:10px;">编辑</div>
-        <div class="title" style="margin-left:10px;">删除</div>
+        <div class="title" style="margin-left:10px;" @click="deleteAll">删除</div>
         <div class="operate-btn">
           <!-- <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="id" />
@@ -32,8 +32,8 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="分组名称" prop="groupName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账户" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="可用金额" align="center"></el-table-column>
@@ -45,6 +45,25 @@
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
+    <!--新增-->
+    <!-- <div class="addForm">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr">关闭</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="分组名称：">
+            <el-input v-model="levelName" placeholder="分组名称"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary">保存</el-button>
+            <el-button type="primary">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -88,7 +107,9 @@ export default {
       pageSize: 31,
       currentPage: 1,
       total: 10,
-      nullTable: false
+      nullTable: false,
+      groupId: [],
+      addTitle: "新增"
     };
   },
   computed: {
@@ -123,6 +144,47 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    handleSelectionChange(val) {
+      console.log(val);
+      let groupIdList = [];
+      val.map(item => {
+        groupIdList.push(item.groupId);
+      });
+      this.groupId = groupIdList;
+    },
+    deleteAll() {
+      if (this.groupId.length <= 0) {
+        this.$alert("请先勾选资金池", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
+        });
+      } else {
+        this.axios
+          .post("/tn/mgr-api/fund-pool/delete", {
+            groupId: this.groupId
+          })
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "sucess"
+              });
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
     getFundAccount() {
       this.axios
         .post("/tn/mgr-api/fund-pool/list", {
@@ -161,6 +223,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.addForm {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.addContent {
+  background-color: #fff;
+  width: 500px;
+  height: 700px;
+  overflow-y: scroll;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.addContent .title {
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-size: 18px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.addContent .title .tl {
+  float: left;
+}
+.addContent .title .tr {
+  float: right;
+  cursor: pointer;
+}
 </style>
 
 
