@@ -34,11 +34,9 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="分组id" prop="groupName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="分组名称" prop="groupName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账户" prop="productCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用金额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考市值" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="余额" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -109,7 +107,8 @@ export default {
       total: 10,
       nullTable: false,
       groupId: [],
-      addTitle: "新增"
+      addTitle: "新增",
+      groupId: 0
     };
   },
   computed: {
@@ -142,8 +141,29 @@ export default {
   },
   created() {
     this.getFundAccount();
+    this.getContent();
   },
   methods: {
+    getContent() {
+      this.axios
+        .post("/tn/mgr-api/fund-pool/detail", {
+          groupId: this.groupId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleSelectionChange(val) {
       console.log(val);
       let groupIdList = [];
