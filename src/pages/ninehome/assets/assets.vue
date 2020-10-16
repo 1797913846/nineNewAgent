@@ -127,7 +127,6 @@
           <span class="tl">{{addTitle}}</span>
           <span class="tr" @click="closeChange1">关闭</span>
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="产品编号：">
             <el-input v-model="formInline.productcode" :disabled="true" placeholder="产品编号"></el-input>
@@ -155,7 +154,7 @@
             <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
           </el-form-item>
           <el-form-item label="通讯密码：">
-            <el-input v-model="formInline.passwordcom" placeholder="交易密码"></el-input>
+            <el-input v-model="formInline.passwordcom" placeholder="通讯密码"></el-input>
           </el-form-item>
           <el-form-item label="券商：">
             <el-select v-model="formInline.brokerid">

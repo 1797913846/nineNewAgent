@@ -40,7 +40,13 @@ axios.interceptors.request.use(
 // 添加请求拦截器
 axios.interceptors.response.use(
     response => {
-        //console.log(JSON.stringify(response))
+        // console.log(JSON.stringify(response))
+        if (response.data.code == 10002) {
+            router.replace({
+                path: '/login',
+                query: { redirect: router.currentRoute.fullPath }
+            });
+        }
         return response;
     },
     error => {
