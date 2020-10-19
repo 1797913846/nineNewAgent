@@ -275,22 +275,24 @@ export default {
       }
     },
     handleCheckedCitiesChange(value) {
-      console.log("我变了", value);
-      let dif = this.getArrDifference(value, this.oldCheckList);
-      if (value.length > this.oldCheckList.length) {
-        dif.map(item => {
-          this.accountGroup.push({
-            priority: 0,
-            productCode: item
+      if (this.addTitle == "修改") {
+        console.log("我变了", value);
+        let dif = this.getArrDifference(value, this.oldCheckList);
+        if (value.length > this.oldCheckList.length) {
+          dif.map(item => {
+            this.accountGroup.push({
+              priority: 0,
+              productCode: item
+            });
           });
-        });
-      } else {
-        this.accountGroup.map((item,index) => {
-          if (item.productCode == dif[0]) {
-            this.accountGroup.splice(index,1);
-            // this.accountGroup.delete(item);
-          }
-        });
+        } else {
+          this.accountGroup.map((item, index) => {
+            if (item.productCode == dif[0]) {
+              this.accountGroup.splice(index, 1);
+              // this.accountGroup.delete(item);
+            }
+          });
+        }
       }
     },
     getArrDifference(arr1, arr2) {
