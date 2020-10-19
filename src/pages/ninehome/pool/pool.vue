@@ -62,7 +62,7 @@
           <div class="codebox">
             <span class="codetitle">资金账号：</span>
             <div class="checkbox">
-              <el-checkbox-group v-model="checkList" align="left">
+              <el-checkbox-group v-model="checkList" align="left" @change="handleCheckedCitiesChange">
                 <el-checkbox v-for="(item,index) in productList" :key="index" :label="item.productcode">{{item.productname}}</el-checkbox>
               </el-checkbox-group>
             </div>
@@ -152,7 +152,8 @@ export default {
       levelName: "",
       formInline: {},
       accountGroup: [],
-      realAccountGroup: []
+      realAccountGroup: [],
+      oldCheckList: []
     };
   },
   computed: {
@@ -186,12 +187,8 @@ export default {
             });
           });
         } else if (this.addTitle == "修改") {
-          // newVal.map(item => {
-          //   this.accountGroup.push({
-          //     priority: 0,
-          //     productCode: item
-          //   });
-          // });
+          console.log("新旧", newVal, oldVal);
+          this.oldCheckList = oldVal;
         }
       },
       deep: true
@@ -276,6 +273,30 @@ export default {
             });
         }
       }
+    },
+    handleCheckedCitiesChange(value) {
+      console.log("我变了", value);
+      let dif = this.getArrDifference(value, this.oldCheckList);
+      if (value.length > this.oldCheckList.length) {
+        dif.map(item => {
+          this.accountGroup.push({
+            priority: 0,
+            productCode: item
+          });
+        });
+      } else {
+        this.accountGroup.map((item,index) => {
+          if (item.productCode == dif[0]) {
+            this.accountGroup.splice(index,1);
+            // this.accountGroup.delete(item);
+          }
+        });
+      }
+    },
+    getArrDifference(arr1, arr2) {
+      return arr1.concat(arr2).filter(function(v, i, arr) {
+        return arr.indexOf(v) === arr.lastIndexOf(v);
+      });
     },
     //单个查询
     getContent(groupId) {
