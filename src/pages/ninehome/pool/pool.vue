@@ -177,13 +177,28 @@ export default {
   watch: {
     checkList: {
       handler(newVal, oldVal) {
-        this.accountGroup = [];
-        newVal.map(item => {
-          this.accountGroup.push({
-            priority: 0,
-            productCode: item
+        if (this.addTitle == "新增") {
+          this.accountGroup = [];
+          newVal.map(item => {
+            this.accountGroup.push({
+              priority: 0,
+              productCode: item
+            });
           });
-        });
+        } else if (this.addTitle == "修改") {
+          // newVal.map(item => {
+          //   this.accountGroup.push({
+          //     priority: 0,
+          //     productCode: item
+          //   });
+          // });
+        }
+      },
+      deep: true
+    },
+    accountGroup: {
+      handler(newVal, oldVal) {
+        console.log("我新的", newVal);
       },
       deep: true
     }
@@ -273,14 +288,7 @@ export default {
             this.productPool = res.data.data.productPool;
             this.productList = res.data.data.productList;
             this.realAccountGroup = [];
-            this.productPool.accountGroup.map(item => {
-              this.realAccountGroup.push({
-                priority: item.priority,
-                productCode: item.productCode
-              });
-            });
-            // this.realAccountGroup = this.productPool;
-            this.levelName = this.productPool.groupName;
+            this.accountGroup = [];
             this.checkList = [];
             //修改时候如果是选中的，那复选框就得勾选上
             this.productList.map(item => {
@@ -288,6 +296,23 @@ export default {
                 this.checkList.push(item.productcode);
               }
             });
+            this.productPool.accountGroup.map(item => {
+              this.realAccountGroup.push({
+                priority: item.priority,
+                productCode: item.productCode
+              });
+              this.accountGroup.push({
+                priority: item.priority,
+                productCode: item.productCode
+              });
+            });
+            console.log(
+              "我是修改的啊",
+              this.accountGroup,
+              this.accountGroup.length
+            );
+            // this.realAccountGroup = this.productPool;
+            this.levelName = this.productPool.groupName;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
