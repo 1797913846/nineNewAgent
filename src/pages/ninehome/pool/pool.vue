@@ -74,19 +74,19 @@
                 <el-table-column label="序号" align="center" width="100">
                   <template slot-scope="scope">
                     <div class="operation">
-                      <span>{{scope.row.priority}}</span>
+                      <el-input v-model="scope.row.priority"></el-input>
                     </div>
                   </template>
                 </el-table-column>
                 <el-table-column show-overflow-tooltip label="资金账号" prop="productCode" align="center"></el-table-column>
-                <el-table-column label="操作" align="center" width="180">
+                <!-- <el-table-column label="操作" align="center" width="180">
                   <template slot-scope="scope">
                     <div class="operation">
                       <span @click.stop="set1(scope.$index,scope.row)">保存</span>
                       <span @click.stop="set2(scope.$index, scope.row)">修改</span>
                     </div>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               </el-table>
             </div>
           </div>
@@ -186,6 +186,7 @@ export default {
               productCode: item
             });
           });
+          this.realAccountGroup = this.accountGroup;
         } else if (this.addTitle == "修改") {
           console.log("新旧", newVal, oldVal);
           this.oldCheckList = oldVal;
@@ -211,7 +212,7 @@ export default {
     },
     set1(index, row) {
       console.log("是我", index, row);
-      this.realAccountGroup.push(row);
+      // this.realAccountGroup.push(row);
     },
     set2(index, row) {},
     closeadd(formName) {
