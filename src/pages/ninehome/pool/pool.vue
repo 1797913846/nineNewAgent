@@ -71,7 +71,7 @@
             <div class="buytitle">买入优先级：</div>
             <div class="buycontent">
               <el-table :border="true" :highlight-current-row="colorBool" :data="accountGroup" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="accountGroup.length>0">
-                <el-table-column label="序号" align="center" width="100">
+                <el-table-column label="优先级" align="center" width="100">
                   <template slot-scope="scope">
                     <div class="operation">
                       <el-input v-model="scope.row.priority"></el-input>
