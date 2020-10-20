@@ -20,6 +20,18 @@ import ninehomeHuiyuan from '@/pages/ninehome/huiyuan/huiyuan'
 import ninehomeHy1 from '@/pages/ninehome/hy1/hy1'
 import ninehomeHy2 from '@/pages/ninehome/hy2/hy2'
 
+import ninehomey1 from '@/pages/ninehome/yy/y1'
+import ninehomey2 from '@/pages/ninehome/yy/y2'
+import ninehomey3 from '@/pages/ninehome/yy/y3'
+import ninehomey4 from '@/pages/ninehome/yy/y4'
+import ninehomey5 from '@/pages/ninehome/yy/y5'
+import ninehomey6 from '@/pages/ninehome/yy/y6'
+import ninehomey7 from '@/pages/ninehome/yy/y7'
+import ninehomey8 from '@/pages/ninehome/yy/y8'
+import ninehomey9 from '@/pages/ninehome/yy/y9'
+import ninehomey10 from '@/pages/ninehome/yy/y10'
+import ninehomey11 from '@/pages/ninehome/yy/y11'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -159,6 +171,94 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomeHy2
+    },
+    {
+      path: '/ninehome/y1',
+      meta: {
+        title: '持仓信息',
+        requireAuth: true
+      },
+      component: ninehomey1
+    },
+    {
+      path: '/ninehome/y2',
+      meta: {
+        title: '逐笔持仓',
+        requireAuth: true
+      },
+      component: ninehomey2
+    },
+    {
+      path: '/ninehome/y3',
+      meta: {
+        title: '委托信息',
+        requireAuth: true
+      },
+      component: ninehomey3
+    },
+    {
+      path: '/ninehome/y4',
+      meta: {
+        title: '成交信息',
+        requireAuth: true
+      },
+      component: ninehomey4
+    },
+    {
+      path: '/ninehome/y5',
+      meta: {
+        title: '逐笔平仓',
+        requireAuth: true
+      },
+      component: ninehomey5
+    },
+    {
+      path: '/ninehome/y6',
+      meta: {
+        title: '结算信息',
+        requireAuth: true
+      },
+      component: ninehomey6
+    },
+    {
+      path: '/ninehome/y7',
+      meta: {
+        title: '代理结算详情',
+        requireAuth: true
+      },
+      component: ninehomey7
+    },
+    {
+      path: '/ninehome/y8',
+      meta: {
+        title: '佣金统计',
+        requireAuth: true
+      },
+      component: ninehomey8
+    },
+    {
+      path: '/ninehome/y9',
+      meta: {
+        title: '分红送股信息',
+        requireAuth: true
+      },
+      component: ninehomey9
+    },
+    {
+      path: '/ninehome/y10',
+      meta: {
+        title: '持仓变动信息',
+        requireAuth: true
+      },
+      component: ninehomey10
+    },
+    {
+      path: '/ninehome/y11',
+      meta: {
+        title: '交割单信息',
+        requireAuth: true
+      },
+      component: ninehomey11
     }
   ]
 })

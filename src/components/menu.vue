@@ -76,6 +76,26 @@
                   <el-menu-item index="6-3" @click="clickJump('/ninehome/hy2')">等级列表</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
+              <el-submenu index="7">
+                <template slot="title">
+                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
+                  <span>交易管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="7-1" @click="clickJump('/ninehome/y1')">持仓信息</el-menu-item>
+                  <el-menu-item index="7-2" @click="clickJump('/ninehome/y2')">逐笔持仓</el-menu-item>
+                  <el-menu-item index="7-3" @click="clickJump('/ninehome/y3')">委托信息</el-menu-item>
+                  <el-menu-item index="7-4" @click="clickJump('/ninehome/y4')">成交信息</el-menu-item>
+                  <el-menu-item index="7-5" @click="clickJump('/ninehome/y5')">逐笔平仓</el-menu-item>
+                  <el-menu-item index="7-6" @click="clickJump('/ninehome/y6')">结算信息</el-menu-item>
+                  <el-menu-item index="7-7" @click="clickJump('/ninehome/y7')">代理结算详情</el-menu-item>
+                  <el-menu-item index="7-8" @click="clickJump('/ninehome/y8')">佣金统计</el-menu-item>
+                  <el-menu-item index="7-9" @click="clickJump('/ninehome/y9')">分红送股信息</el-menu-item>
+                  <el-menu-item index="7-10" @click="clickJump('/ninehome/y10')">持仓变动信息</el-menu-item>
+                  <el-menu-item index="7-11" @click="clickJump('/ninehome/y11')">交割单信息</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
@@ -166,6 +186,39 @@ export default {
             break;
           case "/ninehome/hy2":
             this.whichIndex = "6-3";
+            break;
+          case "/ninehome/y1":
+            this.whichIndex = "7-1";
+            break;
+          case "/ninehome/y2":
+            this.whichIndex = "7-2";
+            break;
+          case "/ninehome/y3":
+            this.whichIndex = "7-3";
+            break;
+          case "/ninehome/y4":
+            this.whichIndex = "7-4";
+            break;
+          case "/ninehome/y5":
+            this.whichIndex = "7-5";
+            break;
+          case "/ninehome/y6":
+            this.whichIndex = "7-6";
+            break;
+          case "/ninehome/y7":
+            this.whichIndex = "7-7";
+            break;
+          case "/ninehome/y8":
+            this.whichIndex = "7-8";
+            break;
+          case "/ninehome/y9":
+            this.whichIndex = "7-9";
+            break;
+          case "/ninehome/y10":
+            this.whichIndex = "7-10";
+            break;
+          case "/ninehome/y11":
+            this.whichIndex = "7-11";
             break;
         }
       },
