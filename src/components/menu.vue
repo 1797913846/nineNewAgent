@@ -66,8 +66,8 @@
               </el-submenu>
               <el-submenu index="6">
                 <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m7-2.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m7-1.png" alt=""></i>
                   <span>账户管理</span>
                 </template>
                 <el-menu-item-group>
@@ -78,8 +78,8 @@
               </el-submenu>
               <el-submenu index="7">
                 <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m8-2.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m8-1.png" alt=""></i>
                   <span>交易管理</span>
                 </template>
                 <el-menu-item-group>
