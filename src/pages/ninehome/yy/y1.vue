@@ -93,7 +93,7 @@ export default {
       nullTable: false,
       accountCode: "",
       productCode: "",
-
+      stockCode:"",
       lastPrice: "",
       setArray: [
         {
