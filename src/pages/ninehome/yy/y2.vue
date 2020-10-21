@@ -44,7 +44,7 @@
           <el-table-column show-overflow-tooltip label="持仓数量" prop="allottedCnt" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="逐笔成本" prop="preCost" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="逐笔市价" prop="lastPrice" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="逐笔盈亏" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="逐笔盈亏" prop="lastPrice" :formatter="formatter" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -175,6 +175,15 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    formatter(row, column) {
+      if (row) {
+        return (
+          Math.round(
+            (row["lastPrice"] - row["preCost"]) * row["allottedCnt"] * 100
+          ) / 100
+        );
+      }
+    },
     closeChange1() {
       this.changeNow = false;
     },
