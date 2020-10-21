@@ -246,7 +246,7 @@ export default {
       $(window).resize(function() {
         let height = $(window).height();
         $(".menu").css("height", height + "px");
-        $(".smallmenu").css("height", height - 130 + "px");
+        $(".smallmenu").css("height", height + "px");
       });
     },
     //监听展开后的导航来设置是否出现滚动条
@@ -255,9 +255,9 @@ export default {
       setTimeout(() => {
         this.menuHeight = $(".menu").height();
         this.navHeight = $(".contentheight").height();
-        if (this.navHeight > this.menuHeight - 130) {
+        if (this.navHeight > this.menuHeight) {
           $(".smallmenu").css("overflow-y", "scroll");
-          $(".smallmenu").css("height", this.menuHeight - 130 + "px");
+          $(".smallmenu").css("height", this.menuHeight + "px");
           // $(".smallmenu").scrollTop(top)
         }
       });
@@ -302,6 +302,8 @@ export default {
 
 .el-submenu .el-menu-item {
   padding-left: 72px !important;
+  height: 40px !important;
+  line-height: 40px !important;
 }
 </style>
 
