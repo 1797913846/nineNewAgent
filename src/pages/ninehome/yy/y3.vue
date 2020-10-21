@@ -1,7 +1,11 @@
-<!--资金信息-->
+<!--委托信息-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
+    <div class="navNav">
+      <span :class="{topactive:topActive==1}" @click="activeNow(1)">当日委托</span>
+      <span :class="{topactive:topActive==2}" @click="activeNow(2)">历史委托</span>
+    </div>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
@@ -16,43 +20,51 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账户余额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初规模" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可取资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易冻结资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手动冻结资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托价格" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托数量" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交数量" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交均价" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手续费" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="发生金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖方向" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托状态" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="备注信息" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="操作" align="center" width="280">
+          <el-table-column label="操作" align="center" width="180">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="set1(scope.$index, scope.row)">调整资金</span>
-                <span @click.stop="set2(scope.$index, scope.row)" v-if="scope.row.allottedScale <= 0">增配资金</span>
-                <span @click.stop="set3(scope.$index, scope.row)" v-if="scope.row.allottedScale > 0">结案策略</span>
+                <span @click.stop="set1(scope.$index, scope.row)">修改</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="序号" type="index" width="50" align="center">
-          </el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托时间" prop="orderDateDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" prop="pkorder" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" prop="accountcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初规模" prop="allottedScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可取资金" prop="ableTakeoutScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" prop="stockScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易冻结资金" prop="lockScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托价格" prop="entrustprice" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托数量" prop="stockcnt" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交数量" prop="dealcnt" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交均价" prop="dealavrprice" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交金额" prop="dealAmount" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手续费" prop="commission" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="发生金额" prop="happenAmount" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖方向" prop="subtypeDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托状态" prop="entruststatusDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="备注信息" prop="memo" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -120,6 +132,15 @@ export default {
       total: 10,
       nullTable: false,
       accountCode: "",
+      order: "",
+      subtype: "",
+      queryChild: "",
+      accountName: "",
+      orderno: "",
+      entruststatusList: "",
+      createTimeStart: "",
+      createTimeEnd: "",
+      topActive: 1,
       setArray: [
         {
           key: 0,
@@ -198,9 +219,17 @@ export default {
     }
   },
   created() {
-    this.getFundAccount();
+    this.getFundAccount("today");
   },
   methods: {
+    activeNow(num) {
+      this.topActive = num;
+      if (num == 1) {
+        this.getFundAccount("today");
+      } else if (num == 2) {
+        this.getFundAccount();
+      }
+    },
     closeChange1() {
       this.changeNow = false;
     },
@@ -276,46 +305,20 @@ export default {
       this.formInline.accountName = row.accountName;
       this.formInline.adjustmentType = 3;
     },
-    set2(index, row) {
-      this.changeNow = true;
-      this.addTitle = "增配资金";
-      this.formInline.accountCode = row.accountCode;
-      this.formInline.financeRatio = 3;
-      this.formInline.amount = 0;
-    },
-    set3(index, row) {
-      this.axios
-        .post("/tn/mgr-api/account/finishStrategy", {
-          accountCode: row.accountCode
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     search() {
       this.getFundAccount();
     },
     exportExcel() {
+      let url;
+      if (this.topActive == 1) {
+        url = "/tn/mgr-api/history/entrustCurrent/export";
+      } else {
+        url = "/tn/mgr-api/history/entrustHistory/export";
+      }
       this.axios({
         method: "post",
         responseType: "arraybuffer",
-        url: "/tn/mgr-api/account/fund/export",
+        url: url,
         data: {}
       }).then(
         res => {
@@ -336,13 +339,38 @@ export default {
         }
       );
     },
-    getFundAccount() {
-      this.axios
-        .post("/tn/mgr-api/account/fund", {
-          accountCode: this.accountCode,
+    getFundAccount(who) {
+      let url, options;
+      if (who == "today") {
+        url = "/tn/mgr-api/history/entrustCurrent";
+        options = {
           pageSize: this.pageSize,
-          pageNo: this.currentPage
-        })
+          pageNo: this.currentPage,
+          order: this.order,
+          subtype: this.subtype,
+          accountCode: this.accountCode,
+          queryChild: this.queryChild,
+          accountName: this.accountName,
+          orderno: this.orderno,
+          entruststatusList: this.entruststatusList
+        };
+      } else {
+        url = "/tn/mgr-api/history/entrustHistory";
+        options = {
+          pageSize: this.pageSize,
+          pageNo: this.currentPage,
+          order: this.order,
+          subtype: this.subtype,
+          accountCode: this.accountCode,
+          queryChild: this.queryChild,
+          accountName: this.accountName,
+          orderno: this.orderno,
+          createTimeStart: this.createTimeStart,
+          createTimeEnd: this.createTimeEnd
+        };
+      }
+      this.axios
+        .post(url, options)
         .then(res => {
           if (res.data.code == 200) {
             let rows = res.data.data.rows;
@@ -407,6 +435,21 @@ export default {
 .addContent .title .tr {
   float: right;
   cursor: pointer;
+}
+.navNav {
+  margin-left: 24px;
+  margin-top: 20px;
+}
+.navNav span {
+  display: inline-block;
+  font-size: 16px;
+  width: 100px;
+  color: #586880;
+  text-align: center;
+  cursor: pointer;
+}
+.topactive {
+  border-bottom: 2px solid #2662ee;
 }
 </style>
 
