@@ -67,7 +67,7 @@
           <el-table-column show-overflow-tooltip label="备注信息" prop="memo" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="nullTable==false">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -138,8 +138,8 @@ export default {
       accountName: "",
       orderno: "",
       entruststatusList: "",
-      createTimeStart: "",
-      createTimeEnd: "",
+      createTimeStart: "2020-10-21",
+      createTimeEnd: "2020-10-21",
       topActive: 1,
       setArray: [
         {
@@ -210,7 +210,7 @@ export default {
     }
   },
   watch: {
-    keyword: {
+    topActive: {
       handler(newVal, oldVal) {
         this.currentPage = 1;
         this.getFundAccount();
