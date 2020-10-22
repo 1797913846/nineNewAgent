@@ -3,6 +3,7 @@
   <div class="bigestbox">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
+      <div class="title" @click="setset">批量转账户余额</div>
       <div class="template-top">
         <div class="operate-btn">
           <el-form :inline="true">
@@ -17,11 +18,11 @@
               </el-select>
             </el-form-item>
           </el-form>
-          <div class="search-box">
+          <div class="search-box1">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-box">
+          <div class="search-box1">
             <input type="text" placeholder="请输入会员名称" v-model="accountName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
@@ -48,7 +49,8 @@
           <el-table-column show-overflow-tooltip label="是否结算" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="结算方式" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="50" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="编号" prop="id" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
@@ -118,13 +120,15 @@ export default {
           value: "转入账户余额"
         }
       ],
-      dealDateStart: "2020-10-22",
+      dealDateStart: "2020-10-1",
       dealDateEnd: "2020-10-22",
       productCode: "",
       stockNo: "",
       lastPrice: "",
       changeNow: false,
-      addTitle: "调整资金"
+      addTitle: "调整资金",
+      list: [],
+      settleType: "BALANCE"
     };
   },
   computed: {
@@ -159,6 +163,15 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    setset() {
+      
+    },
+    handleSelectionChange(val) {
+      console.log("勾选的", val);
+      val.map(item => {
+        this.list.push(item.id);
+      });
+    },
     formatter(row, column) {
       if (row) {
         return (
