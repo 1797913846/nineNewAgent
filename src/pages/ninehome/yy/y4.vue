@@ -1,13 +1,40 @@
-<!--资金信息-->
+<!--成交信息-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
+    <div class="navNav">
+      <span :class="{topactive:topActive==1}" @click="activeNow(1)">当日成交</span>
+      <span :class="{topactive:topActive==2}" @click="activeNow(2)">历史成交</span>
+    </div>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
+          <el-form :inline="true">
+            <el-form-item label="买卖方向：">
+              <el-select v-model="bstype">
+                <el-option v-for="(item,index) in subtypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <!--搜索框-->
           <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
+            <input type="text" placeholder="请输入会员ID" v-model="accountcode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入会员名称" v-model="accountName" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入成交编号" v-model="dealno" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-boxv" v-if="topActive == 2">
+            <el-date-picker v-model="createTimeStart" type="date">
+            </el-date-picker>
+            <span>至</span>
+            <el-date-picker v-model="createTimeEnd" type="date">
+            </el-date-picker>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
@@ -16,88 +43,36 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="母账户编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账户余额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初规模" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可取资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易冻结资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手动冻结资金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交时间" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖方向" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交数量" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交均价" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="操作" align="center" width="280">
-            <template slot-scope="scope">
-              <div class="operation">
-                <span @click.stop="set1(scope.$index, scope.row)">调整资金</span>
-                <span @click.stop="set2(scope.$index, scope.row)" v-if="scope.row.allottedScale <= 0">增配资金</span>
-                <span @click.stop="set3(scope.$index, scope.row)" v-if="scope.row.allottedScale > 0">结案策略</span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="序号" type="index" width="50" align="center">
-          </el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="母账户编号" prop="productcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" prop="accountcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初规模" prop="allottedScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可取资金" prop="ableTakeoutScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" prop="stockScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易冻结资金" prop="lockScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交时间" prop="dealtimeDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖方向" prop="bstypeDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交数量" prop="dealcnt" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交均价" prop="dealprice" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交金额" prop="dealAmount" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交编号" prop="dealno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="nullTable==false">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
-    </div>
-    <!--修改表单-->
-    <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
-        <div class="title">
-          <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
-        </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="会员ID：">
-            <el-input v-model="formInline.accountCode" :disabled="true" placeholder="会员ID"></el-input>
-          </el-form-item>
-          <el-form-item label="会员名称：">
-            <el-input v-model="formInline.accountName" :disabled="true" placeholder="会员名称"></el-input>
-          </el-form-item>
-          <el-form-item label="调整类型：" v-if="addTitle=='调整资金'">
-            <el-select v-model="formInline.adjustmentType">
-              <el-option v-for="(item,index) in setArray" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="金额：" v-if="addTitle=='调整资金'">
-            <el-input v-model="formInline.money" placeholder="金额"></el-input>
-          </el-form-item>
-          <el-form-item label="备注：" v-if="addTitle=='调整资金'">
-            <el-input v-model="formInline.remark" placeholder="备注"></el-input>
-          </el-form-item>
-          <el-form-item label="策略倍数：" v-if="addTitle=='增配资金'">
-            <el-select v-model="formInline.financeRatio">
-              <el-option v-for="(item,index) in financeRatioList" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="劣后资金：" v-if="addTitle=='增配资金'">
-            <el-input v-model="formInline.amount" placeholder="劣后资金"></el-input>
-          </el-form-item>
-          <br />
-          <el-form-item>
-            <el-button type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
-          </el-form-item>
-        </el-form>
       </div>
     </div>
   </div>
@@ -119,54 +94,23 @@ export default {
       currentPage: 1,
       total: 10,
       nullTable: false,
-      accountCode: "",
-      setArray: [
-        {
-          key: 0,
-          value: "减少可用资金"
-        },
-        {
-          key: 1,
-          value: "增加可用资金"
-        },
-        {
-          key: 2,
-          value: "减少账户余额"
-        },
-        {
-          key: 3,
-          value: "增加账户余额"
-        }
+      accountcode: "",
+      accountName: "",
+      dealno: "",
+      order: "",
+      bstype: "",
+      subtypeList: [
+        { key: "1", value: "买入" },
+        { key: "2", value: "卖出" },
+        { key: "", value: "所有" }
       ],
+      queryChild: "",
+      checkList: [],
+      createTimeStart: "2020-10-21",
+      createTimeEnd: "2020-10-21",
+      topActive: 1,
       changeNow: false,
-      addTitle: "调整资金",
-      formInline: {
-        accountCode: "",
-        accountName: "",
-        adjustmentType: "",
-        money: "",
-        remark: "",
-        financeRatio: "",
-        amount: 0
-      },
-      financeRatioList: [
-        {
-          key: 3,
-          value: "3倍"
-        },
-        {
-          key: 5,
-          value: "5倍"
-        },
-        {
-          key: 6,
-          value: "6倍"
-        },
-        {
-          key: 8,
-          value: "8倍"
-        }
-      ]
+      addTitle: "调整资金"
     };
   },
   computed: {
@@ -189,7 +133,7 @@ export default {
     }
   },
   watch: {
-    keyword: {
+    topActive: {
       handler(newVal, oldVal) {
         this.currentPage = 1;
         this.getFundAccount();
@@ -198,124 +142,43 @@ export default {
     }
   },
   created() {
-    this.getFundAccount();
+    if (this.topActive == 1) {
+      this.getFundAccount("today");
+    } else {
+      this.getFundAccount();
+    }
   },
   methods: {
-    closeChange1() {
-      this.changeNow = false;
+    handleCheckedCitiesChange(value) {
+      this.entruststatusList = value.join(",");
+      console.log("最终的", this.entruststatusList);
     },
-    onSubmitChange1(formName) {
-      this.axios
-        .post("/tn/mgr-api/account/deposit", {
-          accountCode: this.formInline.accountCode,
-          amount: this.formInline.amount,
-          financeRatio: this.formInline.financeRatio
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    onSubmitChange(formName) {
-      this.axios
-        .post("/tn/mgr-api/account/adjustment", {
-          accountCode: this.formInline.accountCode,
-          accountName: this.formInline.accountName,
-          adjustmentType: this.formInline.adjustmentType,
-          money: this.formInline.money,
-          remark: this.formInline.remark
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    closeChange(formName) {
-      this.$refs[formName].resetFields();
-      this.changeNow = false;
-    },
-    set1(index, row) {
-      this.changeNow = true;
-      this.addTitle = "调整资金";
-      console.log("我啊", row);
-      this.formInline.accountCode = row.accountCode;
-      this.formInline.accountName = row.accountName;
-      this.formInline.adjustmentType = 3;
-    },
-    set2(index, row) {
-      this.changeNow = true;
-      this.addTitle = "增配资金";
-      this.formInline.accountCode = row.accountCode;
-      this.formInline.financeRatio = 3;
-      this.formInline.amount = 0;
-    },
-    set3(index, row) {
-      this.axios
-        .post("/tn/mgr-api/account/finishStrategy", {
-          accountCode: row.accountCode
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    activeNow(num) {
+      this.topActive = num;
+      if (num == 1) {
+        this.getFundAccount("today");
+      } else if (num == 2) {
+        this.getFundAccount();
+      }
     },
     search() {
-      this.getFundAccount();
+      if (this.topActive == 1) {
+        this.getFundAccount("today");
+      } else {
+        this.getFundAccount();
+      }
     },
     exportExcel() {
+      let url;
+      if (this.topActive == 1) {
+        url = "/tn/mgr-api/history/dealCurrent/export";
+      } else {
+        url = "/tn/mgr-api/history/dealHistory/export";
+      }
       this.axios({
         method: "post",
         responseType: "arraybuffer",
-        url: "/tn/mgr-api/account/fund/export",
+        url: url,
         data: {}
       }).then(
         res => {
@@ -336,13 +199,33 @@ export default {
         }
       );
     },
-    getFundAccount() {
-      this.axios
-        .post("/tn/mgr-api/account/fund", {
-          accountCode: this.accountCode,
+    getFundAccount(who) {
+      let url, options;
+      if (who == "today") {
+        url = "/tn/mgr-api/history/dealCurrent";
+        options = {
           pageSize: this.pageSize,
-          pageNo: this.currentPage
-        })
+          pageNo: this.currentPage,
+          bstype: this.bstype,
+          accountcode: this.accountcode,
+          accountName: this.accountName,
+          dealno: this.dealno
+        };
+      } else {
+        url = "/tn/mgr-api/history/dealHistory";
+        options = {
+          pageSize: this.pageSize,
+          pageNo: this.currentPage,
+          bstype: this.bstype,
+          accountcode: this.accountcode,
+          accountName: this.accountName,
+          dealno: this.dealno,
+          createTimeStart: this.createTimeStart,
+          createTimeEnd: this.createTimeEnd
+        };
+      }
+      this.axios
+        .post(url, options)
         .then(res => {
           if (res.data.code == 200) {
             let rows = res.data.data.rows;
@@ -407,6 +290,21 @@ export default {
 .addContent .title .tr {
   float: right;
   cursor: pointer;
+}
+.navNav {
+  margin-left: 24px;
+  margin-top: 20px;
+}
+.navNav span {
+  display: inline-block;
+  font-size: 16px;
+  width: 100px;
+  color: #586880;
+  text-align: center;
+  cursor: pointer;
+}
+.topactive {
+  border-bottom: 2px solid #2662ee;
 }
 </style>
 
