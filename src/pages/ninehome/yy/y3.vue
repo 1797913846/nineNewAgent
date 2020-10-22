@@ -72,7 +72,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)">修改</span>
-                <span v-if="scope.row.entruststatus!= 6">ITG撤单</span>
+                <span v-if="scope.row.entruststatus!= 6" @click.stop="set2(scope.$index, scope.row)">ITG撤单</span>
               </div>
             </template>
           </el-table-column>
@@ -98,6 +98,22 @@
       </div>
       <div class="pagination" v-if="nullTable==false">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
+    </div>
+    <div class="addForm" v-if="msg==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">信息</span>
+          <span class="tr" @click="closeMsg">关闭</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <span>pk:{{formInline.pkorder}}确认是否撤销该笔委托？</span>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitMsg">保存</el-button>
+            <el-button type="primary" @click="closeMsg">取消</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
     <!--修改表单-->
@@ -215,7 +231,8 @@ export default {
       createTimeEnd: "2020-10-21",
       topActive: 1,
       changeNow: false,
-      addTitle: "调整资金"
+      addTitle: "调整资金",
+      msg: false
     };
   },
   computed: {
@@ -269,6 +286,9 @@ export default {
     closeChange1() {
       this.changeNow = false;
     },
+    closeMsg() {
+      this.msg = false;
+    },
     onSubmitChange(formName) {
       this.axios
         .post("/tn/mgr-api/itg/orderCtrl/UPDATE", {
@@ -300,6 +320,33 @@ export default {
           console.log(err);
         });
     },
+    onSubmitMsg(formName) {
+      this.axios
+        .post("/tn/mgr-api/history/entrustCancel", {
+          appointPkOrder: this.formInline.pkorder
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.msg = false;
+            this.getFundAccount("today");
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     closeChange(formName) {
       this.$refs[formName].resetFields();
       this.changeNow = false;
@@ -317,6 +364,11 @@ export default {
       this.formInline.dealcnt = row.dealcnt;
       this.formInline.dealavrprice = row.dealavrprice;
       this.formInline.updateEntruststatus = row.entruststatusDesc;
+    },
+    set2(index, row) {
+      this.msg = true;
+      this.formInline.pkorder = row.pkorder;
+      this.formInline.orderno = row.orderno;
     },
     search() {
       if (this.topActive == 1) {
