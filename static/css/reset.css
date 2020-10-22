@@ -533,9 +533,11 @@ input:-ms-input-placeholder {
     position: relative;
     background: #FFFFFF;
 }
-.template-top .search-boxv .el-date-editor.el-input{
-    width:140px;
+
+.template-top .search-boxv .el-date-editor.el-input {
+    width: 140px;
 }
+
 .template-top .search-box input {
     width: 100%;
     height: 100%;
@@ -548,6 +550,25 @@ input:-ms-input-placeholder {
 }
 
 .template-top .search-box .search-img {
+    position: absolute;
+    width: 12px;
+    height: 13px;
+    top: 14px;
+    right: 8px;
+}
+
+.template-top .search-box1 input {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: #A4B0C1;
+    font-size: 12px;
+    font-weight: bold
+}
+
+.template-top .search-box1 .search-img {
     position: absolute;
     width: 12px;
     height: 13px;

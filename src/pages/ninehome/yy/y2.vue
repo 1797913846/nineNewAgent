@@ -1,4 +1,4 @@
-<!--持仓信息-->
+<!--逐笔平仓-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
@@ -64,25 +64,6 @@
       </div>
       <div class="pagination">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
-    </div>
-    <!--修改表单-->
-    <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
-        <div class="title">
-          <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
-        </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="平仓价格：">
-            <el-input v-model="lastPrice" placeholder="平仓价格"></el-input>
-          </el-form-item>
-          <br />
-          <el-form-item>
-            <el-button type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
-          </el-form-item>
-        </el-form>
       </div>
     </div>
   </div>
@@ -204,43 +185,6 @@ export default {
           ) / 100
         );
       }
-    },
-    closeChange1() {
-      this.changeNow = false;
-    },
-    onSubmitChange1(formName) {
-      this.axios
-        .post("/tn/mgr-api/itg/appoint/CLOSE", {
-          accountCode: this.formInline.accountCode,
-          productCode: this.productCode,
-          stockCode: this.stockCode,
-          appointPrice: this.lastPrice
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    closeChange(formName) {
-      this.$refs[formName].resetFields();
-      this.changeNow = false;
     },
     search() {
       this.getFundAccount();
