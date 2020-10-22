@@ -35,10 +35,9 @@
             </el-checkbox-group>
           </div>
           <div class="search-boxv" v-if="topActive == 2">
-            <span>开始：</span>
             <el-date-picker v-model="createTimeStart" type="date">
             </el-date-picker>
-            <span>结束：</span>
+            <span>至</span>
             <el-date-picker v-model="createTimeEnd" type="date">
             </el-date-picker>
           </div>
@@ -69,7 +68,7 @@
           <el-table-column show-overflow-tooltip label="备注信息" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="操作" align="center" width="180">
+          <el-table-column label="操作" align="center" width="180" v-if="topActive==1">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)">修改</span>
@@ -109,34 +108,40 @@
           <span class="tr" @click="closeChange1">关闭</span>
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="委托编号：">
+            <el-input v-model="formInline.orderno" placeholder="委托编号"></el-input>
+          </el-form-item>
+          <el-form-item label="买卖方向：">
+            <el-select v-model="formInline.subtype" :disabled="true">
+              <el-option v-for="(item,index) in subtypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="会员ID：">
             <el-input v-model="formInline.accountCode" :disabled="true" placeholder="会员ID"></el-input>
           </el-form-item>
-          <el-form-item label="会员名称：">
-            <el-input v-model="formInline.accountName" :disabled="true" placeholder="会员名称"></el-input>
+          <el-form-item label="股票代码：">
+            <el-input v-model="formInline.stockno" :disabled="true" placeholder="股票代码"></el-input>
           </el-form-item>
-          <el-form-item label="调整类型：" v-if="addTitle=='调整资金'">
-            <el-select v-model="formInline.adjustmentType">
-              <el-option v-for="(item,index) in setArray" :key="index" :label="item.value" :value="item.key"></el-option>
+          <el-form-item label="委托数量：">
+            <el-input v-model="formInline.stockcnt" :disabled="true" placeholder="委托数量"></el-input>
+          </el-form-item>
+          <el-form-item label="委托价格：">
+            <el-input v-model="formInline.entrustprice" :disabled="true" placeholder="委托价格"></el-input>
+          </el-form-item>
+          <el-form-item label="成交数量：">
+            <el-input v-model="formInline.dealcnt" placeholder="成交数量"></el-input>
+          </el-form-item>
+          <el-form-item label="成交价格：">
+            <el-input v-model="formInline.dealavrprice" placeholder="成交价格"></el-input>
+          </el-form-item>
+          <el-form-item label="委托状态：">
+            <el-select v-model="formInline.updateEntruststatus">
+              <el-option v-for="(item,index) in updateEntruststatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="金额：" v-if="addTitle=='调整资金'">
-            <el-input v-model="formInline.money" placeholder="金额"></el-input>
-          </el-form-item>
-          <el-form-item label="备注：" v-if="addTitle=='调整资金'">
-            <el-input v-model="formInline.remark" placeholder="备注"></el-input>
-          </el-form-item>
-          <el-form-item label="策略倍数：" v-if="addTitle=='增配资金'">
-            <el-select v-model="formInline.financeRatio">
-              <el-option v-for="(item,index) in financeRatioList" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="劣后资金：" v-if="addTitle=='增配资金'">
-            <el-input v-model="formInline.amount" placeholder="劣后资金"></el-input>
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
+            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
             <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
@@ -187,57 +192,30 @@ export default {
           value: "委托延迟"
         }
       ],
+      formInline: {
+        pkorder: "",
+        orderno: "",
+        subtype: "",
+        accountcode: "",
+        stockno: "",
+        stockcnt: "",
+        entrustprice: "",
+        dealcnt: "",
+        dealavrprice: "",
+        updateEntruststatus: ""
+      },
+      updateEntruststatusList: [
+        { key: 5, value: "部成已撤" },
+        { key: 6, value: "已撤" },
+        { key: 8, value: "已成" },
+        { key: 9, value: "废单" }
+      ],
       checkList: [],
       createTimeStart: "2020-10-21",
       createTimeEnd: "2020-10-21",
       topActive: 1,
-      setArray: [
-        {
-          key: 0,
-          value: "减少可用资金"
-        },
-        {
-          key: 1,
-          value: "增加可用资金"
-        },
-        {
-          key: 2,
-          value: "减少账户余额"
-        },
-        {
-          key: 3,
-          value: "增加账户余额"
-        }
-      ],
       changeNow: false,
-      addTitle: "调整资金",
-      formInline: {
-        accountCode: "",
-        accountName: "",
-        adjustmentType: "",
-        money: "",
-        remark: "",
-        financeRatio: "",
-        amount: 0
-      },
-      financeRatioList: [
-        {
-          key: 3,
-          value: "3倍"
-        },
-        {
-          key: 5,
-          value: "5倍"
-        },
-        {
-          key: 6,
-          value: "6倍"
-        },
-        {
-          key: 8,
-          value: "8倍"
-        }
-      ]
+      addTitle: "调整资金"
     };
   },
   computed: {
@@ -269,7 +247,11 @@ export default {
     }
   },
   created() {
-    this.getFundAccount("today");
+    if (this.topActive == 1) {
+      this.getFundAccount("today");
+    } else {
+      this.getFundAccount();
+    }
   },
   methods: {
     handleCheckedCitiesChange(value) {
@@ -287,43 +269,14 @@ export default {
     closeChange1() {
       this.changeNow = false;
     },
-    onSubmitChange1(formName) {
-      this.axios
-        .post("/tn/mgr-api/account/deposit", {
-          accountCode: this.formInline.accountCode,
-          amount: this.formInline.amount,
-          financeRatio: this.formInline.financeRatio
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     onSubmitChange(formName) {
       this.axios
-        .post("/tn/mgr-api/account/adjustment", {
-          accountCode: this.formInline.accountCode,
-          accountName: this.formInline.accountName,
-          adjustmentType: this.formInline.adjustmentType,
-          money: this.formInline.money,
-          remark: this.formInline.remark
+        .post("/tn/mgr-api/itg/orderCtrl/UPDATE", {
+          pkorder: this.formInline.pkorder,
+          orderno: this.formInline.orderno,
+          dealcnt: this.formInline.dealcnt,
+          dealavrprice: this.formInline.dealavrprice,
+          updateEntruststatus: this.formInline.updateEntruststatus
         })
         .then(res => {
           console.log("getFundAccount>>", res.data);
@@ -334,7 +287,7 @@ export default {
               type: "success"
             });
             this.changeNow = false;
-            this.getFundAccount();
+            this.getFundAccount("today");
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -353,11 +306,17 @@ export default {
     },
     set1(index, row) {
       this.changeNow = true;
-      this.addTitle = "调整资金";
-      console.log("我啊", row);
-      this.formInline.accountCode = row.accountCode;
-      this.formInline.accountName = row.accountName;
-      this.formInline.adjustmentType = 3;
+      this.addTitle = "修改";
+      this.formInline.pkorder = row.pkorder;
+      this.formInline.orderno = row.orderno;
+      this.formInline.subtype = row.subtype;
+      this.formInline.accountcode = row.accountcode;
+      this.formInline.stockno = row.stockno;
+      this.formInline.stockcnt = row.stockcnt;
+      this.formInline.entrustprice = row.entrustprice;
+      this.formInline.dealcnt = row.dealcnt;
+      this.formInline.dealavrprice = row.dealavrprice;
+      this.formInline.updateEntruststatus = row.entruststatusDesc;
     },
     search() {
       if (this.topActive == 1) {
