@@ -9,9 +9,38 @@
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
+          <el-form :inline="true">
+            <el-form-item label="买卖方向：">
+              <el-select v-model="subtype">
+                <el-option v-for="(item,index) in subtypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <!--搜索框-->
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入会员名称" v-model="accountName" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入委托编号" v-model="orderno" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div style="width:300px;float:left;" v-if="topActive == 1">
+            <el-checkbox-group v-model="checkList" @change="handleCheckedCitiesChange">
+              <el-checkbox v-for="(item,index) in entruststatusListList" :key="index" :label="item.key">{{item.value}}</el-checkbox>
+            </el-checkbox-group>
+          </div>
+          <div class="search-boxv" v-if="topActive == 2">
+            <span>开始：</span>
+            <el-date-picker v-model="createTimeStart" type="date">
+            </el-date-picker>
+            <span>结束：</span>
+            <el-date-picker v-model="createTimeEnd" type="date">
+            </el-date-picker>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
@@ -44,6 +73,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)">修改</span>
+                <span v-if="scope.row.entruststatus!= 6">ITG撤单</span>
               </div>
             </template>
           </el-table-column>
@@ -134,10 +164,30 @@ export default {
       accountCode: "",
       order: "",
       subtype: "",
+      subtypeList: [
+        { key: "1", value: "买入" },
+        { key: "2", value: "卖出" },
+        { key: "", value: "所有" }
+      ],
       queryChild: "",
       accountName: "",
       orderno: "",
       entruststatusList: "",
+      entruststatusListList: [
+        {
+          key: "S,0,1,2,3,4,7,W,C",
+          value: "委托可撤"
+        },
+        {
+          key: "9,A,O,E",
+          value: "委托失败"
+        },
+        {
+          key: "S",
+          value: "委托延迟"
+        }
+      ],
+      checkList: [],
       createTimeStart: "2020-10-21",
       createTimeEnd: "2020-10-21",
       topActive: 1,
@@ -222,6 +272,10 @@ export default {
     this.getFundAccount("today");
   },
   methods: {
+    handleCheckedCitiesChange(value) {
+      this.entruststatusList = value.join(",");
+      console.log("最终的", this.entruststatusList);
+    },
     activeNow(num) {
       this.topActive = num;
       if (num == 1) {
@@ -306,7 +360,11 @@ export default {
       this.formInline.adjustmentType = 3;
     },
     search() {
-      this.getFundAccount();
+      if (this.topActive == 1) {
+        this.getFundAccount("today");
+      } else {
+        this.getFundAccount();
+      }
     },
     exportExcel() {
       let url;
