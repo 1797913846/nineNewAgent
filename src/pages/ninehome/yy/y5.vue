@@ -188,7 +188,7 @@ export default {
       this.axios({
         method: "post",
         responseType: "arraybuffer",
-        url: "/tn/mgr-api/account/holdDetail/export",
+        url: "/tn/mgr-api/account/dealDetail/export",
         data: {}
       }).then(
         res => {
