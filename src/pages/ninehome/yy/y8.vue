@@ -3,8 +3,9 @@
   <div class="bigestbox">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
-      <div class="title" @click="setset">批量转账户余额</div>
+      
       <div class="template-top">
+        <div class="title" @click="setset">批量转账户余额</div>
         <div class="operate-btn">
           <el-form :inline="true">
             <el-form-item label="是否结算：">
@@ -63,6 +64,22 @@
       </div>
       <div class="pagination">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
+    </div>
+    <div class="addForm" v-if="msg==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">提示信息</span>
+          <span class="tr" @click="closeMsg">关闭</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <span>确认转入账户余额？</span>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitMsg">保存</el-button>
+            <el-button type="primary" @click="closeMsg">取消</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
@@ -128,7 +145,8 @@ export default {
       changeNow: false,
       addTitle: "调整资金",
       list: [],
-      settleType: "BALANCE"
+      settleType: "",
+      msg: false
     };
   },
   computed: {
@@ -163,8 +181,39 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    closeMsg() {
+      this.msg = false;
+    },
     setset() {
-      
+      this.msg = true;
+    },
+    onSubmitMsg() {
+      this.axios
+        .post("/tn/mgr-api/account/commission/settle", {
+          list: this.list,
+          settleType: "BALANCE"
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.msg = false;
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     handleSelectionChange(val) {
       console.log("勾选的", val);

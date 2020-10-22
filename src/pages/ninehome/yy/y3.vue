@@ -320,7 +320,7 @@ export default {
           console.log(err);
         });
     },
-    onSubmitMsg(formName) {
+    onSubmitMsg() {
       this.axios
         .post("/tn/mgr-api/history/entrustCancel", {
           appointPkOrder: this.formInline.pkorder
