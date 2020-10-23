@@ -72,7 +72,7 @@
           <span class="tl">提示信息</span>
           <span class="tr" @click="closeMsg">关闭</span>
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+        <el-form :inline="true" ref="formInline" class="demo-form-inline">
           <span>确认转入账户余额？</span>
           <br />
           <el-form-item>
@@ -217,6 +217,7 @@ export default {
     },
     handleSelectionChange(val) {
       console.log("勾选的", val);
+      this.list=[];
       val.map(item => {
         this.list.push(item.id);
       });
