@@ -136,6 +136,12 @@ export default {
     console.log("我是当前路由", this.where);
   },
   watch: {
+    $route(to, from) {
+      console.log("to", to, "from", from);
+      if (to.path == "/ninehome/money") {
+        this.whichIndex = "5-1";
+      }
+    },
     where: {
       handler(newVal, oldVal) {
         switch (newVal) {

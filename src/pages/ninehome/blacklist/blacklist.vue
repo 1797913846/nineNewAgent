@@ -20,6 +20,9 @@
           <el-upload class="upload-demo" action="http://10.10.1.26:8080/tn/mgr-api/tntg/stockBlack/batch-add" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
             <div class="search-user">导入</div>
           </el-upload>
+           <!-- <el-upload class="upload-demo" action="http://127.0.0.1/tn/mgr-api/tntg/stockBlack/batch-add" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
+            <div class="search-user">导入</div>
+          </el-upload> -->
         </div>
       </div>
       <!--表格-->

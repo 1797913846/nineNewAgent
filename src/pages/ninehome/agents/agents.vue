@@ -29,7 +29,7 @@
                 <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
                 <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
                 <span @click.stop="look(scope.$index,scope.row)">查看</span>
-                <span>资金</span>
+                <span @click.stop="money(scope.$index,scope.row)">资金</span>
               </div>
             </template>
           </el-table-column>
@@ -487,6 +487,15 @@ export default {
     this.userName = localStorage.getItem("userName");
   },
   methods: {
+    money(index, row) {
+      let accountId = row.accountId;
+      this.$router.push({
+        path: "/ninehome/money",
+        query: {
+          accountId: accountId
+        }
+      });
+    },
     exportExcel() {
       this.axios({
         method: "post",

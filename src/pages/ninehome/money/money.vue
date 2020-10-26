@@ -198,6 +198,8 @@ export default {
     }
   },
   created() {
+    console.log("是我", this.$route.query);
+    this.accountCode = this.$route.query.accountId || "";
     this.getFundAccount();
   },
   methods: {
