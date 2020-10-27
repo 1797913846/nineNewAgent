@@ -93,7 +93,7 @@ export default {
       nullTable: false,
       accountCode: "",
       productCode: "",
-      stockCode:"",
+      stockCode: "",
       lastPrice: "",
       setArray: [
         {
@@ -173,6 +173,7 @@ export default {
     }
   },
   created() {
+    this.accountCode = this.$route.query.accountId || "";
     this.getFundAccount();
   },
   methods: {

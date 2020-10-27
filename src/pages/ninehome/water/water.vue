@@ -14,24 +14,32 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <el-form :inline="true">
-            <el-form-item label="类型：">
-              <el-select v-model="type">
-                <el-option v-for="(item,index) in typeList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="标的：">
-              <el-select v-model="source">
-                <el-option v-for="(item,index) in sourceList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="selectbox">
+              <el-form-item label="类型：">
+                <el-select v-model="type">
+                  <el-option v-for="(item,index) in typeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="selectbox">
+              <el-form-item label="标的：">
+                <el-select v-model="source">
+                  <el-option v-for="(item,index) in sourceList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </el-form>
           <div class="search-boxv">
-            <span>开始：</span>
-            <el-date-picker v-model="createTimeStart" type="date">
-            </el-date-picker>
-            <span>结束：</span>
-            <el-date-picker v-model="createTimeEnd" type="date">
-            </el-date-picker>
+            <span class="bu"> 从：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeStart" type="date">
+              </el-date-picker>
+            </div>
+            <span class="bu">&nbsp; 至：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeEnd" type="date">
+              </el-date-picker>
+            </div>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>

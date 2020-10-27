@@ -10,11 +10,13 @@
       <div class="template-top">
         <div class="operate-btn">
           <el-form :inline="true">
-            <el-form-item label="买卖方向：">
-              <el-select v-model="bstype">
-                <el-option v-for="(item,index) in subtypeList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="selectbox">
+              <el-form-item label="买卖方向：">
+                <el-select v-model="bstype">
+                  <el-option v-for="(item,index) in subtypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </el-form>
           <!--搜索框-->
           <div class="search-box">

@@ -13,20 +13,26 @@
             <input type="text" placeholder="请输入产品名称" v-model="accountName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <el-form :inline="true">
-            <el-form-item label="审核状态：">
-              <el-select v-model="auditResult">
-                <el-option v-for="(item,index) in auditResultList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
+          <div class="selectbox">
+            <el-form :inline="true">
+              <el-form-item label="审核状态：">
+                <el-select v-model="auditResult">
+                  <el-option v-for="(item,index) in auditResultList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </div>
           <div class="search-boxv">
-            <span>开始：</span>
-            <el-date-picker v-model="createTimeStart" type="date">
-            </el-date-picker>
-            <span>结束：</span>
-            <el-date-picker v-model="createTimeEnd" type="date">
-            </el-date-picker>
+            <span class="bu"> 从：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeStart" type="date">
+              </el-date-picker>
+            </div>
+            <span class="bu">&nbsp; 至：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeEnd" type="date">
+              </el-date-picker>
+            </div>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>

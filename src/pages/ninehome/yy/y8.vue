@@ -3,21 +3,25 @@
   <div class="bigestbox">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
-      
+
       <div class="template-top">
-        <div class="title" @click="setset">批量转账户余额</div>
+        <div class="title" @click="setset" style="padding-left:5px;padding-right:5px;">批量转账户余额</div>
         <div class="operate-btn">
           <el-form :inline="true">
-            <el-form-item label="是否结算：">
-              <el-select v-model="isSettled">
-                <el-option v-for="(item,index) in isSettledList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="结算方式：">
-              <el-select v-model="settleType">
-                <el-option v-for="(item,index) in settleTypeList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
+            <div class="selectbox">
+              <el-form-item label="是否结算：">
+                <el-select v-model="isSettled">
+                  <el-option v-for="(item,index) in isSettledList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="selectbox">
+              <el-form-item label="结算方式：">
+                <el-select v-model="settleType">
+                  <el-option v-for="(item,index) in settleTypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </div>
           </el-form>
           <div class="search-box1">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
@@ -28,11 +32,16 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-boxv">
-            <el-date-picker v-model="dealDateStart" type="date">
-            </el-date-picker>
-            <span>至</span>
-            <el-date-picker v-model="dealDateEnd" type="date">
-            </el-date-picker>
+            <span class="bu"> 从：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="dealDateStart" type="date">
+              </el-date-picker>
+            </div>
+            <span class="bu">&nbsp; 至：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="dealDateEnd" type="date">
+              </el-date-picker>
+            </div>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
@@ -217,7 +226,7 @@ export default {
     },
     handleSelectionChange(val) {
       console.log("勾选的", val);
-      this.list=[];
+      this.list = [];
       val.map(item => {
         this.list.push(item.id);
       });

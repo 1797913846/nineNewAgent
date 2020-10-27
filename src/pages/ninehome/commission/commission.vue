@@ -284,7 +284,7 @@ export default {
         .then(res => {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
-            // this.getFundAccount();
+            this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",

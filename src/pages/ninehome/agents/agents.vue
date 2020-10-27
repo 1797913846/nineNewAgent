@@ -500,7 +500,7 @@ export default {
       this.axios({
         method: "post",
         responseType: "arraybuffer",
-        url: "/tn/mgr-api/account/accountList/export",
+        url: "/tn/mgr-api/account/agent/agentList/export",
         data: {}
       }).then(
         res => {

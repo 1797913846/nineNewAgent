@@ -17,13 +17,15 @@
             <input type="text" placeholder="请输入股票代码" v-model="stockNo" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <el-form :inline="true">
-            <el-form-item label="融资方式：">
-              <el-select v-model="financePeriod">
-                <el-option v-for="(item,index) in financePeriodList" :key="index" :label="item.value" :value="item.key"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
+          <div class="selectbox">
+            <el-form :inline="true">
+              <el-form-item label="融资方式：">
+                <el-select v-model="financePeriod">
+                  <el-option v-for="(item,index) in financePeriodList" :key="index" :label="item.value" :value="item.key"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
         </div>

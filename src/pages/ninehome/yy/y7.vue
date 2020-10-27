@@ -14,11 +14,16 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-boxv">
-            <el-date-picker v-model="createTimeStart" type="date">
-            </el-date-picker>
-            <span>至</span>
-            <el-date-picker v-model="createTimeEnd" type="date">
-            </el-date-picker>
+            <span class="bu"> 从：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeStart" type="date">
+              </el-date-picker>
+            </div>
+            <span class="bu">&nbsp; 至：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeEnd" type="date">
+              </el-date-picker>
+            </div>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>

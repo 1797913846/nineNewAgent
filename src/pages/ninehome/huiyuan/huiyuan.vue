@@ -82,9 +82,14 @@
                     <el-form-item label="代理名称：">
                         <el-input v-model="formInline.accountName" :disabled="true" placeholder="代理名称"></el-input>
                     </el-form-item>
-                    <el-form-item label="产品：">
+                    <!-- <el-form-item label="产品：">
                         <el-select v-model="formInline.productCode" :disabled="true">
                             <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+                        </el-select>
+                    </el-form-item> -->
+                    <el-form-item label="资金池ID：">
+                        <el-select v-model="formInline.groupId" :disabled="true">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="代理等级：">
@@ -187,11 +192,16 @@
                     <el-form-item label="代理名称：">
                         <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
                     </el-form-item>
-                    <el-form-item label="产品：">
+                    <el-form-item label="资金池ID：">
+                        <el-select v-model="formInline.groupId">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="产品：">
                         <el-select v-model="formInline.productCode">
                             <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
                         </el-select>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="代理等级：">
                         <el-select v-model="formInline.level">
                             <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
@@ -304,9 +314,14 @@
                     <el-form-item label="代理名称：">
                         <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
                     </el-form-item>
-                    <el-form-item label="产品：">
+                    <!-- <el-form-item label="产品：">
                         <el-select v-model="formInline.productCode">
                             <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+                        </el-select>
+                    </el-form-item> -->
+                    <el-form-item label="资金池ID：">
+                        <el-select v-model="formInline.groupId">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="代理等级：">
@@ -415,6 +430,7 @@ export default {
         accountId: "",
         accountName: "",
         productCode: "",
+        groupId: "",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
@@ -457,7 +473,8 @@ export default {
       inviteCode: "",
       inviteCodeUrl: "",
       showQrcode: false,
-      showQrcode1: false
+      showQrcode1: false,
+      groupIdList: []
     };
   },
   computed: {
@@ -483,6 +500,7 @@ export default {
   created() {
     this.getFundAccount();
     this.getMsg();
+    this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
   },
@@ -579,6 +597,24 @@ export default {
     mouseOut() {
       this.showQrcode = false;
     },
+    getGroupIdList() {
+      this.axios
+        .post("/tn/mgr-api/account/fund-list")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.groupIdList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getMsg() {
       this.axios
         .post("/tn/mgr-api/account/agent/edit-pre")
@@ -647,7 +683,8 @@ export default {
         .post("/tn/mgr-api/account/save", {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
-          productCode: this.formInline.productCode,
+          //   productCode: this.formInline.productCode,
+          groupId: this.formInline.groupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -685,7 +722,8 @@ export default {
         .post("/tn/mgr-api/account/update", {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
-          productCode: this.formInline.productCode,
+          //   productCode: this.formInline.productCode,
+          groupId: this.formInline.groupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -781,7 +819,7 @@ export default {
         agentId = "";
       }
       this.axios
-        .post("/tn/mgr-api/account/agent/agentList", {
+        .post("/tn/mgr-api/account/agentList", {
           accountId: agentId,
           accountName: agentName,
           pageSize: this.pageSize,

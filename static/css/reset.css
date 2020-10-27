@@ -791,3 +791,25 @@ input:-ms-input-placeholder {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/*补充*/
+
+.selectbox {
+    height: 41px;
+    line-height: 41px;
+    float: left;
+}
+
+.selectbox .el-form--inline .el-form-item__content {
+    vertical-align: middle!important;
+}
+
+.selectbox .el-input__inner {
+    height: 39px!important;
+    line-height: 39px!important;
+    border-radius: 4px!important;
+}
+
+.bu {
+    float: left;
+}

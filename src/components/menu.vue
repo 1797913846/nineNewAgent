@@ -141,6 +141,9 @@ export default {
       if (to.path == "/ninehome/money") {
         this.whichIndex = "5-1";
       }
+      if (to.path == "/ninehome/y1") {
+        this.whichIndex = "7-1";
+      }
     },
     where: {
       handler(newVal, oldVal) {
@@ -323,7 +326,7 @@ export default {
   margin-right: 20px;
 }
 .logo {
-  width: 230px;
+  width:230px;
   height: 75px;
   border-bottom: 1px solid #ccc;
   line-height: 75px;

@@ -21,9 +21,9 @@
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span>资金</span>
-                <span>持仓</span>
-                <span v-if="(scope.row.totalScale - scope.row.cordonLine) < 0 || (scope.row.totalScale - scope.row.flatLine) < 0">平仓</span>
+                <span @click.stop="money(scope.$index,scope.row)">资金</span>
+                <span @click.stop="y1(scope.$index,scope.row)">持仓</span>
+                <span @click.stop="ping(scope.$index, scope.row)" v-if="(scope.row.totalScale - scope.row.cordonLine) < 0 || (scope.row.totalScale - scope.row.flatLine) < 0">平仓</span>
               </div>
             </template>
           </el-table-column>
@@ -99,6 +99,51 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    ping(index, row) {
+      this.axios
+        .post("/tn/mgr-api/account/closePosition", {
+          accountCode: row.accountCode
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert("平仓成功", "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.changeNow = false;
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    money(index, row) {
+      let accountId = row.accountId;
+      this.$router.push({
+        path: "/ninehome/money",
+        query: {
+          accountId: accountId
+        }
+      });
+    },
+    y1(index, row) {
+      let accountId = row.accountId;
+      this.$router.push({
+        path: "/ninehome/y1",
+        query: {
+          accountId: accountId
+        }
+      });
+    },
     exportExcel() {
       this.axios({
         method: "post",
