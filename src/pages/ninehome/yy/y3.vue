@@ -109,7 +109,7 @@
           <span class="tr" @click="closeMsg">关闭</span>
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <span>pk:{{formInline.pkorder}}确认是否撤销该笔委托？</span>
+          <span class="lmsg">pk : {{formInline.pkorder}}确认是否撤销该笔委托？</span>
           <br />
           <el-form-item>
             <el-button type="primary" @click="onSubmitMsg">保存</el-button>
@@ -506,6 +506,12 @@ export default {
 .addContent .title .tr {
   float: right;
   cursor: pointer;
+}
+.addContent .lmsg {
+  font-size: 16px;
+  color:#000;
+  display: inline-block;
+  padding-bottom:20px;
 }
 .navNav {
   margin-left: 24px;
