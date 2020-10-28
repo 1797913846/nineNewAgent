@@ -13,8 +13,8 @@ import router from './router'
 axios.defaults.timeout = 5000;
 //设置接口的域名
 //10.10.1.26  120.26.187.19
-let burl = 'http://10.10.1.26:8080';
-// let burl='http://127.0.0.1';
+// let burl = 'http://10.10.1.26:8080';
+let burl='http://47.102.151.13';
 axios.defaults.baseURL = burl;
 
 console.log('axios', axios.defaults.baseURL)

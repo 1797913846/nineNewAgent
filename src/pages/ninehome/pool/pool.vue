@@ -61,11 +61,20 @@
           </el-form-item>
           <div class="codebox">
             <span class="codetitle">资金账号：</span>
-            <div class="checkbox">
+            <div class="selectMoney">
+              <div class="s1">
+                <el-select placeholder="请选择资金账号" v-model="selectValue" :clearable="true">
+                  <el-option v-for="item in productList" :key="item.value" :label="item.productname" :value="item.productcode" :disabled="item.fundPoolChecked==1">
+                  </el-option>
+                </el-select>
+              </div>
+              <div class="s2" @click="addSelectMoney">添加</div>
+            </div>
+            <!-- <div class="checkbox">
               <el-checkbox-group v-model="checkList" align="left" @change="handleCheckedCitiesChange">
                 <el-checkbox v-for="(item,index) in productList" :key="index" :label="item.productcode">{{item.productname}}</el-checkbox>
               </el-checkbox-group>
-            </div>
+            </div> -->
           </div>
           <div class="buybox" v-if="accountGroup.length>0">
             <div class="buytitle">买入优先级：</div>
@@ -79,14 +88,15 @@
                   </template>
                 </el-table-column>
                 <el-table-column show-overflow-tooltip label="资金账号" prop="productCode" align="center"></el-table-column>
-                <!-- <el-table-column label="操作" align="center" width="180">
+                <el-table-column show-overflow-tooltip label="状态" :formatter="formatter" prop="enable" align="center"></el-table-column>
+                <el-table-column label="操作" align="center" width="180">
                   <template slot-scope="scope">
                     <div class="operation">
-                      <span @click.stop="set1(scope.$index,scope.row)">保存</span>
-                      <span @click.stop="set2(scope.$index, scope.row)">修改</span>
+                      <span v-if="scope.row.enable==false" style="margin-left:20px;" @click.stop="changeUse(scope.$index,scope.row)">启用</span>
+                      <span v-if="scope.row.enable==true" style="margin-left:20px;" @click.stop="changeUse(scope.$index,scope.row)">禁用</span>
                     </div>
                   </template>
-                </el-table-column> -->
+                </el-table-column>
               </el-table>
             </div>
           </div>
@@ -149,11 +159,14 @@ export default {
       productPool: "",
       productList: "",
       checkList: [],
+      selectValue: "",
+      selectlist: [],
       levelName: "",
       formInline: {},
       accountGroup: [],
       realAccountGroup: [],
-      oldCheckList: []
+      oldCheckList: [],
+      oldSelectList: []
     };
   },
   computed: {
@@ -176,20 +189,39 @@ export default {
     }
   },
   watch: {
-    checkList: {
+    // checkList: {
+    //   handler(newVal, oldVal) {
+    //     if (this.addTitle == "新增") {
+    //       this.accountGroup = [];
+    //       newVal.map(item => {
+    //         this.accountGroup.push({
+    //           priority: 0,
+    //           productCode: item
+    //         });
+    //       });
+    //       this.realAccountGroup = this.accountGroup;
+    //     } else if (this.addTitle == "修改") {
+    //       console.log("新旧", newVal, oldVal);
+    //       this.oldCheckList = oldVal;
+    //     }
+    //   },
+    //   deep: true
+    // },
+    selectlist: {
       handler(newVal, oldVal) {
         if (this.addTitle == "新增") {
           this.accountGroup = [];
           newVal.map(item => {
             this.accountGroup.push({
               priority: 0,
-              productCode: item
+              productCode: item,
+              enable: true
             });
           });
           this.realAccountGroup = this.accountGroup;
         } else if (this.addTitle == "修改") {
           console.log("新旧", newVal, oldVal);
-          this.oldCheckList = oldVal;
+          this.oldSelectList = oldVal;
         }
       },
       deep: true
@@ -205,8 +237,67 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    unique(a) {
+      var res = a.filter(function(item, index, array) {
+        return array.indexOf(item) === index;
+      });
+      return res;
+    },
+    formatter(row, column) {
+      if (row) {
+        let enable = row.enable;
+        switch (enable) {
+          case true:
+            return "已启用";
+          case false:
+            return "已禁用";
+        }
+      }
+    },
+    changeUse(index, row) {
+      console.log("使用", index, row);
+      let enable = row.enable;
+      enable = !enable;
+      this.accountGroup.map(item => {
+        if (item == row) {
+          item.enable = enable;
+        }
+      });
+      this.realAccountGroup = this.accountGroup;
+    },
+    addSelectMoney() {
+      console.log("对的", this.selectValue);
+      this.selectlist.push(this.selectValue);
+      this.selectlist = this.unique(this.selectlist);
+      console.log("后面的数组", this.selectlist);
+
+      // if (this.addTitle == "修改") {
+      //   console.log("我变了", this.selectlist);
+      //   let dif = this.getArrDifference(this.selectlist, this.oldSelectList);
+      //   if (this.selectlist.length > this.oldSelectList.length) {
+      //     dif.map(item => {
+      //       this.accountGroup.push({
+      //         priority: 0,
+      //         productCode: item
+      //       });
+      //     });
+      //   } else if (this.addTitle == "新增") {
+      //     console.log("我是dif", dif);
+      //     this.accountGroup.map((item, index) => {
+      //       if (item.productCode == dif[0]) {
+      //         this.accountGroup.splice(index, 1);
+      //         // this.accountGroup.delete(item);
+      //       }
+      //     });
+      //   }
+      // }
+    },
     add() {
       this.addBool = true;
+      this.levelName="";
+      this.selectValue="";
+      this.groupName = "";
+      this.selectlist = [];
       this.getContent(0);
       this.addTitle = "新增";
     },
@@ -220,59 +311,50 @@ export default {
       this.addBool = false;
     },
     saveNow(formName) {
-      console.log("我被勾中了", this.checkList);
-      if (this.checkList.length <= 0) {
-        this.$alert("必须勾选资金账号", "提示", {
+      if (this.realAccountGroup.length <= 0) {
+        this.$alert("请先保存买入优先级", "提示", {
           confirmButtonText: "确定",
           center: true,
           type: "error"
         });
       } else {
-        if (this.realAccountGroup.length <= 0) {
-          this.$alert("请先保存买入优先级", "提示", {
-            confirmButtonText: "确定",
-            center: true,
-            type: "error"
-          });
-        } else {
-          let url, options;
-          if (this.addTitle == "新增") {
-            url = "tn/mgr-api/fund-pool/save";
-            options = {
-              groupName: this.levelName,
-              accountGroup: this.realAccountGroup
-            };
-          } else if (this.addTitle == "修改") {
-            url = "/tn/mgr-api/fund-pool/update";
-            options = {
-              groupId: this.groupId,
-              groupName: this.levelName,
-              accountGroup: this.realAccountGroup
-            };
-          }
-          this.axios
-            .post(url, options)
-            .then(res => {
-              if (res.data.code == 200) {
-                this.$alert(res.data.info, "提示", {
-                  confirmButtonText: "确定",
-                  center: true,
-                  type: "success"
-                });
-                this.getFundAccount();
-                this.addBool = false;
-              } else {
-                this.$alert(res.data.info, "提示", {
-                  confirmButtonText: "确定",
-                  center: true,
-                  type: "error"
-                });
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            });
+        let url, options;
+        if (this.addTitle == "新增") {
+          url = "tn/mgr-api/fund-pool/save";
+          options = {
+            groupName: this.levelName,
+            accountGroup: this.realAccountGroup
+          };
+        } else if (this.addTitle == "修改") {
+          url = "/tn/mgr-api/fund-pool/update";
+          options = {
+            groupId: this.groupId,
+            groupName: this.levelName,
+            accountGroup: this.realAccountGroup
+          };
         }
+        this.axios
+          .post(url, options)
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.getFundAccount();
+              this.addBool = false;
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
     handleCheckedCitiesChange(value) {
@@ -313,21 +395,23 @@ export default {
             this.productList = res.data.data.productList;
             this.realAccountGroup = [];
             this.accountGroup = [];
-            this.checkList = [];
+            // this.checkList = [];
             //修改时候如果是选中的，那复选框就得勾选上
-            this.productList.map(item => {
-              if (item.fundPoolChecked == 1) {
-                this.checkList.push(item.productcode);
-              }
-            });
+            // this.productList.map(item => {
+            //   if (item.fundPoolChecked == 1) {
+            //     this.checkList.push(item.productcode);
+            //   }
+            // });
             this.productPool.accountGroup.map(item => {
               this.realAccountGroup.push({
                 priority: item.priority,
-                productCode: item.productCode
+                productCode: item.productCode,
+                enable: item.enable
               });
               this.accountGroup.push({
                 priority: item.priority,
-                productCode: item.productCode
+                productCode: item.productCode,
+                enable: item.enable
               });
             });
             console.log(
@@ -351,15 +435,16 @@ export default {
     },
     handleSelectionChange(val) {
       console.log(val);
-      let groupIdList = [];
-      val.map(item => {
-        groupIdList.push(item.groupId);
-      });
-      this.groupId = groupIdList;
+      // let groupIdList = [];
+      // val.map(item => {
+      //   groupIdList.push(item.groupId);
+      // });
+      // this.groupId = groupIdList;
     },
     getEdit(index, row) {
       this.addBool = true;
       let groupId = row.groupId;
+      this.groupId = row.groupId;
       this.getContent(groupId);
       this.addTitle = "修改";
     },
@@ -496,10 +581,12 @@ export default {
   cursor: pointer;
 }
 .codebox {
+  overflow: hidden;
 }
 .codetitle {
   font-size: 12px;
   color: #606266;
+  float: left;
 }
 .checkbox {
   width: 390px;
@@ -515,6 +602,25 @@ export default {
   color: #606266;
 }
 .buycontent {
+}
+.selectMoney {
+  float: left;
+}
+.selectMoney .s1 {
+  float: left;
+  margin-left: 12px;
+}
+.selectMoney .s2 {
+  float: left;
+  background-color: #409eff;
+  color: #fff;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 4px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 </style>
 <style>
