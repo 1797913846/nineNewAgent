@@ -88,7 +88,7 @@
                         </el-select>
                     </el-form-item> -->
                     <el-form-item label="资金池ID：">
-                        <el-select v-model="formInline.groupId" :disabled="true">
+                        <el-select v-model="formInline.productGroupId" :disabled="true">
                             <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
                         </el-select>
                     </el-form-item>
@@ -161,6 +161,16 @@
                             <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="代理商添加账户默认资金池：">
+                        <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="代理商添加账户默认佣金方案：">
+                        <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
+                            <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
                     <el-form-item label="创建时间：">
                         <el-input v-model="formInline.createTime" :disabled="true" placeholder="创建时间"></el-input>
                     </el-form-item>
@@ -192,8 +202,18 @@
                     <el-form-item label="代理名称：">
                         <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
                     </el-form-item>
+                    <el-form-item label="代理商添加账户默认资金池：">
+                        <el-select v-model="formInline.defaultChildGroupId">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="代理商添加账户默认佣金方案：">
+                        <el-select v-model="formInline.defaultChildCommissionCfgId">
+                            <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
                     <el-form-item label="资金池ID：">
-                        <el-select v-model="formInline.groupId">
+                        <el-select v-model="formInline.productGroupId">
                             <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
                         </el-select>
                     </el-form-item>
@@ -271,6 +291,16 @@
                             <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="代理商添加账户默认资金池：">
+                        <el-select v-model="formInline.defaultChildGroupId">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="代理商添加账户默认佣金方案：">
+                        <el-select v-model="formInline.defaultChildCommissionCfgId">
+                            <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
                     <br />
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
@@ -320,7 +350,7 @@
                         </el-select>
                     </el-form-item> -->
                     <el-form-item label="资金池ID：">
-                        <el-select v-model="formInline.groupId">
+                        <el-select v-model="formInline.productGroupId">
                             <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
                         </el-select>
                     </el-form-item>
@@ -393,6 +423,16 @@
                             <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
                         </el-select>
                     </el-form-item>
+                    <el-form-item label="代理商添加账户默认资金池：">
+                        <el-select v-model="formInline.defaultChildGroupId">
+                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="代理商添加账户默认佣金方案：">
+                        <el-select v-model="formInline.defaultChildCommissionCfgId">
+                            <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                        </el-select>
+                    </el-form-item>
                     <br />
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit2('formInline')">保存</el-button>
@@ -430,7 +470,7 @@ export default {
         accountId: "",
         accountName: "",
         productCode: "",
-        groupId: "",
+        productGroupId: "",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
@@ -452,7 +492,9 @@ export default {
         createTime: "",
         commissionCfgList: [],
         productList: [],
-        agentLevel: []
+        agentLevel: [],
+        defaultChildGroupId: "",
+        defaultChildCommissionCfgId: ""
       },
       orderPermissionList: [
         { key: 0, value: "可买卖" },
@@ -684,7 +726,7 @@ export default {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
           //   productCode: this.formInline.productCode,
-          groupId: this.formInline.groupId,
+          productGroupId: this.formInline.productGroupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -694,7 +736,10 @@ export default {
           manageFeeRate: this.formInline.manageFeeRate,
           manageMakeFeeRate: this.formInline.manageMakeFeeRate,
           orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus
+          accountStatus: this.formInline.accountStatus,
+          defaultChildGroupId: this.formInline.defaultChildGroupId,
+          defaultChildCommissionCfgId: this.formInline
+            .defaultChildCommissionCfgId
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -723,7 +768,7 @@ export default {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
           //   productCode: this.formInline.productCode,
-          groupId: this.formInline.groupId,
+          productGroupId: this.formInline.productGroupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -733,7 +778,10 @@ export default {
           manageFeeRate: this.formInline.manageFeeRate,
           manageMakeFeeRate: this.formInline.manageMakeFeeRate,
           orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus
+          accountStatus: this.formInline.accountStatus,
+          defaultChildGroupId: this.formInline.defaultChildGroupId,
+          defaultChildCommissionCfgId: this.formInline
+            .defaultChildCommissionCfgId
         })
         .then(res => {
           if (res.data.code == 200) {
