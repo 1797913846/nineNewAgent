@@ -33,7 +33,7 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <!-- <el-table-column show-overflow-tooltip label="序号" prop="serial" align="center"></el-table-column> -->
+                    <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="等级" prop="level" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="等级名称" prop="levelName" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="代理ID" prop="accountId" align="center"></el-table-column>
@@ -52,7 +52,21 @@
                     <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
-                    <!-- <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" prop="defaultChildGroupText" align="center" width="180"></el-table-column> -->
+                    <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="平仓线(金额)" prop="flatLine" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="警戒线(金额)" prop="cordonLine" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="管理费率" prop="manageFeeRate" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" align="center" width="180">
                         <template slot-scope="scope">
                             {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
@@ -541,8 +555,8 @@ export default {
   },
   watch: {},
   created() {
-    this.getFundAccount();
     this.getMsg();
+    this.getFundAccount();
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
@@ -592,6 +606,21 @@ export default {
         }
       );
     },
+    formattera(row, column) {
+      if (row) {
+        let orderPermission = row.orderPermission;
+        switch (orderPermission) {
+          case 0:
+            return "可买卖";
+          case 1:
+            return "禁买";
+          case 2:
+            return "禁卖";
+          case 3:
+            return "禁买卖";
+        }
+      }
+    },
     formatter(row, column) {
       if (row) {
         let accountStatus = row.accountStatus;
@@ -607,11 +636,6 @@ export default {
         }
       }
     },
-    formattera(row, column) {
-      if (row) {
-      }
-    },
-    formatterb(row, column) {},
     jiaNow() {
       this.jia = true;
       this.addTitle = "添加";
