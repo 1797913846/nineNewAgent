@@ -5,7 +5,7 @@
         <div class="logo">LOGO</div>
         <el-row class="tac">
           <el-col>
-            <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+            <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
               <el-submenu index="1">
                 <template slot="title">
                   <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m2-2.png" alt=""></i>
@@ -15,8 +15,6 @@
                 <el-menu-item-group>
                   <el-menu-item index="1-1" @click="clickJump('/ninehome/commission')">佣金方案配置</el-menu-item>
                   <el-menu-item index="1-2" @click="clickJump('/ninehome/financing')">融资方案配置</el-menu-item>
-                  <el-menu-item index="1-3" @click="clickJump('/ninehome/blacklist')">黑名单配置</el-menu-item>
-                  <el-menu-item index="1-4" @click="clickJump('/ninehome/other')">其他配置</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">
@@ -49,6 +47,8 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
+                  <el-menu-item index="3-2" @click="clickJump('/ninehome/blacklist')">黑名单</el-menu-item>
+                  <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="5">
@@ -154,12 +154,6 @@ export default {
           case "/ninehome/financing":
             this.whichIndex = "1-2";
             break;
-          case "/ninehome/blacklist":
-            this.whichIndex = "1-3";
-            break;
-          case "/ninehome/other":
-            this.whichIndex = "1-4";
-            break;
           case "/ninehome/agents":
             this.whichIndex = "2-1";
             break;
@@ -172,8 +166,11 @@ export default {
           case "/ninehome/account":
             this.whichIndex = "3-1";
             break;
-          case "/ninehome/stocks":
+          case "/ninehome/blacklist":
             this.whichIndex = "3-2";
+            break;
+          case "/ninehome/other":
+            this.whichIndex = "3-3";
             break;
           case "/ninehome/money":
             this.whichIndex = "5-1";
@@ -326,7 +323,7 @@ export default {
   margin-right: 20px;
 }
 .logo {
-  width:230px;
+  width: 230px;
   height: 75px;
   border-bottom: 1px solid #ccc;
   line-height: 75px;

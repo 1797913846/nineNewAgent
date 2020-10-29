@@ -1,4 +1,4 @@
-<!--黑名单配置-->
+<!--黑名单-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>

@@ -71,7 +71,7 @@ const router = new Router({
     {
       path: '/ninehome/blacklist',
       meta: {
-        title: '黑名单配置',
+        title: '黑名单',
         requireAuth: true
       },
       component: ninehomeBlacklist
@@ -79,7 +79,7 @@ const router = new Router({
     {
       path: '/ninehome/other',
       meta: {
-        title: '其他配置',
+        title: '风控设置',
         requireAuth: true
       },
       component: ninehomeOther

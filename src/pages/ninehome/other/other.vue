@@ -1,4 +1,4 @@
-<!--其他配置-->
+<!--风控设置-->
 <template>
   <div class="bigestbox" style="background-color:#fff;">
     <topNav></topNav>
