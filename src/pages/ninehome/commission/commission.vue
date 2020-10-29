@@ -17,9 +17,9 @@
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="cfgName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" prop="singleCommission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="monthCommission" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="合作分成方案" width="420" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="月结方案" prop="monthCommission" :formatter="formatterc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="isDefault" :formatter="formatter" align="center"></el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
@@ -216,6 +216,35 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    formattera(row, column) {
+      return (
+        "交易佣金率：" +
+        row.dayCommission * 1000 +
+        "‰ ; 管理费成交率：" +
+        row.dayManageFeeDealRate * 100 +
+        "%"
+      );
+    },
+    formatterb(row, column) {
+      return (
+        "交易佣金率：" +
+        row.singleCommission * 1000 +
+        "‰ ; 管理费成交率：" +
+        row.singleManageFeeDealRate * 100 +
+        "% ; +盈利分成成交率：" +
+        row.singleDividedRate * 100 +
+        "%"
+      );
+    },
+    formatterc(row, column) {
+      return (
+        "交易佣金率：" +
+        row.monthCommission * 1000 +
+        "‰ ; 管理费成交率：" +
+        row.monthManageFeeDealRate * 100 +
+        "%"
+      );
+    },
     getContent(index, row) {
       this.id = row.id;
       this.axios
