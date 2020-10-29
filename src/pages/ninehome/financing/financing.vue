@@ -40,7 +40,7 @@
             <div class="operation">
               <span @click.stop="getContent(scope.$index, scope.row)">修改</span>
               <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
-              <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
+              <span @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
             </div>
           </template>
         </el-table-column>
