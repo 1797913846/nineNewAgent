@@ -29,7 +29,7 @@
                                 <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
                                 <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
                                 <span @click.stop="look(scope.$index,scope.row)">查看</span>
-                                <span>资金</span>
+                                <!-- <span>资金</span> -->
                             </div>
                         </template>
                     </el-table-column>
@@ -41,17 +41,28 @@
                     <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
-                    <el-table-column label="邀请码" align="center">
+                    <!-- <el-table-column label="邀请码" align="center">
                         <template slot-scope="scope">
                             <img class="smallcode" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
                         </template>
-                    </el-table-column>
+                    </el-table-column> -->
                     <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
+                    <!-- <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" prop="defaultChildGroupText" align="center" width="180"></el-table-column> -->
+                    <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" align="center" width="180">
+                        <template slot-scope="scope">
+                            {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip label="代理商添加账户默认佣金方案" align="center" width="180">
+                        <template slot-scope="scope">
+                            {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="pagination">
@@ -201,16 +212,6 @@
                     </el-form-item>
                     <el-form-item label="代理名称：">
                         <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="代理商添加账户默认资金池：">
-                        <el-select v-model="formInline.defaultChildGroupId">
-                            <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="代理商添加账户默认佣金方案：">
-                        <el-select v-model="formInline.defaultChildCommissionCfgId">
-                            <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
-                        </el-select>
                     </el-form-item>
                     <el-form-item label="资金池ID：">
                         <el-select v-model="formInline.productGroupId">
@@ -547,6 +548,25 @@ export default {
     this.userName = localStorage.getItem("userName");
   },
   methods: {
+    getDefaultGroupName(id) {
+      let a;
+      this.groupIdList.map(item => {
+        if (item.groupId == id) {
+          a = item.groupName;
+        }
+      });
+      return a;
+    },
+    getDefaultGroupName1(id) {
+      let a;
+      console.log("我是", this.commissionCfgList);
+      this.commissionCfgList.map(item => {
+        if (item.id == id) {
+          a = item.cfgName;
+        }
+      });
+      return a;
+    },
     exportExcel() {
       this.axios({
         method: "post",
@@ -587,6 +607,11 @@ export default {
         }
       }
     },
+    formattera(row, column) {
+      if (row) {
+      }
+    },
+    formatterb(row, column) {},
     jiaNow() {
       this.jia = true;
       this.addTitle = "添加";
