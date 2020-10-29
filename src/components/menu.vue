@@ -14,7 +14,7 @@
                 </template>
                 <el-menu-item-group>
                   <el-menu-item index="1-1" @click="clickJump('/ninehome/commission')">佣金方案配置</el-menu-item>
-                  <el-menu-item index="1-2" @click="clickJump('/ninehome/financing')">融资方案配置</el-menu-item>
+                  <el-menu-item index="1-2" @click="clickJump('/ninehome/financing')">资金方案配置</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="2">

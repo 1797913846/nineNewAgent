@@ -63,7 +63,7 @@ const router = new Router({
     {
       path: '/ninehome/financing',
       meta: {
-        title: '融资方案配置',
+        title: '资金方案配置',
         requireAuth: true
       },
       component: ninehomeFinancing
