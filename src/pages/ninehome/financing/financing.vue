@@ -1,10 +1,10 @@
-<!--融资方案配置-->
+<!--资金方案配置-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
-        <div class="title" @click="refresh">刷新</div>
+        <div class="title" @click="addNow">添加</div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
@@ -76,7 +76,7 @@
             <el-input v-model="formInline.makeFeeRate" placeholder="建仓费率"></el-input>
           </el-form-item>
           <el-form-item label="利润分成比例：">
-            <el-input v-model="formInline.separateFeeRate" :disabled="true" placeholder="利润分成比例"></el-input>
+            <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="利润分成比例"></el-input>
           </el-form-item>
           <el-form-item label="警戒线比率：">
             <el-input v-model="formInline.cordonLineRate" placeholder="警戒线比率"></el-input>
@@ -215,6 +215,21 @@ export default {
           return false;
         }
       });
+    },
+    addNow() {
+      this.showAdd = true;
+      this.addTitle = "新增";
+      this.formInline.financePeriod = "";
+      this.formInline.financeRatio = "";
+      this.formInline.financeFeeRate = "";
+      this.formInline.makeFeeRate = "";
+      this.formInline.separateFeeRate = "";
+      this.formInline.cordonLineRate = "";
+      this.formInline.flatLineRate = "";
+      this.formInline.positionRatio = "";
+      this.formInline.secondBoardPositionRatio = "";
+      this.formInline.thirdBoardPositionRatio = "";
+      this.id = "";
     },
     getContent(index, row) {
       this.id = row.id;
