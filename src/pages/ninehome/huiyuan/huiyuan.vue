@@ -23,13 +23,15 @@
             <div class="reset-scroll-style">
                 <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
                     <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-                    <el-table-column label="操作" align="center" width="280">
+                    <el-table-column label="操作" align="center" width="400">
                         <template slot-scope="scope">
                             <div class="operation">
                                 <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
                                 <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
                                 <span @click.stop="look(scope.$index,scope.row)">查看</span>
-                                <!-- <span>资金</span> -->
+                                <span @click.stop="money(scope.$index,scope.row)">资金</span>
+                                <span v-if="scope.row.accountStatus == 2 || scope.row.balance < 0" @click.stop="ping(scope.$index,scope.row)">平仓</span>
+                                <span @click.stop="changeWho(scope.$index, scope.row)">修改角色</span>
                             </div>
                         </template>
                     </el-table-column>
@@ -456,6 +458,26 @@
                 </el-form>
             </div>
         </div>
+        <div class="addForm" v-if="msg==true">
+            <div class="addContent">
+                <div class="title">
+                    <span class="tl">修改角色</span>
+                    <span class="tr" @click="closeMsg">关闭</span>
+                </div>
+                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+                    <div>
+                        <el-radio-group v-model="radio">
+                            <el-radio :label="item.roleId" v-for="(item,index) in levelList" :key="index">{{item.roleName}}</el-radio>
+                        </el-radio-group>
+                    </div>
+                    <br />
+                    <el-form-item>
+                        <el-button type="primary" @click="saveChange">保存</el-button>
+                        <el-button type="primary" @click="closeMsg">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -533,7 +555,11 @@ export default {
       inviteCodeUrl: "",
       showQrcode: false,
       showQrcode1: false,
-      groupIdList: []
+      groupIdList: [],
+      levelList: [],
+      accountCode: "",
+      msg: false,
+      radio: ""
     };
   },
   computed: {
@@ -564,6 +590,97 @@ export default {
     this.userName = localStorage.getItem("userName");
   },
   methods: {
+    closeMsg() {
+      this.msg = false;
+    },
+    changeWho(index, row) {
+      this.msg = true;
+      this.accountCode = row.accountId;
+      this.getAgentLevel();
+    },
+    saveChange() {
+      this.axios
+        .post("/tn/mgr-api/account/role/update", {
+          accountCode: this.accountCode,
+          roleId: this.radio
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.msg = false;
+            this.getFundAccount();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        });
+    },
+    getAgentLevel() {
+      this.axios
+        .post("/tn/mgr-api/account/role", {
+          accountCode: this.accountCode
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.levelList = res.data.data;
+            let that = this;
+            this.levelList.map((item, index) => {
+              if (item.isUserRole == 1) {
+                console.log("我在的", item, item.roleId);
+                that.radio = item.roleId;
+              }
+            });
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        });
+    },
+    ping(index, row) {
+      let accountCode = row.accountId;
+      this.axios
+        .post("/tn/mgr-api/account/closePosition", {
+          accountCode: accountCode
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.getFundAccount();
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    money(index, row) {
+      let accountId = row.accountId;
+      this.$router.push({
+        path: "/ninehome/money",
+        query: {
+          accountId: accountId
+        }
+      });
+    },
     getDefaultGroupName(id) {
       let a;
       this.groupIdList.map(item => {
@@ -575,7 +692,6 @@ export default {
     },
     getDefaultGroupName1(id) {
       let a;
-      console.log("我是", this.commissionCfgList);
       this.commissionCfgList.map(item => {
         if (item.id == id) {
           a = item.cfgName;
