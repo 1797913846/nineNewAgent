@@ -46,6 +46,7 @@
           <el-table-column show-overflow-tooltip label="卖出手续费" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="交易佣金返利" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="管理费返利" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖成交金额" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="利润分成返利" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
@@ -63,7 +64,8 @@
           <el-table-column show-overflow-tooltip label="卖出手续费" prop="commissionSell" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="交易佣金返利" prop="commissionRebate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="管理费返利" prop="managerRebate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="利润分成返利" prop="profitRebate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖成交金额" prop="dealAmountBuy" :formatter="formattera" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="利润分成返利" prop="profitRebate" :formatter="formatterb" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination" v-if="nullTable==false">
@@ -168,6 +170,14 @@ export default {
           ) / 100
         );
       }
+    },
+    formattera(row, column) {
+      return row["dealAmountBuy"] + row["dealAmountSell"];
+    },
+    formatterb(row, column) {
+      return (
+        row["profitRebate"] + row["managerRebate"] + row["commissionRebate"]
+      );
     },
     search() {
       this.getFundAccount();
