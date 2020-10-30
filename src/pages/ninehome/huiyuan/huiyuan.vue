@@ -511,6 +511,7 @@ export default {
         defaultChildGroupId: "",
         defaultChildCommissionCfgId: ""
       },
+      commissionCfgList: [],
       orderPermissionList: [
         { key: 0, value: "可买卖" },
         { key: 1, value: "禁买" },
