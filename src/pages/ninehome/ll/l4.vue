@@ -1,98 +1,147 @@
 <!--券商管理-->
 <template>
-  <div class="bigestbox">
-    <topNav></topNav>
-    <div class="container" @click="colorBool = false">
-      <div class="template-top">
-        <div class="title" @click="showAddNow">添加</div>
-        <div class="operate-btn">
-          <div class="search-box">
-            <input type="text" placeholder="请输入方案名称" v-model="cfgName" />
-            <img src="../../../assets/nine/search.png" class="search-img" />
-          </div>
-          <div class="search-user" @click="search()">查询</div>
+    <div class="bigestbox">
+        <topNav></topNav>
+        <div class="container" @click="colorBool = false">
+            <div class="template-top">
+                <div class="title" @click="jiaNow">添加</div>
+                <div class="operate-btn">
+                    <div class="search-box">
+                        <input type="text" placeholder="请输入券商名称" v-model="brokername" />
+                        <img src="../../../assets/nine/search.png" class="search-img" />
+                    </div>
+                    <div class="search-user" @click="search">查询</div>
+                </div>
+            </div>
+            <!--表格-->
+            <div class="reset-scroll-style">
+                <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                    <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+                    <el-table-column label="操作" align="center" width="180">
+                        <template slot-scope="scope">
+                            <div class="operation">
+                                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
+                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip label="券商编号" prop="brokerid" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="券商名称" prop="brokername" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="券商类型" prop="brokertype" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="登录模式" prop="loginflag" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="客户端版本号" prop="clientversion" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="营业部标识" prop="deptid" align="center" :formatter="formatter"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="成交类型" prop="calcdealstype" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="协议类型" prop="productssl" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="IP地址" prop="ipaddress" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="端口号" prop="ipport" align="center"></el-table-column>
+                </el-table>
+            </div>
+            <div class="pagination">
+                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+            </div>
         </div>
-      </div>
-      <!--表格-->
-      <div class="reset-scroll-style">
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="cfgName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" width="420" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="monthCommission" :formatter="formatterc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="isDefault" :formatter="formatter" align="center"></el-table-column>
-          <el-table-column label="操作" align="center">
-            <template slot-scope="scope">
-              <div class="operation">
-                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
-                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)" class="addSameClass ">置为默认</span>
-                <span v-if="scope.row.isDefault==1" class="addSameClass ">默认方案</span>
-              </div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column show-overflow-tooltip label="方案名称" width="100" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="用户注册默认" width="100" align="center"></el-table-column>
-        </el-table>
-      </div>
-      <div class="pagination" v-if="nullTable==false">
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
-    </div>
-    <!--表单-->
-    <div class="addForm" v-if="showAdd==true">
-      <div class="addContent">
-        <div class="title">
-          <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">X</span>
+        <!--添加表单-->
+        <div class="addForm" v-if="jia==true">
+            <div class="addContent">
+                <div class="title">
+                    <span class="tl">{{addTitle}}</span>
+                    <span class="tr" @click="closeJia">关闭</span>
+                </div>
+                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+                    <el-form-item label="券商编码：">
+                        <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
+                    </el-form-item>
+                    <el-form-item label="券商名称：">
+                        <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="券商类型：">
+                        <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
+                    </el-form-item>
+                    <el-form-item label="登录模式：">
+                        <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
+                    </el-form-item>
+                    <el-form-item label="客户端版本号：">
+                        <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="营业部标识：">
+                        <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
+                    </el-form-item>
+                    <el-form-item label="成交类型：">
+                        <el-select v-model="formInline.calcdealstype">
+                            <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="协议类型：">
+                        <el-select v-model="formInline.productssl">
+                            <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="IP地址：">
+                        <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
+                    </el-form-item>
+                    <el-form-item label="端口：">
+                        <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
+                    </el-form-item>
+                    <br />
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+                        <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
-        <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
-          <el-form-item label="方案名称：">
-            <el-input v-model="formInline.cfgName" placeholder="方案名称"></el-input>
-          </el-form-item>
-          <div class="bt">
-            <div class="smallTitle">日结方案：</div>
-            <el-form-item label="交易佣金率：" prop="dayCommission">
-              <el-input v-model="formInline.dayCommission" placeholder="交易佣金率"></el-input>
-            </el-form-item>
-            <el-form-item label="管理费成交率：" prop="dayManageFeeDealRate">
-              <el-input v-model="formInline.dayManageFeeDealRate" placeholder="管理费成交率"></el-input>
-            </el-form-item>
-          </div>
-          <div class="bt">
-            <div class="smallTitle">合作分成方案：</div>
-            <el-form-item label="交易佣金率：" prop="singleCommission">
-              <el-input v-model="formInline.singleCommission" placeholder="交易佣金率"></el-input>
-            </el-form-item>
-            <el-form-item label="管理费成交率：" prop="singleManageFeeDealRate">
-              <el-input v-model="formInline.singleManageFeeDealRate" placeholder="管理费成交率"></el-input>
-            </el-form-item>
-            <el-form-item label="盈利分成成交率：" prop="singleDividedRate">
-              <el-input v-model="formInline.singleDividedRate" placeholder="管理费成交率"></el-input>
-            </el-form-item>
-          </div>
-          <div class="bt">
-            <div class="smallTitle">月结方案：</div>
-            <el-form-item label="交易佣金率：" prop="monthCommission">
-              <el-input v-model="formInline.monthCommission" placeholder="交易佣金率"></el-input>
-            </el-form-item>
-            <el-form-item label="管理费成交率：" prop="monthManageFeeDealRate">
-              <el-input v-model="formInline.monthManageFeeDealRate" placeholder="管理费成交率"></el-input>
-            </el-form-item>
-          </div>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+        <!--修改表单-->
+        <div class="addForm" v-if="changeNow==true">
+            <div class="addContent">
+                <div class="title">
+                    <span class="tl">{{addTitle}}</span>
+                    <span class="tr" @click="closeChange1">关闭</span>
+                </div>
+                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+                    <el-form-item label="券商编码：">
+                        <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
+                    </el-form-item>
+                    <el-form-item label="券商名称：">
+                        <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="券商类型：">
+                        <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
+                    </el-form-item>
+                    <el-form-item label="登录模式：">
+                        <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
+                    </el-form-item>
+                    <el-form-item label="客户端版本号：">
+                        <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="营业部标识：">
+                        <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
+                    </el-form-item>
+                    <el-form-item label="成交类型：">
+                        <el-select v-model="formInline.calcdealstype">
+                            <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="协议类型：">
+                        <el-select v-model="formInline.productssl">
+                            <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="IP地址：">
+                        <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
+                    </el-form-item>
+                    <el-form-item label="端口：">
+                        <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
+                    </el-form-item>
+                    <br />
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+                        <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -105,83 +154,59 @@ export default {
     return {
       tableData: [],
       colorBool: false,
-      cfgName: "",
+      keyword: "",
+      accountCode: "",
+      userName: "",
       pageSize: 31,
       currentPage: 1,
       total: 10,
       nullTable: false,
-
-      showAdd: false,
+      jia: false,
+      addTitle: "添加",
       formInline: {
-        cfgName: "",
-        dayCommission: "",
-        dayManageFeeDealRate: "",
-        singleCommission: "",
-        singleManageFeeDealRate: "",
-        singleDividedRate: "",
-        monthCommission: "",
-        monthManageFeeDealRate: ""
+        brokerid: "",
+        brokername: "",
+        brokertype: "",
+        loginflag: "",
+        clientversion: "",
+        deptid: "",
+        calcdealstype: "",
+        productssl: "",
+        ipaddress: "",
+        ipport: ""
       },
-      rules: {
-        dayCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        dayManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleDividedRate: [
-          { required: true, message: "请输入盈利分成成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        monthCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        monthManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ]
-      },
+      accountList: [],
+      banksList: [],
+      provincesList: [],
+      citiesList: [],
+      branchesList: [],
+      bankId: "",
+      provinceId: "",
+      cityId: "",
+      changeNow: false,
       id: "",
-      addTitle: "新增"
+      brokername: "",
+      brokerid: "",
+      calcdealstypeList: [
+        {
+          key: "0",
+          vlaue: "券商"
+        },
+        {
+          key: "1",
+          vlaue: "计算"
+        }
+      ],
+      productsslList: [
+        {
+          key: "0",
+          vlaue: "同花顺"
+        },
+        {
+          key: "1",
+          vlaue: "通达信"
+        }
+      ]
     };
   },
   computed: {
@@ -204,74 +229,194 @@ export default {
     }
   },
   watch: {
-    // cfgName: {
-    //   handler(newVal, oldVal) {
-    //     this.currentPage = 1;
-    //     this.getFundAccount();
-    //   },
-    //   deep: true
-    // }
+    "formInline.bankId": {
+      handler(newVal, oldVal) {
+        this.getProvincesList();
+        this.getCitiesList();
+        this.getBranchesList();
+      },
+      deep: true
+    },
+    "formInline.provinceId": {
+      handler(newVal, oldVal) {
+        this.getCitiesList();
+        this.getBranchesList();
+      },
+      deep: true
+    },
+    "formInline.cityId": {
+      handler(newVal, oldVal) {
+        this.getBranchesList();
+      },
+      deep: true
+    }
   },
   created() {
+    this.getAccountList();
     this.getFundAccount();
+    this.getBanksList();
+    this.getProvincesList();
+    this.getCitiesList();
+    this.getBranchesList();
   },
   methods: {
-    formattera(row, column) {
-      return (
-        "交易佣金率：" +
-        row.dayCommission * 1000 +
-        "‰ ; 管理费成交率：" +
-        row.dayManageFeeDealRate * 100 +
-        "%"
-      );
-    },
-    formatterb(row, column) {
-      return (
-        "交易佣金率：" +
-        row.singleCommission * 1000 +
-        "‰ ; 管理费成交率：" +
-        row.singleManageFeeDealRate * 100 +
-        "% ; +盈利分成成交率：" +
-        row.singleDividedRate * 100 +
-        "%"
-      );
-    },
-    formatterc(row, column) {
-      return (
-        "交易佣金率：" +
-        row.monthCommission * 1000 +
-        "‰ ; 管理费成交率：" +
-        row.monthManageFeeDealRate * 100 +
-        "%"
-      );
-    },
-    getContent(index, row) {
-      this.id = row.id;
+    getAccountList() {
       this.axios
-        .get("/tn/mgr-api/commissionCfgs/getById", {
-          params: {
-            id: this.id
+        .post("/tn/mgr-api/account/bankCard/edit-pre")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.accountList = res.data.data.accountList;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
           }
         })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    //可以
+    getBanksList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks")
         .then(res => {
-          console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
-            let data = res.data.data;
-            this.showAdd = true;
-            this.addTitle = "修改";
-            this.id = data.id;
-            this.formInline.id = data.id;
-            this.formInline.cfgName = data.cfgName;
-            this.formInline.dayCommission = data.dayCommission;
-            this.formInline.dayManageFeeDealRate = data.dayManageFeeDealRate;
-            this.formInline.singleCommission = data.singleCommission;
-            this.formInline.singleManageFeeDealRate =
-              data.singleManageFeeDealRate;
-            this.formInline.singleDividedRate = data.singleDividedRate;
-            this.formInline.monthCommission = data.monthCommission;
-            this.formInline.monthManageFeeDealRate =
-              data.monthManageFeeDealRate;
+            this.banksList = res.data.data;
           } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getProvincesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces", {
+          bankId: this.formInline.bankId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.provincesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCitiesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces/cities", {
+          bankId: this.formInline.bankId,
+          provinceId: this.formInline.provinceId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.citiesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getBranchesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces/cities/branches", {
+          bankId: this.formInline.bankId,
+          provinceId: this.formInline.provinceId,
+          cityId: this.formInline.cityId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.branchesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    closeJia() {
+      this.jia = false;
+    },
+    formatter(row, column) {
+      if (row) {
+        let usertype = row.usertype;
+        switch (usertype) {
+          case 0:
+            return "普通户";
+          case 1:
+            return "担保品";
+          case 2:
+            return "融资融券";
+          default:
+            return "未知";
+        }
+      }
+    },
+    jiaNow() {
+      this.jia = true;
+      this.addTitle = "添加";
+      this.formInline.brokerid = "";
+      this.formInline.brokername = "";
+      this.formInline.brokertype = "";
+      this.formInline.loginflag = "";
+      this.formInline.clientversion = "";
+      this.formInline.deptid = "";
+      this.formInline.calcdealstype = "";
+      this.formInline.productssl = "";
+      this.formInline.ipaddress = "";
+      this.formInline.ipport = "";
+    },
+    closeAdd(formName) {
+      this.$refs[formName].resetFields();
+      this.jia = false;
+    },
+    closeChange1() {
+      this.changeNow = false;
+    },
+    getEdit(index, row) {
+      this.addTitle = "修改";
+      this.changeNow = true;
+      let brokerid = row.brokerid;
+      this.brokerid = brokerid;
+      this.axios
+        .post("/tn/mgr-api/sysmgr/brokerMgr/get", {
+          brokerid: brokerid
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.formInline = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
           }
         })
         .catch(err => {
@@ -279,16 +424,19 @@ export default {
         });
     },
     deleteNow(index, row) {
-      console.log(222);
-      console.log("13点", index, row);
-      this.id = row.id;
+      let brokerid = row.brokerid;
       this.axios
-        .post("/tn/mgr-api/commissionCfgs/delete", {
-          id: this.id
+        .post("/tn/mgr-api/sysmgr/brokerMgr/delete", {
+          brokerid: brokerid
         })
         .then(res => {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
             this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
@@ -302,19 +450,31 @@ export default {
           console.log(err);
         });
     },
-    setIt(index, row) {
-      console.log(222);
-      console.log("13点", index, row);
-      this.id = row.id;
+    onSubmitChange(formName) {
       this.axios
-        .post("/tn/mgr-api/commissionCfgs/markAsDefault", {
-          id: this.id
+        .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
+          brokerid: this.formInline.brokerid,
+          brokername: this.formInline.brokername,
+          brokertype: this.formInline.brokertype,
+          loginflag: this.formInline.loginflag,
+          clientversion: this.formInline.clientversion,
+          deptid: this.formInline.deptid,
+          calcdealstype: this.formInline.calcdealstype,
+          productssl: this.formInline.productssl,
+          ipaddress: this.formInline.ipaddress,
+          ipport: this.formInline.ipport
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.changeNow = false;
             this.getFundAccount();
           } else {
+            this.changeNow = false;
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
               center: true,
@@ -326,72 +486,57 @@ export default {
           console.log(err);
         });
     },
-    showAddNow() {
-      this.addTitle = "新增";
-      this.showAdd = true;
-    },
-    closeAdd() {
-      this.showAdd = false;
-    },
-    closeAdd1(formName) {
+    closeChange(formName) {
       this.$refs[formName].resetFields();
-      this.showAdd = false;
+      this.changeNow = false;
     },
     onSubmit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          console.log("submit!");
-          this.axios
-            .post("/tn/mgr-api/commissionCfgs/saveOrUpdate", {
-              id: this.formInline.id,
-              cfgName: this.formInline.cfgName,
-              dayCommission: this.formInline.dayCommission,
-              dayManageFeeDealRate: this.formInline.dayManageFeeDealRate,
-              singleCommission: this.formInline.singleCommission,
-              singleManageFeeDealRate: this.formInline.singleManageFeeDealRate,
-              singleDividedRate: this.formInline.singleDividedRate,
-              monthCommission: this.formInline.monthCommission,
-              monthManageFeeDealRate: this.formInline.monthManageFeeDealRate
-            })
-            .then(res => {
-              console.log("getFundAccount>>", res.data);
-              if (res.data.code == 200) {
-                this.showAdd = false;
-                this.getFundAccount();
-              } else {
-              }
-            })
-            .catch(err => {
-              console.log(err);
+      this.axios
+        .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
+          brokerid: this.formInline.brokerid,
+          brokername: this.formInline.brokername,
+          brokertype: this.formInline.brokertype,
+          loginflag: this.formInline.loginflag,
+          clientversion: this.formInline.clientversion,
+          deptid: this.formInline.deptid,
+          calcdealstype: this.formInline.calcdealstype,
+          productssl: this.formInline.productssl,
+          ipaddress: this.formInline.ipaddress,
+          ipport: this.formInline.ipport
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
             });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-    },
-    formatter(row, column) {
-      if (row) {
-        if (row.isDefault == 0) {
-          return "否";
-        } else if (row.isDefault == 1) {
-          return "是";
-        }
-      }
+            this.jia = false;
+            this.getFundAccount();
+          } else {
+            this.jia = false;
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     search() {
-      this.currentPage = 1;
       this.getFundAccount();
     },
     getFundAccount() {
       this.axios
-        .post("/tn/mgr-api/commissionCfgs/pageQuery", {
+        .post("/tn/mgr-api/sysmgr/brokerMgr/brokerList", {
           pageSize: this.pageSize,
           pageNo: this.currentPage,
-          cfgName: this.cfgName
+          brokername: this.brokername
         })
         .then(res => {
-          console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
             let rows = res.data.data.rows;
             if (rows.length > 0) {
@@ -409,8 +554,6 @@ export default {
           } else {
             this.nullTable = false;
           }
-
-          console.log("我是最终结果", this.tableData);
         })
         .catch(err => {
           console.log(err);
@@ -435,11 +578,12 @@ export default {
 }
 .addContent {
   background-color: #fff;
-  width: 800px;
-  height: 530px;
+  width: 500px;
+  height: 500px;
+  overflow-y: scroll;
   position: absolute;
   left: 50%;
-  transform: translate(-50%, 10%);
+  transform: translate(-50%, 0);
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -458,15 +602,6 @@ export default {
 .addContent .title .tr {
   float: right;
   cursor: pointer;
-}
-.addContent .smallTitle {
-  margin-bottom: 10px;
-  color: #000;
-  font-size: 20px;
-}
-.addContent .bt {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #ccc;
 }
 </style>
 

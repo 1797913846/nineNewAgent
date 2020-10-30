@@ -292,7 +292,7 @@ const router = new Router({
     {
       path: '/ninehome/l4',
       meta: {
-        title: '佣金方案配置',
+        title: '券商管理',
         requireAuth: true
       },
       component: ninehomel4

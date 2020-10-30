@@ -583,7 +583,6 @@ export default {
     },
     getDefaultGroupName1(id) {
       let a;
-      console.log("我是", this.commissionCfgList);
       this.commissionCfgList.map(item => {
         if (item.id == id) {
           a = item.cfgName;
