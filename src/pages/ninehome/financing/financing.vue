@@ -38,9 +38,9 @@
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <div class="operation">
-              <span @click.stop="getContent(scope.$index, scope.row)">修改</span>
-              <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
-              <span @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
+              <span class="addSameClass " @click.stop="getContent(scope.$index, scope.row)">修改</span>
+              <span class="addSameClass " @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+              <span class="addSameClass " @click.stop="setIt(scope.$index, scope.row)">应用到用户</span>
             </div>
           </template>
         </el-table-column>

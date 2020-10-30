@@ -24,10 +24,10 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="getContent(scope.$index, scope.row)">修改</span>
-                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
-                <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)">置为默认</span>
-                <span v-if="scope.row.isDefault==1">默认方案</span>
+                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+                <span v-if="scope.row.isDefault==0" @click.stop="setIt(scope.$index, scope.row)" class="addSameClass ">置为默认</span>
+                <span v-if="scope.row.isDefault==1" class="addSameClass ">默认方案</span>
               </div>
             </template>
           </el-table-column>

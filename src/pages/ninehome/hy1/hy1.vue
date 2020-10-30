@@ -24,8 +24,8 @@
                     <el-table-column label="操作" align="center" width="180">
                         <template slot-scope="scope">
                             <div class="operation">
-                                <span @click.stop="getEdit(scope.$index,scope.row)">修改</span>
-                                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+                                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
+                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
                             </div>
                         </template>
                     </el-table-column>

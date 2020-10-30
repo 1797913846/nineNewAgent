@@ -21,9 +21,9 @@
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="money(scope.$index,scope.row)">资金</span>
-                <span @click.stop="y1(scope.$index,scope.row)">持仓</span>
-                <span @click.stop="ping(scope.$index, scope.row)" v-if="(scope.row.totalScale - scope.row.cordonLine) < 0 || (scope.row.totalScale - scope.row.flatLine) < 0">平仓</span>
+                <span @click.stop="money(scope.$index,scope.row)" class="addSameClass " style="color:#337ab7;">资金</span>
+                <span @click.stop="y1(scope.$index,scope.row)" class="addSameClass " style="color:#f0ad4e;">持仓</span>
+                <span @click.stop="ping(scope.$index, scope.row)" v-if="(scope.row.totalScale - scope.row.cordonLine) < 0 || (scope.row.totalScale - scope.row.flatLine) < 0" class="addSameClass " style="color:#d9534f;">平仓</span>
               </div>
             </template>
           </el-table-column>

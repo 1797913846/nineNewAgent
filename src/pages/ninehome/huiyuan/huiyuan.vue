@@ -26,12 +26,12 @@
                     <el-table-column label="操作" align="center" width="400">
                         <template slot-scope="scope">
                             <div class="operation">
-                                <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
-                                <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
-                                <span @click.stop="look(scope.$index,scope.row)">查看</span>
-                                <span @click.stop="money(scope.$index,scope.row)">资金</span>
-                                <span v-if="scope.row.accountStatus == 2 || scope.row.balance < 0" @click.stop="ping(scope.$index,scope.row)">平仓</span>
-                                <span @click.stop="changeWho(scope.$index, scope.row)">修改角色</span>
+                                <span @click.stop="changeMsg(scope.$index,scope.row)" class="addSameClass ">修改</span>
+                                <span @click.stop="resetPassWord(scope.$index,scope.row)" class="addSameClass ">重置密码</span>
+                                <span @click.stop="look(scope.$index,scope.row)" class="addSameClass ">查看</span>
+                                <span @click.stop="money(scope.$index,scope.row)" class="addSameClass ">资金</span>
+                                <span v-if="scope.row.accountStatus == 2 || scope.row.balance < 0" @click.stop="ping(scope.$index,scope.row)" class="addSameClass ">平仓</span>
+                                <span @click.stop="changeWho(scope.$index, scope.row)" class="addSameClass ">修改角色</span>
                             </div>
                         </template>
                     </el-table-column>

@@ -31,7 +31,7 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="set1(scope.$index, scope.row)" style="margin-left:20px;">平仓</span>
+                <span @click.stop="set1(scope.$index, scope.row)" style="margin-left:20px;text-decoration: underline;color:#d9534f;">平仓</span>
               </div>
             </template>
           </el-table-column>

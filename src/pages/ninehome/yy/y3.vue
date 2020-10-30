@@ -73,8 +73,8 @@
           <el-table-column label="操作" align="center" width="180" v-if="topActive==1">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="set1(scope.$index, scope.row)">修改</span>
-                <span v-if="scope.row.entruststatus!= 6" @click.stop="set2(scope.$index, scope.row)">ITG撤单</span>
+                <span @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#f0ad4e;">修改</span>
+                <span v-if="scope.row.entruststatus!= 6" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">ITG撤单</span>
               </div>
             </template>
           </el-table-column>
@@ -509,9 +509,9 @@ export default {
 }
 .addContent .lmsg {
   font-size: 16px;
-  color:#000;
+  color: #000;
   display: inline-block;
-  padding-bottom:20px;
+  padding-bottom: 20px;
 }
 .navNav {
   margin-left: 24px;

@@ -33,9 +33,9 @@
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="set1(scope.$index, scope.row)">调整资金</span>
-                <span @click.stop="set2(scope.$index, scope.row)" v-if="scope.row.allottedScale <= 0">增配资金</span>
-                <span @click.stop="set3(scope.$index, scope.row)" v-if="scope.row.allottedScale > 0">结案策略</span>
+                <span @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#337ab7;">调整资金</span>
+                <span @click.stop="set2(scope.$index, scope.row)" v-if="scope.row.allottedScale <= 0" class="addSameClass " style="color:#f0ad4e;">增配资金</span>
+                <span @click.stop="set3(scope.$index, scope.row)" v-if="scope.row.allottedScale > 0" class="addSameClass " style="color:#d9534f;">结案策略</span>
               </div>
             </template>
           </el-table-column>

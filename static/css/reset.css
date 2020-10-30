@@ -813,3 +813,7 @@ input:-ms-input-placeholder {
 .bu {
     float: left;
 }
+
+.addSameClass {
+    text-decoration: underline;
+}

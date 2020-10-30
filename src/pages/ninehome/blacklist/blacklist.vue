@@ -37,7 +37,7 @@
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
               </div>
             </template>
           </el-table-column>

@@ -12,7 +12,7 @@
                     <el-table-column label="操作" align="center">
                         <template slot-scope="scope">
                             <div class="operation">
-                                <span @click.stop="getEdit(scope.$index,scope.row)">编辑</span>
+                                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">编辑</span>
                             </div>
                         </template>
                     </el-table-column>

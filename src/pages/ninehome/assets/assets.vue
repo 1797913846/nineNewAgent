@@ -33,10 +33,10 @@
           <el-table-column label="操作" align="center" width="330">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="getEdit(scope.$index,scope.row)">修改</span>
-                <span @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
-                <span @click.stop="getBalanceRefresh(scope.$index,scope.row)"> 获取券商资金</span>
-                <span @click.stop="getHoldRefresh(scope.$index,scope.row)"> 获取券商持仓</span>
+                <span class="addSameClass " @click.stop="getEdit(scope.$index,scope.row)">修改</span>
+                <span class="addSameClass " @click.stop="deleteNow(scope.$index, scope.row)">删除</span>
+                <span class="addSameClass " @click.stop="getBalanceRefresh(scope.$index,scope.row)"> 获取券商资金</span>
+                <span class="addSameClass " @click.stop="getHoldRefresh(scope.$index,scope.row)"> 获取券商持仓</span>
               </div>
             </template>
           </el-table-column>

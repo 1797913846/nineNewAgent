@@ -26,10 +26,10 @@
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
               <div class="operation">
-                <span @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
-                <span @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
-                <span @click.stop="look(scope.$index,scope.row)">查看</span>
-                <span @click.stop="money(scope.$index,scope.row)">资金</span>
+                <span class="addSameClass " @click.stop="changeMsg(scope.$index,scope.row)">修改</span>
+                <span class="addSameClass " @click.stop="resetPassWord(scope.$index,scope.row)">重置密码</span>
+                <span class="addSameClass " @click.stop="look(scope.$index,scope.row)">查看</span>
+                <span class="addSameClass " @click.stop="money(scope.$index,scope.row)">资金</span>
               </div>
             </template>
           </el-table-column>
@@ -470,7 +470,7 @@ export default {
         accountId: "",
         accountName: "",
         productGroupId: "",
-        productGroupId:"",
+        productGroupId: "",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
