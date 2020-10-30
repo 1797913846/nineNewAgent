@@ -31,11 +31,11 @@
                     </el-table-column>
                 </el-table>
                 <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="方案名称" width="100" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="日结方案" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="合作分成方案" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="月结方案" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="用户注册默认" width="100" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="编号" width="100" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="角色名称" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="描述" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="创建人" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="创建时间" width="100" align="center"></el-table-column>
                 </el-table>
             </div>
             <div class="pagination" v-if="nullTable==false">
@@ -49,7 +49,7 @@
                     <span class="tl">{{addTitle}}</span>
                     <span class="tr" @click="closeAdd">X</span>
                 </div>
-                <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
+                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
                     <el-form-item label="角色名称：">
                         <el-input v-model="formInline.roleName" placeholder="角色名称"></el-input>
                     </el-form-item>
@@ -89,64 +89,6 @@ export default {
         roleName: "",
         roleDesc: "",
         roleId: ""
-      },
-      rules: {
-        dayCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        dayManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        singleDividedRate: [
-          { required: true, message: "请输入盈利分成成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        monthCommission: [
-          { required: true, message: "请输入交易佣金率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ],
-        monthManageFeeDealRate: [
-          { required: true, message: "请输入管理费成交率", trigger: "blur" },
-          {
-            pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
-            trigger: "blur"
-          }
-        ]
       },
       id: "",
       addTitle: "新增"
