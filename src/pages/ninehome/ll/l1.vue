@@ -26,6 +26,7 @@
                             <div class="operation">
                                 <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
                                 <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+                                <span class="addSameClass ">权限设置</span>
                             </div>
                         </template>
                     </el-table-column>
