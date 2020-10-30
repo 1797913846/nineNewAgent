@@ -1,6 +1,6 @@
 <!--分账户监管-->
 <template>
-  <div class="bigestbox">
+  <div class="bigestbox jiankong">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
@@ -16,7 +16,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
@@ -99,6 +99,15 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      console.log("对的是我", row);
+      if (row["totalScale"] - row["flatLine"] <= 0) {
+        return "yellow";
+      } else if (row["totalScale"] - row["cordonLine"] <= 0) {
+        return "red";
+      }
+      return "colorgreen";
+    },
     ping(index, row) {
       this.axios
         .post("/tn/mgr-api/account/closePosition", {
@@ -212,7 +221,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.el-table .colorgreen {
+  background-color: #dff0d8 !important;
+}
+.el-table .yellow {
+  background-color: #fcf8e3 !important;
+}
+.el-table .red {
+  background-color: #f2dede !important;
+}
+.jiankong .el-table--striped .el-table__body tr td {
+  background: none !important;
+}
 </style>
 
 
