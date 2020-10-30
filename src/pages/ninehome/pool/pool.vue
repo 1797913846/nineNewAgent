@@ -229,6 +229,17 @@ export default {
     accountGroup: {
       handler(newVal, oldVal) {
         console.log("我新的", newVal);
+        if (this.addTitle == "新增") {
+          newVal.map((item, index) => {
+            this.productList.map((item1, index1) => {
+              if (item.productCode == item1.productcode) {
+                item1.fundPoolChecked = 1;
+              } else {
+                item1.fundPoolChecked = 0;
+              }
+            });
+          });
+        }
       },
       deep: true
     }
@@ -294,8 +305,8 @@ export default {
     },
     add() {
       this.addBool = true;
-      this.levelName="";
-      this.selectValue="";
+      this.levelName = "";
+      this.selectValue = "";
       this.groupName = "";
       this.selectlist = [];
       this.getContent(0);
