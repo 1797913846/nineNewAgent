@@ -32,6 +32,11 @@ import ninehomey9 from '@/pages/ninehome/yy/y9'
 import ninehomey10 from '@/pages/ninehome/yy/y10'
 import ninehomey11 from '@/pages/ninehome/yy/y11'
 
+import ninehomel1 from '@/pages/ninehome/ll/l1'
+import ninehomel2 from '@/pages/ninehome/ll/l2'
+import ninehomel3 from '@/pages/ninehome/ll/l3'
+import ninehomel4 from '@/pages/ninehome/ll/l4'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -259,7 +264,40 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomey11
+    },
+    {
+      path: '/ninehome/l1',
+      meta: {
+        title: '角色管理',
+        requireAuth: true
+      },
+      component: ninehomel1
+    },
+    {
+      path: '/ninehome/l2',
+      meta: {
+        title: '公告管理',
+        requireAuth: true
+      },
+      component: ninehomel2
+    },
+    {
+      path: '/ninehome/l3',
+      meta: {
+        title: '收付款管理',
+        requireAuth: true
+      },
+      component: ninehomel3
+    },
+    {
+      path: '/ninehome/l4',
+      meta: {
+        title: '佣金方案配置',
+        requireAuth: true
+      },
+      component: ninehomel4
     }
+
   ]
 })
 
