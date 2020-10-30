@@ -141,7 +141,10 @@ export default {
         { key: 1, value: "委托成交" },
         { key: 2, value: "送股转赠股" },
         { key: 3, value: " 持仓调整" }
-      ]
+      ],
+      accountName: "",
+      createTimeStart: "",
+      createTimeEnd: ""
     };
   },
   computed: {

@@ -159,7 +159,10 @@ export default {
       ],
       bstype: "",
       bstypeList: [{ key: "1", value: "买入" }, { key: "2", value: "卖出" }],
-      orderno: ""
+      orderno: "",
+      accountName: "",
+      createTimeStart: "",
+      createTimeEnd: ""
     };
   },
   computed: {
