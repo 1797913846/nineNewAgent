@@ -39,7 +39,7 @@
           <el-table-column show-overflow-tooltip label="代理ID" prop="accountId" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="代理名称" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金池ID" prop="productGroupId" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
           <el-table-column label="邀请码" align="center">
             <template slot-scope="scope">
@@ -52,6 +52,31 @@
           <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线(金额)" prop="flatLine" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线(金额)" prop="cordonLine" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="管理费率" prop="manageFeeRate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" align="center" width="180">
+            <template slot-scope="scope">
+              {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
+            </template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="代理商添加账户默认佣金方案" align="center" width="180">
+            <template slot-scope="scope">
+              {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -82,9 +107,9 @@
           <el-form-item label="代理名称：">
             <el-input v-model="formInline.accountName" :disabled="true" placeholder="代理名称"></el-input>
           </el-form-item>
-          <el-form-item label="产品：">
-            <el-select v-model="formInline.productCode" :disabled="true">
-              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+          <el-form-item label="资金池ID：">
+            <el-select v-model="formInline.productGroupId" :disabled="true">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="代理等级：">
@@ -156,6 +181,16 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="代理商添加账户默认资金池：">
+            <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理商添加账户默认佣金方案：">
+            <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="创建时间：">
             <el-input v-model="formInline.createTime" :disabled="true" placeholder="创建时间"></el-input>
           </el-form-item>
@@ -187,9 +222,9 @@
           <el-form-item label="代理名称：">
             <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
           </el-form-item>
-          <el-form-item label="产品：">
-            <el-select v-model="formInline.productCode">
-              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+          <el-form-item label="资金池ID：">
+            <el-select v-model="formInline.productGroupId">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="代理等级：">
@@ -261,6 +296,16 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="代理商添加账户默认资金池：">
+            <el-select v-model="formInline.defaultChildGroupId">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理商添加账户默认佣金方案：">
+            <el-select v-model="formInline.defaultChildCommissionCfgId">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
           <br />
           <el-form-item>
             <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
@@ -304,9 +349,9 @@
           <el-form-item label="代理名称：">
             <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
           </el-form-item>
-          <el-form-item label="产品：">
-            <el-select v-model="formInline.productCode">
-              <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
+          <el-form-item label="资金池ID：">
+            <el-select v-model="formInline.productGroupId">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="代理等级：">
@@ -378,6 +423,16 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="代理商添加账户默认资金池：">
+            <el-select v-model="formInline.defaultChildGroupId">
+              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="代理商添加账户默认佣金方案：">
+            <el-select v-model="formInline.defaultChildCommissionCfgId">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            </el-select>
+          </el-form-item>
           <br />
           <el-form-item>
             <el-button type="primary" @click="onSubmit2('formInline')">保存</el-button>
@@ -414,7 +469,8 @@ export default {
         commission: "",
         accountId: "",
         accountName: "",
-        productCode: "",
+        productGroupId: "",
+        productGroupId:"",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
@@ -436,8 +492,13 @@ export default {
         createTime: "",
         commissionCfgList: [],
         productList: [],
-        agentLevel: []
+        agentLevel: [],
+        defaultChildGroupId: "",
+        defaultChildCommissionCfgId: ""
       },
+      groupIdList: [],
+      productList: [],
+      commissionCfgList: [],
       orderPermissionList: [
         { key: 0, value: "可买卖" },
         { key: 1, value: "禁买" },
@@ -481,12 +542,65 @@ export default {
   },
   watch: {},
   created() {
-    this.getFundAccount();
     this.getMsg();
+    this.getFundAccount();
+    this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
   },
   methods: {
+    formattera(row, column) {
+      if (row) {
+        let orderPermission = row.orderPermission;
+        switch (orderPermission) {
+          case 0:
+            return "可买卖";
+          case 1:
+            return "禁买";
+          case 2:
+            return "禁卖";
+          case 3:
+            return "禁买卖";
+        }
+      }
+    },
+    getDefaultGroupName(id) {
+      let a;
+      this.groupIdList.map(item => {
+        if (item.groupId == id) {
+          a = item.groupName;
+        }
+      });
+      return a;
+    },
+    getDefaultGroupName1(id) {
+      let a;
+      console.log("我是", this.commissionCfgList);
+      this.commissionCfgList.map(item => {
+        if (item.id == id) {
+          a = item.cfgName;
+        }
+      });
+      return a;
+    },
+    getGroupIdList() {
+      this.axios
+        .post("/tn/mgr-api/account/fund-list")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.groupIdList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     money(index, row) {
       let accountId = row.accountId;
       this.$router.push({
@@ -656,7 +770,7 @@ export default {
         .post("/tn/mgr-api/account/save", {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
-          productCode: this.formInline.productCode,
+          productGroupId: this.formInline.productGroupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -666,7 +780,10 @@ export default {
           manageFeeRate: this.formInline.manageFeeRate,
           manageMakeFeeRate: this.formInline.manageMakeFeeRate,
           orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus
+          accountStatus: this.formInline.accountStatus,
+          defaultChildGroupId: this.formInline.defaultChildGroupId,
+          defaultChildCommissionCfgId: this.formInline
+            .defaultChildCommissionCfgId
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -694,7 +811,7 @@ export default {
         .post("/tn/mgr-api/account/update", {
           accountId: this.formInline.accountId,
           accountName: this.formInline.accountName,
-          productCode: this.formInline.productCode,
+          productGroupId: this.formInline.productGroupId,
           level: this.formInline.level,
           commissionCfgId: this.formInline.commissionCfgId,
           ableCrud: this.formInline.ableCrud,
@@ -704,7 +821,10 @@ export default {
           manageFeeRate: this.formInline.manageFeeRate,
           manageMakeFeeRate: this.formInline.manageMakeFeeRate,
           orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus
+          accountStatus: this.formInline.accountStatus,
+          defaultChildGroupId: this.formInline.defaultChildGroupId,
+          defaultChildCommissionCfgId: this.formInline
+            .defaultChildCommissionCfgId
         })
         .then(res => {
           if (res.data.code == 200) {
