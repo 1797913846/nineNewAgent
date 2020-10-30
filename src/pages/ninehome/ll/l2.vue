@@ -158,10 +158,10 @@ export default {
       this.showAdd = true;
     },
     deleteNow(index, row) {
-      let roleId = row.roleId;
+      let id = row.id;
       this.axios
-        .post("/tn/mgr-api/sysmgr/deleteRole", {
-          roleId: roleId
+        .post("/tn/mgr-api/sysmgr/bulltinMgr/delete", {
+          id: id
         })
         .then(res => {
           console.log("getFundAccount>>", res.data);
