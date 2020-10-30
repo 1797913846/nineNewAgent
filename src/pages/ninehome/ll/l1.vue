@@ -214,45 +214,17 @@ export default {
       );
     },
     getContent(index, row) {
-      this.id = row.id;
-      this.axios
-        .get("/tn/mgr-api/commissionCfgs/getById", {
-          params: {
-            id: this.id
-          }
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            let data = res.data.data;
-            this.showAdd = true;
-            this.addTitle = "修改";
-            this.id = data.id;
-            this.formInline.id = data.id;
-            this.formInline.cfgName = data.cfgName;
-            this.formInline.dayCommission = data.dayCommission;
-            this.formInline.dayManageFeeDealRate = data.dayManageFeeDealRate;
-            this.formInline.singleCommission = data.singleCommission;
-            this.formInline.singleManageFeeDealRate =
-              data.singleManageFeeDealRate;
-            this.formInline.singleDividedRate = data.singleDividedRate;
-            this.formInline.monthCommission = data.monthCommission;
-            this.formInline.monthManageFeeDealRate =
-              data.monthManageFeeDealRate;
-          } else {
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.formInline.roleName = row.roleName;
+      this.formInline.roleDesc = row.roleDesc;
+      this.formInline.roleId = row.roleId;
+      this.addTitle = "修改";
+      this.showAdd = true;
     },
     deleteNow(index, row) {
-      console.log(222);
-      console.log("13点", index, row);
-      this.id = row.id;
+      let roleId = row.roleId;
       this.axios
-        .post("/tn/mgr-api/commissionCfgs/delete", {
-          id: this.id
+        .post("/tn/mgr-api/sysmgr/deleteRole", {
+          roleId: roleId
         })
         .then(res => {
           console.log("getFundAccount>>", res.data);
@@ -297,6 +269,9 @@ export default {
     showAddNow() {
       this.addTitle = "新增";
       this.showAdd = true;
+      this.formInline.roleName = "";
+      this.formInline.roleDesc = "";
+      this.formInline.roleId = "";
     },
     closeAdd() {
       this.showAdd = false;
