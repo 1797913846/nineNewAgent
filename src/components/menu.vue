@@ -6,6 +6,19 @@
         <el-row class="tac">
           <el-col>
             <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
+              <el-submenu index="8">
+                <template slot="title">
+                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m9-2.png" alt=""></i>
+                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m9-1.png" alt=""></i>
+                  <span>系统管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="8-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
+                  <el-menu-item index="8-2" @click="clickJump('/ninehome/l2')">公告管理</el-menu-item>
+                  <el-menu-item index="8-3" @click="clickJump('/ninehome/l3')">收付款管理</el-menu-item>
+                  <el-menu-item index="8-4" @click="clickJump('/ninehome/l4')">券商管理</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
               <el-submenu index="1">
                 <template slot="title">
                   <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m2-2.png" alt=""></i>
@@ -48,7 +61,9 @@
                 <el-menu-item-group>
                   <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
                   <el-menu-item index="3-2" @click="clickJump('/ninehome/blacklist')">黑名单</el-menu-item>
-                  <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item>
+                  <!-- <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item> -->
+                  <el-menu-item index="3-4" @click="clickJump('/ninehome/other1')">全局风控设置</el-menu-item>
+                  <el-menu-item index="3-5" @click="clickJump('/ninehome/other2')">股票交易设置</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
               <el-submenu index="5">
@@ -94,19 +109,6 @@
                   <el-menu-item index="7-9" @click="clickJump('/ninehome/y9')">分红送股信息</el-menu-item>
                   <el-menu-item index="7-10" @click="clickJump('/ninehome/y10')">持仓变动信息</el-menu-item>
                   <el-menu-item index="7-11" @click="clickJump('/ninehome/y11')">交割单信息</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="8">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m9-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m9-1.png" alt=""></i>
-                  <span>系统管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="8-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
-                  <el-menu-item index="8-2" @click="clickJump('/ninehome/l2')">公告管理</el-menu-item>
-                  <el-menu-item index="8-3" @click="clickJump('/ninehome/l3')">收付款管理</el-menu-item>
-                  <el-menu-item index="8-4" @click="clickJump('/ninehome/l4')">券商管理</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
             </el-menu>
@@ -184,6 +186,12 @@ export default {
             break;
           case "/ninehome/other":
             this.whichIndex = "3-3";
+            break;
+          case "/ninehome/other1":
+            this.whichIndex = "3-4";
+            break;
+          case "/ninehome/other2":
+            this.whichIndex = "3-5";
             break;
           case "/ninehome/money":
             this.whichIndex = "5-1";

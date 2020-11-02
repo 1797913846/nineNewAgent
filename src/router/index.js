@@ -7,6 +7,8 @@ import ninehomeCommission from '@/pages/ninehome/commission/commission'
 import ninehomeFinancing from '@/pages/ninehome/financing/financing'
 import ninehomeBlacklist from '@/pages/ninehome/blacklist/blacklist'
 import ninehomeOther from '@/pages/ninehome/other/other'
+import ninehomeOther1 from '@/pages/ninehome/other1/other1'
+import ninehomeOther2 from '@/pages/ninehome/other2/other2'
 import ninehomeAgents from '@/pages/ninehome/agents/agents'
 import ninehomeAssets from '@/pages/ninehome/assets/assets'
 import ninehomePool from '@/pages/ninehome/pool/pool'
@@ -88,6 +90,22 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomeOther
+    },
+    {
+      path: '/ninehome/other1',
+      meta: {
+        title: '全局风控设置',
+        requireAuth: true
+      },
+      component: ninehomeOther1
+    },
+    {
+      path: '/ninehome/other2',
+      meta: {
+        title: '股票交易设置',
+        requireAuth: true
+      },
+      component: ninehomeOther2
     },
     {
       path: '/ninehome/agents',

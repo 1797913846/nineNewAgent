@@ -26,7 +26,7 @@
                             <div class="operation">
                                 <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
                                 <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                                <span class="addSameClass ">权限设置</span>
+                                <span class="addSameClass " @click.stop="getSaveRoleRes(scope.$index, scope.row)">权限设置</span>
                             </div>
                         </template>
                     </el-table-column>
@@ -43,7 +43,7 @@
                 <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
             </div>
         </div>
-        <!--表单-->
+        <!--表单ztree-->
         <div class="addForm" v-if="showAdd==true">
             <div class="addContent">
                 <div class="title">
@@ -127,6 +127,27 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    getSaveRoleRes(index, row) {
+      let roleId = row.roleId;
+      this.axios
+        .post("/tn/mgr-api/sysmgr/roleResSelect", {
+          roleId: roleId
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     formattera(row, column) {
       return (
         "交易佣金率：" +
