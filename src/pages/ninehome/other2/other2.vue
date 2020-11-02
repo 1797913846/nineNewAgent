@@ -11,27 +11,35 @@
         <el-form-item label="沪深主板涨幅买入限制：">
           <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板涨幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="沪深主板跌幅买入限制：">
           <el-input v-model="formInline.stockDropBuyLimit" placeholder="沪深主板跌幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="创业板新票禁止交易天数：">
           <el-input v-model="formInline.secondRejectTradeDays" placeholder="创业板新票禁止交易天数"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="创业板涨幅买入限制：">
           <el-input v-model="formInline.secondStockIncreaseBuyLimit" placeholder="创业板涨幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="创业板跌幅买入限制：">
           <el-input v-model="formInline.secondStockDropBuyLimit" placeholder="创业板跌幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="科创板新票禁止交易天数：">
           <el-input v-model="formInline.thirdRejectTradeDays" placeholder="科创板新票禁止交易天数"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="科创板涨幅买入限制：">
           <el-input v-model="formInline.thirdStockIncreaseBuyLimit" placeholder="科创板涨幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="科创板跌幅买入限制：">
           <el-input v-model="formInline.thirdStockDropBuyLimit" placeholder="科创板跌幅买入限制"></el-input>
         </el-form-item>
+        <span>注：数据为0时无限制</span>
         <el-form-item label="单客户单支股票市值规模限制：">
           <el-input v-model="formInline.singlestockHoldLimit" placeholder="单客户单支股票市值规模限制"></el-input>
         </el-form-item>

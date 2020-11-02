@@ -55,9 +55,6 @@
           </el-select>
         </el-form-item>
         <el-form-item label="产品下单随机算法配置：">
-          <el-input v-model="formInline.ctrlRoundRobinNumber" placeholder="产品下单随机算法配置"></el-input>
-        </el-form-item>
-        <el-form-item label="产品下单随机算法配置：">
           <el-select v-model="formInline.ctrlRoundRobinNumber">
             <el-option label="【随机方式】匹配券商账户" :value="Number(1)"></el-option>
             <el-option label="【可用资金方式】匹配券商账户" :value="Number(2)"></el-option>
@@ -78,6 +75,7 @@
         <el-form-item label="委托间隔时效（秒）：">
           <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
         </el-form-item>
+        <span>注：数据为0时不拦截</span>
         <el-form-item label="开启创业板注册制：">
           <el-select v-model="formInline.autoPolling">
             <el-option label="关闭" :value="Number(0)"></el-option>
