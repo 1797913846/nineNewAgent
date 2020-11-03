@@ -104,16 +104,16 @@ export default {
   },
   methods: {
     sortChange({ column, prop, order }) {
-      console.log('排序',column, prop, order)
-      this.sort=prop;
-      this.order=order;
+      console.log("排序", column, prop, order);
+      this.sort = prop;
+      this.order = order;
       this.getFundAccount();
     },
     tableRowClassName({ row, rowIndex }) {
       if (row["totalScale"] - row["flatLine"] <= 0) {
-        return "yellow";
-      } else if (row["totalScale"] - row["cordonLine"] <= 0) {
         return "colorgreen";
+      } else if (row["totalScale"] - row["cordonLine"] <= 0) {
+        return "yellow";
       }
       return "red";
     },
@@ -189,6 +189,8 @@ export default {
       );
     },
     search() {
+      this.sort = "";
+      this.order = "";
       this.getFundAccount();
     },
     refresh() {
