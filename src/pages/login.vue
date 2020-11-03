@@ -15,24 +15,25 @@
           <div class="smallbg">
             <div class="msgbox">
               <span class="m1">
-                <img src="../assets/nine/u1.png" alt="">
+                <img src="../assets/nine/u1.png" alt="" class="tu">
                 <div class="mt">account</div>
               </span>
               <input v-model="form.username" type="text" placeholder="请输入用户名">
             </div>
             <div class="msgbox">
               <span class="m1">
-                <img src="../assets/nine/u2.png" alt="">
+                <img src="../assets/nine/u2.png" alt="" class="tu">
                 <div class="mt">password</div>
               </span>
               <input v-model="form.pwd" type="password" placeholder="请输入密码">
             </div>
             <div class="msgbox">
               <span class="m1">
-                <img src="../assets/nine/u3.png" alt="">
+                <img src="../assets/nine/u3.png" alt="" class="tu">
                 <div class="mt">Verification</div>
               </span>
               <input v-model="form.code" placeholder="请输入验证码">
+              <img class="code" :src="'http://47.102.151.13/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
             </div>
             <div class="errorbox" v-if="errMsg">
               <img src="../assets/loginimg/error.png" alt="">
@@ -67,12 +68,14 @@ export default {
       who: "",
       app: "",
       appUrl: "",
-      Expire_Day: ""
+      Expire_Day: "",
+      num: 2345
     };
   },
   watch: {},
   created() {
     localStorage.clear();
+    this.getCode();
   },
   mounted: function() {
     this.listenResize();
@@ -85,6 +88,11 @@ export default {
         let height = $(window).height();
         $(".login-container").css("height", height + "px");
       });
+    },
+    getCode() {
+      let out = Math.floor(Math.random() * 10000);
+      console.log("我啊", out);
+      this.num = out;
     },
     getMsg() {
       this.axios
@@ -106,7 +114,9 @@ export default {
       this.axios
         .post("/tn/mgr-api/login", {
           username: this.form.username,
-          password: md5(this.form.pwd)
+          password: md5(this.form.pwd),
+          code: this.form.code,
+          uuid: this.num
         })
         .then(res => {
           console.log("login>>", res.data);
@@ -218,11 +228,14 @@ export default {
 .loginbox .msgbox .m1 .mt {
   color: #44444f;
 }
-.loginbox .msgbox img {
+.loginbox .msgbox .tu {
   width: 20px;
   margin-bottom: 5px;
 }
-
+.loginbox .msgbox .code {
+  margin-left: -140px;
+  float: left;
+}
 .loginbox .msgbox input {
   float: left;
   width: 348px;
@@ -231,7 +244,7 @@ export default {
   margin-left: 20px;
   box-sizing: border-box;
   padding-left: 10px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 33px;
   outline: none;
   border-bottom: 1px solid #ededed;
