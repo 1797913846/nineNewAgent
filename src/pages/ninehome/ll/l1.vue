@@ -66,6 +66,23 @@
                 </el-form>
             </div>
         </div>
+        <div class="addForm" v-if="sBool==true">
+            <div class="addContent addContent2">
+                <div class="title">
+                    <span class="tl">权限设置</span>
+                    <span class="tr" @click="closeS">X</span>
+                </div>
+                <el-form :inline="true" class="demo-form-inline">
+                    <el-tree :data="sdata" show-checkbox default-expand-all node-key="checked" ref="tree" highlight-current :props="defaultProps">
+                    </el-tree>
+                    <br />
+                    <el-form-item>
+                        <el-button type="primary" @click="saveS">保存</el-button>
+                        <el-button type="primary" @click="closeS">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -92,7 +109,13 @@ export default {
         roleId: ""
       },
       id: "",
-      addTitle: "新增"
+      addTitle: "新增",
+      sBool: false,
+      sdata: [],
+      defaultProps: {
+        children: "children",
+        label: "name"
+      }
     };
   },
   computed: {
@@ -127,7 +150,14 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    saveS() {
+      this.sBool = false;
+    },
+    closeS() {
+      this.sBool = false;
+    },
     getSaveRoleRes(index, row) {
+      this.sBool = true;
       let roleId = row.roleId;
       this.axios
         .post("/tn/mgr-api/sysmgr/roleResSelect", {
@@ -136,6 +166,7 @@ export default {
         .then(res => {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
+            this.sdata = res.data.data;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -376,6 +407,10 @@ export default {
 .addContent .bt {
   margin-bottom: 15px;
   border-bottom: 1px solid #ccc;
+}
+.addContent2 {
+  height: 500px;
+  overflow-y: scroll;
 }
 </style>
 
