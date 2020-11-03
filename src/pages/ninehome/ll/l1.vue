@@ -1,89 +1,89 @@
 <!--角色管理-->
 <template>
-    <div class="bigestbox">
-        <topNav></topNav>
-        <div class="container" @click="colorBool = false">
-            <div class="template-top">
-                <div class="title" @click="showAddNow">添加</div>
-                <div class="operate-btn">
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入角色名称" v-model="roleName" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="search-user" @click="search()">查询</div>
-                </div>
-            </div>
-            <!--表格-->
-            <div class="reset-scroll-style">
-                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="编号" width="100" prop="roleId" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="角色名称" prop="roleName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="描述" prop="roleDesc" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="创建人" prop="modifyUser" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="创建时间" width="200" prop="createTime" align="center"></el-table-column>
-                    <el-table-column label="操作" align="center">
-                        <template slot-scope="scope">
-                            <div class="operation">
-                                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
-                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                                <span class="addSameClass " @click.stop="getSaveRoleRes(scope.$index, scope.row)">权限设置</span>
-                            </div>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="编号" width="100" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="角色名称" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="描述" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="创建人" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="创建时间" width="100" align="center"></el-table-column>
-                </el-table>
-            </div>
-            <div class="pagination" v-if="nullTable==false">
-                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-            </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container" @click="colorBool = false">
+      <div class="template-top">
+        <div class="title" @click="showAddNow">添加</div>
+        <div class="operate-btn">
+          <div class="search-box">
+            <input type="text" placeholder="请输入角色名称" v-model="roleName" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-user" @click="search()">查询</div>
         </div>
-        <!--表单ztree-->
-        <div class="addForm" v-if="showAdd==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <span class="tr" @click="closeAdd">X</span>
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="角色名称：">
-                        <el-input v-model="formInline.roleName" placeholder="角色名称"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item label="描述：">
-                        <el-input v-model="formInline.roleDesc" placeholder="描述"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-                        <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
-        <div class="addForm" v-if="sBool==true">
-            <div class="addContent addContent2">
-                <div class="title">
-                    <span class="tl">权限设置</span>
-                    <span class="tr" @click="closeS">X</span>
-                </div>
-                <el-form :inline="true" class="demo-form-inline">
-                    <el-tree :data="sdata" show-checkbox default-expand-all node-key="checked" ref="tree" highlight-current :props="defaultProps">
-                    </el-tree>
-                    <br />
-                    <el-form-item>
-                        <el-button type="primary" @click="saveS">保存</el-button>
-                        <el-button type="primary" @click="closeS">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
+      </div>
+      <!--表格-->
+      <div class="reset-scroll-style">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="编号" width="100" prop="roleId" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="角色名称" prop="roleName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="描述" prop="roleDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建人" prop="modifyUser" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建时间" width="200" prop="createTime" align="center"></el-table-column>
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+                <span class="addSameClass " @click.stop="getSaveRoleRes(scope.$index, scope.row)">权限设置</span>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="编号" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="角色名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="描述" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建人" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建时间" width="100" align="center"></el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination" v-if="nullTable==false">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
+    <!--表单ztree-->
+    <div class="addForm" v-if="showAdd==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeAdd">X</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="角色名称：">
+            <el-input v-model="formInline.roleName" placeholder="角色名称"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item label="描述：">
+            <el-input v-model="formInline.roleDesc" placeholder="描述"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <div class="addForm" v-if="sBool==true">
+      <div class="addContent addContent2">
+        <div class="title">
+          <span class="tl">权限设置</span>
+          <span class="tr" @click="closeS">X</span>
+        </div>
+        <el-form :inline="true" class="demo-form-inline">
+          <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" ref="tree" highlight-current :props="defaultProps">
+          </el-tree>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="saveS">保存</el-button>
+            <el-button type="primary" @click="closeS">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -115,7 +115,9 @@ export default {
       defaultProps: {
         children: "children",
         label: "name"
-      }
+      },
+      checkedbox: [],
+      roleId: ""
     };
   },
   computed: {
@@ -151,7 +153,34 @@ export default {
   },
   methods: {
     saveS() {
-      this.sBool = false;
+      console.log(this.$refs.tree.getCheckedKeys());
+      let resIds = this.$refs.tree.getCheckedKeys();
+      this.axios
+        .post("/tn/mgr-api/sysmgr/saveRoleRes", {
+          roleId: this.roleId,
+          resIds: resIds
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert("修改成功", "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.getFundAccount();
+            this.sBool = false;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     closeS() {
       this.sBool = false;
@@ -159,6 +188,7 @@ export default {
     getSaveRoleRes(index, row) {
       this.sBool = true;
       let roleId = row.roleId;
+      this.roleId = roleId;
       this.axios
         .post("/tn/mgr-api/sysmgr/roleResSelect", {
           roleId: roleId
@@ -167,6 +197,12 @@ export default {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
             this.sdata = res.data.data;
+            this.checkedbox = [];
+            this.sdata.map(item => {
+              if (item.checked == true) {
+                this.checkedbox.push(item.id);
+              }
+            });
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
