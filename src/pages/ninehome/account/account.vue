@@ -31,18 +31,21 @@
           </el-table-column>
           <el-table-column show-overflow-tooltip label="母账户ID" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center" width="150"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="借款额" prop="borrowing" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="期初金额" prop="allottedScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="盈亏额" prop="profit" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="期初金额" prop="allottedScale" align="center" width="100" sortable></el-table-column>
+          <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center" width="100" sortable></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏额" prop="profit" align="center" width="100" sortable></el-table-column>
           <el-table-column show-overflow-tooltip label="盈亏率" prop="profitRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="持仓数" prop="stockCnt" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票市值" prop="stockScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票市值" prop="stockScale" align="center" width="100" sortable></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center" width="100" sortable></el-table-column>
           <el-table-column show-overflow-tooltip label="持仓率%" prop="stockRate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="警戒线" prop="cordonLineDiff" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线(差额)" prop="cordonLineDiff" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线(差额)" prop="flatLineDiff" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="风控提示" prop="riskTip" align="center" sortable></el-table-column>
+          <el-table-column show-overflow-tooltip label="账户状态" prop="statusDesc" align="center"></el-table-column>
         </el-table>
       </div>
     </div>
