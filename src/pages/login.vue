@@ -3,25 +3,43 @@
   <div class="login-container">
     <el-form ref="form" :model="form" label-position="left" label-width="80px" class="login-box">
       <div class="loginbox">
-        <div class="logintitle">代理商后台管理系统</div>
+        <div class="logintop1">
+          <div class="logintitle1">代理商后台管理系统</div>
+          <div class="logintitle2">AGENT BACK OFFICE MANAGEMENT SYSTEM</div>
+        </div>
         <div style="display: none">
           <input type="text" id="username">
           <input type="password" id="password">
         </div>
-        <div v-if="isLogin==true">
-          <div class="msgbox">
-            <img src="../assets/loginimg/username.png" alt="">
-            <input v-model="form.username" type="text" placeholder="请输入用户名">
+        <div v-if="isLogin==true" class="bgbox">
+          <div class="smallbg">
+            <div class="msgbox">
+              <span class="m1">
+                <img src="../assets/nine/u1.png" alt="">
+                <div class="mt">account</div>
+              </span>
+              <input v-model="form.username" type="text" placeholder="请输入用户名">
+            </div>
+            <div class="msgbox">
+              <span class="m1">
+                <img src="../assets/nine/u2.png" alt="">
+                <div class="mt">password</div>
+              </span>
+              <input v-model="form.pwd" type="password" placeholder="请输入密码">
+            </div>
+            <div class="msgbox">
+              <span class="m1">
+                <img src="../assets/nine/u3.png" alt="">
+                <div class="mt">Verification</div>
+              </span>
+              <input v-model="form.code" placeholder="请输入验证码">
+            </div>
+            <div class="errorbox" v-if="errMsg">
+              <img src="../assets/loginimg/error.png" alt="">
+              <div>{{errMsg}}</div>
+            </div>
+            <div class="loginbtn" @click="login()">登录</div>
           </div>
-          <div class="msgbox">
-            <img src="../assets/loginimg/password.png" alt="" placeholder="请输入密码">
-            <input v-model="form.pwd" type="password">
-          </div>
-          <div class="errorbox" v-if="errMsg">
-            <img src="../assets/loginimg/error.png" alt="">
-            <div>{{errMsg}}</div>
-          </div>
-          <div class="loginbtn" @click="login()">登录</div>
         </div>
       </div>
     </el-form>
@@ -38,6 +56,7 @@ export default {
       form: {
         username: localStorage.getItem("remenberUsername") || "",
         pwd: "",
+        code: "",
         url: "http://120.26.187.19:8081"
       },
       isLogin: true,
@@ -136,60 +155,90 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   width: 100%;
-  background: #111622;
   box-sizing: border-box;
-  padding-top: 190px;
+  background-color: #fff;
 }
 .login-box {
-  width: 826px;
-  height: 620px;
-  background-image: url("../assets/loginimg/bigbg.png");
-  background-repeat: no-repeat;
-  background-size: 413px 620px;
-  margin: 0 auto;
   overflow: hidden;
+  background-color: #2562ee;
 }
 .loginbox {
-  width: 317px;
-  margin-left: 254.5px;
-  margin-top: 190px;
-  text-align: center;
+  overflow: hidden;
 }
-.logintitle {
+.loginbox .logintop1 {
+  width: 1200px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 150px);
+  height: 247px;
+}
+.logintitle1 {
   color: #fff;
-  font-size: 30px;
-  margin-bottom: 30px;
+  font-size: 56px;
+  margin-bottom: 17px;
+}
+.logintitle2 {
+  font-size: 20px;
+  color: #fff;
+}
+.bgbox {
+  background-image: url("../assets/nine/bgcolor.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 100%;
+  height: 450px;
+  background-color: #fff;
+  margin-top: 200px;
+}
+.smallbg {
+  background-image: url("../assets/nine/smallbg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 380px;
+  width: 650px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin-left: 200px;
+  margin-top: 180px;
+  overflow: hidden;
 }
 .loginbox .msgbox {
-  width: 317px;
-  height: 43px;
-  background-color: #24272c;
-  margin-bottom: 8px;
+  height: 65px;
   box-sizing: border-box;
+}
+.loginbox .msgbox:first-child {
+  margin-top: 130px;
+}
+.loginbox .msgbox .m1 {
+  width: 66px;
+  overflow: hidden;
+  float: left;
+  margin-left: 94px;
+}
+.loginbox .msgbox .m1 .mt {
+  color: #44444f;
 }
 .loginbox .msgbox img {
-  width: 13px;
-  height: 14px;
-  float: left;
-  margin-top: 14.5px;
-  margin-left: 14px;
+  width: 20px;
+  margin-bottom: 5px;
 }
-.loginbox .msgbox1 img {
-  width: 16px;
-  height: 12px;
-}
+
 .loginbox .msgbox input {
   float: left;
-  width: 270px;
+  width: 348px;
   height: 33px;
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-left: 20px;
   box-sizing: border-box;
   padding-left: 10px;
-  background-color: #24272c;
-  color: #ffffff;
   font-size: 12px;
   line-height: 33px;
   outline: none;
+  border-bottom: 1px solid #ededed;
+  color: #393747;
+}
+.loginbox .msgbox input::placeholder {
+  color: #393747;
 }
 .loginbox .msgbox .el-select {
   float: left;
@@ -205,15 +254,18 @@ export default {
   outline: none;
 }
 .loginbox .loginbtn {
-  width: 317px;
-  height: 43px;
+  width: 466px;
+  height: 60px;
   text-align: center;
   color: #fff;
-  font-size: 16px;
+  font-size: 26px;
   box-sizing: border-box;
-  line-height: 43px;
+  line-height: 60px;
   cursor: pointer;
-  background-image: url("../assets/loginimg/btnbg.png");
+  background-color: #2562ee;
+  border-radius: 10px;
+  margin-left: 80px;
+  margin-top: 20px;
 }
 .login-container .shezhi {
   width: 33px;
