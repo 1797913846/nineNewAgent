@@ -1,147 +1,147 @@
 <!--券商管理-->
 <template>
-    <div class="bigestbox">
-        <topNav></topNav>
-        <div class="container" @click="colorBool = false">
-            <div class="template-top">
-                <div class="title" @click="jiaNow">添加</div>
-                <div class="operate-btn">
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入券商名称" v-model="brokername" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="search-user" @click="search">查询</div>
-                </div>
-            </div>
-            <!--表格-->
-            <div class="reset-scroll-style">
-                <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-                    <el-table-column label="操作" align="center" width="180">
-                        <template slot-scope="scope">
-                            <div class="operation">
-                                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
-                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column show-overflow-tooltip label="券商编号" prop="brokerid" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="券商名称" prop="brokername" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="券商类型" prop="brokertype" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="登录模式" prop="loginflag" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="客户端版本号" prop="clientversion" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="营业部标识" prop="deptid" align="center" :formatter="formatter"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="成交类型" prop="calcdealstype" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="协议类型" prop="productssl" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="IP地址" prop="ipaddress" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="端口号" prop="ipport" align="center"></el-table-column>
-                </el-table>
-            </div>
-            <div class="pagination">
-                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-            </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container" @click="colorBool = false">
+      <div class="template-top">
+        <div class="title" @click="jiaNow">添加</div>
+        <div class="operate-btn">
+          <div class="search-box">
+            <input type="text" placeholder="请输入券商名称" v-model="brokername" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-user" @click="search">查询</div>
         </div>
-        <!--添加表单-->
-        <div class="addForm" v-if="jia==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <span class="tr" @click="closeJia">关闭</span>
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="券商编码：">
-                        <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
-                    </el-form-item>
-                    <el-form-item label="券商名称：">
-                        <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="券商类型：">
-                        <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
-                    </el-form-item>
-                    <el-form-item label="登录模式：">
-                        <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
-                    </el-form-item>
-                    <el-form-item label="客户端版本号：">
-                        <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="营业部标识：">
-                        <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
-                    </el-form-item>
-                    <el-form-item label="成交类型：">
-                        <el-select v-model="formInline.calcdealstype">
-                            <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="协议类型：">
-                        <el-select v-model="formInline.productssl">
-                            <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="IP地址：">
-                        <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
-                    </el-form-item>
-                    <el-form-item label="端口：">
-                        <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-                        <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
-        <!--修改表单-->
-        <div class="addForm" v-if="changeNow==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <span class="tr" @click="closeChange1">关闭</span>
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="券商编码：">
-                        <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
-                    </el-form-item>
-                    <el-form-item label="券商名称：">
-                        <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="券商类型：">
-                        <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
-                    </el-form-item>
-                    <el-form-item label="登录模式：">
-                        <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
-                    </el-form-item>
-                    <el-form-item label="客户端版本号：">
-                        <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="营业部标识：">
-                        <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
-                    </el-form-item>
-                    <el-form-item label="成交类型：">
-                        <el-select v-model="formInline.calcdealstype">
-                            <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="协议类型：">
-                        <el-select v-model="formInline.productssl">
-                            <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="IP地址：">
-                        <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
-                    </el-form-item>
-                    <el-form-item label="端口：">
-                        <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
-                        <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
+      </div>
+      <!--表格-->
+      <div class="reset-scroll-style">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+          <el-table-column label="操作" align="center" width="180">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="券商编号" prop="brokerid" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" prop="brokername" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商类型" prop="brokertype" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="登录模式" prop="loginflag" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户端版本号" prop="clientversion" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="营业部标识" prop="deptid" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交类型" prop="calcdealstype" align="center" :formatter="formatter1"></el-table-column>
+          <el-table-column show-overflow-tooltip label="协议类型" prop="productssl" align="center" :formatter="formatter2"></el-table-column>
+          <el-table-column show-overflow-tooltip label="IP地址" prop="ipaddress" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="端口号" prop="ipport" align="center"></el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
+    <!--添加表单-->
+    <div class="addForm" v-if="jia==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeJia">关闭</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="券商编码：">
+            <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
+          </el-form-item>
+          <el-form-item label="券商名称：">
+            <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
+          </el-form-item>
+          <el-form-item label="券商类型：">
+            <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
+          </el-form-item>
+          <el-form-item label="登录模式：">
+            <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
+          </el-form-item>
+          <el-form-item label="客户端版本号：">
+            <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
+          </el-form-item>
+          <el-form-item label="营业部标识：">
+            <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
+          </el-form-item>
+          <el-form-item label="成交类型：">
+            <el-select v-model="formInline.calcdealstype">
+              <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="协议类型：">
+            <el-select v-model="formInline.productssl">
+              <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="IP地址：">
+            <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
+          </el-form-item>
+          <el-form-item label="端口：">
+            <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <!--修改表单-->
+    <div class="addForm" v-if="changeNow==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <span class="tr" @click="closeChange1">关闭</span>
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="券商编码：">
+            <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
+          </el-form-item>
+          <el-form-item label="券商名称：">
+            <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
+          </el-form-item>
+          <el-form-item label="券商类型：">
+            <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
+          </el-form-item>
+          <el-form-item label="登录模式：">
+            <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
+          </el-form-item>
+          <el-form-item label="客户端版本号：">
+            <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
+          </el-form-item>
+          <el-form-item label="营业部标识：">
+            <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
+          </el-form-item>
+          <el-form-item label="成交类型：">
+            <el-select v-model="formInline.calcdealstype">
+              <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="协议类型：">
+            <el-select v-model="formInline.productssl">
+              <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="IP地址：">
+            <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
+          </el-form-item>
+          <el-form-item label="端口：">
+            <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -363,18 +363,25 @@ export default {
     closeJia() {
       this.jia = false;
     },
-    formatter(row, column) {
+    formatter1(row, column) {
       if (row) {
-        let usertype = row.usertype;
-        switch (usertype) {
+        let calcdealstype = row.calcdealstype;
+        switch (calcdealstype) {
           case 0:
-            return "普通户";
+            return "券商";
           case 1:
-            return "担保品";
-          case 2:
-            return "融资融券";
-          default:
-            return "未知";
+            return "计算";
+        }
+      }
+    },
+    formatter2(row, column) {
+      if (row) {
+        let productssl = row.productssl;
+        switch (productssl) {
+          case 0:
+            return "同花顺";
+          case 1:
+            return "通达信";
         }
       }
     },
