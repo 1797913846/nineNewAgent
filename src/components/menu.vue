@@ -1,9 +1,9 @@
 <template>
   <div class="menu">
+    <div class="logo">LOGO</div>
     <div class="smenu">
       <div class="boxmenu">
         <div class="smallmenu">
-          <div class="logo">LOGO</div>
           <el-row class="tac">
             <el-col>
               <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
@@ -353,9 +353,10 @@ export default {
   margin-right: 20px;
 }
 .logo {
-  width: 230px;
-  height: 75px;
-  border-bottom: 1px solid #ccc;
+  width: 191px;
+  height: 76px;
+  border-bottom: 1px solid #e9eff3;
+  border-right: 1px solid #e9eff3;
   line-height: 75px;
   font-size: 20px;
   font-weight: bold;

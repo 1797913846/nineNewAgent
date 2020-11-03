@@ -49,7 +49,7 @@ export default {
 .topnav {
   background-color: #fff;
   height: 75px;
-  border-bottom: 1px solid #ccc;
+  margin-left:1px;
 }
 .navname {
   color: #5b5b65;
