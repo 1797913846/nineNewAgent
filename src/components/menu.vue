@@ -14,10 +14,19 @@
                     <span>系统管理</span>
                   </template>
                   <el-menu-item-group>
-                    <el-menu-item index="8-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
                     <el-menu-item index="8-2" @click="clickJump('/ninehome/l2')">公告管理</el-menu-item>
                     <el-menu-item index="8-3" @click="clickJump('/ninehome/l3')">收付款管理</el-menu-item>
                     <el-menu-item index="8-4" @click="clickJump('/ninehome/l4')">券商管理</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="9">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m10-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m10-1.png" alt=""></i>
+                    <span>安全管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="9-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
                   </el-menu-item-group>
                 </el-submenu>
                 <el-submenu index="1">
@@ -250,7 +259,7 @@ export default {
             this.whichIndex = "7-11";
             break;
           case "/ninehome/l1":
-            this.whichIndex = "8-1";
+            this.whichIndex = "9-1";
             break;
           case "/ninehome/l2":
             this.whichIndex = "8-2";
