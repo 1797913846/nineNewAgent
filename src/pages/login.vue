@@ -35,11 +35,11 @@
               <input v-model="form.code" placeholder="请输入验证码">
               <img class="code" :src="'http://47.102.151.13/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
             </div>
-            <div class="errorbox" v-if="errMsg">
+            <!-- <div class="errorbox" v-if="errMsg">
               <img src="../assets/loginimg/error.png" alt="">
               <div>{{errMsg}}</div>
-            </div>
-            <div class="loginbtn" @click="login()">登录</div>
+            </div> -->
+            <div class="loginbtn" @click="login()">登 &nbsp;录</div>
           </div>
         </div>
       </div>
@@ -132,11 +132,11 @@ export default {
             }, 800);
           } else {
             this.errMsg = res.data.info;
-            // this.$alert(res.data.msg, "提示", {
-            //   confirmButtonText: "确定",
-            //   center: true,
-            //   type: "error"
-            // });
+            this.$alert(this.errMsg, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
           }
         })
         .catch(() => {});
@@ -271,7 +271,7 @@ export default {
   height: 60px;
   text-align: center;
   color: #fff;
-  font-size: 26px;
+  font-size: 20px;
   box-sizing: border-box;
   line-height: 60px;
   cursor: pointer;
