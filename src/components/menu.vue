@@ -1,119 +1,121 @@
 <template>
   <div class="menu">
-    <div class="smallmenu">
-      <div class="contentheight">
-        <div class="logo">LOGO</div>
-        <el-row class="tac">
-          <el-col>
-            <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
-              <el-submenu index="8">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m9-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m9-1.png" alt=""></i>
-                  <span>系统管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="8-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
-                  <el-menu-item index="8-2" @click="clickJump('/ninehome/l2')">公告管理</el-menu-item>
-                  <el-menu-item index="8-3" @click="clickJump('/ninehome/l3')">收付款管理</el-menu-item>
-                  <el-menu-item index="8-4" @click="clickJump('/ninehome/l4')">券商管理</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="1">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m2-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m2-1.png" alt=""></i>
-                  <span>投顾管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="1-1" @click="clickJump('/ninehome/commission')">佣金方案配置</el-menu-item>
-                  <el-menu-item index="1-2" @click="clickJump('/ninehome/financing')">资金方案配置</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="2">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
-                  <span>代理商管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="2-1" @click="clickJump('/ninehome/agents')">代理商列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="3">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m4-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m4-1.png" alt=""></i>
-                  <span>资产管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="4-1" @click="clickJump('/ninehome/assets')">资产管理</el-menu-item>
-                  <el-menu-item index="4-2" @click="clickJump('/ninehome/pool')">资金池管理</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="4">
-                <template slot="title">
-                  <!-- <i class="el-icon-location"></i> -->
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m6-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m6-1.png" alt=""></i>
-                  <span>风控管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
-                  <el-menu-item index="3-2" @click="clickJump('/ninehome/blacklist')">黑名单</el-menu-item>
-                  <!-- <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item> -->
-                  <el-menu-item index="3-4" @click="clickJump('/ninehome/other1')">全局风控设置</el-menu-item>
-                  <el-menu-item index="3-5" @click="clickJump('/ninehome/other2')">股票交易设置</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="5">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m5-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m5-1.png" alt=""></i>
-                  <span>资金管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="5-1" @click="clickJump('/ninehome/money')">资金信息</el-menu-item>
-                  <el-menu-item index="5-2" @click="clickJump('/ninehome/topup')">充值审核</el-menu-item>
-                  <el-menu-item index="5-3" @click="clickJump('/ninehome/withdrawal')">提现审核</el-menu-item>
-                  <el-menu-item index="5-4" @click="clickJump('/ninehome/water')">资金流水</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="6">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m7-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m7-1.png" alt=""></i>
-                  <span>账户管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="6-1" @click="clickJump('/ninehome/huiyuan')">会员列表</el-menu-item>
-                  <el-menu-item index="6-2" @click="clickJump('/ninehome/hy1')">会员绑卡信息</el-menu-item>
-                  <el-menu-item index="6-3" @click="clickJump('/ninehome/hy2')">等级列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="7">
-                <template slot="title">
-                  <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m8-2.png" alt=""></i>
-                  <i><img class="menu-icon menu-icon-show" src="../assets/nine/m8-1.png" alt=""></i>
-                  <span>交易管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="7-1" @click="clickJump('/ninehome/y1')">持仓信息</el-menu-item>
-                  <el-menu-item index="7-2" @click="clickJump('/ninehome/y2')">逐笔持仓</el-menu-item>
-                  <el-menu-item index="7-3" @click="clickJump('/ninehome/y3')">委托信息</el-menu-item>
-                  <el-menu-item index="7-4" @click="clickJump('/ninehome/y4')">成交信息</el-menu-item>
-                  <el-menu-item index="7-5" @click="clickJump('/ninehome/y5')">逐笔平仓</el-menu-item>
-                  <el-menu-item index="7-6" @click="clickJump('/ninehome/y6')">结算信息</el-menu-item>
-                  <el-menu-item index="7-7" @click="clickJump('/ninehome/y7')">代理结算详情</el-menu-item>
-                  <el-menu-item index="7-8" @click="clickJump('/ninehome/y8')">佣金统计</el-menu-item>
-                  <el-menu-item index="7-9" @click="clickJump('/ninehome/y9')">分红送股信息</el-menu-item>
-                  <el-menu-item index="7-10" @click="clickJump('/ninehome/y10')">持仓变动信息</el-menu-item>
-                  <el-menu-item index="7-11" @click="clickJump('/ninehome/y11')">交割单信息</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-row>
+    <div class="smenu">
+      <div class="boxmenu">
+        <div class="smallmenu">
+          <div class="logo">LOGO</div>
+          <el-row class="tac">
+            <el-col>
+              <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
+                <el-submenu index="8">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m9-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m9-1.png" alt=""></i>
+                    <span>系统管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="8-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
+                    <el-menu-item index="8-2" @click="clickJump('/ninehome/l2')">公告管理</el-menu-item>
+                    <el-menu-item index="8-3" @click="clickJump('/ninehome/l3')">收付款管理</el-menu-item>
+                    <el-menu-item index="8-4" @click="clickJump('/ninehome/l4')">券商管理</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="1">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m2-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m2-1.png" alt=""></i>
+                    <span>投顾管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="1-1" @click="clickJump('/ninehome/commission')">佣金方案配置</el-menu-item>
+                    <el-menu-item index="1-2" @click="clickJump('/ninehome/financing')">资金方案配置</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="2">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m3-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m3-1.png" alt=""></i>
+                    <span>代理商管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="2-1" @click="clickJump('/ninehome/agents')">代理商列表</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="3">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m4-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m4-1.png" alt=""></i>
+                    <span>资产管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="4-1" @click="clickJump('/ninehome/assets')">资产管理</el-menu-item>
+                    <el-menu-item index="4-2" @click="clickJump('/ninehome/pool')">资金池管理</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="4">
+                  <template slot="title">
+                    <!-- <i class="el-icon-location"></i> -->
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m6-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m6-1.png" alt=""></i>
+                    <span>风控管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
+                    <el-menu-item index="3-2" @click="clickJump('/ninehome/blacklist')">黑名单</el-menu-item>
+                    <!-- <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item> -->
+                    <el-menu-item index="3-4" @click="clickJump('/ninehome/other1')">全局风控设置</el-menu-item>
+                    <el-menu-item index="3-5" @click="clickJump('/ninehome/other2')">股票交易设置</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="5">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m5-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m5-1.png" alt=""></i>
+                    <span>资金管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="5-1" @click="clickJump('/ninehome/money')">资金信息</el-menu-item>
+                    <el-menu-item index="5-2" @click="clickJump('/ninehome/topup')">充值审核</el-menu-item>
+                    <el-menu-item index="5-3" @click="clickJump('/ninehome/withdrawal')">提现审核</el-menu-item>
+                    <el-menu-item index="5-4" @click="clickJump('/ninehome/water')">资金流水</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="6">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m7-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m7-1.png" alt=""></i>
+                    <span>账户管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="6-1" @click="clickJump('/ninehome/huiyuan')">会员列表</el-menu-item>
+                    <el-menu-item index="6-2" @click="clickJump('/ninehome/hy1')">会员绑卡信息</el-menu-item>
+                    <el-menu-item index="6-3" @click="clickJump('/ninehome/hy2')">等级列表</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="7">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m8-2.png" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" src="../assets/nine/m8-1.png" alt=""></i>
+                    <span>交易管理</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item index="7-1" @click="clickJump('/ninehome/y1')">持仓信息</el-menu-item>
+                    <el-menu-item index="7-2" @click="clickJump('/ninehome/y2')">逐笔持仓</el-menu-item>
+                    <el-menu-item index="7-3" @click="clickJump('/ninehome/y3')">委托信息</el-menu-item>
+                    <el-menu-item index="7-4" @click="clickJump('/ninehome/y4')">成交信息</el-menu-item>
+                    <el-menu-item index="7-5" @click="clickJump('/ninehome/y5')">逐笔平仓</el-menu-item>
+                    <el-menu-item index="7-6" @click="clickJump('/ninehome/y6')">结算信息</el-menu-item>
+                    <el-menu-item index="7-7" @click="clickJump('/ninehome/y7')">代理结算详情</el-menu-item>
+                    <el-menu-item index="7-8" @click="clickJump('/ninehome/y8')">佣金统计</el-menu-item>
+                    <el-menu-item index="7-9" @click="clickJump('/ninehome/y9')">分红送股信息</el-menu-item>
+                    <el-menu-item index="7-10" @click="clickJump('/ninehome/y10')">持仓变动信息</el-menu-item>
+                    <el-menu-item index="7-11" @click="clickJump('/ninehome/y11')">交割单信息</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+              </el-menu>
+            </el-col>
+          </el-row>
+        </div>
       </div>
     </div>
   </div>
@@ -265,8 +267,7 @@ export default {
     }
   },
   mounted: function() {
-    this.listenResize();
-    this.navHeight = $(".contentheight").height();
+    // this.listenResize();
   },
   methods: {
     clickJump(where) {
@@ -286,19 +287,6 @@ export default {
         let height = $(window).height();
         $(".menu").css("height", height + "px");
         $(".smallmenu").css("height", height + "px");
-      });
-    },
-    //监听展开后的导航来设置是否出现滚动条
-    isScroll: function(top) {
-      //获取展开后的导航高度
-      setTimeout(() => {
-        this.menuHeight = $(".menu").height();
-        this.navHeight = $(".contentheight").height();
-        if (this.navHeight > this.menuHeight) {
-          $(".smallmenu").css("overflow-y", "scroll");
-          $(".smallmenu").css("height", this.menuHeight + "px");
-          // $(".smallmenu").scrollTop(top)
-        }
       });
     }
   }
