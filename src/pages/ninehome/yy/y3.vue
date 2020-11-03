@@ -74,7 +74,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#f0ad4e;">修改</span>
-                <span v-if="scope.row.entruststatus!= 6" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">ITG撤单</span>
+                <span v-if="scope.row.entruststatus!= 6" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">撤单</span>
               </div>
             </template>
           </el-table-column>
