@@ -188,7 +188,7 @@ export default {
   width: 100%;
   height: 450px;
   background-color: #fff;
-  margin-top: 200px;
+  margin-top: 160px;
 }
 .smallbg {
   background-image: url("../assets/nine/smallbg.png");
