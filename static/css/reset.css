@@ -976,3 +976,38 @@ input:-ms-input-placeholder {
     outline: none;
     margin-left: 492px;
 }
+
+.contanier2 {
+    width: 602px;
+    padding: 0px;
+}
+
+.contanier2 .c2title {
+    width: 455px;
+    height: 46px;
+    background: #2562ee;
+    color: #fff;
+    font-size: 14px;
+    line-height: 46px;
+    text-align: center;
+    margin-left: 73px;
+    margin-top: 45px;
+}
+
+.rbox1 {
+    border-top: 0px;
+    margin-top: 0px;
+    width: 880px;
+}
+
+.contanier3 {
+    width: 880px;
+}
+
+.rbox1 .el-form-item__label {
+    width: 250px;
+}
+
+.rbox1 .nobt {
+    margin-left: 580px;
+}

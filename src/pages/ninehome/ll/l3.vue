@@ -152,21 +152,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.contanier2 {
-  width: 602px;
-  padding: 0px;
-}
-.contanier2 .c2title {
-  width: 455px;
-  height: 46px;
-  background: #2562ee;
-  color: #fff;
-  font-size: 14px;
-  line-height: 46px;
-  text-align: center;
-  margin-left: 73px;
-  margin-top: 45px;
-}
+
 </style>
 
 

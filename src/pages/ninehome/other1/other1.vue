@@ -2,11 +2,11 @@
 <template>
   <div class="bigestbox">
     <topNav></topNav>
-    <div class="container">
+    <div class="container contanier2 contanier3">
       <div class=" heightbox">
         <!--表单-->
         <div class="reset-scroll-style">
-          <div class="rbox">
+          <div class="rbox rbox1">
             <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
               <!-- <el-form-item label="沪深主板涨幅买入限制：">
           <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板涨幅买入限制"></el-input>
@@ -83,7 +83,7 @@
                 </el-select>
               </el-form-item><br />
               <el-form-item>
-                <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+                <el-button type="primary" class="nobt" @click="onSubmit('formInline')">保存</el-button>
               </el-form-item>
             </el-form>
           </div>
