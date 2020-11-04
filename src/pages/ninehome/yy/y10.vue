@@ -66,7 +66,7 @@
           <el-table-column show-overflow-tooltip label="证券代码" prop="stockCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="证券名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="数量" prop="amount" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="类型" prop="type" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="类型" prop="type" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注" prop="remark" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作人" prop="opeartor" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作时间" prop="opeartorTime" align="center"></el-table-column>
@@ -181,11 +181,17 @@ export default {
   methods: {
     formatter(row, column) {
       if (row) {
-        return (
-          Math.round(
-            (row["lastPrice"] - row["preCost"]) * row["allottedCnt"] * 100
-          ) / 100
-        );
+        let type = row.type;
+        switch (type) {
+          case 1:
+            return "委托成交";
+          case 2:
+            return "送股转赠股";
+          case 3:
+            return "持仓调整";
+          default:
+            return "所有";
+        }
       }
     },
     search() {
@@ -261,7 +267,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
