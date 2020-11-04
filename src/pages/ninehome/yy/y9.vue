@@ -32,7 +32,7 @@
           <el-table-column show-overflow-tooltip label="交易所" prop="exchangeCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="证券代码" prop="stockCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="证券名称" prop="stockName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="发生日期" prop="brokeDate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="发生日期" prop="brokeDate" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="分红" prop="bonus" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="送股" prop="bonusIssue" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="转赠股" prop="conversionShares" align="center"></el-table-column>
@@ -110,11 +110,8 @@ export default {
   methods: {
     formatter(row, column) {
       if (row) {
-        return (
-          Math.round(
-            (row["lastPrice"] - row["preCost"]) * row["allottedCnt"] * 100
-          ) / 100
-        );
+        let value = row.brokeDate;
+        return value.year + "-" + value.monthValue + "-" + value.dayOfMonth;
       }
     },
     search() {
@@ -185,7 +182,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
