@@ -335,14 +335,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addForm {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  background-color: rgba(0, 0, 0, 0.5);
-}
 .addContent {
   background-color: #fff;
   width: 500px;
@@ -352,22 +344,6 @@ export default {
   transform: translate(-50%, 10%);
   padding-left: 10px;
   padding-right: 10px;
-}
-.addContent .title {
-  border-bottom: 1px solid #ccc;
-  color: #000;
-  font-size: 18px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-.addContent .title .tl {
-  float: left;
-}
-.addContent .title .tr {
-  float: right;
-  cursor: pointer;
 }
 .operate-btn {
   width: 900px;

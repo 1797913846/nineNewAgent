@@ -149,30 +149,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  width: 500px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 1%);
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.addContent .title {
-  border-bottom: 1px solid #ccc;
-  color: #000;
-  font-size: 18px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-.addContent .title .tl {
-  float: left;
-}
-.addContent .title .tr {
-  float: right;
-  cursor: pointer;
-}
+
 </style>
 
 
