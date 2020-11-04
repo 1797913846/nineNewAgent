@@ -33,9 +33,9 @@
         <el-table-column show-overflow-tooltip label="警戒线比率" width="100" prop="cordonLineRate" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="平仓线比率" width="100" prop="flatLineRate" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="positionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" prop="secondBoardPositionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" prop="thirdBoardPositionRatio" align="center"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column show-overflow-tooltip label="创业板持仓比率" width="130" prop="secondBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="科创板持仓比率" width="130" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column label="操作" align="center" width="280">
           <template slot-scope="scope">
             <div class="operation">
               <span class="addSameClass " @click.stop="getContent(scope.$index, scope.row)">修改</span>
