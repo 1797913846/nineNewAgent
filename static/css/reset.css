@@ -102,6 +102,9 @@ input:-ms-input-placeholder {
     background-color: #fff;
     margin: 27px;
     box-sizing: border-box;
+    border: 1px solid #E7E7E7;
+    border-radius: 10px;
+    width: 1674px;
 }
 
 /* table */
