@@ -401,10 +401,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent2 {
-  height: 500px;
-  overflow-y: scroll;
-}
+
 </style>
 
 

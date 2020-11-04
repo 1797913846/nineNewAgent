@@ -85,10 +85,10 @@
     </div>
     <!--表单-->
     <div class="addForm" v-if="showAdd==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -200,10 +200,10 @@
 
     <!--修改表单-->
     <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt=""  @click="closeChange">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -308,8 +308,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -327,10 +327,10 @@
     </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeJia">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -435,8 +435,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit2('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd2('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit2('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd2('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -1040,17 +1040,6 @@ export default {
   width: 10px;
   height: 10px;
   margin-left: 36px;
-}
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 700px;
-  overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding-left: 10px;
-  padding-right: 10px;
 }
 </style>
 <style>

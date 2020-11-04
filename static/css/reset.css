@@ -865,6 +865,11 @@ input:-ms-input-placeholder {
     margin-right: 20px;
 }
 
+.addContent2 {
+    height: 600px;
+    overflow-y: scroll;
+}
+
 .addForm .el-form-item__label {
     color: #586982;
     font-size: 15px;
