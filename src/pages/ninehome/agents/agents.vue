@@ -67,12 +67,12 @@
           <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" align="center" width="180">
+          <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="180">
             <template slot-scope="scope">
               {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="代理商添加账户默认佣金方案" align="center" width="180">
+          <el-table-column show-overflow-tooltip label="下级默认佣金方案" align="center" width="180">
             <template slot-scope="scope">
               {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
             </template>
@@ -117,7 +117,7 @@
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="佣金方案(单边)：">
+          <el-form-item label="佣金方案(单边)：" class="smallfont">
             <el-select v-model="formInline.commissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -148,10 +148,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" :disabled="true" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" :disabled="true" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" :disabled="true" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -181,12 +181,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -232,7 +232,7 @@
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="佣金方案(单边)：">
+          <el-form-item label="佣金方案(单边)：" class="smallfont">
             <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -263,10 +263,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -296,12 +296,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -359,7 +359,7 @@
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="佣金方案(单边)：">
+          <el-form-item label="佣金方案(单边)：" class="smallfont">
             <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -390,10 +390,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -423,12 +423,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商添加账户默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>

@@ -853,7 +853,7 @@ input:-ms-input-placeholder {
     font-size: 21px;
     margin-top: 26px;
     margin-bottom: 28px;
-    margin-left:33px;
+    margin-left: 33px;
 }
 
 .addContent .title .tr {
@@ -876,9 +876,9 @@ input:-ms-input-placeholder {
     font-weight: 500;
     height: 40px;
     line-height: 40px;
-    width: 110px;
+    width: 120px;
     text-align: left;
-    margin-left:44px;
+    margin-left: 44px;
 }
 
 .addForm .el-input__inner {
@@ -890,12 +890,16 @@ input:-ms-input-placeholder {
     background: rgba(233, 239, 243, 0.3);
     color: #9aa5aa;
     font-size: 12px;
-    padding-left:30px;
+    padding-left: 30px;
     box-sizing: border-box;
 }
 
 .addForm .el-input__inner::placeholder {
     color: #9aa5aa;
+}
+
+.addForm .smallfont .el-form-item__label {
+    font-size: 12px;
 }
 
 .addForm .el-button {

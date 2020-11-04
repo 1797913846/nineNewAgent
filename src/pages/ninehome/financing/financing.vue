@@ -87,10 +87,10 @@
           <el-form-item label="个股持仓比率：">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比率"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比率：">
+          <el-form-item label="创业板持仓比率：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比率"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比率：">
+          <el-form-item label="科创板持仓比率：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比率"></el-input>
           </el-form-item>
           <br />

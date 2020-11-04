@@ -45,11 +45,11 @@
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="标题">
+          <el-form-item label="标题：">
             <el-input v-model="formInline.title" placeholder="请输入标题"></el-input>
           </el-form-item>
           <br />
-          <el-form-item label="内容">
+          <el-form-item label="内容：">
             <el-input v-model="formInline.content" placeholder="请输入内容"></el-input>
           </el-form-item>
           <br />
