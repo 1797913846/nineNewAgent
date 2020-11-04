@@ -54,6 +54,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="分组名称：">
@@ -102,8 +103,8 @@
           </div>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="saveNow('formInline')">{{addTitle}}</el-button>
-            <el-button type="primary" @click="closeadd('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="saveNow('formInline')">{{addTitle}}</el-button>
+            <el-button class="nobt" type="primary" @click="closeadd('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -319,6 +320,9 @@ export default {
     set2(index, row) {},
     closeadd(formName) {
       this.$refs[formName].resetFields();
+      this.addBool = false;
+    },
+    closeadd1() {
       this.addBool = false;
     },
     saveNow(formName) {
@@ -556,25 +560,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 700px;
-  overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding-left: 10px;
-  padding-right: 10px;
-}
 .codebox {
   overflow: hidden;
 }
 .codetitle {
-  font-size: 12px;
-  color: #606266;
+  color: #586982;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  width: 120px;
+  text-align: left;
+  margin-left: 44px;
   float: left;
 }
+
 .checkbox {
   width: 390px;
 }
@@ -585,24 +585,30 @@ export default {
   margin-top: 30px;
 }
 .buybox .buytitle {
-  font-size: 12px;
-  color: #606266;
+  color: #586982;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  width: 120px;
+  margin-left: 44px;
 }
 .buycontent {
+  margin-left:44px;
+  margin-right:44px;
 }
 .selectMoney {
   float: left;
 }
 .selectMoney .s1 {
   float: left;
-  margin-left: 12px;
 }
 .selectMoney .s2 {
   float: left;
-  background-color: #409eff;
+  background-color: #2562ee;
   color: #fff;
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 4px;
@@ -617,6 +623,10 @@ export default {
 }
 .pool .el-checkbox {
   margin-right: 30px;
+}
+
+.addForm .selectMoney .el-input__inner {
+  width: 260px;
 }
 </style>
 
