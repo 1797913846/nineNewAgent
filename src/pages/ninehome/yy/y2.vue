@@ -1,4 +1,4 @@
-<!--逐笔平仓-->
+<!--逐笔持仓-->
 <template>
   <div class="bigestbox">
     <topNav></topNav>
