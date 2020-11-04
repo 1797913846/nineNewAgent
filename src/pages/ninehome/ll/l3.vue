@@ -2,9 +2,9 @@
 <template>
   <div class="bigestbox">
     <topNav></topNav>
-    <div class="container">
+    <div class="container contanier2">
       <div class=" heightbox">
-        <div style="background-color:#d9edf7;color:#000;height:30px;line-height:30px;padding-left:20px;margin-top:20px;margin-left:20px;margin-right:20px;margin-bottom:20px;">请配置用户线下充值的收款银行、支付宝信息</div>
+        <div class="c2title">请配置用户线下充值的收款银行、支付宝信息</div>
         <!--表单-->
         <div class="reset-scroll-style">
           <div class="rbox">
@@ -31,7 +31,7 @@
                 <el-input v-model="formInline.PAY_ALIYPAY_CODE_URL" placeholder="支付宝收款码"></el-input>
               </el-form-item><br />
               <el-form-item>
-                <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+                <el-button class="nobt" type="primary" @click="onSubmit('formInline')">保存</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -152,7 +152,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.contanier2 {
+  width: 602px;
+  padding: 0px;
+}
+.contanier2 .c2title {
+  width: 455px;
+  height: 46px;
+  background: #2562ee;
+  color: #fff;
+  font-size: 14px;
+  line-height: 46px;
+  text-align: center;
+  margin-left: 73px;
+  margin-top: 45px;
+}
 </style>
 
 

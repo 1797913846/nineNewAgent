@@ -926,15 +926,53 @@ input:-ms-input-placeholder {
 
 .heightbox {
     background-color: #fff;
-    height: 690px;
 }
 
 .rbox {
     background-color: #fff;
-    width: 500px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 30px);
-    padding-left: 10px;
-    padding-right: 10px;
+    overflow: hidden;
+    border-top: 1px solid #EDEDED;
+    margin-top: 33px;
+    padding-top: 66px;
+    width: 602px;
+}
+
+.rbox .el-form-item__label {
+    color: #586982;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 40px;
+    width: 144px;
+    text-align: left;
+    margin-left: 79px;
+}
+
+.rbox .el-input__inner {
+    width: 303px;
+    height: 40px;
+    line-height: 40px;
+    border: 0px;
+    outline: none;
+    background: rgba(233, 239, 243, 0.3);
+    color: #9aa5aa;
+    font-size: 12px;
+    padding-left: 30px;
+    box-sizing: border-box;
+}
+
+.rbox .nobt {
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 0px;
+    margin-top: 50px;
+    margin-bottom: 26px;
+    background: #2562EE;
+    color: #fff;
+    border: 0px;
+    outline: none;
+    margin-left: 492px;
 }
