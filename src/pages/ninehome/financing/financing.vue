@@ -54,7 +54,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">X</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="融资周期：">
@@ -95,8 +95,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -395,16 +395,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 590px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  padding-left: 10px;
-  padding-right: 10px;
-}
+
 </style>
 
 
