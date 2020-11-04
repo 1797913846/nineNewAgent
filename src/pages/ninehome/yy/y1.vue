@@ -58,7 +58,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="平仓价格：">
@@ -66,8 +66,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
