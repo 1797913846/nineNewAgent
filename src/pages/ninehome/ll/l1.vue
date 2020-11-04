@@ -48,7 +48,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">X</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="角色名称：">
@@ -60,8 +60,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -70,15 +70,15 @@
       <div class="addContent addContent2">
         <div class="title">
           <span class="tl">权限设置</span>
-          <span class="tr" @click="closeS">X</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeS">
         </div>
         <el-form :inline="true" class="demo-form-inline">
           <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" ref="tree" highlight-current :props="defaultProps">
           </el-tree>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="saveS">保存</el-button>
-            <el-button type="primary" @click="closeS">取消</el-button>
+            <el-button class="savebt" type="primary" @click="saveS">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeS">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -401,25 +401,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 400px;
-  height: 260px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.addContent .smallTitle {
-  margin-bottom: 10px;
-  color: #000;
-  font-size: 20px;
-}
-.addContent .bt {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #ccc;
-}
 .addContent2 {
   height: 500px;
   overflow-y: scroll;
