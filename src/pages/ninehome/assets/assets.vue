@@ -41,7 +41,7 @@
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column>
@@ -49,12 +49,12 @@
           <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总可用" prop="availableBnc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="客户总期初" prop="allottedScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总可用" prop="availableBnc" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总期初" prop="allottedScale" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center" width="140"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
