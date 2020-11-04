@@ -52,15 +52,17 @@
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
-          <el-form-item label="方案名称：">
-            <el-input v-model="formInline.cfgName" placeholder="方案名称"></el-input>
-          </el-form-item>
+          <div class="bt">
+            <el-form-item label="方案名称：">
+              <el-input v-model="formInline.cfgName" placeholder="方案名称"></el-input>
+            </el-form-item>
+          </div>
           <div class="bt">
             <div class="smallTitle">日结方案：</div>
             <el-form-item label="交易佣金率：" prop="dayCommission">
               <el-input v-model="formInline.dayCommission" placeholder="交易佣金率"></el-input>
             </el-form-item>
-            <el-form-item label="管理费成交率：" prop="dayManageFeeDealRate">
+            <el-form-item label="管理费成交率：" prop="dayManageFeeDealRate" class="smallfont">
               <el-input v-model="formInline.dayManageFeeDealRate" placeholder="管理费成交率"></el-input>
             </el-form-item>
           </div>
@@ -69,19 +71,19 @@
             <el-form-item label="交易佣金率：" prop="singleCommission">
               <el-input v-model="formInline.singleCommission" placeholder="交易佣金率"></el-input>
             </el-form-item>
-            <el-form-item label="管理费成交率：" prop="singleManageFeeDealRate">
+            <el-form-item label="管理费成交率：" prop="singleManageFeeDealRate" class="smallfont">
               <el-input v-model="formInline.singleManageFeeDealRate" placeholder="管理费成交率"></el-input>
             </el-form-item>
-            <el-form-item label="盈利分成成交率：" prop="singleDividedRate">
-              <el-input v-model="formInline.singleDividedRate" placeholder="管理费成交率"></el-input>
+            <el-form-item label="盈利分成成交率：" prop="singleDividedRate" class="smallfont">
+              <el-input v-model="formInline.singleDividedRate" placeholder="盈利分成成交率"></el-input>
             </el-form-item>
           </div>
-          <div class="bt">
+          <div class="bt btlast">
             <div class="smallTitle">月结方案：</div>
             <el-form-item label="交易佣金率：" prop="monthCommission">
               <el-input v-model="formInline.monthCommission" placeholder="交易佣金率"></el-input>
             </el-form-item>
-            <el-form-item label="管理费成交率：" prop="monthManageFeeDealRate">
+            <el-form-item label="管理费成交率：" prop="monthManageFeeDealRate" class="smallfont">
               <el-input v-model="formInline.monthManageFeeDealRate" placeholder="管理费成交率"></el-input>
             </el-form-item>
           </div>
@@ -427,13 +429,30 @@ export default {
 <style lang="scss" scoped>
 .addContent .smallTitle {
   margin-bottom: 10px;
-  color: #000;
-  font-size: 20px;
+  color: #586982;
+  font-size: 14px;
+  font-weight: bold;
 }
+
 .addContent .bt {
   margin-bottom: 15px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ededed;
+  margin-left: 44px;
+  margin-right: 44px;
+}
+
+.addContent .btlast {
+  border-bottom: 0px;
 }
 </style>
+<style>
+.addForm .bt .el-input__inner {
+  width: 327px;
+}
+.addForm .bt .el-form-item__label {
+  margin-left: 0px;
+}
+</style>
+
 
 
