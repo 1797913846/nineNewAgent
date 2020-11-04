@@ -834,31 +834,82 @@ input:-ms-input-placeholder {
 
 .addContent {
     background-color: #fff;
-    width: 500px;
+    width: 626px;
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 10%);
-    padding-left: 10px;
-    padding-right: 10px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding-left: 33px;
+    border-radius: 10px;
 }
 
 .addContent .title {
-    border-bottom: 1px solid #ccc;
-    color: #000;
-    font-size: 18px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
     overflow: hidden;
 }
 
 .addContent .title .tl {
     float: left;
+    color: #586982;
+    font-weight: 800;
+    font-size: 21px;
+    margin-top: 26px;
+    margin-bottom: 28px;
 }
 
 .addContent .title .tr {
+    width: 20px;
+    height: 20px;
     float: right;
     cursor: pointer;
+    margin-top: 15px;
+    margin-right: 20px;
+}
+
+.addForm .el-form-item__label {
+    color: #586982;
+    font-size: 15px;
+    font-weight: 500;
+    height: 45px;
+    line-height: 45px;
+    width: 120px;
+    text-align: left;
+}
+
+.addForm .el-input__inner {
+    width: 439px;
+    height: 45px;
+    line-height: 45px;
+    border: 0px;
+    outline: none;
+    background-color: #F3F3F3;
+    color: #586982;
+    font-size: 15px;
+}
+
+.addForm .el-input__inner::placeholder {
+    color: #586982;
+}
+
+.addForm .el-button {
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 0px;
+    margin-top: 50px;
+    margin-bottom: 26px;
+}
+
+.addForm .savebt {
+    background-color: rgba(37, 98, 238, 0.1);
+    border: 1px solid #E7E7E7;
+    color: #2562EE;
+    margin-left: 370px;
+}
+
+.addForm .nobt {
+    background: #2562EE;
 }
 
 .heightbox {

@@ -1,66 +1,66 @@
 <!--公告管理-->
 <template>
-    <div class="bigestbox">
-        <topNav></topNav>
-        <div class="container" @click="colorBool = false">
-            <div class="template-top">
-                <div class="title" @click="showAddNow">添加</div>
-                <div class="operate-btn">
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入标题" v-model="title" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="search-user" @click="search()">查询</div>
-                </div>
-            </div>
-            <!--表格-->
-            <div class="reset-scroll-style">
-                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="标题" prop="title" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="更新时间" prop="createTime" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作" align="center"></el-table-column>
-                    <el-table-column label="操作" align="center">
-                        <template slot-scope="scope">
-                            <div class="operation">
-                                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
-                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                            </div>
-                        </template>
-                    </el-table-column>
-                </el-table>
-                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="标题" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="更新时间" align="center"></el-table-column>
-                </el-table>
-            </div>
-            <div class="pagination" v-if="nullTable==false">
-                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-            </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container" @click="colorBool = false">
+      <div class="template-top">
+        <div class="title" @click="showAddNow">添加</div>
+        <div class="operate-btn">
+          <div class="search-box">
+            <input type="text" placeholder="请输入标题" v-model="title" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-user" @click="search()">查询</div>
         </div>
-        <!--表单-->
-        <div class="addForm" v-if="showAdd==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <span class="tr" @click="closeAdd">X</span>
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="标题：">
-                        <el-input v-model="formInline.title" placeholder="标题"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item label="内容：">
-                        <el-input v-model="formInline.content" placeholder="内容"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-                        <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
+      </div>
+      <!--表格-->
+      <div class="reset-scroll-style">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="标题" prop="title" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="更新时间" prop="createTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作" align="center"></el-table-column>
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span @click.stop="getContent(scope.$index, scope.row)" class="addSameClass ">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="标题" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="更新时间" align="center"></el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination" v-if="nullTable==false">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
+    <!--表单-->
+    <div class="addForm" v-if="showAdd==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="标题">
+            <el-input v-model="formInline.title" placeholder="请输入标题"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item label="内容">
+            <el-input v-model="formInline.content" placeholder="请输入内容"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -306,25 +306,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 400px;
-  height: 260px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  padding-left: 10px;
-  padding-right: 10px;
-}
-.addContent .smallTitle {
-  margin-bottom: 10px;
-  color: #000;
-  font-size: 20px;
-}
-.addContent .bt {
-  margin-bottom: 15px;
-  border-bottom: 1px solid #ccc;
-}
 </style>
 
 
