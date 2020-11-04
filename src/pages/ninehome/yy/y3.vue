@@ -106,14 +106,14 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">信息</span>
-          <span class="tr" @click="closeMsg">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeMsg">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <span class="lmsg">pk : {{formInline.pkorder}}确认是否撤销该笔委托？</span>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitMsg">保存</el-button>
-            <el-button type="primary" @click="closeMsg">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitMsg">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeMsg">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -123,7 +123,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="委托编号：">
@@ -159,8 +159,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -478,7 +478,7 @@ export default {
   font-size: 16px;
   color: #000;
   display: inline-block;
-  padding-bottom: 20px;
+  margin-left: 44px;
 }
 .navNav {
   margin-left: 24px;
