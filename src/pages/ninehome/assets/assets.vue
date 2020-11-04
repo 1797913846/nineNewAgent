@@ -66,7 +66,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeJia">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt=""  @click="closeJia">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -106,7 +106,7 @@
           <el-form-item label="产品佣金：">
             <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
           </el-form-item>
-          <el-form-item label="期初可分配金额：">
+          <el-form-item label="期初可分配金额：" class="smallfont">
             <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
           </el-form-item>
           <el-form-item label="备注：">
@@ -114,8 +114,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -125,7 +125,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt=""  @click="closeChange1">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="产品编号：">
@@ -164,7 +164,7 @@
           <el-form-item label="产品佣金：">
             <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
           </el-form-item>
-          <el-form-item label="期初可分配金额：">
+          <el-form-item label="期初可分配金额：" class="smallfont">
             <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
           </el-form-item>
           <el-form-item label="备注：">
@@ -172,8 +172,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -574,17 +574,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 700px;
-  overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding-left: 10px;
-  padding-right: 10px;
-}
+
 </style>
 
 
