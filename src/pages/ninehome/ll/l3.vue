@@ -1,41 +1,44 @@
-<!--首付款管理-->
+<!--收付款管理-->
 <template>
-    <div class="bigestbox" style="background-color:#fff;">
-        <topNav></topNav>
-        <div>
-            <div class="reset-scroll-style"></div>
-        </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container">
+      <div class=" heightbox">
         <div style="background-color:#d9edf7;color:#000;height:30px;line-height:30px;padding-left:20px;margin-top:20px;margin-left:20px;margin-right:20px;margin-bottom:20px;">请配置用户线下充值的收款银行、支付宝信息</div>
         <!--表单-->
-        <div class="addContent">
+        <div class="reset-scroll-style">
+          <div class="rbox">
             <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                <el-form-item label="开户银行：">
-                    <el-input v-model="formInline.PAY_BANK_NAME" placeholder="开户银行"></el-input>
-                </el-form-item>
-                <el-form-item label="支行名称：">
-                    <el-input v-model="formInline.PAY_BANK_BRANCH" placeholder="支行名称"></el-input>
-                </el-form-item>
-                <el-form-item label="银行卡号：">
-                    <el-input v-model="formInline.PAY_BANK_CARDNO" placeholder="银行卡号"></el-input>
-                </el-form-item>
-                <el-form-item label="户 名：">
-                    <el-input v-model="formInline.PAY_BANK_ACCOUNT_NAME" placeholder="户名"></el-input>
-                </el-form-item>
-                <el-form-item label="支付宝账号：">
-                    <el-input v-model="formInline.PAY_ALIYPAY" placeholder="支付宝账号"></el-input>
-                </el-form-item>
-                <el-form-item label="支付宝名称：">
-                    <el-input v-model="formInline.PAY_ALIYPAY_NAME" placeholder="支付宝名称"></el-input>
-                </el-form-item>
-                <el-form-item label="支付宝收款码：">
-                    <el-input v-model="formInline.PAY_ALIYPAY_CODE_URL" placeholder="支付宝收款码"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-                </el-form-item>
+              <el-form-item label="开户银行：">
+                <el-input v-model="formInline.PAY_BANK_NAME" placeholder="开户银行"></el-input>
+              </el-form-item>
+              <el-form-item label="支行名称：">
+                <el-input v-model="formInline.PAY_BANK_BRANCH" placeholder="支行名称"></el-input>
+              </el-form-item>
+              <el-form-item label="银行卡号：">
+                <el-input v-model="formInline.PAY_BANK_CARDNO" placeholder="银行卡号"></el-input>
+              </el-form-item>
+              <el-form-item label="户 名：">
+                <el-input v-model="formInline.PAY_BANK_ACCOUNT_NAME" placeholder="户名"></el-input>
+              </el-form-item>
+              <el-form-item label="支付宝账号：">
+                <el-input v-model="formInline.PAY_ALIYPAY" placeholder="支付宝账号"></el-input>
+              </el-form-item>
+              <el-form-item label="支付宝名称：">
+                <el-input v-model="formInline.PAY_ALIYPAY_NAME" placeholder="支付宝名称"></el-input>
+              </el-form-item>
+              <el-form-item label="支付宝收款码：">
+                <el-input v-model="formInline.PAY_ALIYPAY_CODE_URL" placeholder="支付宝收款码"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+              </el-form-item>
             </el-form>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>

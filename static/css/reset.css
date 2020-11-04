@@ -860,3 +860,15 @@ input:-ms-input-placeholder {
     float: right;
     cursor: pointer;
 }
+
+.heightbox {
+    background-color: #fff;
+    height: 690px;
+}
+
+.rbox {
+    background-color: #fff;
+    width: 500px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

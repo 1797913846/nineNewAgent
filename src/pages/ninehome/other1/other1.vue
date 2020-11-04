@@ -1,14 +1,14 @@
-<!--风控设置-->
+<!--全局风控设置-->
 <template>
-  <div class="bigestbox" style="background-color:#fff;">
+  <div class="bigestbox">
     <topNav></topNav>
-    <div>
-      <div class="reset-scroll-style"></div>
-    </div>
-    <!--表单-->
-    <div class="addContent">
-      <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-        <!-- <el-form-item label="沪深主板涨幅买入限制：">
+    <div class="container">
+      <div class=" heightbox">
+        <!--表单-->
+        <div class="reset-scroll-style">
+          <div class="rbox">
+            <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+              <!-- <el-form-item label="沪深主板涨幅买入限制：">
           <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板涨幅买入限制"></el-input>
         </el-form-item>
         <el-form-item label="沪深主板跌幅买入限制：">
@@ -38,54 +38,57 @@
         <el-form-item label="全平台单支股票市值规模限制：">
           <el-input v-model="formInline.singlestockAllHoldLimit" placeholder="全平台单支股票市值规模限制"></el-input>
         </el-form-item> -->
-        <el-form-item label="交易股票限制：">
-          <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
-        </el-form-item>
-        <el-form-item label="管理费清算模式：">
-          <el-select v-model="formInline.manageFeeMode">
-            <el-option label="按持仓市值计算：股票总市值*管理费率/天" :value="Number(1)"></el-option>
-            <el-option label="按优先资金计算：(保证金*融资倍率-可用资金)*管理费率/天" :value="Number(2)"></el-option>
-            <el-option label="按融资金额计算：(保证金*融资倍率)*管理费率/天" :value="Number(3)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="自动强平模式：">
-          <el-select v-model="formInline.autoClosePosition">
-            <el-option label="关闭" :value="Number(0)"></el-option>
-            <el-option label="开启" :value="Number(1)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="产品下单随机算法配置：">
-          <el-select v-model="formInline.ctrlRoundRobinNumber">
-            <el-option label="【随机方式】匹配券商账户" :value="Number(1)"></el-option>
-            <el-option label="【可用资金方式】匹配券商账户" :value="Number(2)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开启交易佣金自动结算到账户余额：">
-          <el-select v-model="formInline.autoClear">
-            <el-option label="关闭" :value="Number(0)"></el-option>
-            <el-option label="开启" :value="Number(1)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开启券商账户资金轮询：">
-          <el-select v-model="formInline.autoPolling">
-            <el-option label="关闭" :value="Number(0)"></el-option>
-            <el-option label="开启" :value="Number(1)"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="委托间隔时效（秒）：">
-          <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
-        </el-form-item>
-        <span>注：数据为0时不拦截</span>
-        <el-form-item label="开启创业板注册制：">
-          <el-select v-model="formInline.autoPolling">
-            <el-option label="关闭" :value="Number(0)"></el-option>
-            <el-option label="开启" :value="Number(1)"></el-option>
-          </el-select>
-        </el-form-item><br />
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-        </el-form-item>
-      </el-form>
+              <el-form-item label="交易股票限制：">
+                <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
+              </el-form-item>
+              <el-form-item label="管理费清算模式：">
+                <el-select v-model="formInline.manageFeeMode">
+                  <el-option label="按持仓市值计算：股票总市值*管理费率/天" :value="Number(1)"></el-option>
+                  <el-option label="按优先资金计算：(保证金*融资倍率-可用资金)*管理费率/天" :value="Number(2)"></el-option>
+                  <el-option label="按融资金额计算：(保证金*融资倍率)*管理费率/天" :value="Number(3)"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="自动强平模式：">
+                <el-select v-model="formInline.autoClosePosition">
+                  <el-option label="关闭" :value="Number(0)"></el-option>
+                  <el-option label="开启" :value="Number(1)"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="产品下单随机算法配置：">
+                <el-select v-model="formInline.ctrlRoundRobinNumber">
+                  <el-option label="【随机方式】匹配券商账户" :value="Number(1)"></el-option>
+                  <el-option label="【可用资金方式】匹配券商账户" :value="Number(2)"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="开启交易佣金自动结算到账户余额：">
+                <el-select v-model="formInline.autoClear">
+                  <el-option label="关闭" :value="Number(0)"></el-option>
+                  <el-option label="开启" :value="Number(1)"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="开启券商账户资金轮询：">
+                <el-select v-model="formInline.autoPolling">
+                  <el-option label="关闭" :value="Number(0)"></el-option>
+                  <el-option label="开启" :value="Number(1)"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="委托间隔时效（秒）：">
+                <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
+              </el-form-item>
+              <span>注：数据为0时不拦截</span>
+              <el-form-item label="开启创业板注册制：">
+                <el-select v-model="formInline.autoPolling">
+                  <el-option label="关闭" :value="Number(0)"></el-option>
+                  <el-option label="开启" :value="Number(1)"></el-option>
+                </el-select>
+              </el-form-item><br />
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -225,7 +228,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
