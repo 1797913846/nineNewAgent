@@ -54,7 +54,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <img class="tr" src="../../../assets/nine/closeform.png" alt="">
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeadd1">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="分组名称：">
