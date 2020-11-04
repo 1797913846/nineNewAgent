@@ -466,9 +466,9 @@
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeMsg">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <div>
+          <div class="changewho">
             <el-radio-group v-model="radio">
-              <el-radio :label="item.roleId" v-for="(item,index) in levelList" :key="index">{{item.roleName}}</el-radio>
+              <el-radio :class="{tradio:index==5}" :label="item.roleId" v-for="(item,index) in levelList" :key="index">{{item.roleName}}</el-radio>
             </el-radio-group>
           </div>
           <br />
@@ -1233,6 +1233,10 @@ export default {
   height: 10px;
   margin-left: 36px;
 }
+.changewho {
+  margin-left: 33px;
+  margin-right: 33px;
+}
 </style>
 <style>
 .el-table .colorgreen {
@@ -1246,6 +1250,23 @@ export default {
 }
 .huiyuan .el-table--striped .el-table__body tr td {
   background: none !important;
+}
+.changewho .el-radio__input.is-checked + .el-radio__label {
+  color: #2562ee;
+}
+.changewho .el-radio__label {
+  font-size: 15px;
+}
+.changewho .el-radio__input.is-checked .el-radio__inner {
+  border-color: #2562ee;
+  background: #2562ee;
+}
+.changewho .el-radio__inner {
+  width: 17px;
+  height: 17px;
+}
+.tradio {
+  margin-left: 0px !important;
 }
 </style>
 
