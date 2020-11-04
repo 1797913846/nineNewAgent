@@ -43,7 +43,7 @@
           <el-table-column show-overflow-tooltip label="持仓率%" prop="stockRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="警戒线(差额)" prop="cordonLineDiff" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="平仓线(差额)" prop="flatLineDiff" width="100" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="风控提示" prop="riskTip" align="center" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="风控提示" prop="riskTip" align="center" sortable="custom" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户状态" prop="statusDesc" align="center"></el-table-column>
         </el-table>
       </div>
