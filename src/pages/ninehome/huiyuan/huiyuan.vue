@@ -50,25 +50,25 @@
                         </template>
                     </el-table-column> -->
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="平仓线(金额)" prop="flatLine" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="警戒线(金额)" prop="cordonLine" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线(金额)" prop="flatLine" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线(金额)" prop="cordonLine" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="管理费率" prop="manageFeeRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="代理商添加账户默认资金池" align="center" width="180">
             <template slot-scope="scope">
