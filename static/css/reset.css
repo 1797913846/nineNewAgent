@@ -869,6 +869,9 @@ input:-ms-input-placeholder {
 .rbox {
     background-color: #fff;
     width: 500px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 30px);
     padding-left: 10px;
     padding-right: 10px;
 }

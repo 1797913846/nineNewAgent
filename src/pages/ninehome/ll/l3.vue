@@ -29,7 +29,7 @@
               </el-form-item>
               <el-form-item label="支付宝收款码：">
                 <el-input v-model="formInline.PAY_ALIYPAY_CODE_URL" placeholder="支付宝收款码"></el-input>
-              </el-form-item>
+              </el-form-item><br />
               <el-form-item>
                 <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
               </el-form-item>
