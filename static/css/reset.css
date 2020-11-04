@@ -1011,3 +1011,8 @@ input:-ms-input-placeholder {
 .rbox1 .nobt {
     margin-left: 580px;
 }
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+    background-color: #2562ee;
+    border-color: #2562ee;
+  }
