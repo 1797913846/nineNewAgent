@@ -46,7 +46,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeJia">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="券商编码：">
@@ -85,8 +85,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd('formInline')">取消</el-button>
+            <el-button type="primary" class="savebt" @click="onSubmit('formInline')">保存</el-button>
+            <el-button type="primary" class="nobt" @click="closeAdd('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -96,7 +96,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange1">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="券商编码：">
@@ -135,8 +135,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitChange('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeChange('formInline')">取消</el-button>
+            <el-button type="primary" class="savebt" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button type="primary" class="nobt" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -189,22 +189,22 @@ export default {
       brokerid: "",
       calcdealstypeList: [
         {
-          key: "0",
-          vlaue: "券商"
+          key: 0,
+          value: "券商"
         },
         {
-          key: "1",
-          vlaue: "计算"
+          key: 1,
+          value: "计算"
         }
       ],
       productsslList: [
         {
-          key: "0",
-          vlaue: "同花顺"
+          key: 0,
+          value: "同花顺"
         },
         {
-          key: "1",
-          vlaue: "通达信"
+          key: 1,
+          value: "通达信"
         }
       ]
     };
@@ -575,17 +575,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 500px;
-  overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding-left: 10px;
-  padding-right: 10px;
-}
 </style>
 
 
