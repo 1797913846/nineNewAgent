@@ -834,12 +834,11 @@ input:-ms-input-placeholder {
 
 .addContent {
     background-color: #fff;
-    width: 626px;
+    width: 545px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    padding-left: 33px;
     border-radius: 10px;
 }
 
@@ -854,6 +853,7 @@ input:-ms-input-placeholder {
     font-size: 21px;
     margin-top: 26px;
     margin-bottom: 28px;
+    margin-left:33px;
 }
 
 .addContent .title .tr {
@@ -872,23 +872,26 @@ input:-ms-input-placeholder {
 
 .addForm .el-form-item__label {
     color: #586982;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     height: 40px;
     line-height: 40px;
-    width: 150px;
+    width: 110px;
     text-align: left;
+    margin-left:44px;
 }
 
 .addForm .el-input__inner {
-    width: 439px;
+    width: 343px;
     height: 40px;
     line-height: 40px;
     border: 0px;
     outline: none;
-    background-color: #F3F3F3;
+    background: rgba(233, 239, 243, 0.3);
     color: #9aa5aa;
-    font-size: 15px;
+    font-size: 12px;
+    padding-left:30px;
+    box-sizing: border-box;
 }
 
 .addForm .el-input__inner::placeholder {
@@ -910,7 +913,7 @@ input:-ms-input-placeholder {
     background-color: rgba(37, 98, 238, 0.1);
     border: 1px solid #E7E7E7;
     color: #2562EE;
-    margin-left: 370px;
+    margin-left: 335px;
 }
 
 .addForm .nobt {
