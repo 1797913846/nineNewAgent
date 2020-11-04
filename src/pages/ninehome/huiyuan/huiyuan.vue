@@ -88,10 +88,10 @@
     </div>
     <!--表单-->
     <div class="addForm" v-if="showAdd==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeAdd">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -156,10 +156,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" :disabled="true" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" :disabled="true" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" :disabled="true" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -189,12 +189,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -208,10 +208,10 @@
 
     <!--修改表单-->
     <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeChange">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -276,10 +276,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -309,20 +309,20 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd1('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -340,10 +340,10 @@
     </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
-      <div class="addContent">
+      <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <span class="tr" @click="closeJia">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
         <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
@@ -408,10 +408,10 @@
           <el-form-item label="个股持仓比例：">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：">
+          <el-form-item label="创业板持仓比例：" class="smallfont">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：">
+          <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
@@ -441,20 +441,20 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：">
+          <el-form-item label="下级默认资金池：" class="smallfont">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：">
+          <el-form-item label="下级默认佣金方案：" class="smallfont">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmit2('formInline')">保存</el-button>
-            <el-button type="primary" @click="closeAdd2('formInline')">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmit2('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd2('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -463,7 +463,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">修改角色</span>
-          <span class="tr" @click="closeMsg">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeMsg">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <div>
@@ -473,8 +473,8 @@
           </div>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="saveChange">保存</el-button>
-            <el-button type="primary" @click="closeMsg">取消</el-button>
+            <el-button class="savebt" type="primary" @click="saveChange">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeMsg">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -483,7 +483,7 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">修改用户推荐人</span>
-          <span class="tr" @click="closeMsgSet">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeMsgSet">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <div>
@@ -495,8 +495,8 @@
           </div>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="saveChangeSet">保存</el-button>
-            <el-button type="primary" @click="closeMsgSet">取消</el-button>
+            <el-button class="savebt" type="primary" @click="saveChangeSet">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeMsgSet">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -1158,14 +1158,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.addForm1 {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  background-color: rgba(0, 0, 0, 0);
-}
 .qrbox {
   background-color: #fff;
   padding-left: 20px;
@@ -1240,17 +1232,6 @@ export default {
   width: 10px;
   height: 10px;
   margin-left: 36px;
-}
-.addContent {
-  background-color: #fff;
-  width: 500px;
-  height: 700px;
-  overflow-y: scroll;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding-left: 10px;
-  padding-right: 10px;
 }
 </style>
 <style>
