@@ -133,6 +133,7 @@ export default {
             }, 800);
           } else {
             this.errMsg = res.data.info;
+            this.getCode();
             this.$alert(this.errMsg, "提示", {
               confirmButtonText: "确定",
               center: true,
