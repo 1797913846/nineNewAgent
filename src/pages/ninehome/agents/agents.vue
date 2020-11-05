@@ -845,86 +845,102 @@ export default {
       this.jia = false;
     },
     onSubmit2(formName) {
-      this.axios
-        .post("/tn/mgr-api/account/save", {
-          accountId: this.formInline.accountId,
-          accountName: this.formInline.accountName,
-          productGroupId: this.formInline.productGroupId,
-          level: this.formInline.level,
-          commissionCfgId: this.formInline.commissionCfgId,
-          ableCrud: this.formInline.ableCrud,
-          positionRatio: this.formInline.positionRatio,
-          secondBoardPositionRatio: this.formInline.secondBoardPositionRatio,
-          thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
-          manageFeeRate: this.formInline.manageFeeRate,
-          manageMakeFeeRate: this.formInline.manageMakeFeeRate,
-          orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus,
-          defaultChildGroupId: this.formInline.defaultChildGroupId,
-          defaultChildCommissionCfgId: this.formInline
-            .defaultChildCommissionCfgId
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/account/save", {
+              accountId: this.formInline.accountId,
+              accountName: this.formInline.accountName,
+              productGroupId: this.formInline.productGroupId,
+              level: this.formInline.level,
+              commissionCfgId: this.formInline.commissionCfgId,
+              ableCrud: this.formInline.ableCrud,
+              positionRatio: this.formInline.positionRatio,
+              secondBoardPositionRatio: this.formInline
+                .secondBoardPositionRatio,
+              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
+              manageFeeRate: this.formInline.manageFeeRate,
+              manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+              orderPermission: this.formInline.orderPermission,
+              accountStatus: this.formInline.accountStatus,
+              defaultChildGroupId: this.formInline.defaultChildGroupId,
+              defaultChildCommissionCfgId: this.formInline
+                .defaultChildCommissionCfgId
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.jia = false;
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.jia = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     onSubmit(formName) {
-      this.axios
-        .post("/tn/mgr-api/account/update", {
-          accountId: this.formInline.accountId,
-          accountName: this.formInline.accountName,
-          productGroupId: this.formInline.productGroupId,
-          level: this.formInline.level,
-          commissionCfgId: this.formInline.commissionCfgId,
-          ableCrud: this.formInline.ableCrud,
-          positionRatio: this.formInline.positionRatio,
-          secondBoardPositionRatio: this.formInline.secondBoardPositionRatio,
-          thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
-          manageFeeRate: this.formInline.manageFeeRate,
-          manageMakeFeeRate: this.formInline.manageMakeFeeRate,
-          orderPermission: this.formInline.orderPermission,
-          accountStatus: this.formInline.accountStatus,
-          defaultChildGroupId: this.formInline.defaultChildGroupId,
-          defaultChildCommissionCfgId: this.formInline
-            .defaultChildCommissionCfgId
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.changeNow = false;
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/account/update", {
+              accountId: this.formInline.accountId,
+              accountName: this.formInline.accountName,
+              productGroupId: this.formInline.productGroupId,
+              level: this.formInline.level,
+              commissionCfgId: this.formInline.commissionCfgId,
+              ableCrud: this.formInline.ableCrud,
+              positionRatio: this.formInline.positionRatio,
+              secondBoardPositionRatio: this.formInline
+                .secondBoardPositionRatio,
+              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
+              manageFeeRate: this.formInline.manageFeeRate,
+              manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+              orderPermission: this.formInline.orderPermission,
+              accountStatus: this.formInline.accountStatus,
+              defaultChildGroupId: this.formInline.defaultChildGroupId,
+              defaultChildCommissionCfgId: this.formInline
+                .defaultChildCommissionCfgId
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.changeNow = false;
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     closeAdd() {
       this.showAdd = false;
