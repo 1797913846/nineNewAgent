@@ -31,7 +31,7 @@
             <input type="text" placeholder="请输入委托编号" v-model="orderno" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div style="width:300px;float:left;" v-if="topActive == 1">
+          <div style="width:300px;float:left;margin-top:10px;" v-if="topActive == 1">
             <el-checkbox-group v-model="checkList" @change="handleCheckedCitiesChange">
               <el-checkbox v-for="(item,index) in entruststatusListList" :key="index" :label="item.key">{{item.value}}</el-checkbox>
             </el-checkbox-group>
@@ -491,6 +491,7 @@ export default {
   color: #586880;
   text-align: center;
   cursor: pointer;
+  padding-bottom:10px;
 }
 .topactive {
   border-bottom: 2px solid #2662ee;

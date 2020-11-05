@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="codebox" v-if="sureShow==true">
-      <span>推广代理商后台管理系统即可获得丰厚提成。扫描下方二维码注册属于您的专属推广账号。</span>
+      <span>推广管理系统即可获得丰厚提成。扫描下方二维码注册属于您的专属推广账号。</span>
       <img src="../assets/ercode.png" alt="">
     </div>
     <div class="foot-bar">

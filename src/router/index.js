@@ -38,6 +38,7 @@ import ninehomel1 from '@/pages/ninehome/ll/l1'
 import ninehomel2 from '@/pages/ninehome/ll/l2'
 import ninehomel3 from '@/pages/ninehome/ll/l3'
 import ninehomel4 from '@/pages/ninehome/ll/l4'
+import ninehomel5 from '@/pages/ninehome/ll/l5'
 
 Vue.use(Router)
 
@@ -315,7 +316,15 @@ const router = new Router({
       },
       component: ninehomel4
     }
-
+    ,
+    {
+      path: '/ninehome/l5',
+      meta: {
+        title: '手机号认证',
+        requireAuth: true
+      },
+      component: ninehomel5
+    }
   ]
 })
 

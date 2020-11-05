@@ -4,7 +4,7 @@
     <el-form ref="form" :model="form" label-position="left" label-width="80px" class="login-box">
       <div class="loginbox">
         <div class="logintop1">
-          <div class="logintitle1">代理商后台管理系统</div>
+          <div class="logintitle1">管理系统</div>
           <div class="logintitle2">AGENT BACK OFFICE MANAGEMENT SYSTEM</div>
         </div>
         <div style="display: none">
@@ -121,8 +121,9 @@ export default {
         .then(res => {
           console.log("login>>", res.data);
           if (res.data.code == 200) {
-            let Authorization = res.data.data;
+            let Authorization = res.data.data.token;
             localStorage.setItem("Authorization", Authorization);
+            let toVerifyCode=res.data.data.toVerifyCode;
             this.getMsg();
             let that = this;
             setTimeout(function() {

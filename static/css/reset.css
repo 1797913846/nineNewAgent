@@ -891,7 +891,6 @@ input:-ms-input-placeholder {
     /* background: rgb(81, 81, 81); */
 }
 
-
 .addForm .el-form-item__label {
     color: #586982;
     font-size: 14px;
@@ -1037,4 +1036,37 @@ input:-ms-input-placeholder {
 .el-checkbox__input.is-checked .el-checkbox__inner {
     background-color: #2562ee;
     border-color: #2562ee;
-  }
+}
+
+.getcode {
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 0px;
+    background: #2562EE;
+    color: #fff;
+    float: left;
+    outline: none;
+}
+
+.getcode:hover {
+    background: #2562EE;
+}
+
+.getcode:active {
+    background: #2562EE;
+}
+
+.getcode:focus {
+    background: #2562EE;
+}
+
+.codebox {
+    float: left;
+}
+
+.codeinput .el-input__inner {
+    width: 180px;
+}

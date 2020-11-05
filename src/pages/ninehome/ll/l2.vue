@@ -18,7 +18,6 @@
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="标题" prop="title" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="更新时间" prop="createTime" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="操作" align="center"></el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">

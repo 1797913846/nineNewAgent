@@ -1,6 +1,6 @@
 <template>
   <div class="topnav">
-    <div class="navname">代理商后台管理系统</div>
+    <div class="navname">管理系统</div>
     <div class="rightnav">
       <img class="r1" src="../assets/nine/tou.png" alt="">
       <span class="r2">

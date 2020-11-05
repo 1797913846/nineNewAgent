@@ -271,6 +271,7 @@ export default {
   color: #586880;
   text-align: center;
   cursor: pointer;
+  padding-bottom: 10px;
 }
 .topactive {
   border-bottom: 2px solid #2662ee;
