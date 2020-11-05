@@ -48,39 +48,39 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="券商编码：">
+        <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" class="demo-form-inline">
+          <el-form-item label="券商编码：" prop="brokerid">
             <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
           </el-form-item>
-          <el-form-item label="券商名称：">
+          <el-form-item label="券商名称：" prop="brokername">
             <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
           </el-form-item>
-          <el-form-item label="券商类型：">
+          <el-form-item label="券商类型：" prop="brokertype">
             <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
           </el-form-item>
-          <el-form-item label="登录模式：">
+          <el-form-item label="登录模式：" prop="loginflag">
             <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
           </el-form-item>
-          <el-form-item label="客户端版本号：">
+          <el-form-item label="客户端版本号：" prop="clientversion">
             <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
           </el-form-item>
-          <el-form-item label="营业部标识：">
+          <el-form-item label="营业部标识：" prop="deptid">
             <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
           </el-form-item>
-          <el-form-item label="成交类型：">
+          <el-form-item label="成交类型：" prop="alcdealstype">
             <el-select v-model="formInline.calcdealstype">
               <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="协议类型：">
+          <el-form-item label="协议类型：" prop="productssl">
             <el-select v-model="formInline.productssl">
               <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="IP地址：">
+          <el-form-item label="IP地址：" prop="ipaddress">
             <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
           </el-form-item>
-          <el-form-item label="端口：">
+          <el-form-item label="端口：" prop="ipport">
             <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
           </el-form-item>
           <br />
@@ -98,39 +98,39 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="券商编码：">
+        <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" class="demo-form-inline">
+          <el-form-item label="券商编码：" prop="brokerid">
             <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
           </el-form-item>
-          <el-form-item label="券商名称：">
+          <el-form-item label="券商名称：" prop="brokername">
             <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
           </el-form-item>
-          <el-form-item label="券商类型：">
+          <el-form-item label="券商类型：" prop="brokertype">
             <el-input v-model="formInline.brokertype" placeholder="券商类型"></el-input>
           </el-form-item>
-          <el-form-item label="登录模式：">
+          <el-form-item label="登录模式：" prop="loginflag">
             <el-input v-model="formInline.loginflag" placeholder="登录模式"></el-input>
           </el-form-item>
-          <el-form-item label="客户端版本号：">
+          <el-form-item label="客户端版本号：" prop="clientversion">
             <el-input v-model="formInline.clientversion" placeholder="客户端版本号"></el-input>
           </el-form-item>
-          <el-form-item label="营业部标识：">
+          <el-form-item label="营业部标识：" prop="deptid">
             <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
           </el-form-item>
-          <el-form-item label="成交类型：">
+          <el-form-item label="成交类型：" prop="alcdealstype">
             <el-select v-model="formInline.calcdealstype">
               <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="协议类型：">
+          <el-form-item label="协议类型：" prop="productssl">
             <el-select v-model="formInline.productssl">
               <el-option v-for="(item,index) in productsslList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="IP地址：">
+          <el-form-item label="IP地址：" prop="ipaddress">
             <el-input v-model="formInline.ipaddress" placeholder="IP地址"></el-input>
           </el-form-item>
-          <el-form-item label="端口：">
+          <el-form-item label="端口：" prop="ipport">
             <el-input v-model="formInline.ipport" placeholder="端口"></el-input>
           </el-form-item>
           <br />
@@ -206,7 +206,37 @@ export default {
           key: 1,
           value: "通达信"
         }
-      ]
+      ],
+      rules: {
+        brokerid: [
+          { required: true, message: "请输入券商编码", trigger: "blur" }
+        ],
+        brokername: [
+          { required: true, message: "请输入券商名称", trigger: "blur" }
+        ],
+        brokertype: [
+          { required: true, message: "请输入券商类型", trigger: "blur" }
+        ],
+        loginflag: [
+          { required: true, message: "请输入登录模式", trigger: "blur" }
+        ],
+        clientversion: [
+          { required: true, message: "请输入客户端版本号", trigger: "blur" }
+        ],
+        deptid: [
+          { required: true, message: "请输入营业部标识", trigger: "blur" }
+        ],
+        calcdealstype: [
+          { required: true, message: "请选择成交类型", trigger: "change" }
+        ],
+        productssl: [
+          { required: true, message: "请选择协议类型", trigger: "change" }
+        ],
+        ipaddress: [
+          { required: true, message: "请输入IP地址", trigger: "blur" }
+        ],
+        ipport: [{ required: true, message: "请输入端口", trigger: "blur" }]
+      }
     };
   },
   computed: {
@@ -394,8 +424,8 @@ export default {
       this.formInline.loginflag = "";
       this.formInline.clientversion = "";
       this.formInline.deptid = "";
-      this.formInline.calcdealstype = "";
-      this.formInline.productssl = "";
+      this.formInline.calcdealstype = this.calcdealstypeList[0].key;
+      this.formInline.productssl = this.productsslList[0].key;
       this.formInline.ipaddress = "";
       this.formInline.ipport = "";
     },
@@ -439,7 +469,7 @@ export default {
         .then(res => {
           console.log("getFundAccount>>", res.data);
           if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
+            this.$alert("删除成功", "提示", {
               confirmButtonText: "确定",
               center: true,
               type: "success"
@@ -458,80 +488,94 @@ export default {
         });
     },
     onSubmitChange(formName) {
-      this.axios
-        .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
-          brokerid: this.formInline.brokerid,
-          brokername: this.formInline.brokername,
-          brokertype: this.formInline.brokertype,
-          loginflag: this.formInline.loginflag,
-          clientversion: this.formInline.clientversion,
-          deptid: this.formInline.deptid,
-          calcdealstype: this.formInline.calcdealstype,
-          productssl: this.formInline.productssl,
-          ipaddress: this.formInline.ipaddress,
-          ipport: this.formInline.ipport
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
+              brokerid: this.formInline.brokerid,
+              brokername: this.formInline.brokername,
+              brokertype: this.formInline.brokertype,
+              loginflag: this.formInline.loginflag,
+              clientversion: this.formInline.clientversion,
+              deptid: this.formInline.deptid,
+              calcdealstype: this.formInline.calcdealstype,
+              productssl: this.formInline.productssl,
+              ipaddress: this.formInline.ipaddress,
+              ipport: this.formInline.ipport
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.changeNow = false;
+                this.getFundAccount();
+              } else {
+                this.changeNow = false;
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.changeNow = false;
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     closeChange(formName) {
       this.$refs[formName].resetFields();
       this.changeNow = false;
     },
     onSubmit(formName) {
-      this.axios
-        .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
-          brokerid: this.formInline.brokerid,
-          brokername: this.formInline.brokername,
-          brokertype: this.formInline.brokertype,
-          loginflag: this.formInline.loginflag,
-          clientversion: this.formInline.clientversion,
-          deptid: this.formInline.deptid,
-          calcdealstype: this.formInline.calcdealstype,
-          productssl: this.formInline.productssl,
-          ipaddress: this.formInline.ipaddress,
-          ipport: this.formInline.ipport
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
+              brokerid: this.formInline.brokerid,
+              brokername: this.formInline.brokername,
+              brokertype: this.formInline.brokertype,
+              loginflag: this.formInline.loginflag,
+              clientversion: this.formInline.clientversion,
+              deptid: this.formInline.deptid,
+              calcdealstype: this.formInline.calcdealstype,
+              productssl: this.formInline.productssl,
+              ipaddress: this.formInline.ipaddress,
+              ipport: this.formInline.ipport
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.jia = false;
+                this.getFundAccount();
+              } else {
+                this.jia = false;
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.jia = false;
-            this.getFundAccount();
-          } else {
-            this.jia = false;
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     search() {
       this.getFundAccount();
