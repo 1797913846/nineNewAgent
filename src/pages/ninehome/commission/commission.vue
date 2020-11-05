@@ -53,7 +53,7 @@
         </div>
         <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
           <div class="bt">
-            <el-form-item label="方案名称：">
+            <el-form-item label="方案名称：" prop="cfgName">
               <el-input v-model="formInline.cfgName" placeholder="方案名称"></el-input>
             </el-form-item>
           </div>
@@ -125,6 +125,9 @@ export default {
         monthManageFeeDealRate: ""
       },
       rules: {
+        cfgName: [
+          { required: true, message: "请输入方案名称", trigger: "blur" }
+        ],
         dayCommission: [
           { required: true, message: "请输入交易佣金率", trigger: "blur" },
           {
@@ -367,7 +370,7 @@ export default {
               console.log(err);
             });
         } else {
-          console.log("error submit!!");
+          console.log("提交信息错误");
           return false;
         }
       });
