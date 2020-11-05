@@ -56,8 +56,8 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="融资周期：">
+        <el-form :inline="true" :model="formInline" :rules="rules" ref="formInline" class="demo-form-inline">
+          <el-form-item label="融资周期：" prop="financePeriod">
             <el-select v-model="formInline.financePeriod">
               <el-option label="天" value="day"></el-option>
               <el-option label="周" value="week"></el-option>
@@ -65,32 +65,32 @@
               <el-option label="单" value="single"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="融资倍率：">
+          <el-form-item label="融资倍率：" prop="financeRatio">
             <el-input v-model="formInline.financeRatio" placeholder="融资倍率"></el-input>
           </el-form-item>
-          <el-form-item label="融资费率：">
+          <el-form-item label="融资费率：" prop="financeFeeRate">
             <el-input v-model="formInline.financeFeeRate" placeholder="融资费率"></el-input>
           </el-form-item>
 
-          <el-form-item label="建仓费率：">
+          <el-form-item label="建仓费率：" prop="makeFeeRate">
             <el-input v-model="formInline.makeFeeRate" placeholder="建仓费率"></el-input>
           </el-form-item>
-          <el-form-item label="利润分成比例：">
+          <el-form-item label="利润分成比例：" prop="separateFeeRate">
             <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="利润分成比例"></el-input>
           </el-form-item>
-          <el-form-item label="警戒线比率：">
+          <el-form-item label="警戒线比率：" prop="cordonLineRate">
             <el-input v-model="formInline.cordonLineRate" placeholder="警戒线比率"></el-input>
           </el-form-item>
-          <el-form-item label="平仓线比率：">
+          <el-form-item label="平仓线比率：" prop="flatLineRate">
             <el-input v-model="formInline.flatLineRate" placeholder="平仓线比率"></el-input>
           </el-form-item>
-          <el-form-item label="个股持仓比率：">
+          <el-form-item label="个股持仓比率：" prop="positionRatio">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比率"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比率：" class="smallfont">
+          <el-form-item label="创业板持仓比率：" class="smallfont" prop="secondBoardPositionRatio">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比率"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比率：" class="smallfont">
+          <el-form-item label="科创板持仓比率：" class="smallfont" prop="thirdBoardPositionRatio">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比率"></el-input>
           </el-form-item>
           <br />
@@ -133,6 +133,78 @@ export default {
         positionRatio: "", //个股持仓比率
         secondBoardPositionRatio: "", //创业板持仓比率
         thirdBoardPositionRatio: "" //科创板持仓比率
+      },
+      rules: {
+        financePeriod: [
+          { required: true, message: "请选择融资周期", trigger: "change" }
+        ],
+        financeRatio: [
+          { required: true, message: "请输入融资倍率", trigger: "blur" }
+        ],
+        financeFeeRate: [
+          { required: true, message: "请输入融资费率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        makeFeeRate: [
+          { required: true, message: "请输入建仓费率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        separateFeeRate: [
+          { required: true, message: "请输入利润分成比例", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        cordonLineRate: [
+          { required: true, message: "请输入警戒线比率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        flatLineRate: [
+          { required: true, message: "请输入平仓线比率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        positionRatio: [
+          { required: true, message: "请输入个股持仓比率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        secondBoardPositionRatio: [
+          { required: true, message: "请输入创业板持仓比率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        thirdBoardPositionRatio: [
+          { required: true, message: "请输入科创板持仓比率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
@@ -395,7 +467,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
