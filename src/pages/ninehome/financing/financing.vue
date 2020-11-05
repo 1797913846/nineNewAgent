@@ -139,7 +139,12 @@ export default {
           { required: true, message: "请选择融资周期", trigger: "change" }
         ],
         financeRatio: [
-          { required: true, message: "请输入融资倍率", trigger: "blur" }
+          { required: true, message: "请输入融资倍率", trigger: "blur" },
+          {
+            pattern: /^[1-9]\d*$/,
+            message: "融资倍率需为正整数",
+            trigger: "blur"
+          }
         ],
         financeFeeRate: [
           { required: true, message: "请输入融资费率", trigger: "blur" },
