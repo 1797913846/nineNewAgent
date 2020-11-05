@@ -1070,3 +1070,9 @@ input:-ms-input-placeholder {
 .codeinput .el-input__inner {
     width: 180px;
 }
+
+.tmbox{
+    float: left;
+    margin-right:20px;
+    margin-top:5px;
+}
