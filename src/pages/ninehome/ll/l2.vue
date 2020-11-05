@@ -49,7 +49,10 @@
           </el-form-item>
           <br />
           <el-form-item label="内容：">
-            <el-input v-model="formInline.content" placeholder="请输入内容"></el-input>
+            <div class="editorbox">
+              <editor :catchData="formInline.content" @childByValue="childByValue"></editor>
+            </div>
+            <!-- <el-input v-model="formInline.content" placeholder="请输入内容"></el-input> -->
           </el-form-item>
           <br />
           <el-form-item>
@@ -63,10 +66,12 @@
 </template>
 
 <script>
+import editor from "@/components/editor";
 import topNav from "@/components/topNav";
 export default {
   components: {
-    topNav
+    topNav,
+    editor
   },
   data() {
     return {
@@ -120,6 +125,10 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.formInline.content = childValue;
+    },
     formattera(row, column) {
       return (
         "交易佣金率：" +
@@ -305,6 +314,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.editorbox {
+  margin-left: 44px;
+  margin-right: 30px;
+}
 </style>
 
 

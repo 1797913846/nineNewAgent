@@ -35,6 +35,7 @@
     "vue-layer": "^0.9.13",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
+    "wangeditor": "^4.2.2",
     "xlsx": "^0.14.2"
   },
   "devDependencies": {
