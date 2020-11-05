@@ -450,7 +450,7 @@ export default {
 </style>
 <style>
 .addForm .bt .el-input__inner {
-  width: 327px;
+  width: 317px;
 }
 .addForm .bt .el-form-item__label {
   margin-left: 0px;

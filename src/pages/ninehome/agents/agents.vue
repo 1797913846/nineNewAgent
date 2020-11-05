@@ -692,6 +692,7 @@ export default {
         colorDark: "#000",
         colorLight: "#fff"
       });
+      qrcode._el.title=''
     },
     creatQrCode1(url) {
       console.log("我是地址1", url);
@@ -702,6 +703,7 @@ export default {
         colorDark: "#000",
         colorLight: "#fff"
       });
+      qrcode._el.title=''
     },
     mouseOver() {
       this.showQrcode = true;

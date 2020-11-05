@@ -67,7 +67,7 @@
           <el-form-item label="营业部标识：" prop="deptid">
             <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
           </el-form-item>
-          <el-form-item label="成交类型：" prop="alcdealstype">
+          <el-form-item label="成交类型：" prop="calcdealstype">
             <el-select v-model="formInline.calcdealstype">
               <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -117,7 +117,7 @@
           <el-form-item label="营业部标识：" prop="deptid">
             <el-input v-model="formInline.deptid" placeholder="营业部标识"></el-input>
           </el-form-item>
-          <el-form-item label="成交类型：" prop="alcdealstype">
+          <el-form-item label="成交类型：" prop="calcdealstype">
             <el-select v-model="formInline.calcdealstype">
               <el-option v-for="(item,index) in calcdealstypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>

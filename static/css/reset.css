@@ -935,14 +935,14 @@ input:-ms-input-placeholder {
 }
 
 .addForm .savebt {
-    background-color: rgba(37, 98, 238, 0.1);
-    border: 1px solid #E7E7E7;
-    color: #2562EE;
+    background: #2562EE;
     margin-left: 335px;
 }
 
 .addForm .nobt {
-    background: #2562EE;
+    background-color: rgba(37, 98, 238, 0.1);
+    border: 1px solid #E7E7E7;
+    color: #2562EE;
 }
 
 .heightbox {
