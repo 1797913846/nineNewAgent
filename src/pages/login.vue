@@ -76,6 +76,13 @@ export default {
   created() {
     localStorage.clear();
     this.getCode();
+    let that = this;
+    document.onkeydown = function(e) {
+      var key = window.event.keyCode;
+      if (key == 13) {
+        that.login();
+      }
+    };
   },
   mounted: function() {
     this.listenResize();
@@ -123,7 +130,7 @@ export default {
           if (res.data.code == 200) {
             let Authorization = res.data.data.token;
             localStorage.setItem("Authorization", Authorization);
-            let toVerifyCode=res.data.data.toVerifyCode;
+            let toVerifyCode = res.data.data.toVerifyCode;
             this.getMsg();
             let that = this;
             setTimeout(function() {
