@@ -46,6 +46,9 @@
               <el-form-item label="全平台单支股票市值规模限制：">
                 <el-input v-model="formInline.singlestockAllHoldLimit" placeholder="全平台单支股票市值规模限制"></el-input>
               </el-form-item>
+              <el-form-item label="交易股票限制：">
+                <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
+              </el-form-item>
               <!-- <el-form-item label="交易股票限制：">
           <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
         </el-form-item>
@@ -181,8 +184,8 @@ export default {
                 .thirdStockIncreaseBuyLimit,
               thirdStockDropBuyLimit: this.formInline.thirdStockDropBuyLimit,
               singlestockHoldLimit: this.formInline.singlestockHoldLimit,
-              singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit
-              // stockPrefixLimit: this.formInline.stockPrefixLimit,
+              singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit,
+              stockPrefixLimit: this.formInline.stockPrefixLimit
               // manageFeeMode: this.formInline.manageFeeMode,
               // autoClosePosition: this.formInline.autoClosePosition,
               // ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,

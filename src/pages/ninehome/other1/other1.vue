@@ -38,9 +38,9 @@
         <el-form-item label="全平台单支股票市值规模限制：">
           <el-input v-model="formInline.singlestockAllHoldLimit" placeholder="全平台单支股票市值规模限制"></el-input>
         </el-form-item> -->
-              <el-form-item label="交易股票限制：">
+              <!-- <el-form-item label="交易股票限制：">
                 <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="管理费清算模式：">
                 <el-select v-model="formInline.manageFeeMode">
                   <el-option label="按持仓市值计算：股票总市值*管理费率/天" :value="Number(1)"></el-option>
@@ -172,7 +172,7 @@ export default {
               // thirdStockDropBuyLimit: this.formInline.thirdStockDropBuyLimit,
               // singlestockHoldLimit: this.formInline.singlestockHoldLimit,
               // singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit,
-              stockPrefixLimit: this.formInline.stockPrefixLimit,
+              // stockPrefixLimit: this.formInline.stockPrefixLimit,
               manageFeeMode: this.formInline.manageFeeMode,
               autoClosePosition: this.formInline.autoClosePosition,
               ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,
