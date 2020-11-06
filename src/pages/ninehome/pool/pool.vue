@@ -71,11 +71,6 @@
               </div>
               <div class="s2" @click="addSelectMoney">添加</div>
             </div>
-            <!-- <div class="checkbox">
-              <el-checkbox-group v-model="checkList" align="left" @change="handleCheckedCitiesChange">
-                <el-checkbox v-for="(item,index) in productList" :key="index" :label="item.productcode">{{item.productname}}</el-checkbox>
-              </el-checkbox-group>
-            </div> -->
           </div>
           <div class="buybox" v-if="accountGroup.length>0">
             <div class="buytitle">买入优先级：</div>
@@ -84,7 +79,8 @@
                 <el-table-column label="优先级" align="center" width="100" sortable prop="priority">
                   <template slot-scope="scope">
                     <div class="operation">
-                      <el-input v-model="scope.row.priority"></el-input>
+                      <!-- <el-input v-model="scope.row.priority"></el-input> -->
+                      <el-input v-model="accountGroup[scope.$index].priority"></el-input>
                     </div>
                   </template>
                 </el-table-column>
@@ -164,7 +160,7 @@ export default {
       selectlist: [],
       levelName: "",
       formInline: {
-        levelName:""
+        levelName: ""
       },
       accountGroup: [],
       realAccountGroup: [],
@@ -197,24 +193,6 @@ export default {
     }
   },
   watch: {
-    // checkList: {
-    //   handler(newVal, oldVal) {
-    //     if (this.addTitle == "新增") {
-    //       this.accountGroup = [];
-    //       newVal.map(item => {
-    //         this.accountGroup.push({
-    //           priority: 0,
-    //           productCode: item
-    //         });
-    //       });
-    //       this.realAccountGroup = this.accountGroup;
-    //     } else if (this.addTitle == "修改") {
-    //       console.log("新旧", newVal, oldVal);
-    //       this.oldCheckList = oldVal;
-    //     }
-    //   },
-    //   deep: true
-    // },
     selectlist: {
       handler(newVal, oldVal) {
         if (this.addTitle == "新增") {
@@ -230,6 +208,13 @@ export default {
         } else if (this.addTitle == "修改") {
           console.log("新旧", newVal, oldVal);
           this.oldSelectList = oldVal;
+          newVal.map(item => {
+            this.accountGroup.push({
+              priority: 0,
+              productCode: item,
+              enable: true
+            });
+          });
         }
       },
       deep: true
@@ -284,36 +269,37 @@ export default {
       });
       this.realAccountGroup = this.accountGroup;
     },
+    isRepeat(arr) {
+      var hash = {};
+      for (var i in arr) {
+        if (hash[arr[i]]) return true;
+        hash[arr[i]] = true;
+      }
+      return false;
+    },
     addSelectMoney() {
       console.log("对的", this.selectValue);
       this.selectlist.push(this.selectValue);
+      if (
+        this.isRepeat(this.selectlist) &&
+        this.selectlist.indexOf(this.selectValue) != -1
+      ) {
+        this.$alert("买入优先级中资金账号已存在，请勿重复操作", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
+        });
+      }
       this.selectlist = this.unique(this.selectlist);
-      console.log("后面的数组", this.selectlist);
-
-      // if (this.addTitle == "修改") {
-      //   console.log("我变了", this.selectlist);
-      //   let dif = this.getArrDifference(this.selectlist, this.oldSelectList);
-      //   if (this.selectlist.length > this.oldSelectList.length) {
-      //     dif.map(item => {
-      //       this.accountGroup.push({
-      //         priority: 0,
-      //         productCode: item
-      //       });
-      //     });
-      //   } else if (this.addTitle == "新增") {
-      //     console.log("我是dif", dif);
-      //     this.accountGroup.map((item, index) => {
-      //       if (item.productCode == dif[0]) {
-      //         this.accountGroup.splice(index, 1);
-      //         // this.accountGroup.delete(item);
-      //       }
-      //     });
-      //   }
-      // }
+      console.log(
+        "后面的数组",
+        this.selectlist,
+        this.selectlist.indexOf(this.selectValue)
+      );
     },
     add() {
       this.addBool = true;
-      this.formInline.levelName="";
+      this.formInline.levelName = "";
       this.levelName = "";
       this.selectValue = "";
       this.groupName = "";
@@ -355,12 +341,12 @@ export default {
                 accountGroup: this.realAccountGroup
               };
             } else if (this.addTitle == "修改") {
-              console.log('数据',this.realAccountGroup);
+              console.log("数据", this.realAccountGroup);
               url = "/tn/mgr-api/fund-pool/update";
               options = {
                 groupId: this.groupId,
                 groupName: this.formInline.levelName,
-                accountGroup: this.realAccountGroup
+                accountGroup: this.accountGroup
               };
             }
             this.axios
