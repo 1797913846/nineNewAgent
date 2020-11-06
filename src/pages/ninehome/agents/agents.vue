@@ -320,12 +320,12 @@
     <!--邀请码二维码-->
     <div :class="{'show-qrcode': showQrcode==true,addForm:true,'qrcode':true,}" @click="mouseOut">
       <div :class="{'qrbox':true}">
-        <span>邀请码：</span>
+        <span>邀请码：{{inviteCode}}</span>
         <div id="qrcode" ref="qrcode"></div>
       </div>
     </div>
     <div :class="{'qrbox1':true,'show-qrcode1': showQrcode1==true,'qrcode1':true}" id="qrcode2">
-      <span>邀请码：</span>
+      <span>邀请码：{{inviteCode}}</span>
       <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
@@ -473,7 +473,6 @@ export default {
         accountId: "",
         accountName: "",
         productGroupId: "",
-        productGroupId: "",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
@@ -587,7 +586,8 @@ export default {
             message: "请选择下级默认佣金方案",
             trigger: "change"
           }
-        ]
+        ],
+        inviteCode: ""
       }
     };
   },
@@ -739,10 +739,26 @@ export default {
       this.formInline.flatLine = 0;
       this.formInline.cordonLine = 0;
       this.formInline.financeRatio = 0;
+      this.formInline.accountId="";
+      this.formInline.accountName="";
+      this.formInline.productGroupId="";
+      this.formInline.level="";
+      this.formInline.commissionCfgId="";
+      this.formInline.ableCrud="";
+      this.formInline.positionRatio="";
+      this.formInline.secondBoardPositionRatio="";
+      this.formInline.thirdBoardPositionRatio="";
+      this.formInline.manageFeeRate="";
+      this.formInline.manageMakeFeeRate="";
+      this.formInline.orderPermission="";
+      this.formInline.accountStatus="";
+      this.formInline.defaultChildGroupId="";
+      this.formInline.defaultChildCommissionCfgId="";
     },
     showEveryCode(index, row) {
       console.log("index2", index);
       let inviteCode = row.inviteCode;
+      this.inviteCode = inviteCode;
       this.showQrcode1 = true;
       document.getElementById("qrcode1").innerHTML = "";
       document.getElementById("qrcode2").style.top = 220 + 35 * index + "px";
