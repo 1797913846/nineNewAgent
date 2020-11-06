@@ -20,7 +20,7 @@
                             </div>
                             <br />
                             <el-form-item>
-                                <el-button class="nobt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+                                <el-button class="nobt" type="primary" @click="onSubmit('formInline')" >保存</el-button>
                             </el-form-item>
                         </el-form>
                     </div>

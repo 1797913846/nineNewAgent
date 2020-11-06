@@ -141,6 +141,6 @@ export default {
   margin-top: 25.5px;
 }
 .rightnav .r5 {
-  margin-top: 25px;
+  margin-top: 27px;
 }
 </style>
