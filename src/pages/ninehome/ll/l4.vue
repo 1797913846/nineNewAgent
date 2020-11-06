@@ -233,7 +233,12 @@ export default {
           { required: true, message: "请选择协议类型", trigger: "change" }
         ],
         ipaddress: [
-          { required: true, message: "请输入IP地址", trigger: "blur" }
+          { required: true, message: "请输入IP地址", trigger: "blur" },
+          {
+            pattern: /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/,
+            message: "IP地址不正确",
+            trigger: "blur"
+          }
         ],
         ipport: [{ required: true, message: "请输入端口", trigger: "blur" }]
       }
