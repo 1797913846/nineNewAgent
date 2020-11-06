@@ -30,7 +30,7 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center" width="330">
+          <el-table-column label="操作" align="center" width="330" v-if="!nullTable">
             <template slot-scope="scope">
               <div class="operation">
                 <span class="addSameClass " @click.stop="getEdit(scope.$index,scope.row)">修改</span>
@@ -66,47 +66,46 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <img class="tr" src="../../../assets/nine/closeform.png" alt=""  @click="closeJia">
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="产品编号：">
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
+          <el-form-item label="产品编号：" prop="productcode">
             <el-input v-model="formInline.productcode" placeholder="产品编号"></el-input>
           </el-form-item>
-          <el-form-item label="产品名称：">
+          <el-form-item label="产品名称：" prop="productname">
             <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
           </el-form-item>
-          <el-form-item label="优先级：">
+          <el-form-item label="优先级：" prop="priority">
             <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
           </el-form-item>
-          <el-form-item label="资金账号：">
+          <el-form-item label="资金账号：" prop="userid">
             <el-input v-model="formInline.userid" placeholder="资金账号"></el-input>
           </el-form-item>
-          <el-form-item label="资金账号类型：">
+          <el-form-item label="资金账号类型：" prop="usertype">
             <el-select v-model="formInline.usertype">
               <el-option v-for="(item,index) in usertypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="开仓控制：">
+          <el-form-item label="开仓控制：" prop="operateStatus">
             <el-select v-model="formInline.operateStatus">
               <el-option v-for="(item,index) in operateStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="交易密码：">
+          <el-form-item label="交易密码：" prop="passwordtrade">
             <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
           </el-form-item>
-          <el-form-item label="通讯密码：">
+          <el-form-item label="通讯密码：" prop="passwordcom">
             <el-input v-model="formInline.passwordcom" placeholder="交易密码"></el-input>
           </el-form-item>
-          <el-form-item label="券商：">
+          <el-form-item label="券商：" prop="brokerid">
             <el-select v-model="formInline.brokerid">
               <el-option v-for="(item,index) in brokerList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="产品佣金：">
+          <el-form-item label="产品佣金：" prop="commission">
             <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
           </el-form-item>
-          <el-form-item label="期初可分配金额：" class="smallfont">
+          <el-form-item label="期初可分配金额：" prop="marketcap" class="smallfont">
             <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
           </el-form-item>
           <el-form-item label="备注：">
@@ -125,46 +124,46 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
-          <img class="tr" src="../../../assets/nine/closeform.png" alt=""  @click="closeChange1">
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="产品编号：">
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
+          <el-form-item label="产品编号：" prop="productcode">
             <el-input v-model="formInline.productcode" :disabled="true" placeholder="产品编号"></el-input>
           </el-form-item>
-          <el-form-item label="产品名称：">
+          <el-form-item label="产品名称：" prop="productname">
             <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
           </el-form-item>
-          <el-form-item label="优先级：">
+          <el-form-item label="优先级：" prop="priority">
             <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
           </el-form-item>
-          <el-form-item label="资金账号：">
+          <el-form-item label="资金账号：" prop="userid">
             <el-input v-model="formInline.userid" :disabled="true" placeholder="资金账号"></el-input>
           </el-form-item>
-          <el-form-item label="资金账号类型：">
+          <el-form-item label="资金账号类型：" prop="usertype">
             <el-select v-model="formInline.usertype">
               <el-option v-for="(item,index) in usertypeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="开仓控制：">
+          <el-form-item label="开仓控制：" prop="operateStatus">
             <el-select v-model="formInline.operateStatus">
               <el-option v-for="(item,index) in operateStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="交易密码：">
+          <el-form-item label="交易密码：" prop="passwordtrade">
             <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
           </el-form-item>
-          <el-form-item label="通讯密码：">
+          <el-form-item label="通讯密码：" prop="passwordcom">
             <el-input v-model="formInline.passwordcom" placeholder="通讯密码"></el-input>
           </el-form-item>
-          <el-form-item label="券商：">
+          <el-form-item label="券商：" prop="brokerid">
             <el-select v-model="formInline.brokerid">
               <el-option v-for="(item,index) in brokerList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="产品佣金：">
+          <el-form-item label="产品佣金：" prop="commission">
             <el-input v-model="formInline.commission" placeholder="产品佣金"></el-input>
           </el-form-item>
-          <el-form-item label="期初可分配金额：" class="smallfont">
+          <el-form-item label="期初可分配金额：" prop="marketcap" class="smallfont">
             <el-input v-model="formInline.marketcap" placeholder="期初可分配金额"></el-input>
           </el-form-item>
           <el-form-item label="备注：">
@@ -235,7 +234,42 @@ export default {
         { key: 1, value: "禁止操作" }
       ],
       brokerList: [],
-      changeNow: false
+      changeNow: false,
+      rules: {
+        productcode: [
+          { required: true, message: "请输入产品编号", trigger: "blur" }
+        ],
+        productname: [
+          { required: true, message: "请输入产品名称", trigger: "blur" }
+        ],
+        priority: [
+          { required: true, message: "请输入优先级", trigger: "blur" }
+        ],
+        userid: [
+          { required: true, message: "请输入资金账号", trigger: "blur" }
+        ],
+        usertype: [
+          { required: true, message: "请选择资金账号类型", trigger: "change" }
+        ],
+        operateStatus: [
+          { required: true, message: "请选择开仓控制", trigger: "change" }
+        ],
+        passwordtrade: [
+          { required: true, message: "请输入交易密码", trigger: "blur" }
+        ],
+        passwordcom: [
+          { required: true, message: "请输入通讯密码", trigger: "blur" }
+        ],
+        brokerid: [
+          { required: true, message: "请选择券商", trigger: "change" }
+        ],
+        commission: [
+          { required: true, message: "请输入产品佣金", trigger: "blur" }
+        ],
+        marketcap: [
+          { required: true, message: "请输入期初可分配金额", trigger: "blur" }
+        ]
+      }
     };
   },
   computed: {
@@ -370,6 +404,18 @@ export default {
     },
     jiaNow() {
       this.jia = true;
+      this.formInline.productcode = "";
+      this.formInline.productname = "";
+      this.formInline.priority = "";
+      this.formInline.userid = "";
+      this.formInline.usertype = "";
+      this.formInline.operateStatus = "";
+      this.formInline.passwordtrade = "";
+      this.formInline.passwordcom = "";
+      this.formInline.brokerid = "";
+      this.formInline.commission = "";
+      this.formInline.marketcap = "";
+      this.formInline.memo = "";
     },
     closeAdd(formName) {
       this.$refs[formName].resetFields();
@@ -450,84 +496,96 @@ export default {
         });
     },
     onSubmitChange(formName) {
-      this.axios
-        .post("/tn/mgr-api/productInfo/update", {
-          productcode: this.formInline.productcode,
-          productname: this.formInline.productname,
-          priority: this.formInline.priority,
-          userid: this.formInline.userid,
-          usertype: this.formInline.usertype,
-          operateStatus: this.formInline.operateStatus,
-          passwordtrade: this.formInline.passwordtrade,
-          passwordcom: this.formInline.passwordcom,
-          brokerid: this.formInline.brokerid,
-          commission: this.formInline.commission,
-          marketcap: this.formInline.marketcap,
-          memo: this.formInline.memo
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/productInfo/update", {
+              productcode: this.formInline.productcode,
+              productname: this.formInline.productname,
+              priority: this.formInline.priority,
+              userid: this.formInline.userid,
+              usertype: this.formInline.usertype,
+              operateStatus: this.formInline.operateStatus,
+              passwordtrade: this.formInline.passwordtrade,
+              passwordcom: this.formInline.passwordcom,
+              brokerid: this.formInline.brokerid,
+              commission: this.formInline.commission,
+              marketcap: this.formInline.marketcap,
+              memo: this.formInline.memo
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.changeNow = false;
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.changeNow = false;
-            this.getFundAccount();
-          } else {
-            this.changeNow = false;
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     closeChange(formName) {
       this.$refs[formName].resetFields();
       this.changeNow = false;
     },
     onSubmit(formName) {
-      this.axios
-        .post("/tn/mgr-api/productInfo/save", {
-          productcode: this.formInline.productcode,
-          productname: this.formInline.productname,
-          priority: this.formInline.priority,
-          userid: this.formInline.userid,
-          usertype: this.formInline.usertype,
-          operateStatus: this.formInline.operateStatus,
-          passwordtrade: this.formInline.passwordtrade,
-          passwordcom: this.formInline.passwordcom,
-          brokerid: this.formInline.brokerid,
-          commission: this.formInline.commission,
-          marketcap: this.formInline.marketcap,
-          memo: this.formInline.memo
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/productInfo/save", {
+              productcode: this.formInline.productcode,
+              productname: this.formInline.productname,
+              priority: this.formInline.priority,
+              userid: this.formInline.userid,
+              usertype: this.formInline.usertype,
+              operateStatus: this.formInline.operateStatus,
+              passwordtrade: this.formInline.passwordtrade,
+              passwordcom: this.formInline.passwordcom,
+              brokerid: this.formInline.brokerid,
+              commission: this.formInline.commission,
+              marketcap: this.formInline.marketcap,
+              memo: this.formInline.memo
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.jia = false;
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.jia = false;
-            this.getFundAccount();
-          } else {
-            this.jia = false;
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     search() {
       this.getFundAccount();
@@ -574,7 +632,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
