@@ -56,9 +56,9 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeadd1">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="分组名称：">
-            <el-input v-model="levelName" placeholder="分组名称"></el-input>
+        <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" class="demo-form-inline">
+          <el-form-item label="分组名称：" prop="levelName">
+            <el-input v-model="formInline.levelName" placeholder="分组名称"></el-input>
           </el-form-item>
           <div class="codebox">
             <span class="codetitle">资金账号：</span>
@@ -163,11 +163,18 @@ export default {
       selectValue: "",
       selectlist: [],
       levelName: "",
-      formInline: {},
+      formInline: {
+        levelName:""
+      },
       accountGroup: [],
       realAccountGroup: [],
       oldCheckList: [],
-      oldSelectList: []
+      oldSelectList: [],
+      rules: {
+        levelName: [
+          { required: true, message: "请输入分组名称", trigger: "blur" }
+        ]
+      }
     };
   },
   computed: {
@@ -306,6 +313,7 @@ export default {
     },
     add() {
       this.addBool = true;
+      this.formInline.levelName="";
       this.levelName = "";
       this.selectValue = "";
       this.groupName = "";
@@ -326,51 +334,63 @@ export default {
       this.addBool = false;
     },
     saveNow(formName) {
-      if (this.realAccountGroup.length <= 0) {
-        this.$alert("请先保存买入优先级", "提示", {
-          confirmButtonText: "确定",
-          center: true,
-          type: "error"
-        });
-      } else {
-        let url, options;
-        if (this.addTitle == "新增") {
-          url = "tn/mgr-api/fund-pool/save";
-          options = {
-            groupName: this.levelName,
-            accountGroup: this.realAccountGroup
-          };
-        } else if (this.addTitle == "修改") {
-          url = "/tn/mgr-api/fund-pool/update";
-          options = {
-            groupId: this.groupId,
-            groupName: this.levelName,
-            accountGroup: this.realAccountGroup
-          };
-        }
-        this.axios
-          .post(url, options)
-          .then(res => {
-            if (res.data.code == 200) {
-              this.$alert(res.data.info, "提示", {
-                confirmButtonText: "确定",
-                center: true,
-                type: "success"
-              });
-              this.getFundAccount();
-              this.addBool = false;
-            } else {
-              this.$alert(res.data.info, "提示", {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.realAccountGroup.length <= 0) {
+            this.$alert(
+              "请先选择资金账号且点添加按钮来保存买入优先级",
+              "提示",
+              {
                 confirmButtonText: "确定",
                 center: true,
                 type: "error"
-              });
+              }
+            );
+          } else {
+            let url, options;
+            if (this.addTitle == "新增") {
+              url = "tn/mgr-api/fund-pool/save";
+              options = {
+                groupName: this.formInline.levelName,
+                accountGroup: this.realAccountGroup
+              };
+            } else if (this.addTitle == "修改") {
+              console.log('数据',this.realAccountGroup);
+              url = "/tn/mgr-api/fund-pool/update";
+              options = {
+                groupId: this.groupId,
+                groupName: this.formInline.levelName,
+                accountGroup: this.realAccountGroup
+              };
             }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
+            this.axios
+              .post(url, options)
+              .then(res => {
+                if (res.data.code == 200) {
+                  this.$alert(res.data.info, "提示", {
+                    confirmButtonText: "确定",
+                    center: true,
+                    type: "success"
+                  });
+                  this.getFundAccount();
+                  this.addBool = false;
+                } else {
+                  this.$alert(res.data.info, "提示", {
+                    confirmButtonText: "确定",
+                    center: true,
+                    type: "error"
+                  });
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        } else {
+          console.log("提交信息错误");
+          return false;
+        }
+      });
     },
     handleCheckedCitiesChange(value) {
       if (this.addTitle == "修改") {
@@ -435,7 +455,7 @@ export default {
               this.accountGroup.length
             );
             // this.realAccountGroup = this.productPool;
-            this.levelName = this.productPool.groupName;
+            this.formInline.levelName = this.productPool.groupName;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -594,8 +614,8 @@ export default {
   margin-left: 44px;
 }
 .buycontent {
-  margin-left:44px;
-  margin-right:44px;
+  margin-left: 44px;
+  margin-right: 44px;
 }
 .selectMoney {
   float: left;
