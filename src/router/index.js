@@ -40,6 +40,8 @@ import ninehomel3 from '@/pages/ninehome/ll/l3'
 import ninehomel4 from '@/pages/ninehome/ll/l4'
 import ninehomel5 from '@/pages/ninehome/ll/l5'
 import ninehomel6 from '@/pages/ninehome/ll/l6'
+import ninehomel7 from '@/pages/ninehome/ll/l7'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -331,6 +333,14 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomel6
+    },
+    {
+      path: '/ninehome/l7',
+      meta: {
+        title: '安全设置',
+        requireAuth: true
+      },
+      component: ninehomel7
     }
   ]
 })

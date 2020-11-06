@@ -29,6 +29,7 @@
                     <el-menu-item index="9-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
                     <!-- <el-menu-item index="9-2" @click="clickJump('/ninehome/l5')">手机号认证</el-menu-item> -->
                     <el-menu-item index="9-3" @click="clickJump('/ninehome/l6')">操作日志</el-menu-item>
+                    <el-menu-item index="9-4" @click="clickJump('/ninehome/l7')">安全设置</el-menu-item>
                   </el-menu-item-group>
                 </el-submenu>
                 <el-submenu index="1">
@@ -265,6 +266,9 @@ export default {
             break;
           case "/ninehome/l6":
             this.whichIndex = "9-3";
+            break;
+          case "/ninehome/l7":
+            this.whichIndex = "9-4";
             break;
           case "/ninehome/l2":
             this.whichIndex = "8-2";

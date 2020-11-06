@@ -9,12 +9,11 @@
         <span style="cursor: pointer;" @click="loginOut">退出</span>
       </span>
       <span class="r3">|</span>
-      <span class="r5">
+      <!-- <span class="r5">
         <el-switch v-model="value1" active-text="开" inactive-text="关" @change="changeVal">
         </el-switch>
-      </span>
-
-      <!-- <img class="r4" src="../assets/nine/chi.png" alt=""> -->
+      </span> -->
+      <img class="r4" src="../assets/nine/chi.png" alt="">
     </div>
   </div>
 </template>
@@ -30,7 +29,7 @@ export default {
   created() {},
   mounted() {
     this.userName = localStorage.getItem("userName");
-    this.getValue1();
+    // this.getValue1();
   },
   methods: {
     getValue1() {
