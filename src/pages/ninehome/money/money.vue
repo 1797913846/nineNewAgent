@@ -94,7 +94,8 @@
           </el-form-item>
           <br />
           <el-form-item>
-            <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')" v-if="addTitle=='增配资金'">保存</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')" v-if="addTitle=='调整资金'">保存</el-button>
             <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
           </el-form-item>
         </el-form>
