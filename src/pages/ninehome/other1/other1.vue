@@ -2,7 +2,7 @@
 <template>
   <div class="bigestbox">
     <topNav></topNav>
-    <div class="container contanier2 contanier3">
+    <div class="container contanier2 contanier3 longwidth">
       <div class=" heightbox">
         <!--表单-->
         <div class="reset-scroll-style">
@@ -75,9 +75,9 @@
               <el-form-item label="委托间隔时效（秒）：">
                 <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
               </el-form-item>
-              <span>注：数据为0时不拦截</span>
+              <span class="zhutext">注：数据为0时不拦截</span>
               <el-form-item label="开启创业板注册制：">
-                <el-select v-model="formInline.autoPolling">
+                <el-select v-model="formInline.isRegBoard">
                   <el-option label="关闭" :value="Number(0)"></el-option>
                   <el-option label="开启" :value="Number(1)"></el-option>
                 </el-select>

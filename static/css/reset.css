@@ -969,6 +969,10 @@ input:-ms-input-placeholder {
     margin-left: 79px;
 }
 
+.longwidth .rbox .el-input__inner {
+    width:380px;
+}
+
 .rbox .el-input__inner {
     width: 303px;
     height: 40px;
@@ -1075,4 +1079,9 @@ input:-ms-input-placeholder {
     float: left;
     margin-right:20px;
     margin-top:5px;
+}
+
+.zhutext{
+    color:red;
+    line-height:38px;
 }
