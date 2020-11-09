@@ -27,7 +27,6 @@
           <el-table-column show-overflow-tooltip label="交易冻结资金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="手动冻结资金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="操作" align="center" width="280">
@@ -52,7 +51,6 @@
           <el-table-column show-overflow-tooltip label="交易冻结资金" prop="lockScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
