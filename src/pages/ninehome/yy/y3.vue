@@ -37,10 +37,10 @@
             </el-checkbox-group>
           </div>
           <div class="search-boxv" v-if="topActive == 2">
-            <el-date-picker v-model="createTimeStart" type="date">
+            <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
             </el-date-picker>
             <span>至</span>
-            <el-date-picker v-model="createTimeEnd" type="date">
+            <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
             </el-date-picker>
           </div>
           <div class="search-user" @click="search">查询</div>
@@ -229,8 +229,8 @@ export default {
         { key: 9, value: "废单" }
       ],
       checkList: [],
-      createTimeStart: "2020-10-21",
-      createTimeEnd: "2020-10-21",
+      createTimeStart: "",
+      createTimeEnd: "",
       topActive: 1,
       changeNow: false,
       addTitle: "调整资金",
@@ -266,6 +266,8 @@ export default {
     }
   },
   created() {
+    this.createTimeStart = this.getNowFormatDate();
+    this.createTimeEnd = this.getNowFormatDate();
     if (this.topActive == 1) {
       this.getFundAccount("today");
     } else {
@@ -273,6 +275,21 @@ export default {
     }
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
     handleCheckedCitiesChange(value) {
       this.entruststatusList = value.join(",");
       console.log("最终的", this.entruststatusList);
@@ -390,7 +407,14 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: url,
-        data: {}
+        data: {
+          subtype: this.subtype,
+          accountCode: this.accountCode,
+          queryChild: this.queryChild,
+          accountName: this.accountName,
+          orderno: this.orderno,
+          entruststatusList: this.entruststatusList
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -491,7 +515,7 @@ export default {
   color: #586880;
   text-align: center;
   cursor: pointer;
-  padding-bottom:10px;
+  padding-bottom: 10px;
 }
 .topactive {
   border-bottom: 2px solid #2662ee;

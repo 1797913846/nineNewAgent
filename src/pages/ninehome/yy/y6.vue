@@ -16,12 +16,12 @@
           <div class="search-boxv">
             <span class="bu"> 从：</span>
             <div class="selectbox">
-              <el-date-picker v-model="dateStart" type="date">
+              <el-date-picker v-model="dateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
             <span class="bu">&nbsp; 至：</span>
             <div class="selectbox">
-              <el-date-picker v-model="dateEnd" type="date">
+              <el-date-picker v-model="dateEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
           </div>
@@ -89,8 +89,8 @@ export default {
         { key: "month", value: "月" },
         { key: "single", value: "单" }
       ],
-      dateStart: "2020-10-21",
-      dateEnd: "2020-10-21",
+      dateStart: "",
+      dateEnd: "",
       productCode: "",
 
       lastPrice: "",
@@ -144,9 +144,26 @@ export default {
     }
   },
   created() {
+    this.dateStart = this.getNowFormatDate();
+    this.dateEnd = this.getNowFormatDate();
     this.getFundAccount();
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
     formatter(row, column) {
       if (row) {
         return (
@@ -164,7 +181,12 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/history/settle/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode,
+          accountName: this.accountName,
+          dateStart: this.dateStart,
+          dateEnd: this.dateEnd
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -226,7 +248,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 

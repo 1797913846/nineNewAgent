@@ -24,7 +24,7 @@
           <el-form :inline="true">
             <div class="selectbox">
               <el-form-item label="类型：">
-                <el-select v-model="type">
+                <el-select v-model="type" :clearable="true">
                   <el-option v-for="(item,index) in typeList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
@@ -33,12 +33,12 @@
           <div class="search-boxv">
             <span class="bu"> 从：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeStart" type="date">
+              <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
             <span class="bu">&nbsp; 至：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeEnd" type="date">
+              <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
           </div>
@@ -176,9 +176,26 @@ export default {
     }
   },
   created() {
+    this.createTimeStart = this.getNowFormatDate();
+    this.createTimeEnd = this.getNowFormatDate();
     this.getFundAccount();
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
     formatter(row, column) {
       if (row) {
         let type = row.type;

@@ -10,14 +10,14 @@
           <el-form :inline="true">
             <div class="selectbox">
               <el-form-item label="是否结算：">
-                <el-select v-model="isSettled">
+                <el-select v-model="isSettled" :clearable="true">
                   <el-option v-for="(item,index) in isSettledList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
             </div>
             <div class="selectbox">
               <el-form-item label="结算方式：">
-                <el-select v-model="settleType">
+                <el-select v-model="settleType" :clearable="true">
                   <el-option v-for="(item,index) in settleTypeList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
@@ -34,12 +34,12 @@
           <div class="search-boxv">
             <span class="bu"> 从：</span>
             <div class="selectbox">
-              <el-date-picker v-model="dealDateStart" type="date">
+              <el-date-picker v-model="dealDateStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
             <span class="bu">&nbsp; 至：</span>
             <div class="selectbox">
-              <el-date-picker v-model="dealDateEnd" type="date">
+              <el-date-picker v-model="dealDateEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
           </div>
@@ -68,7 +68,7 @@
           <el-table-column show-overflow-tooltip label="佣金总和" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="日期" prop="dataDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="是否结算" prop="isSettledDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="结算方式" prop="settleTypeDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="结算方式" prop="settleTypeDesc" :formatter="formatter" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -146,8 +146,8 @@ export default {
           value: "转入账户余额"
         }
       ],
-      dealDateStart: "2020-10-1",
-      dealDateEnd: "2020-10-22",
+      dealDateStart: "",
+      dealDateEnd: "",
       productCode: "",
       stockNo: "",
       lastPrice: "",
@@ -187,9 +187,26 @@ export default {
     }
   },
   created() {
+    this.dealDateStart = this.getNowFormatDate();
+    this.dealDateEnd = this.getNowFormatDate();
     this.getFundAccount();
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
     closeMsg() {
       this.msg = false;
     },
@@ -233,11 +250,21 @@ export default {
     },
     formatter(row, column) {
       if (row) {
-        return (
-          Math.round(
-            (row["lastPrice"] - row["preCost"]) * row["allottedCnt"] * 100
-          ) / 100
-        );
+        let settleTypeDesc = row.settleTypeDesc;
+        switch (settleTypeDesc) {
+          case 1:
+            return "提现";
+            break;
+          case 2:
+            return "转入可用";
+            break;
+          case 3:
+            return "转入账户余额";
+            break;
+          default:
+            return "所有";
+            break;
+        }
       }
     },
     search() {
@@ -248,7 +275,14 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/commission/export",
-        data: {}
+        data: {
+          isSettled: this.isSettled,
+          accountCode: this.accountCode,
+          accountName: this.accountName,
+          dealDateStart: this.dealDateStart,
+          dealDateEnd: this.dealDateEnd,
+          settleType: this.settleType
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -312,7 +346,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 

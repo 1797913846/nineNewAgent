@@ -230,7 +230,9 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/hold/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];

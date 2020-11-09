@@ -16,12 +16,12 @@
           <div class="search-boxv">
             <span class="bu"> 从：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeStart" type="date">
+              <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
             <span class="bu">&nbsp; 至：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeEnd" type="date">
+              <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
           </div>
@@ -55,7 +55,7 @@
           <el-table-column show-overflow-tooltip label="代理账户名称" prop="agentAccountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员账户ID" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员账户名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资方案" prop="financePeriod" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资方案" :formatter="formatterday" prop="financePeriod" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买入数量" prop="dealCntBuy" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买入成交金额" prop="dealAmountBuy" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买入手续费" prop="commissionBuy" align="center"></el-table-column>
@@ -104,8 +104,8 @@ export default {
         { key: "month", value: "月" },
         { key: "single", value: "单" }
       ],
-      createTimeStart: "2020-10-21",
-      createTimeEnd: "2020-10-21",
+      createTimeStart: "",
+      createTimeEnd: "",
       productCode: "",
 
       lastPrice: "",
@@ -159,9 +159,48 @@ export default {
     }
   },
   created() {
+    this.createTimeStart = this.getNowFormatDate();
+    this.createTimeEnd = this.getNowFormatDate();
     this.getFundAccount();
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
+    formatterday(row, column) {
+      if (row) {
+        let financePeriod = row.financePeriod;
+        switch (financePeriod) {
+          case "day":
+            return "天";
+            break;
+          case "week":
+            return "周";
+            break;
+          case "month":
+            return "月";
+            break;
+          case "single":
+            return "单";
+            break;
+          default:
+            return "所有";
+            break;
+        }
+      }
+    },
     formatter(row, column) {
       if (row) {
         return (
@@ -187,7 +226,12 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/agent/settle/infoList/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode,
+          agentAccountCode: this.agentAccountCode,
+          createTimeStart: this.createTimeStart,
+          createTimeEnd: this.createTimeEnd
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -249,7 +293,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
