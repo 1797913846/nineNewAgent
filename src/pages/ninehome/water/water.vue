@@ -5,25 +5,28 @@
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
-          <div class="search-box">
+          <div class="search-box1">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-box">
+          <div class="tmbox">
+            <el-checkbox v-model="checked">下级</el-checkbox>
+          </div>
+          <div class="search-box1">
             <input type="text" placeholder="请输入会员名称" v-model="accountName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <el-form :inline="true">
             <div class="selectbox">
               <el-form-item label="类型：">
-                <el-select v-model="type">
+                <el-select v-model="type" :clearable="true">
                   <el-option v-for="(item,index) in typeList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
             </div>
             <div class="selectbox">
               <el-form-item label="标的：">
-                <el-select v-model="source">
+                <el-select v-model="source" :clearable="true">
                   <el-option v-for="(item,index) in sourceList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
@@ -32,12 +35,12 @@
           <div class="search-boxv">
             <span class="bu"> 从：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeStart" type="date">
+              <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
             <span class="bu">&nbsp; 至：</span>
             <div class="selectbox">
-              <el-date-picker v-model="createTimeEnd" type="date">
+              <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
               </el-date-picker>
             </div>
           </div>
@@ -47,16 +50,25 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="金额(元)" prop="amount" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="类型" prop="type" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="标的" prop="source" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="类型" :formatter="formattera" prop="type" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="标的" :formatter="formatterb" prop="source" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注" prop="remark" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作人" prop="opeartor" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作时间" prop="opeartorTime" align="center"></el-table-column>
+        </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+          <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="金额(元)" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="类型" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="标的" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="备注" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作人" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作时间" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -74,6 +86,7 @@ export default {
   },
   data() {
     return {
+      checked: false,
       value1: "",
       tableData: [],
       colorBool: false,
@@ -90,6 +103,7 @@ export default {
       accountName: "",
       type: "",
       typeList: [
+        { key: "", value: "所有" },
         { key: 1, value: "充值" },
         { key: 2, value: "提现" },
         { key: 3, value: "资金调整" },
@@ -105,6 +119,7 @@ export default {
       ],
       source: "",
       sourceList: [
+        { key: "", value: "所有" },
         { key: 1, value: "账户余额" },
         { key: 2, value: "可用资金" }
       ],
@@ -142,9 +157,26 @@ export default {
   },
   created() {
     this.isAdminGroup = localStorage.getItem("isAdminGroup");
+    this.createTimeStart = this.getNowFormatDate();
+    this.createTimeEnd = this.getNowFormatDate();
     this.getFundAccount();
   },
   methods: {
+    getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
     exportExcel() {
       this.axios({
         method: "post",
@@ -170,12 +202,45 @@ export default {
         }
       );
     },
-    formatter(row, column) {
+    formattera(row, column) {
       if (row) {
-        let commission = row.commission;
-        switch (commission) {
-          case "-1.00":
-            return "-";
+        let type = row.type;
+        switch (type) {
+          case 1:
+            return "充值";
+          case 2:
+            return "提现";
+          case 3:
+            return "资金调整";
+          case 4:
+            return "入金";
+          case 5:
+            return "出金";
+          case 6:
+            return "管理费";
+          case 7:
+            return "佣金转入";
+          case 8:
+            return "补平亏损";
+          case 9:
+            return "委托成交";
+          case 10:
+            return "除息分红";
+          case 11:
+            return "除权除息税费";
+          case 12:
+            return "单票免息";
+        }
+      }
+    },
+    formatterb(row, column) {
+      if (row) {
+        let source = row.source;
+        switch (source) {
+          case 1:
+            return "账户余额";
+          case 2:
+            return "可用资金";
         }
       }
     },
@@ -188,6 +253,7 @@ export default {
           pageSize: this.pageSize,
           pageNo: this.currentPage,
           accountCode: this.accountCode,
+          queryChild: this.checked,
           accountName: this.accountName,
           type: this.type,
           source: this.source,
