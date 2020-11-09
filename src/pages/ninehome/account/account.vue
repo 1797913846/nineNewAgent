@@ -10,13 +10,17 @@
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入股票代码" v-model="stockCode" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
@@ -46,6 +50,25 @@
           <el-table-column show-overflow-tooltip label="风控提示" prop="riskTip" align="center" sortable="custom" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户状态" prop="statusDesc" align="center"></el-table-column>
         </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable==true">
+          <el-table-column show-overflow-tooltip label="母账户ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户ID" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户名称" align="center" width="150"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="借款额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="期初金额" align="center" width="100" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="总资产" align="center" width="100" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏额" align="center" width="100" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈亏率" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓数" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="股票市值" align="center" width="100" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" align="center" width="100" sortable="custom"></el-table-column>
+          <el-table-column show-overflow-tooltip label="持仓率%" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线(差额)" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线(差额)" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="风控提示" align="center" sortable="custom" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账户状态" align="center"></el-table-column>
+        </el-table>
       </div>
     </div>
   </div>
@@ -68,7 +91,8 @@ export default {
       nullTable: false,
       accountCode: "",
       sort: "profit",
-      order: "descending"
+      order: "descending",
+      stockCode: ""
     };
   },
   computed: {
@@ -200,6 +224,7 @@ export default {
       this.axios
         .post("/tn/mgr-api/risk/management/list", {
           accountCode: this.accountCode,
+          stockCode: this.stockCode,
           sort: this.sort,
           order: this.order
         })
@@ -221,6 +246,8 @@ export default {
           } else {
             this.nullTable = false;
           }
+        
+        console.log('是否显示',this.nullTable);
         })
         .catch(err => {
           console.log(err);
