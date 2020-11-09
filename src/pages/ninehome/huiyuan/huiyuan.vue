@@ -8,11 +8,11 @@
         <div class="title" style="margin-left:7px;" @click="mouseOver">我的二维码</div>
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入代理商名称" v-model="agentName" />
+            <input type="text" placeholder="请输入会员ID" v-model="agentId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
-            <input type="text" placeholder="请输入代理商ID" v-model="agentId" />
+            <input type="text" placeholder="请输入会员名称" v-model="agentName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-user" @click="search">查询</div>
@@ -39,9 +39,9 @@
           <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="等级" prop="level" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="等级名称" prop="levelName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理ID" prop="accountId" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="120" prop="accountId" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" width="120" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
           <!-- <el-table-column label="邀请码" align="center">
@@ -51,7 +51,7 @@
                     </el-table-column> -->
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账户余额" width="120" prop="balance" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="初期规模" prop="allottedScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
@@ -93,7 +93,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -104,11 +103,11 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="代理ID：">
-            <el-input v-model="formInline.accountId" :disabled="true" placeholder="代理ID"></el-input>
+          <el-form-item label="会员ID：">
+            <el-input v-model="formInline.accountId" :disabled="true" placeholder="会员ID"></el-input>
           </el-form-item>
-          <el-form-item label="代理名称：">
-            <el-input v-model="formInline.accountName" :disabled="true" placeholder="代理名称"></el-input>
+          <el-form-item label="会员名称：">
+            <el-input v-model="formInline.accountName" :disabled="true" placeholder="会员名称"></el-input>
           </el-form-item>
           <!-- <el-form-item label="产品：">
                         <el-select v-model="formInline.productCode" :disabled="true">
@@ -120,7 +119,7 @@
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理等级：">
+          <el-form-item label="会员等级：">
             <el-select v-model="formInline.level" :disabled="true">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
@@ -130,7 +129,7 @@
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理管理权限：">
+          <el-form-item label="会员管理权限：">
             <el-select v-model="formInline.ableCrud" :disabled="true">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -184,7 +183,7 @@
               <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理状态：">
+          <el-form-item label="会员状态：">
             <el-select v-model="formInline.accountStatus" :disabled="true">
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -213,7 +212,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -224,11 +222,11 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="代理ID：">
-            <el-input v-model="formInline.accountId" :disabled="true" placeholder="代理ID"></el-input>
+          <el-form-item label="会员ID：">
+            <el-input v-model="formInline.accountId" :disabled="true" placeholder="会员ID"></el-input>
           </el-form-item>
-          <el-form-item label="代理名称：">
-            <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
+          <el-form-item label="会员名称：">
+            <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：">
             <el-select v-model="formInline.productGroupId">
@@ -240,7 +238,7 @@
                             <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
                         </el-select>
                     </el-form-item> -->
-          <el-form-item label="代理等级：">
+          <el-form-item label="会员等级：">
             <el-select v-model="formInline.level">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
@@ -250,7 +248,7 @@
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理管理权限：">
+          <el-form-item label="会员管理权限：">
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -304,7 +302,7 @@
               <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理状态：">
+          <el-form-item label="会员状态：">
             <el-select v-model="formInline.accountStatus">
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -345,7 +343,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -356,11 +353,11 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="代理ID：">
-            <el-input v-model="formInline.accountId" placeholder="代理ID"></el-input>
+          <el-form-item label="会员ID：">
+            <el-input v-model="formInline.accountId" placeholder="会员ID"></el-input>
           </el-form-item>
-          <el-form-item label="代理名称：">
-            <el-input v-model="formInline.accountName" placeholder="代理名称"></el-input>
+          <el-form-item label="会员名称：">
+            <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
           <!-- <el-form-item label="产品：">
                         <el-select v-model="formInline.productCode">
@@ -372,7 +369,7 @@
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理等级：">
+          <el-form-item label="会员等级：">
             <el-select v-model="formInline.level">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
@@ -382,7 +379,7 @@
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理管理权限：">
+          <el-form-item label="会员管理权限：">
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -436,7 +433,7 @@
               <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理状态：">
+          <el-form-item label="会员状态：">
             <el-select v-model="formInline.accountStatus">
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
@@ -489,7 +486,7 @@
           <div>
             <el-form-item label="推荐人：">
               <el-select v-model="whowho">
-                <el-option v-for="(item,index) in eList" :key="index" :label="item.accountName" :value="item.accountId"></el-option>
+                <el-option v-for="(item,index) in eList" :key="index" :label="item.accountId+'~'+item.accountName" :value="item.accountId"></el-option>
               </el-select>
             </el-form-item>
           </div>
@@ -840,6 +837,21 @@ export default {
     jiaNow() {
       this.jia = true;
       this.addTitle = "添加";
+      this.formInline.accountId = "";
+      this.formInline.accountName = "";
+      this.formInline.productGroupId = "";
+      this.formInline.level = "";
+      this.formInline.commissionCfgId = "";
+      this.formInline.ableCrud = "";
+      this.formInline.positionRatio = "";
+      this.formInline.secondBoardPositionRatio = "";
+      this.formInline.thirdBoardPositionRatio = "";
+      this.formInline.manageFeeRate = "";
+      this.formInline.manageMakeFeeRate = "";
+      this.formInline.orderPermission = "";
+      this.formInline.accountStatus = "";
+      this.formInline.defaultChildGroupId = "";
+      this.formInline.defaultChildCommissionCfgId = "";
       this.formInline.parentAccountCode = this.userId;
       this.formInline.parentAccountName = this.userName;
       this.formInline.balance = 0;
@@ -1058,6 +1070,7 @@ export default {
       this.showAdd = false;
     },
     look(index, row) {
+      this.addTitle = "查看";
       let accountId = row.accountId;
       this.axios
         .post("/tn/mgr-api/account/detail", {
