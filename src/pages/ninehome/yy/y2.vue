@@ -20,7 +20,7 @@
           <div class="selectbox">
             <el-form :inline="true">
               <el-form-item label="融资方式：">
-                <el-select v-model="financePeriod">
+                <el-select v-model="financePeriod" :clearable="true">
                   <el-option v-for="(item,index) in financePeriodList" :key="index" :label="item.value" :value="item.key"></el-option>
                 </el-select>
               </el-form-item>
@@ -53,7 +53,7 @@
           <el-table-column show-overflow-tooltip label="委托编号" prop="orderNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" :formatter="formatterday" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="成交数量" prop="dealCnt" align="center"></el-table-column>
@@ -92,6 +92,7 @@ export default {
       stockNo: "",
       financePeriod: "",
       financePeriodList: [
+        { key: "", value: "所有" },
         { key: "day", value: "天" },
         { key: "week", value: "周" },
         { key: "month", value: "月" },
@@ -179,6 +180,28 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    formatterday(row, column) {
+      if (row) {
+        let financePeriod = row.financePeriod;
+        switch (financePeriod) {
+          case "day":
+            return "天";
+            break;
+          case "week":
+            return "周";
+            break;
+          case "month":
+            return "月";
+            break;
+          case "single":
+            return "单";
+            break;
+          default:
+            return "所有";
+            break;
+        }
+      }
+    },
     formatter(row, column) {
       if (row) {
         return (
@@ -196,7 +219,12 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/holdDetail/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode,
+          productCode: this.productCode,
+          stockNo: this.stockNo,
+          financePeriod: this.financePeriod
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -258,7 +286,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
