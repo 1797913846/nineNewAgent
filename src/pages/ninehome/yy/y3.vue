@@ -51,10 +51,10 @@
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托PK" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" width="160" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" width="160" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" width="160" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="160" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
@@ -78,12 +78,19 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="委托时间" prop="orderDateDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托PK" prop="pkorder" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column label="委托时间" align="center" width="220">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span>{{scope.row.orderDateDesc}} {{scope.row.orderTimeDesc}}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="委托时间" width="160" prop="orderDateDesc" align="center"></el-table-column> -->
+          <el-table-column show-overflow-tooltip label="委托编号" width="140" prop="orderno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" width="140" prop="pkorder" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" width="140" prop="productcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="140" prop="accountcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" width="140" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托价格" prop="entrustprice" align="center"></el-table-column>
@@ -188,8 +195,8 @@ export default {
       order: "",
       subtype: "",
       subtypeList: [
-        { key: "1", value: "买入" },
-        { key: "2", value: "卖出" },
+        { key: 1, value: "买入" },
+        { key: 2, value: "卖出" },
         { key: "", value: "所有" }
       ],
       queryChild: "",
@@ -257,13 +264,13 @@ export default {
     }
   },
   watch: {
-    topActive: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    }
+    // topActive: {
+    //   handler(newVal, oldVal) {
+    //     this.currentPage = 1;
+    //     this.getFundAccount();
+    //   },
+    //   deep: true
+    // }
   },
   created() {
     this.createTimeStart = this.getNowFormatDate();
@@ -409,7 +416,7 @@ export default {
         url: url,
         data: {
           subtype: this.subtype,
-          accountCode: this.accountCode,
+          accountcode: this.accountCode,
           queryChild: this.queryChild,
           accountName: this.accountName,
           orderno: this.orderno,
@@ -443,7 +450,7 @@ export default {
           pageNo: this.currentPage,
           order: this.order,
           subtype: this.subtype,
-          accountCode: this.accountCode,
+          accountcode: this.accountCode,
           queryChild: this.queryChild,
           accountName: this.accountName,
           orderno: this.orderno,
@@ -456,7 +463,7 @@ export default {
           pageNo: this.currentPage,
           order: this.order,
           subtype: this.subtype,
-          accountCode: this.accountCode,
+          accountcode: this.accountCode,
           queryChild: this.queryChild,
           accountName: this.accountName,
           orderno: this.orderno,

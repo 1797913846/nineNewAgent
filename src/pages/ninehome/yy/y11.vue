@@ -67,14 +67,14 @@
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="母账户ID" prop="productcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托日期" prop="orderdate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托时间" prop="ordertime" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="分账户ID" prop="accountcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="分账户名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托日期" prop="orderDateDesc" width="140" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托时间" prop="orderTimeDesc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="分账户ID" prop="accountcode" width="140" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="分账户名称" prop="accountName" width="140" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买卖方向" prop="subtypeDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" width="140" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托价" prop="entrustprice" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托数量" prop="stockcnt" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="成交数量" prop="dealcnt" align="center"></el-table-column>
@@ -236,7 +236,7 @@ export default {
         responseType: "arraybuffer",
         url: "/tn/mgr-api/risk/deliverOrder/export",
         data: {
-          bstype: this.bstype,
+          subtype: this.bstype,
           accountcode: this.accountcode,
           accountName: this.accountName,
           orderno: this.orderno,
@@ -267,7 +267,7 @@ export default {
         .post("/tn/mgr-api/risk/deliverOrder", {
           pageSize: this.pageSize,
           pageNo: this.currentPage,
-          bstype: this.bstype,
+          subtype: this.bstype,
           accountcode: this.accountcode,
           accountName: this.accountName,
           orderno: this.orderno,

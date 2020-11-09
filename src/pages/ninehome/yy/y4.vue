@@ -62,7 +62,14 @@
           <el-table-column show-overflow-tooltip label="母账户编号" prop="productcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="成交时间" prop="dealtimeDesc" align="center"></el-table-column>
+          <el-table-column label="成交时间" align="center" width="220">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span>{{scope.row.dealdate}} {{scope.row.dealtime}}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="成交时间" prop="dealtime" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买卖方向" prop="bstypeDesc" align="center"></el-table-column>
@@ -135,13 +142,13 @@ export default {
     }
   },
   watch: {
-    topActive: {
-      handler(newVal, oldVal) {
-        this.currentPage = 1;
-        this.getFundAccount();
-      },
-      deep: true
-    }
+    // topActive: {
+    //   handler(newVal, oldVal) {
+    //     this.currentPage = 1;
+    //     this.getFundAccount();
+    //   },
+    //   deep: true
+    // }
   },
   created() {
     this.createTimeStart = this.getNowFormatDate();

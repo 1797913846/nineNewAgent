@@ -68,8 +68,8 @@
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="产品编号" prop="productCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" width="160" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" width="160" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center" :formatter="formatterday"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
