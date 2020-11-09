@@ -45,7 +45,7 @@
           <el-table-column show-overflow-tooltip label="持仓数量" prop="stockCnt" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="可用数量" prop="stockCntAble" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="参考成本" prop="costPrice" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="市价" prop="marketValue" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="市价" prop="lastPrice" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="参考盈亏" prop="profit" align="center"></el-table-column>
         </el-table>
       </div>
