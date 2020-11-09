@@ -1,152 +1,152 @@
 <!--会员绑卡信息-->
 <template>
-    <div class="bigestbox">
-        <topNav></topNav>
-        <div class="container" @click="colorBool = false">
-            <div class="template-top">
-                <div class="title" @click="jiaNow">添加</div>
-                <div class="operate-btn">
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入账户" v-model="accountCode" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入开户名" v-model="userName" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="search-user" @click="search">查询</div>
-                </div>
-            </div>
-            <!--表格-->
-            <div class="reset-scroll-style">
-                <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-                    <el-table-column label="操作" align="center" width="180">
-                        <template slot-scope="scope">
-                            <div class="operation">
-                                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
-                                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="银行名称" prop="bankName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="省份名称" prop="provinceName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="城市名称" prop="cityName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="支行名称" prop="subBranchName" align="center" :formatter="formatter"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="卡号" prop="cardNo" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="开户名" prop="userName" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="身份证号" prop="identityNo" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" align="center"></el-table-column>
-                </el-table>
-            </div>
-            <div class="pagination">
-                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-            </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container" @click="colorBool = false">
+      <div class="template-top">
+        <div class="title" @click="jiaNow">添加</div>
+        <div class="operate-btn">
+          <div class="search-box">
+            <input type="text" placeholder="请输入账户" v-model="accountCode" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入开户名" v-model="userName" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-user" @click="search">查询</div>
         </div>
-        <!--添加表单-->
-        <div class="addForm" v-if="jia==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="账户：">
-                        <el-select v-model="formInline.accountCode">
-                            <el-option v-for="(item,index) in accountList" :key="index" :label="item.accountName" :value="item.accountId"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行：">
-                        <el-select v-model="formInline.bankId">
-                            <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行省份：">
-                        <el-select v-model="formInline.provinceId">
-                            <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行城市：">
-                        <el-select v-model="formInline.cityId">
-                            <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行支行：">
-                        <el-select v-model="formInline.subBranchId">
-                            <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="卡号：">
-                        <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="开户名：">
-                        <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
-                    </el-form-item>
-                    <el-form-item label="身份证：">
-                        <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
-                        <el-button class="nobt" type="primary" @click="closeAdd('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
-        <!--修改表单-->
-        <div class="addForm" v-if="changeNow==true">
-            <div class="addContent">
-                <div class="title">
-                    <span class="tl">{{addTitle}}</span>
-                    <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
-                </div>
-                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-                    <el-form-item label="账户：">
-                        <el-select v-model="formInline.accountCode">
-                            <el-option v-for="(item,index) in accountList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行：">
-                        <el-select v-model="formInline.bankId">
-                            <el-option v-for="(item,index) in banksList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行省份：">
-                        <el-select v-model="formInline.provinceId">
-                            <el-option v-for="(item,index) in provincesList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行城市：">
-                        <el-select v-model="formInline.cityId">
-                            <el-option v-for="(item,index) in citiesList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="开户银行支行：">
-                        <el-select v-model="formInline.subBranchId">
-                            <el-option v-for="(item,index) in branchesList" :key="index" :label="item.value" :value="item.key"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="卡号：">
-                        <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="开户名：">
-                        <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
-                    </el-form-item>
-                    <el-form-item label="身份证：">
-                        <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
-                    </el-form-item>
-                    <br />
-                    <el-form-item>
-                        <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')">保存</el-button>
-                        <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </div>
+      </div>
+      <!--表格-->
+      <div class="reset-scroll-style">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+          <el-table-column label="操作" align="center" width="180" v-if="!nullTable">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
+                <span @click.stop="deleteNow(scope.$index, scope.row)" class="addSameClass ">删除</span>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="银行名称" prop="bankName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="省份名称" prop="provinceName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="城市名称" prop="cityName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="支行名称" prop="subBranchName" align="center" :formatter="formatter"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卡号" prop="cardNo" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="开户名" prop="userName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="身份证号" prop="identityNo" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" align="center"></el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
+    <!--添加表单-->
+    <div class="addForm" v-if="jia==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="账户：">
+            <el-select v-model="formInline.accountCode">
+              <el-option v-for="(item,index) in accountList" :key="index" :label="item.accountId+'~'+item.accountName" :value="item.accountId"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行：">
+            <el-select v-model="formInline.bankId">
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行省份：">
+            <el-select v-model="formInline.provinceId">
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行城市：">
+            <el-select v-model="formInline.cityId">
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行支行：">
+            <el-select v-model="formInline.subBranchId">
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="卡号：">
+            <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户名：">
+            <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证：">
+            <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <!--修改表单-->
+    <div class="addForm" v-if="changeNow==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="账户：">
+            <el-select v-model="formInline.accountCode">
+              <el-option v-for="(item,index) in accountList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行：">
+            <el-select v-model="formInline.bankId">
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行省份：">
+            <el-select v-model="formInline.provinceId">
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行城市：">
+            <el-select v-model="formInline.cityId">
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行支行：">
+            <el-select v-model="formInline.subBranchId">
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.value" :value="item.key"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="卡号：">
+            <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户名：">
+            <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证：">
+            <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -366,6 +366,14 @@ export default {
     jiaNow() {
       this.jia = true;
       this.addTitle = "添加";
+      this.formInline.accountCode = "";
+      this.formInline.bankId = "";
+      this.formInline.provinceId = "";
+      this.formInline.cityId = "";
+      this.formInline.subBranchId = "";
+      this.formInline.cardNo = "";
+      this.formInline.userName = "";
+      this.formInline.identityNo = "";
     },
     closeAdd(formName) {
       this.$refs[formName].resetFields();
