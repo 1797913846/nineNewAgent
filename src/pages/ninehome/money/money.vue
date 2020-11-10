@@ -272,6 +272,7 @@ export default {
     set1(index, row) {
       this.changeNow = true;
       this.addTitle = "调整资金";
+      this.formInline.money="";
       console.log("我啊", row);
       this.formInline.accountCode = row.accountCode;
       this.formInline.accountName = row.accountName;
