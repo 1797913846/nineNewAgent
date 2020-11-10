@@ -28,9 +28,8 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center" width="330" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
+          <el-table-column label="操作" align="center" width="330">
             <template slot-scope="scope">
               <div class="operation">
                 <span class="addSameClass " @click.stop="getEdit(scope.$index,scope.row)">修改</span>
@@ -56,8 +55,25 @@
           <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center" width="140"></el-table-column>
         </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+          <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品名称" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金账号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="优先级" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="状态" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账号类型" align="center" :formatter="formatter"></el-table-column>
+          <el-table-column show-overflow-tooltip label="开仓控制" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品佣金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总可用" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总期初" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户总可用" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="剩余资产" align="center" width="140"></el-table-column>
+        </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>

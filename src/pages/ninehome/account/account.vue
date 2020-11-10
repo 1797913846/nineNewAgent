@@ -1,6 +1,6 @@
 <!--分账户监管-->
 <template>
-  <div class="bigestbox jiankong">
+  <div class="bigestbox">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
@@ -20,7 +20,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
@@ -271,7 +271,7 @@ export default {
 .el-table .red {
   background-color: #f2dede !important;
 }
-.jiankong .el-table--striped .el-table__body tr td {
+.jiankong .el-table__body tr td {
   background: none !important;
 }
 </style>

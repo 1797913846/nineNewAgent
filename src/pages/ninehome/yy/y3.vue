@@ -407,21 +407,31 @@ export default {
       let url;
       if (this.topActive == 1) {
         url = "/tn/mgr-api/history/entrustCurrent/export";
-      } else {
-        url = "/tn/mgr-api/history/entrustHistory/export";
-      }
-      this.axios({
-        method: "post",
-        responseType: "arraybuffer",
-        url: url,
-        data: {
+        options = {
           subtype: this.subtype,
           accountcode: this.accountCode,
           queryChild: this.queryChild,
           accountName: this.accountName,
           orderno: this.orderno,
           entruststatusList: this.entruststatusList
-        }
+        };
+      } else {
+        url = "/tn/mgr-api/history/entrustHistory/export";
+        options = {
+          subtype: this.subtype,
+          accountcode: this.accountCode,
+          queryChild: this.queryChild,
+          accountName: this.accountName,
+          orderno: this.orderno,
+          createTimeStart: this.createTimeStart,
+          createTimeEnd: this.createTimeEnd
+        };
+      }
+      this.axios({
+        method: "post",
+        responseType: "arraybuffer",
+        url: url,
+        data: options
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];

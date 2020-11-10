@@ -15,8 +15,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <el-table-column label="操作" align="center" width="180">
             <template slot-scope="scope">
               <div class="operation">
@@ -36,8 +35,20 @@
           <el-table-column show-overflow-tooltip label="IP地址" prop="ipaddress" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="端口号" prop="ipport" align="center"></el-table-column>
         </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+          <el-table-column show-overflow-tooltip label="券商编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商类型" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="登录模式" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="客户端版本号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="营业部标识" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="成交类型" align="center" :formatter="formatter1"></el-table-column>
+          <el-table-column show-overflow-tooltip label="协议类型" align="center" :formatter="formatter2"></el-table-column>
+          <el-table-column show-overflow-tooltip label="IP地址" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="端口号" align="center"></el-table-column>
+        </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>

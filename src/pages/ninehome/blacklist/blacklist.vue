@@ -47,7 +47,7 @@
           <el-table-column show-overflow-tooltip label="证券名称" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="nullTable==false">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
       <!--表单-->

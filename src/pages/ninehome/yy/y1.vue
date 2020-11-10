@@ -49,7 +49,7 @@
           <el-table-column show-overflow-tooltip label="参考盈亏" prop="profit" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -291,7 +291,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 

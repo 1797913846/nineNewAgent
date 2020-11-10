@@ -88,7 +88,7 @@
           <el-table-column show-overflow-tooltip label="备注" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>

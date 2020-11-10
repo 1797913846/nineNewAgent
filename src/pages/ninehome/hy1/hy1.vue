@@ -19,9 +19,8 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center" width="180" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
+          <el-table-column label="操作" align="center" width="180">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
@@ -41,8 +40,21 @@
           <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" align="center"></el-table-column>
         </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+          <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="银行名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="省份名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="城市名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="支行名称" align="center" :formatter="formatter"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卡号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="开户名" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="身份证号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手机号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="注册时间" align="center"></el-table-column>
+        </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>

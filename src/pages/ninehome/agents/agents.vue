@@ -1,6 +1,6 @@
 <!--代理商列表-->
 <template>
-  <div class="bigestbox daili" @click="hideEveryCode">
+  <div class="bigestbox" @click="hideEveryCode">
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
@@ -24,7 +24,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table daili" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
@@ -114,7 +114,7 @@
           <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="180"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination">
+      <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -1190,7 +1190,7 @@ export default {
 .el-table .red {
   background-color: #f2dede !important;
 }
-.daili .el-table--striped .el-table__body tr td {
+.daili .el-table__body tr td {
   background: none !important;
 }
 </style>
