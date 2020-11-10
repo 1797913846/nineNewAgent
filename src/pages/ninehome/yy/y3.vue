@@ -76,8 +76,8 @@
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="操作" align="center" width="180" v-if="topActive==1">
             <template slot-scope="scope">
-              <div class="operation">
-                <span v-if="scope.row.entruststatus!= 8 && scope.row.entruststatus!= 5" @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#f0ad4e;">修改</span>
+              <div class="operation" v-if="scope.row.entruststatus != 'E'">
+                <span v-if="scope.row.entruststatus!= 8 && scope.row.entruststatus!= 6 && scope.row.entruststatus!= 5" @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#f0ad4e;">修改</span>
                 <span v-if="scope.row.entruststatus!= 6 && scope.row.entruststatus!= 8 && scope.row.entruststatus!= 5" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">撤单</span>
               </div>
             </template>
@@ -89,7 +89,7 @@
               </div>
             </template>
           </el-table-column>
-          <!-- <el-table-column show-overflow-tooltip label="委托时间" width="160" prop="orderDateDesc" align="center"></el-table-column> -->
+          <!-- <el-table-column show-overflow-tooltip label="委托时间" width="220" prop="orderDateDesc" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="委托编号" width="140" prop="orderno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托PK" width="140" prop="pkorder" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品编号" width="140" prop="productcode" align="center"></el-table-column>
@@ -490,6 +490,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             let rows = res.data.data.rows;
+
             if (rows.length > 0) {
               this.tableData = res.data.data.rows;
             } else {
@@ -505,6 +506,7 @@ export default {
           } else {
             this.nullTable = false;
           }
+          console.log("我是数据", this.tableData, this.nullTable);
         })
         .catch(err => {
           console.log(err);

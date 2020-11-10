@@ -72,6 +72,12 @@
                   <el-option label="开启" :value="Number(1)"></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item label="提前结案开关：">
+                <el-select v-model="formInline.finishStrategyInAdvance">
+                  <el-option label="关闭" :value="Number(0)"></el-option>
+                  <el-option label="开启" :value="Number(1)"></el-option>
+                </el-select>
+              </el-form-item>
               <el-form-item label="委托间隔时效（秒）：">
                 <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
               </el-form-item>
@@ -125,6 +131,7 @@ export default {
         ctrlRoundRobinNumber: "",
         autoClear: "",
         autoPolling: "",
+        finishStrategyInAdvance: "",
         appointReqExpire: "",
         isRegBoard: ""
       }
@@ -178,6 +185,7 @@ export default {
               ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,
               autoClear: this.formInline.autoClear,
               autoPolling: this.formInline.autoPolling,
+              finishStrategyInAdvance: this.formInline.finishStrategyInAdvance,
               appointReqExpire: this.formInline.appointReqExpire,
               isRegBoard: this.formInline.isRegBoard
             })

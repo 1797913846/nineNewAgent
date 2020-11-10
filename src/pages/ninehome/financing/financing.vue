@@ -20,6 +20,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" align="center"></el-table-column>
         </el-table>
       </div>
       <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
@@ -35,6 +37,8 @@
         <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="positionRatio" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="创业板持仓比率" width="130" prop="secondBoardPositionRatio" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="科创板持仓比率" width="130" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
         <el-table-column label="操作" align="center" width="280">
           <template slot-scope="scope">
             <div class="operation">
@@ -50,7 +54,7 @@
       <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
     </div>
     <!--表单-->
-    <div class="addForm" v-if="showAdd==true">
+    <div class="addForm fnn" v-if="showAdd==true">
       <div class="addContent">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -93,6 +97,12 @@
           <el-form-item label="科创板持仓比率：" class="smallfont" prop="thirdBoardPositionRatio">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
+          <el-form-item label="创业板个股持仓比率：" class="smallfont" prop="secondBoardSingleStockPositionRatio">
+            <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板个股持仓比率：" class="smallfont" prop="thirdBoardSingleStockPositionRatio">
+            <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+          </el-form-item>
           <br />
           <el-form-item>
             <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
@@ -132,7 +142,10 @@ export default {
         flatLineRate: "", //平仓线比率
         positionRatio: "", //个股持仓比率
         secondBoardPositionRatio: "", //创业板持仓比率
-        thirdBoardPositionRatio: "" //科创板持仓比率
+        thirdBoardPositionRatio: "", //科创板持仓比率
+        secondBoardSingleStockPositionRatio: "",
+        thirdBoardSingleStockPositionRatio: "",
+        agentMaxLimitMoney:""
       },
       rules: {
         financePeriod: [
@@ -209,6 +222,30 @@ export default {
             message: "请输入大于0小于等于1的数字",
             trigger: "blur"
           }
+        ],
+        secondBoardSingleStockPositionRatio: [
+          {
+            required: true,
+            message: "请输入创业板个股持仓比率",
+            trigger: "blur"
+          },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        thirdBoardSingleStockPositionRatio: [
+          {
+            required: true,
+            message: "请输入科创板个股持仓比率",
+            trigger: "blur"
+          },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
         ]
       }
     };
@@ -269,7 +306,11 @@ export default {
               positionRatio: this.formInline.positionRatio, //个股持仓比率
               secondBoardPositionRatio: this.formInline
                 .secondBoardPositionRatio, //创业板持仓比率
-              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio //科创板持仓比率
+              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio, //科创板持仓比率
+              secondBoardSingleStockPositionRatio: this.formInline
+                .secondBoardSingleStockPositionRatio,
+              thirdBoardSingleStockPositionRatio: this.formInline
+                .thirdBoardSingleStockPositionRatio
             })
             .then(res => {
               console.log("getFundAccount>>", res.data);
@@ -306,6 +347,8 @@ export default {
       this.formInline.positionRatio = "";
       this.formInline.secondBoardPositionRatio = "";
       this.formInline.thirdBoardPositionRatio = "";
+      this.formInline.secondBoardSingleStockPositionRatio = "";
+      this.formInline.thirdBoardSingleStockPositionRatio = "";
       this.id = "";
     },
     getContent(index, row) {
@@ -334,6 +377,10 @@ export default {
               data.secondBoardPositionRatio; //创业板持仓比率
             this.formInline.thirdBoardPositionRatio =
               data.thirdBoardPositionRatio; //科创板持仓比率
+            this.formInline.secondBoardSingleStockPositionRatio =
+              data.secondBoardSingleStockPositionRatio;
+            this.formInline.thirdBoardSingleStockPositionRatio =
+              data.thirdBoardSingleStockPositionRatio;
           } else {
           }
         })
@@ -473,5 +520,12 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+<style>
+.fnn .el-form-item__label {
+  width: 160px;
+  margin-left: 24px;
+}
+</style>
+
 
 

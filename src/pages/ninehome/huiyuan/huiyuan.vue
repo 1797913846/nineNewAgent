@@ -42,6 +42,7 @@
           <el-table-column show-overflow-tooltip label="会员ID" width="120" prop="accountId" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" width="120" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理商限额" prop="agentMaxLimitMoney" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
@@ -57,6 +58,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
@@ -82,6 +85,7 @@
           <el-table-column show-overflow-tooltip label="会员ID" width="120" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" width="120" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员状态" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理商限额"  align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" align="center"></el-table-column>
@@ -97,6 +101,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比例" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比例" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比例" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" align="center"></el-table-column>
@@ -114,7 +120,7 @@
       </div>
     </div>
     <!--表单-->
-    <div class="addForm" v-if="showAdd==true">
+    <div class="addForm fnn" v-if="showAdd==true">
       <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -161,6 +167,9 @@
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="代理商限额：">
+            <el-input :disabled="true" v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
+          </el-form-item>
           <el-form-item label="账户余额：">
             <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
           </el-form-item>
@@ -187,6 +196,12 @@
           </el-form-item>
           <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" :disabled="true" placeholder="科创板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板个股持仓比率：" class="smallfont">
+            <el-input :disabled="true" v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="创业板个股持仓比率"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板个股持仓比率：" class="smallfont">
+            <el-input :disabled="true" v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="科创板个股持仓比率"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
@@ -233,7 +248,7 @@
     </div>
 
     <!--修改表单-->
-    <div class="addForm" v-if="changeNow==true">
+    <div class="addForm fnn" v-if="changeNow==true">
       <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -260,11 +275,6 @@
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <!-- <el-form-item label="产品：">
-                        <el-select v-model="formInline.productCode">
-                            <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item> -->
           <el-form-item label="会员等级：">
             <el-select v-model="formInline.level">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
@@ -279,6 +289,9 @@
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="代理商限额：">
+            <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="账户余额：">
             <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
@@ -306,6 +319,12 @@
           </el-form-item>
           <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板个股持仓比率：" class="smallfont">
+            <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板个股持仓比率：" class="smallfont">
+            <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
@@ -364,7 +383,7 @@
       <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
-    <div class="addForm" v-if="jia==true">
+    <div class="addForm fnn" v-if="jia==true">
       <div class="addContent addContent2">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -386,11 +405,6 @@
           <el-form-item label="会员名称：">
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
-          <!-- <el-form-item label="产品：">
-                        <el-select v-model="formInline.productCode">
-                            <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item> -->
           <el-form-item label="资金池ID：">
             <el-select v-model="formInline.productGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
@@ -410,6 +424,9 @@
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="代理商限额：">
+            <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="账户余额：">
             <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
@@ -437,6 +454,12 @@
           </el-form-item>
           <el-form-item label="科创板持仓比例：" class="smallfont">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
+          </el-form-item>
+          <el-form-item label="创业板个股持仓比率：" class="smallfont">
+            <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+          </el-form-item>
+          <el-form-item label="科创板个股持仓比率：" class="smallfont">
+            <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
@@ -578,7 +601,10 @@ export default {
         productList: [],
         agentLevel: [],
         defaultChildGroupId: "",
-        defaultChildCommissionCfgId: ""
+        defaultChildCommissionCfgId: "",
+        secondBoardSingleStockPositionRatio: "",
+        thirdBoardSingleStockPositionRatio: "",
+        agentMaxLimitMoney: ""
       },
       productList: [],
       commissionCfgList: [],
@@ -888,6 +914,9 @@ export default {
       this.formInline.flatLine = 0;
       this.formInline.cordonLine = 0;
       this.formInline.financeRatio = 0;
+      this.formInline.secondBoardSingleStockPositionRatio = "";
+      this.formInline.thirdBoardSingleStockPositionRatio = "";
+      this.agentMaxLimitMoney = "";
     },
     showEveryCode(index, row) {
       console.log("index2", index);
@@ -1028,7 +1057,12 @@ export default {
           accountStatus: this.formInline.accountStatus,
           defaultChildGroupId: this.formInline.defaultChildGroupId,
           defaultChildCommissionCfgId: this.formInline
-            .defaultChildCommissionCfgId
+            .defaultChildCommissionCfgId,
+          secondBoardSingleStockPositionRatio: this.formInline
+            .secondBoardSingleStockPositionRatio,
+          thirdBoardSingleStockPositionRatio: this.formInline
+            .thirdBoardSingleStockPositionRatio,
+          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1070,7 +1104,12 @@ export default {
           accountStatus: this.formInline.accountStatus,
           defaultChildGroupId: this.formInline.defaultChildGroupId,
           defaultChildCommissionCfgId: this.formInline
-            .defaultChildCommissionCfgId
+            .defaultChildCommissionCfgId,
+          secondBoardSingleStockPositionRatio: this.formInline
+            .secondBoardSingleStockPositionRatio,
+          thirdBoardSingleStockPositionRatio: this.formInline
+            .thirdBoardSingleStockPositionRatio,
+          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1307,6 +1346,10 @@ export default {
 }
 .tradio {
   margin-left: 0px !important;
+}
+.fnn .el-form-item__label {
+  width: 160px;
+  margin-left: 24px;
 }
 </style>
 
