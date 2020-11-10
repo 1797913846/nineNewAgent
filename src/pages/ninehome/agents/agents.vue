@@ -682,7 +682,8 @@ export default {
             trigger: "change"
           }
         ],
-        inviteCode: ""
+        inviteCode: "",
+        loginName:""
       }
     };
   },
@@ -712,6 +713,7 @@ export default {
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
+    this.loginName=localStorage.getItem("loginName");
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
@@ -825,7 +827,7 @@ export default {
     jiaNow() {
       this.jia = true;
       this.addTitle = "添加";
-      this.formInline.parentAccountCode = this.userId;
+      this.formInline.parentAccountCode = this.loginName;
       this.formInline.parentAccountName = this.userName;
       this.formInline.balance = 0;
       this.formInline.allottedScale = 0;
@@ -1210,7 +1212,7 @@ export default {
   border-radius: 5px;
   border: 1px solid #ccc;
   position: absolute;
-  left: 920px;
+  left: 1060px;
   top: 0px;
 }
 
