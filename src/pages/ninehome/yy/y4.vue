@@ -32,11 +32,15 @@
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-boxv" v-if="topActive == 2">
-            <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
-            </el-date-picker>
-            <span>至</span>
-            <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
-            </el-date-picker>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeStart" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
+              </el-date-picker>
+            </div>
+            <span class="bu">至</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeEnd" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date">
+              </el-date-picker>
+            </div>
           </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
