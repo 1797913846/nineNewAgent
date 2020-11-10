@@ -178,7 +178,7 @@ export default {
       });
     },
     y1(index, row) {
-      let accountId = row.accountId;
+      let accountId = row.accountCode;
       this.$router.push({
         path: "/ninehome/y1",
         query: {

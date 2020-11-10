@@ -174,6 +174,7 @@ export default {
   },
   created() {
     this.accountCode = this.$route.query.accountId || "";
+    console.log('是我啊',this.$route.query)
     this.getFundAccount();
   },
   methods: {
