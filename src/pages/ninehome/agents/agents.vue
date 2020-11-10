@@ -24,7 +24,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
@@ -80,6 +80,38 @@
               {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
             </template>
           </el-table-column>
+        </el-table>
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+          <el-table-column show-overflow-tooltip label="等级" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="等级名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理ID" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理名称" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理状态" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金池ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="单边佣金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="邀请码" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人ID" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="账户余额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="初期规模" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="可用资金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="手动冻结资金" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓线(金额)" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="警戒线(金额)" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="个股持仓比例" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板持仓比例" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板持仓比例" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下单权限" :formatter="formattera" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资比例" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资周期" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="管理费率" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="建仓费率" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="盈利分成率" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资开始日期" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创建时间" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="180"></el-table-column>
         </el-table>
       </div>
       <div class="pagination">
@@ -739,21 +771,21 @@ export default {
       this.formInline.flatLine = 0;
       this.formInline.cordonLine = 0;
       this.formInline.financeRatio = 0;
-      this.formInline.accountId="";
-      this.formInline.accountName="";
-      this.formInline.productGroupId="";
-      this.formInline.level="";
-      this.formInline.commissionCfgId="";
-      this.formInline.ableCrud="";
-      this.formInline.positionRatio="";
-      this.formInline.secondBoardPositionRatio="";
-      this.formInline.thirdBoardPositionRatio="";
-      this.formInline.manageFeeRate="";
-      this.formInline.manageMakeFeeRate="";
-      this.formInline.orderPermission="";
-      this.formInline.accountStatus="";
-      this.formInline.defaultChildGroupId="";
-      this.formInline.defaultChildCommissionCfgId="";
+      this.formInline.accountId = "";
+      this.formInline.accountName = "";
+      this.formInline.productGroupId = "";
+      this.formInline.level = "";
+      this.formInline.commissionCfgId = "";
+      this.formInline.ableCrud = "";
+      this.formInline.positionRatio = "";
+      this.formInline.secondBoardPositionRatio = "";
+      this.formInline.thirdBoardPositionRatio = "";
+      this.formInline.manageFeeRate = "";
+      this.formInline.manageMakeFeeRate = "";
+      this.formInline.orderPermission = "";
+      this.formInline.accountStatus = "";
+      this.formInline.defaultChildGroupId = "";
+      this.formInline.defaultChildCommissionCfgId = "";
     },
     showEveryCode(index, row) {
       console.log("index2", index);

@@ -69,29 +69,29 @@
             <el-input v-model="formInline.financeRatio" placeholder="融资倍率"></el-input>
           </el-form-item>
           <el-form-item label="融资费率：" prop="financeFeeRate">
-            <el-input v-model="formInline.financeFeeRate" placeholder="融资费率"></el-input>
+            <el-input v-model="formInline.financeFeeRate" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
 
           <el-form-item label="建仓费率：" prop="makeFeeRate">
-            <el-input v-model="formInline.makeFeeRate" placeholder="建仓费率"></el-input>
+            <el-input v-model="formInline.makeFeeRate" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="利润分成比例：" prop="separateFeeRate">
-            <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="利润分成比例"></el-input>
+            <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="警戒线比率：" prop="cordonLineRate">
-            <el-input v-model="formInline.cordonLineRate" placeholder="警戒线比率"></el-input>
+            <el-input v-model="formInline.cordonLineRate" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="平仓线比率：" prop="flatLineRate">
-            <el-input v-model="formInline.flatLineRate" placeholder="平仓线比率"></el-input>
+            <el-input v-model="formInline.flatLineRate" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="个股持仓比率：" prop="positionRatio">
-            <el-input v-model="formInline.positionRatio" placeholder="个股持仓比率"></el-input>
+            <el-input v-model="formInline.positionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="创业板持仓比率：" class="smallfont" prop="secondBoardPositionRatio">
-            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比率"></el-input>
+            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="科创板持仓比率：" class="smallfont" prop="thirdBoardPositionRatio">
-            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比率"></el-input>
+            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <br />
           <el-form-item>
@@ -123,7 +123,7 @@ export default {
       showAdd: false,
       addTitle: "修改",
       formInline: {
-        financePeriod: "", //融资周期
+        financePeriod: "day", //融资周期
         financeRatio: "", //融资倍率
         separateFeeRate: "", //分成比例
         makeFeeRate: "", //建仓费率
@@ -150,7 +150,7 @@ export default {
           { required: true, message: "请输入融资费率", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
+            message: "请输入大于0小于等于1的小数",
             trigger: "blur"
           }
         ],
@@ -158,7 +158,7 @@ export default {
           { required: true, message: "请输入建仓费率", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
+            message: "请输入大于0小于等于1的小数",
             trigger: "blur"
           }
         ],
@@ -166,7 +166,7 @@ export default {
           { required: true, message: "请输入利润分成比例", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
+            message: "请输入大于0小于等于1的小数",
             trigger: "blur"
           }
         ],
@@ -174,7 +174,7 @@ export default {
           { required: true, message: "请输入警戒线比率", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
+            message: "请输入大于0小于等于1的小数",
             trigger: "blur"
           }
         ],
@@ -182,7 +182,7 @@ export default {
           { required: true, message: "请输入平仓线比率", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
-            message: "请输入大于0小于等于1的数字",
+            message: "请输入大于0小于等于1的小数",
             trigger: "blur"
           }
         ],
@@ -296,7 +296,7 @@ export default {
     addNow() {
       this.showAdd = true;
       this.addTitle = "新增";
-      this.formInline.financePeriod = "";
+      this.formInline.financePeriod = "day";
       this.formInline.financeRatio = "";
       this.formInline.financeFeeRate = "";
       this.formInline.makeFeeRate = "";

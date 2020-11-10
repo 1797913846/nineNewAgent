@@ -334,6 +334,14 @@ export default {
     showAddNow() {
       this.addTitle = "新增";
       this.showAdd = true;
+      this.formInline.cfgName="";
+      this.formInline.dayCommission="";
+      this.formInline.dayManageFeeDealRate="";
+      this.formInline.singleCommission="";
+      this.formInline.singleManageFeeDealRate="";
+      this.formInline.singleDividedRate="";
+      this.formInline.monthCommission="";
+      this.formInline.monthManageFeeDealRate="";
     },
     closeAdd() {
       this.showAdd = false;
