@@ -79,14 +79,14 @@
       <div class="addContent">
         <div class="title">
           <span class="tl">提示信息</span>
-          <span class="tr" @click="closeMsg">关闭</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeMsg">
         </div>
         <el-form :inline="true" ref="formInline" class="demo-form-inline">
-          <span>确认转入账户余额？</span>
+          <span style="color:#586982;font-size:16px;margin:34px;">确认转入账户余额？</span>
           <br />
           <el-form-item>
-            <el-button type="primary" @click="onSubmitMsg">保存</el-button>
-            <el-button type="primary" @click="closeMsg">取消</el-button>
+            <el-button class="savebt" type="primary" @click="onSubmitMsg">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeMsg">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -214,32 +214,40 @@ export default {
       this.msg = true;
     },
     onSubmitMsg() {
-      this.axios
-        .post("/tn/mgr-api/account/commission/settle", {
-          list: this.list,
-          settleType: "BALANCE"
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.msg = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
+      if (this.list.length <= 0) {
+        this.$alert("请先勾选需要处理的数据", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
         });
+      } else {
+        this.axios
+          .post("/tn/mgr-api/account/commission/settle", {
+            list: this.list,
+            settleType: "BALANCE"
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.msg = false;
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     handleSelectionChange(val) {
       console.log("勾选的", val);
