@@ -21,7 +21,7 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
-          <el-table-column label="操作" width="200" align="center">
+          <el-table-column label="操作" width="130" align="center">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="money(scope.$index,scope.row)" class="addSameClass " style="color:#337ab7;">资金</span>

@@ -29,7 +29,7 @@
           <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="操作" align="center" width="280">
+          <el-table-column label="操作" align="center" width="200">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#337ab7;">调整资金</span>

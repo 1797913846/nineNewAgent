@@ -20,7 +20,7 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
-          <el-table-column label="操作" align="center" width="180">
+          <el-table-column label="操作" align="center" width="140">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
@@ -28,7 +28,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID"  width="100" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="银行名称" prop="bankName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="省份名称" prop="provinceName" align="center"></el-table-column>
@@ -38,7 +38,7 @@
           <el-table-column show-overflow-tooltip label="开户名" prop="userName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="身份证号" prop="identityNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" width="150" align="center"></el-table-column>
         </el-table>
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>

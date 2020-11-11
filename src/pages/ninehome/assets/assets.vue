@@ -29,7 +29,7 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
-          <el-table-column label="操作" align="center" width="330">
+          <el-table-column label="操作" align="center" width="260">
             <template slot-scope="scope">
               <div class="operation">
                 <span class="addSameClass " @click.stop="getEdit(scope.$index,scope.row)">修改</span>
@@ -47,9 +47,9 @@
           <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip width="120" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center" width="120"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" prop="totalBnc" align="center" width="120"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商总可用" prop="availableBnc" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总期初" prop="allottedScale" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center" width="140"></el-table-column>
@@ -64,9 +64,9 @@
           <el-table-column show-overflow-tooltip label="账号类型" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="开仓控制" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip width="150" label="期初可分配金额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商名称" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="券商总资产" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip width="120" label="期初可分配金额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商名称" align="center" width="120"></el-table-column>
+          <el-table-column show-overflow-tooltip label="券商总资产" align="center" width="120"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商总可用" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总期初" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="客户总可用" align="center" width="140"></el-table-column>

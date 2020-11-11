@@ -23,7 +23,7 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table huiyuan" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center" width="520">
+          <el-table-column label="操作" align="center" width="400">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="changeMsg(scope.$index,scope.row)" class="addSameClass ">修改</span>
@@ -42,6 +42,17 @@
           <el-table-column show-overflow-tooltip label="会员ID" width="120" prop="accountId" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" width="120" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="140">
+            <template slot-scope="scope">
+              {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
+            </template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip label="下级默认佣金方案" align="center" width="140">
+            <template slot-scope="scope">
+              {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
+            </template>
+          </el-table-column>
+
           <el-table-column show-overflow-tooltip label="代理商限额" prop="agentMaxLimitMoney" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
@@ -58,8 +69,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="150" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="150" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
@@ -67,17 +78,7 @@
           <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资开始日期" prop="financeStartDate" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="180">
-            <template slot-scope="scope">
-              {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
-            </template>
-          </el-table-column>
-          <el-table-column show-overflow-tooltip label="下级默认佣金方案" align="center" width="180">
-            <template slot-scope="scope">
-              {{getDefaultGroupName1(scope.row.defaultChildCommissionCfgId)}}
-            </template>
-          </el-table-column>
+          <el-table-column show-overflow-tooltip label="创建时间" width="200" prop="createTime" align="center"></el-table-column>
         </el-table>
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
           <el-table-column show-overflow-tooltip label="等级" align="center"></el-table-column>
@@ -86,6 +87,8 @@
           <el-table-column show-overflow-tooltip label="会员名称" width="120" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员状态" :formatter="formatter" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="代理商限额" align="center" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下级默认资金池" width="140"></el-table-column>
+          <el-table-column show-overflow-tooltip label="下级默认佣金方案" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="单边佣金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" align="center"></el-table-column>
@@ -101,8 +104,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比例" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比例" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比例" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="150" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="150" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" align="center"></el-table-column>
@@ -111,8 +114,6 @@
           <el-table-column show-overflow-tooltip label="盈利分成率" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资开始日期" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="创建时间" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="下级默认资金池" width="180"></el-table-column>
-          <el-table-column show-overflow-tooltip label="下级默认佣金方案" width="180"></el-table-column>
         </el-table>
       </div>
       <div class="pagination" v-if="!nullTable">
@@ -892,7 +893,7 @@ export default {
       this.formInline.accountName = "";
       this.formInline.productGroupId = "";
       this.formInline.level = "";
-      this.formInline.commission=0;
+      this.formInline.commission = 0;
       this.formInline.commissionCfgId = "";
       this.formInline.ableCrud = "";
       this.formInline.positionRatio = "";
