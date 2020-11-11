@@ -28,7 +28,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <el-table-column label="操作" align="center" width="330">
             <template slot-scope="scope">
               <div class="operation">
@@ -55,7 +55,7 @@
           <el-table-column show-overflow-tooltip label="客户总可用" prop="accountAvailableBnc" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="剩余资产" prop="diffTotal" align="center" width="140"></el-table-column>
         </el-table>
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
           <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品名称" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账号" align="center"></el-table-column>
@@ -291,7 +291,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -299,7 +298,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",

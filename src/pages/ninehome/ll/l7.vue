@@ -39,7 +39,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -47,7 +46,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",
@@ -115,7 +113,7 @@ export default {
   width: 602px;
   height: 138px;
   background: #ffffff;
-  border: 1px solid #e7e7e7;
+  border: 1px solid rgba(233, 239, 243, 0.21);
   border-radius: 10px;
   margin-left: 53px;
   margin-top: 31px;

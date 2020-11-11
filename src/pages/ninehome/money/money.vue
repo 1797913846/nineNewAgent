@@ -15,7 +15,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户余额" align="center"></el-table-column>
@@ -28,7 +28,7 @@
           <el-table-column show-overflow-tooltip label="手动冻结资金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="总盈亏" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
               <div class="operation">
@@ -171,18 +171,14 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
-        color: "#586A82",
         "font-size": "12px"
       };
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
-        color: "#8C97A6",
         "font-size": "12px"
       };
     }
@@ -272,7 +268,7 @@ export default {
     set1(index, row) {
       this.changeNow = true;
       this.addTitle = "调整资金";
-      this.formInline.money="";
+      this.formInline.money = "";
       console.log("我啊", row);
       this.formInline.accountCode = row.accountCode;
       this.formInline.accountName = row.accountName;
@@ -377,7 +373,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 

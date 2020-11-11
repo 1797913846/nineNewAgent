@@ -8,7 +8,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="融资周期" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="递延周期" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资倍率" align="center"></el-table-column>
@@ -24,7 +24,7 @@
           <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" align="center"></el-table-column>
         </el-table>
       </div>
-      <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+      <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
         <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
         <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financePeriod" :formatter="formatter1" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="递延周期" prop="financePeriod" :formatter="formatter" align="center"></el-table-column>
@@ -253,7 +253,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -261,7 +260,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",

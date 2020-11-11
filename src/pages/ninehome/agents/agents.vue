@@ -24,7 +24,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table daili" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table daili" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column label="操作" align="center" width="280">
             <template slot-scope="scope">
@@ -84,7 +84,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
           <el-table-column show-overflow-tooltip label="等级" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="等级名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="代理ID" align="center" width="140"></el-table-column>
@@ -683,14 +683,13 @@ export default {
           }
         ],
         inviteCode: "",
-        loginName:""
+        loginName: ""
       }
     };
   },
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -698,7 +697,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",
@@ -713,7 +711,7 @@ export default {
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
-    this.loginName=localStorage.getItem("loginName");
+    this.loginName = localStorage.getItem("loginName");
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
@@ -1270,6 +1268,9 @@ export default {
 }
 .daili .el-table__body tr td {
   background: none !important;
+}
+.daili .el-table__body tr.el-table__row--striped td {
+  background: #fff !important;
 }
 .fnn .el-form-item__label {
   width: 160px;

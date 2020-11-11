@@ -53,7 +53,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托编号" width="160" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托PK" width="160" align="center"></el-table-column>
@@ -73,7 +73,7 @@
           <el-table-column show-overflow-tooltip label="委托状态" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注信息" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="操作" align="center" width="180" v-if="topActive==1">
             <template slot-scope="scope">
               <div class="operation" v-if="scope.row.entruststatus != 'E'">
@@ -251,7 +251,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -259,7 +258,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",

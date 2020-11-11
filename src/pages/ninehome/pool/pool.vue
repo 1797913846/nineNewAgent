@@ -32,7 +32,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
           <el-table-column label="操作" align="center" width="180">
             <template slot-scope="scope">
               <div class="operation">
@@ -75,7 +75,7 @@
           <div class="buybox" v-if="accountGroup.length>0">
             <div class="buytitle">买入优先级：</div>
             <div class="buycontent">
-              <el-table :border="true" :highlight-current-row="colorBool" :data="accountGroup" key="desingerTable" stripe class="user-table" style="width:100%;background-color:#ffffff;" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="accountGroup.length>0" :default-sort="{prop: 'priority', order: 'ascending'}">
+              <el-table :border="true" :highlight-current-row="colorBool" :data="accountGroup" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="accountGroup.length>0" :default-sort="{prop: 'priority', order: 'ascending'}">
                 <el-table-column label="优先级" align="center" width="100" sortable prop="priority">
                   <template slot-scope="scope">
                     <div class="operation">
@@ -176,7 +176,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -184,7 +183,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",

@@ -20,7 +20,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
           <el-table-column label="操作" width="200" align="center">
             <template slot-scope="scope">
               <div class="operation">
@@ -50,7 +50,7 @@
           <el-table-column show-overflow-tooltip label="风控提示" prop="riskTip" align="center" sortable="custom" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="账户状态" prop="statusDesc" align="center"></el-table-column>
         </el-table>
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable==true">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable==true">
           <el-table-column show-overflow-tooltip label="母账户ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户ID" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户名称" align="center" width="150"></el-table-column>
@@ -98,7 +98,6 @@ export default {
   computed: {
     headerCellStyle() {
       return {
-        padding: "10px 0",
         background: "#F3F3F3",
         color: "#586A82",
         "font-size": "12px"
@@ -106,7 +105,6 @@ export default {
     },
     cellStyle() {
       return {
-        padding: "6px 0",
         "border-bottom": "1px solid #F3F3F3",
         "border-right": "0px",
         color: "#8C97A6",
@@ -246,8 +244,8 @@ export default {
           } else {
             this.nullTable = false;
           }
-        
-        console.log('是否显示',this.nullTable);
+
+          console.log("是否显示", this.nullTable);
         })
         .catch(err => {
           console.log(err);
@@ -273,6 +271,9 @@ export default {
 }
 .jiankong .el-table__body tr td {
   background: none !important;
+}
+.jiankong .el-table__body tr.el-table__row--striped td {
+  background: #fff !important;
 }
 </style>
 
