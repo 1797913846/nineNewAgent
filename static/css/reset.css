@@ -1107,3 +1107,8 @@ input:-ms-input-placeholder {
     color: red;
     line-height: 38px;
 }
+
+/*输入框禁用*/
+.el-input.is-disabled .el-input__inner{
+    color:#2662EE!important;
+}

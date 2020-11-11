@@ -838,6 +838,7 @@ export default {
       this.formInline.accountName = "";
       this.formInline.productGroupId = "";
       this.formInline.level = "";
+      this.formInline.commission= 0;
       this.formInline.commissionCfgId = "";
       this.formInline.ableCrud = "";
       this.formInline.agentMaxLimitMoney = "";
