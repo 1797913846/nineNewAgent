@@ -20,8 +20,8 @@
           <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="创业板持仓比率" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="科创板持仓比率" width="100" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="140" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="140" align="center"></el-table-column>
         </el-table>
       </div>
       <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
@@ -35,10 +35,10 @@
         <el-table-column show-overflow-tooltip label="警戒线比率" width="100" prop="cordonLineRate" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="平仓线比率" width="100" prop="flatLineRate" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="个股持仓比率" width="100" prop="positionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="创业板持仓比率" width="130" prop="secondBoardPositionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="科创板持仓比率" width="130" prop="thirdBoardPositionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="130" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
-        <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="130" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="创业板持仓比率" width="120" prop="secondBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="科创板持仓比率" width="120" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="创业板个股持仓比率" width="140" prop="secondBoardSingleStockPositionRatio" align="center"></el-table-column>
+        <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="140" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
         <el-table-column label="操作" align="center" width="280">
           <template slot-scope="scope">
             <div class="operation">

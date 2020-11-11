@@ -18,7 +18,7 @@
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="cfgName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="合作分成方案" width="420" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="合作分成方案" width="430" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="月结方案" prop="monthCommission" :formatter="formatterc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="isDefault" :formatter="formatter" align="center"></el-table-column>
           <el-table-column label="操作" align="center">

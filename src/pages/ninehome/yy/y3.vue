@@ -55,10 +55,10 @@
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托编号" width="160" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托PK" width="160" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品编号" width="160" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" width="160" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
@@ -73,16 +73,16 @@
           <el-table-column show-overflow-tooltip label="委托状态" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注信息" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="操作" align="center" width="180" v-if="topActive==1">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table weituo" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column label="操作" align="center" width="80" v-if="topActive==1">
             <template slot-scope="scope">
-              <div class="operation" v-if="scope.row.entruststatus != 'E'">
+              <div class="operation">
                 <span v-if="scope.row.entruststatus!= 8 && scope.row.entruststatus!= 6 && scope.row.entruststatus!= 5" @click.stop="set1(scope.$index, scope.row)" class="addSameClass " style="color:#f0ad4e;">修改</span>
-                <span v-if="scope.row.entruststatus!= 6 && scope.row.entruststatus!= 8 && scope.row.entruststatus!= 5" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">撤单</span>
+                <span v-if="scope.row.entruststatus != 'E' && scope.row.entruststatus!= 6 && scope.row.entruststatus!= 8 && scope.row.entruststatus!= 5" @click.stop="set2(scope.$index, scope.row)" class="addSameClass " style="color:#d9534f;">撤单</span>
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="委托时间" align="center" width="220">
+          <el-table-column label="委托时间" align="center" width="150">
             <template slot-scope="scope">
               <div class="operation">
                 <span>{{scope.row.orderDateDesc}} {{scope.row.orderTimeDesc}}</span>
@@ -90,11 +90,11 @@
             </template>
           </el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="委托时间" width="220" prop="orderDateDesc" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="委托编号" width="140" prop="orderno" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托PK" width="140" prop="pkorder" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="产品编号" width="140" prop="productcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" width="140" prop="accountcode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" width="140" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" width="80" prop="orderno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托PK" width="90" prop="pkorder" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="产品编号" width="80" prop="productcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="110" prop="accountcode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" width="80" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托价格" prop="entrustprice" align="center"></el-table-column>
@@ -540,6 +540,10 @@ export default {
 }
 .topactive {
   border-bottom: 2px solid #2662ee;
+}
+.weituo .operation span {
+  margin-right: 0px;
+  font-weight: none !important;
 }
 </style>
 

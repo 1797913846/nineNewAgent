@@ -235,7 +235,7 @@ export default {
         url: "/tn/mgr-api/risk/deliverOrder/export",
         data: {
           subtype: this.bstype,
-          accountcode: this.accountcode,
+          accountcode: this.accountCode,
           accountName: this.accountName,
           orderno: this.orderno,
           createTimeStart: this.createTimeStart,
@@ -266,7 +266,7 @@ export default {
           pageSize: this.pageSize,
           pageNo: this.currentPage,
           subtype: this.bstype,
-          accountcode: this.accountcode,
+          accountcode: this.accountCode,
           accountName: this.accountName,
           orderno: this.orderno,
           createTimeStart: this.createTimeStart,

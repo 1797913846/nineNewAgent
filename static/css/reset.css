@@ -63,11 +63,9 @@ input:-ms-input-placeholder {
 /***9**/
 
 .operation span {
-    color: #586880;
-    font-weight: bold;
     display: inline-block;
     cursor: pointer;
-    margin-right: 24px;
+    margin-right: 4px;
 }
 
 .el-menu-item-group__title {
@@ -116,6 +114,8 @@ input:-ms-input-placeholder {
 .el-table td {
     height: 50px;
     line-height: 50px;
+    font-size: 13px!important;
+    color: #333!important;
 }
 
 .el-table th.is-leaf {
@@ -173,15 +173,15 @@ input:-ms-input-placeholder {
     padding-bottom: 0px!important;
     padding: 0px 0px!important;
     background: rgba(233, 239, 243, 0.21)!important;
-    color: #586982!important;
+    color: #333!important;
     font-weight: bold;
-    font-size: 12px!important;
+    font-size: 13px!important;
     border-right: 0px!important;
     box-sizing: border-box;
 }
 
 .el-table tr {
-    color: #8B96A6;
+    color: #333!important;
 }
 
 .el-table--border {
@@ -1109,6 +1109,7 @@ input:-ms-input-placeholder {
 }
 
 /*输入框禁用*/
-.el-input.is-disabled .el-input__inner{
-    color:#2662EE!important;
+
+.el-input.is-disabled .el-input__inner {
+    color: #2662EE!important;
 }
