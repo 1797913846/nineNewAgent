@@ -143,11 +143,6 @@
           <el-form-item label="会员名称：">
             <el-input v-model="formInline.accountName" :disabled="true" placeholder="会员名称"></el-input>
           </el-form-item>
-          <!-- <el-form-item label="产品：">
-                        <el-select v-model="formInline.productCode" :disabled="true">
-                            <el-option v-for="(item,index) in productList" :key="index" :label="item.value+'~'+item.text" :value="item.value"></el-option>
-                        </el-select>
-                    </el-form-item> -->
           <el-form-item label="资金池ID：">
             <el-select v-model="formInline.productGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
@@ -243,6 +238,39 @@
           </el-form-item>
           <el-form-item label="创建时间：">
             <el-input v-model="formInline.createTime" :disabled="true" placeholder="创建时间"></el-input>
+          </el-form-item>
+          <el-form-item label="添加开户银行：">
+            <el-radio v-model="radio1" :label="1" :disabled="true">是</el-radio>
+            <el-radio v-model="radio1" :label="0" :disabled="true">否</el-radio>
+          </el-form-item>
+          <el-form-item label="开户银行：" v-if="radio1==1">
+            <el-select v-model="formInline.bankId" :disabled="true">
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行省份：" v-if="radio1==1" >
+            <el-select v-model="formInline.provinceId" :disabled="true">
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行城市：" v-if="radio1==1" >
+            <el-select v-model="formInline.cityId" :disabled="true">
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行支行：" v-if="radio1==1" >
+            <el-select v-model="formInline.subBranchId" :disabled="true">
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="卡号：" v-if="radio1==1">
+            <el-input v-model="formInline.cardNo" :disabled="true" placeholder="卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户名：" v-if="radio1==1">
+            <el-input v-model="formInline.userName" :disabled="true" placeholder="开户名"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证：" v-if="radio1==1">
+            <el-input v-model="formInline.identityNo" :disabled="true" placeholder="身份证"></el-input>
           </el-form-item>
         </el-form>
       </div>
@@ -363,6 +391,39 @@
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
+          </el-form-item>
+          <el-form-item label="添加开户银行：">
+            <el-radio v-model="radio1" :label="1">是</el-radio>
+            <el-radio v-model="radio1" :label="0">否</el-radio>
+          </el-form-item>
+          <el-form-item label="开户银行：" v-if="radio1==1">
+            <el-select v-model="formInline.bankId">
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行省份：" v-if="radio1==1">
+            <el-select v-model="formInline.provinceId">
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行城市：" v-if="radio1==1">
+            <el-select v-model="formInline.cityId">
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行支行：" v-if="radio1==1">
+            <el-select v-model="formInline.subBranchId">
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="卡号：" v-if="radio1==1">
+            <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户名：" v-if="radio1==1">
+            <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证：" v-if="radio1==1">
+            <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
           </el-form-item>
           <br />
           <el-form-item>
@@ -499,6 +560,39 @@
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="添加开户银行：">
+            <el-radio v-model="radio1" :label="1">是</el-radio>
+            <el-radio v-model="radio1" :label="0">否</el-radio>
+          </el-form-item>
+          <el-form-item label="开户银行：" v-if="radio1==1">
+            <el-select v-model="formInline.bankId">
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行省份：" v-if="radio1==1">
+            <el-select v-model="formInline.provinceId">
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行城市：" v-if="radio1==1">
+            <el-select v-model="formInline.cityId">
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开户银行支行：" v-if="radio1==1">
+            <el-select v-model="formInline.subBranchId">
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="卡号：" v-if="radio1==1">
+            <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
+          </el-form-item>
+          <el-form-item label="开户名：" v-if="radio1==1">
+            <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
+          </el-form-item>
+          <el-form-item label="身份证：" v-if="radio1==1">
+            <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
+          </el-form-item>
           <br />
           <el-form-item>
             <el-button class="savebt" type="primary" @click="onSubmit2('formInline')">保存</el-button>
@@ -571,6 +665,10 @@ export default {
       nullTable: false,
       showAdd: false,
       addTitle: "查看",
+      banksList: [],
+      provincesList: [],
+      citiesList: [],
+      branchesList: [],
       formInline: {
         parentAccountCode: "",
         parentAccountName: "",
@@ -605,8 +703,16 @@ export default {
         defaultChildCommissionCfgId: "",
         secondBoardSingleStockPositionRatio: "",
         thirdBoardSingleStockPositionRatio: "",
-        agentMaxLimitMoney: ""
+        agentMaxLimitMoney: "",
+        bankId: "",
+        provinceId: "",
+        cityId: "",
+        subBranchId: "",
+        cardNo: "",
+        userName: "",
+        identityNo: ""
       },
+      radio1: 0,
       productList: [],
       commissionCfgList: [],
       orderPermissionList: [
@@ -657,8 +763,34 @@ export default {
       };
     }
   },
-  watch: {},
+  watch: {
+    "formInline.bankId": {
+      handler(newVal, oldVal) {
+        this.getProvincesList();
+        this.getCitiesList();
+        this.getBranchesList();
+      },
+      deep: true
+    },
+    "formInline.provinceId": {
+      handler(newVal, oldVal) {
+        this.getCitiesList();
+        this.getBranchesList();
+      },
+      deep: true
+    },
+    "formInline.cityId": {
+      handler(newVal, oldVal) {
+        this.getBranchesList();
+      },
+      deep: true
+    }
+  },
   created() {
+    this.getBanksList();
+    this.getProvincesList();
+    this.getCitiesList();
+    this.getBranchesList();
     this.getMsg();
     this.getFundAccount();
     this.getGroupIdList();
@@ -667,6 +799,87 @@ export default {
     this.getEList();
   },
   methods: {
+    getBanksList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.banksList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getProvincesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces", {
+          bankId: this.formInline.bankId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.provincesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getCitiesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces/cities", {
+          bankId: this.formInline.bankId,
+          provinceId: this.formInline.provinceId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.citiesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getBranchesList() {
+      this.axios
+        .post("/tn/mgr-api/account/banks/provinces/cities/branches", {
+          bankId: this.formInline.bankId,
+          provinceId: this.formInline.provinceId,
+          cityId: this.formInline.cityId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.branchesList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getEList() {
       this.axios.post("/tn/mgr-api/account/edit-pre").then(res => {
         if (res.data.code == 200) {
@@ -917,6 +1130,14 @@ export default {
       this.formInline.secondBoardSingleStockPositionRatio = "";
       this.formInline.thirdBoardSingleStockPositionRatio = "";
       this.agentMaxLimitMoney = "";
+      this.radio1 = 0;
+      this.formInline.bankId = "";
+      this.formInline.provinceId = "";
+      this.formInline.cityId = "";
+      this.formInline.subBranchId = "";
+      this.formInline.cardNo = "";
+      this.formInline.userName = "";
+      this.formInline.identityNo = "";
     },
     showEveryCode(index, row) {
       console.log("index2", index);
@@ -1012,6 +1233,11 @@ export default {
           if (res.data.code == 200) {
             this.changeNow = true;
             this.formInline = res.data.data;
+            if (this.formInline.bankId == 0) {
+              this.radio1 = 0;
+            } else {
+              this.radio1 = 1;
+            }
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -1062,7 +1288,14 @@ export default {
             .secondBoardSingleStockPositionRatio,
           thirdBoardSingleStockPositionRatio: this.formInline
             .thirdBoardSingleStockPositionRatio,
-          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney
+          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
+          bankId: this.formInline.bankId || 0,
+          provinceId: this.formInline.provinceId || 0,
+          cityId: this.formInline.cityId || 0,
+          subBranchId: this.formInline.subBranchId || 0,
+          cardNo: this.formInline.cardNo,
+          userName: this.formInline.userName,
+          identityNo: this.formInline.identityNo
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1109,7 +1342,14 @@ export default {
             .secondBoardSingleStockPositionRatio,
           thirdBoardSingleStockPositionRatio: this.formInline
             .thirdBoardSingleStockPositionRatio,
-          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney
+          agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
+          bankId: this.formInline.bankId || 0,
+          provinceId: this.formInline.provinceId || 0,
+          cityId: this.formInline.cityId || 0,
+          subBranchId: this.formInline.subBranchId || 0,
+          cardNo: this.formInline.cardNo,
+          userName: this.formInline.userName,
+          identityNo: this.formInline.identityNo
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1146,6 +1386,11 @@ export default {
           if (res.data.code == 200) {
             this.showAdd = true;
             this.formInline = res.data.data;
+            if (this.formInline.bankId == 0) {
+              this.radio1 = 0;
+            } else {
+              this.radio1 = 1;
+            }
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",

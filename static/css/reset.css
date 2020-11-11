@@ -518,6 +518,22 @@ input:-ms-input-placeholder {
     cursor: pointer;
 }
 
+.template-top .title1 {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    width: 114px;
+    height: 41px;
+    background: #FFFFFF;
+    border: 1px solid #E7E7E7;
+    border-radius: 5px;
+    color: #2662EE;
+    border: 1px solid #E7E7E7;
+    text-align: center;
+    line-height: 41px;
+    cursor: pointer;
+    margin-left:20px;
+}
 .template-top .operate-btn {
     float: right;
     overflow: hidden;
