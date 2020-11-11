@@ -5,6 +5,7 @@
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="title" @click="jiaNow">添加</div>
+        <div class="title1" @click="getmoney">获取全部券商资金</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入产品编号" v-model="productcodeLike" />
@@ -319,6 +320,28 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    getmoney() {
+      this.axios
+        .get("/tn/mgr-api/itg/product/balance/refresh-all")
+        .then(res => {
+          if (res.data.code == 200) {
+            this.$alert("获取成功", "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     exportExcel() {
       this.axios({
         method: "post",
