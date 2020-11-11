@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div style="overflow:hidden;display:flex;">
+    <div style="display:flex;">
       <Menu v-if="$route.name != 'login'"></Menu>
       <router-view></router-view>
     </div>
