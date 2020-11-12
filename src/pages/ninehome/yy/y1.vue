@@ -50,6 +50,11 @@
         </el-table>
       </div>
       <div class="pagination" v-if="!nullTable">
+        <div class="tongji">
+          <span>总持仓数量 : {{ext.stockCnt }}</span>
+          <span>总参考盈亏 : {{ext.profit }}</span>
+          <span>总持仓金额（市值）: {{ext.lastPrice }}</span>
+        </div>
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -84,6 +89,7 @@ export default {
   data() {
     return {
       tableData: [],
+      ext: {},
       colorBool: false,
       id: "",
       keyword: "",
@@ -172,10 +178,55 @@ export default {
   },
   created() {
     this.accountCode = this.$route.query.accountId || "";
-    console.log('是我啊',this.$route.query)
+    console.log("是我啊", this.$route.query);
     this.getFundAccount();
   },
   methods: {
+    getSummaries(param) {
+      console.log("是我", param);
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "当前页统计";
+          return;
+        }
+        if (
+          column.property != "accountCode" &&
+          column.property != "accountName" &&
+          column.property != "productCode" &&
+          column.property != "stockCode" &&
+          column.property != "stockName" &&
+          column.property != "stockCntAble" &&
+          column.property != "costPrice"
+        ) {
+          console.log("列", column);
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index];
+          } else {
+            sums[index] = " ";
+          }
+        }
+      });
+      let newsums = sums.map(item => {
+        console.log(typeof item);
+        if (typeof item == "number") {
+          item = item.toFixed(2);
+        }
+        return item;
+      });
+      // console.log('是我',sums)
+      return newsums;
+    },
     closeChange1() {
       this.changeNow = false;
     },
@@ -263,6 +314,7 @@ export default {
             let rows = res.data.data.rows;
             if (rows.length > 0) {
               this.tableData = res.data.data.rows;
+              this.ext = res.data.data.ext;
             } else {
               this.tableData = [];
             }

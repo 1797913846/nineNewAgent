@@ -91,6 +91,12 @@
         <div class="tongji">
           <span>合计买卖总金额买卖总数量 : {{ext.totalDealAmount }}</span>
           <span>合计买卖总数量 : {{ext.totalDealCnt }}</span>
+          <span>总买入数量 : {{ext.sumBuyDealCnt }}</span>
+          <span>总买入手续费 : {{ext.sumBuyCommission }}</span>
+          <span>总买入发生金额 : {{ext.sumBuyDealAmount }}</span>
+          <span>总卖出数量 : {{ext.sumSellDealCnt }}</span>
+          <span>总卖出手续费 : {{ext.sumSellCommission }}</span>
+          <span>总卖出发生金额 : {{ext.sumSellDealAmount }}</span>
         </div>
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
