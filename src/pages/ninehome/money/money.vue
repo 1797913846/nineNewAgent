@@ -135,6 +135,14 @@ export default {
         {
           key: 3,
           value: "增加账户余额"
+        },
+        {
+          key: 4,
+          value: "减少保证金"
+        },
+        {
+          key: 5,
+          value: "增加保证金"
         }
       ],
       changeNow: false,

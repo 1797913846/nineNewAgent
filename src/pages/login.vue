@@ -112,6 +112,8 @@ export default {
             localStorage.setItem("userName", data.userName);
             localStorage.setItem("loginName", data.loginName);
             localStorage.setItem("isAdminGroup", data.isAdminGroup);
+            localStorage.setItem("defaultChildGroupId",data.defaultChildGroupId);
+            localStorage.setItem("defaultChildCommissionCfgId",data.defaultChildCommissionCfgId);
           } else {
           }
         })

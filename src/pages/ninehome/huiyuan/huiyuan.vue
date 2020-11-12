@@ -265,12 +265,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -421,12 +421,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -507,7 +507,7 @@
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：">
-            <el-select v-model="formInline.productGroupId">
+            <el-select v-model="formInline.productGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
@@ -517,7 +517,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="佣金方案(单边)：">
-            <el-select v-model="formInline.commissionCfgId">
+            <el-select v-model="formInline.commissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -589,12 +589,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -793,7 +793,10 @@ export default {
       tableData1: "",
       total1: "",
       nullTable1: false,
-      loginName: ""
+      loginName: "",
+      defaultChildGroupId: "",
+      defaultChildCommissionCfgId: "",
+      levelId: ""
     };
   },
   computed: {
@@ -848,6 +851,10 @@ export default {
     this.userName = localStorage.getItem("userName");
     this.loginName = localStorage.getItem("loginName");
     this.getEList();
+    this.defaultChildGroupId = localStorage.getItem("defaultChildGroupId");
+    this.defaultChildCommissionCfgId = localStorage.getItem(
+      "defaultChildCommissionCfgId"
+    );
   },
   methods: {
     huishou() {
@@ -1203,10 +1210,12 @@ export default {
       this.addTitle = "添加";
       this.formInline.accountId = "";
       this.formInline.accountName = "";
-      this.formInline.productGroupId = "";
+      this.formInline.productGroupId = Number(this.defaultChildGroupId);
       this.formInline.level = "";
       this.formInline.commission = 0;
-      this.formInline.commissionCfgId = "";
+      this.formInline.commissionCfgId = Number(
+        this.defaultChildCommissionCfgId
+      );
       this.formInline.ableCrud = "";
       this.formInline.positionRatio = "";
       this.formInline.secondBoardPositionRatio = "";
@@ -1303,6 +1312,12 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+            //取出客户
+            this.agentLevel.map(item => {
+              if (item.levelName == "客户") {
+                this.levelId = item.level;
+              }
+            });
             this.inviteCode = res.data.data.inviteCode;
             this.inviteCodeUrl = res.data.data.inviteCodeUrl;
             localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);

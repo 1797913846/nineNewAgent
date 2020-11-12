@@ -233,12 +233,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="true">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -357,12 +357,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont" prop="defaultChildGroupId">
+          <el-form-item label="下级默认资金池：" class="smallfont" prop="defaultChildGroupId" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont" prop="defaultChildCommissionCfgId">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" prop="defaultChildCommissionCfgId" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -414,7 +414,7 @@
             <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：" prop="productGroupId">
-            <el-select v-model="formInline.productGroupId">
+            <el-select v-model="formInline.productGroupId" :disabled="true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
@@ -424,8 +424,8 @@
             </el-select>
           </el-form-item>
           <el-form-item label="佣金方案(单边)：" class="smallfont" prop=" commissionCfgId">
-            <el-select v-model="formInline.commissionCfgId">
-              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+            <el-select v-model="formInline.commissionCfgId" :disabled="true">
+              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.id+'~'+item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="代理管理权限：" prop="ableCrud">
@@ -493,12 +493,12 @@
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont" prop="defaultChildGroupId">
+          <el-form-item label="下级默认资金池：" class="smallfont" prop="defaultChildGroupId" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont" prop="defaultChildCommissionCfgId">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" prop="defaultChildCommissionCfgId" v-if="formInline.level!=levelId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -684,10 +684,13 @@ export default {
             message: "请选择下级默认佣金方案",
             trigger: "change"
           }
-        ],
-        inviteCode: "",
-        loginName: ""
-      }
+        ]
+      },
+      inviteCode: "",
+      loginName: "",
+      defaultChildGroupId: "",
+      defaultChildCommissionCfgId: "",
+      levelId: ""
     };
   },
   computed: {
@@ -715,6 +718,10 @@ export default {
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
     this.loginName = localStorage.getItem("loginName");
+    this.defaultChildGroupId = localStorage.getItem("defaultChildGroupId");
+    this.defaultChildCommissionCfgId = localStorage.getItem(
+      "defaultChildCommissionCfgId"
+    );
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
@@ -731,7 +738,6 @@ export default {
       if (row) {
         let productGroupId = row.productGroupId;
         this.groupIdList.map(item => {
-          console.log('我',item)
           switch (productGroupId) {
             case item.groupId:
               a = item.groupName;
@@ -779,6 +785,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.groupIdList = res.data.data;
+            console.log("数组", this.groupIdList);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -841,6 +848,11 @@ export default {
       }
     },
     jiaNow() {
+      console.log(
+        "ID",
+        this.defaultChildGroupId,
+        this.defaultChildCommissionCfgId
+      );
       this.jia = true;
       this.addTitle = "添加";
       this.formInline.parentAccountCode = this.loginName;
@@ -854,10 +866,12 @@ export default {
       this.formInline.financeRatio = 0;
       this.formInline.accountId = "";
       this.formInline.accountName = "";
-      this.formInline.productGroupId = "";
+      this.formInline.productGroupId = Number(this.defaultChildGroupId);
       this.formInline.level = "";
       this.formInline.commission = 0;
-      this.formInline.commissionCfgId = "";
+      this.formInline.commissionCfgId = Number(
+        this.defaultChildCommissionCfgId
+      );
       this.formInline.ableCrud = "";
       this.formInline.agentMaxLimitMoney = "";
       this.formInline.positionRatio = "";
@@ -922,6 +936,13 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+            console.log("我是等级", this.agentLevel);
+            //取出客户
+            this.agentLevel.map(item => {
+              if (item.levelName == "客户") {
+                this.levelId = item.level;
+              }
+            });
             this.inviteCode = res.data.data.inviteCode;
             this.inviteCodeUrl = res.data.data.inviteCodeUrl;
             localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);
@@ -1003,7 +1024,8 @@ export default {
               secondBoardSingleStockPositionRatio: this.formInline
                 .secondBoardSingleStockPositionRatio,
               thirdBoardSingleStockPositionRatio: this.formInline
-                .thirdBoardSingleStockPositionRatio
+                .thirdBoardSingleStockPositionRatio,
+              bankId: 0
             })
             .then(res => {
               if (res.data.code == 200) {
@@ -1057,7 +1079,8 @@ export default {
               secondBoardSingleStockPositionRatio: this.formInline
                 .secondBoardSingleStockPositionRatio,
               thirdBoardSingleStockPositionRatio: this.formInline
-                .thirdBoardSingleStockPositionRatio
+                .thirdBoardSingleStockPositionRatio,
+              bankId: 0
             })
             .then(res => {
               if (res.data.code == 200) {

@@ -8,6 +8,9 @@
         <div class="reset-scroll-style">
           <div class="rbox rbox1">
             <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+              <!-- <el-form-item label="沪深主板禁止交易天数：">
+                <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板禁止交易天数"></el-input>
+              </el-form-item> -->
               <el-form-item label="沪深主板涨幅买入限制：">
                 <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板涨幅买入限制"></el-input>
               </el-form-item>
