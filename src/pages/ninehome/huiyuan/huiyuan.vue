@@ -12,6 +12,9 @@
             <input type="text" placeholder="请输入会员ID" v-model="agentId" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
+          <div class="tmbox">
+            <el-checkbox v-model="checked">下级</el-checkbox>
+          </div>
           <div class="search-box">
             <input type="text" placeholder="请输入会员名称" v-model="agentName" />
             <img src="../../../assets/nine/search.png" class="search-img" />
@@ -691,6 +694,7 @@ export default {
   },
   data() {
     return {
+      checked: false,
       hsbool: false,
       tableData: [],
       colorBool: false,
@@ -1593,6 +1597,7 @@ export default {
         .post("/tn/mgr-api/account/agentList", {
           accountId: agentId,
           accountName: agentName,
+          queryChild: this.checked,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })
