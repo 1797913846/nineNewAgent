@@ -532,8 +532,9 @@ input:-ms-input-placeholder {
     text-align: center;
     line-height: 41px;
     cursor: pointer;
-    margin-left:20px;
+    margin-left: 20px;
 }
+
 .template-top .operate-btn {
     float: right;
     overflow: hidden;
@@ -879,11 +880,13 @@ input:-ms-input-placeholder {
     transform: translate(-50%, -50%);
     border-radius: 10px;
 }
-.addcontenths{
-    width:90%!important;
+
+.addcontenths {
+    width: 90%!important;
     box-sizing: border-box;
-    padding-left:30px;
+    padding-left: 30px;
 }
+
 .addContent .title {
     overflow: hidden;
 }
@@ -1132,4 +1135,17 @@ input:-ms-input-placeholder {
 
 .el-input.is-disabled .el-input__inner {
     color: #2662EE!important;
+}
+
+/*统计*/
+
+.tongji {
+    margin-bottom: 10px;
+}
+
+.tongji span {
+    color: #333;
+    font-size: 16px;
+    display: inline-block;
+    margin-right: 20px;
 }

@@ -110,6 +110,13 @@
         </el-table>
       </div>
       <div class="pagination" v-if="nullTable==false">
+        <div class="tongji">
+          <span>发生金额 : {{ext.totalHappenAmount}}</span>
+          <span>委托数量 : {{ext.totalStockCnt}}</span>
+          <span>成交金额 : {{ext.totalDealAmount}}</span>
+          <span>手续费 : {{ext.totalCommission}}</span>
+          <span>成交数量 : {{ext.totalDealCnt}}</span>
+        </div>
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -188,6 +195,7 @@ export default {
   data() {
     return {
       tableData: [],
+      ext: {},
       colorBool: false,
       id: "",
       keyword: "",
@@ -491,6 +499,7 @@ export default {
 
             if (rows.length > 0) {
               this.tableData = res.data.data.rows;
+              this.ext = res.data.data.ext;
             } else {
               this.tableData = [];
             }

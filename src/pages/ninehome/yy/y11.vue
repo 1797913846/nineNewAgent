@@ -48,7 +48,7 @@
           <el-table-column show-overflow-tooltip label="母账户ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托日期" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="分账户ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="分账户ID" width="140" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="分账户名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
@@ -88,6 +88,10 @@
         </el-table>
       </div>
       <div class="pagination" v-if="!nullTable">
+        <div class="tongji">
+          <span>合计买卖总金额买卖总数量 : {{ext.totalDealAmount }}</span>
+          <span>合计买卖总数量 : {{ext.totalDealCnt }}</span>
+        </div>
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
@@ -103,6 +107,7 @@ export default {
   data() {
     return {
       tableData: [],
+      ext: {},
       colorBool: false,
       id: "",
       keyword: "",
@@ -277,6 +282,7 @@ export default {
             let rows = res.data.data.rows;
             if (rows.length > 0) {
               this.tableData = res.data.data.rows;
+              this.ext = res.data.data.ext;
             } else {
               this.tableData = [];
             }
