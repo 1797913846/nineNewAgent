@@ -117,7 +117,7 @@
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="账户：">
-            <el-select v-model="formInline.accountCode">
+            <el-select v-model="formInline.accountCode" :disabled="true">
               <el-option v-for="(item,index) in accountList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>

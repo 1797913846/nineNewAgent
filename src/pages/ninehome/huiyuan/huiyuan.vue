@@ -788,7 +788,8 @@ export default {
       whowho: "",
       tableData1: "",
       total1: "",
-      nullTable1: false
+      nullTable1: false,
+      loginName: ""
     };
   },
   computed: {
@@ -841,6 +842,7 @@ export default {
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
+    this.loginName = localStorage.getItem("loginName");
     this.getEList();
   },
   methods: {
@@ -1211,7 +1213,7 @@ export default {
       this.formInline.accountStatus = "";
       this.formInline.defaultChildGroupId = "";
       this.formInline.defaultChildCommissionCfgId = "";
-      this.formInline.parentAccountCode = this.userId;
+      this.formInline.parentAccountCode = this.loginName;
       this.formInline.parentAccountName = this.userName;
       this.formInline.balance = 0;
       this.formInline.allottedScale = 0;
@@ -1412,7 +1414,10 @@ export default {
           subBranchName: this.formInline.subBranchName,
           cardNo: this.formInline.cardNo,
           userName: this.formInline.userName,
-          identityNo: this.formInline.identityNo
+          identityNo: this.formInline.identityNo,
+          freezeScale: this.formInline.freezeScale,
+          flatLine: this.formInline.flatLine,
+          cordonLine: this.formInline.cordonLine
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1490,7 +1495,10 @@ export default {
           subBranchName: this.formInline.subBranchName,
           cardNo: this.formInline.cardNo,
           userName: this.formInline.userName,
-          identityNo: this.formInline.identityNo
+          identityNo: this.formInline.identityNo,
+          freezeScale: this.formInline.freezeScale,
+          flatLine: this.formInline.flatLine,
+          cordonLine: this.formInline.cordonLine
         })
         .then(res => {
           if (res.data.code == 200) {

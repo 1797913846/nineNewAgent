@@ -43,7 +43,7 @@
           <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
@@ -60,7 +60,7 @@
           <el-table-column show-overflow-tooltip label="产品编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品名称" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账号" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="优先级" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="优先级" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="状态" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="账号类型" align="center" :formatter="formatter"></el-table-column>
           <el-table-column show-overflow-tooltip label="开仓控制" align="center"></el-table-column>
@@ -92,9 +92,9 @@
           <el-form-item label="产品名称：" prop="productname">
             <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
           </el-form-item>
-          <el-form-item label="优先级：" prop="priority">
+          <!-- <el-form-item label="优先级：" prop="priority">
             <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="资金账号：" prop="userid">
             <el-input v-model="formInline.userid" placeholder="资金账号"></el-input>
           </el-form-item>
@@ -150,9 +150,9 @@
           <el-form-item label="产品名称：" prop="productname">
             <el-input v-model="formInline.productname" placeholder="产品名称"></el-input>
           </el-form-item>
-          <el-form-item label="优先级：" prop="priority">
+          <!-- <el-form-item label="优先级：" prop="priority">
             <el-input v-model="formInline.priority" placeholder="优先级"></el-input>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="资金账号：" prop="userid">
             <el-input v-model="formInline.userid" :disabled="true" placeholder="资金账号"></el-input>
           </el-form-item>
@@ -259,9 +259,9 @@ export default {
         productname: [
           { required: true, message: "请输入产品名称", trigger: "blur" }
         ],
-        priority: [
-          { required: true, message: "请输入优先级", trigger: "blur" }
-        ],
+        // priority: [
+        //   { required: true, message: "请输入优先级", trigger: "blur" }
+        // ],
         userid: [
           { required: true, message: "请输入资金账号", trigger: "blur" }
         ],
@@ -443,7 +443,7 @@ export default {
       this.jia = true;
       this.formInline.productcode = "";
       this.formInline.productname = "";
-      this.formInline.priority = "";
+      // this.formInline.priority = "";
       this.formInline.userid = "";
       this.formInline.usertype = "";
       this.formInline.operateStatus = "";
@@ -539,7 +539,7 @@ export default {
             .post("/tn/mgr-api/productInfo/update", {
               productcode: this.formInline.productcode,
               productname: this.formInline.productname,
-              priority: this.formInline.priority,
+              // priority: this.formInline.priority,
               userid: this.formInline.userid,
               usertype: this.formInline.usertype,
               operateStatus: this.formInline.operateStatus,
@@ -587,7 +587,7 @@ export default {
             .post("/tn/mgr-api/productInfo/save", {
               productcode: this.formInline.productcode,
               productname: this.formInline.productname,
-              priority: this.formInline.priority,
+              // priority: this.formInline.priority,
               userid: this.formInline.userid,
               usertype: this.formInline.usertype,
               operateStatus: this.formInline.operateStatus,
