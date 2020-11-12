@@ -20,7 +20,7 @@
           <!-- <el-upload class="upload-demo" action="http://10.10.1.26:8080/tn/mgr-api/tntg/stockBlack/batch-add" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
             <div class="search-user">导入</div>
           </el-upload> -->
-           <el-upload class="upload-demo" action="http://47.102.151.13/tn/mgr-api/tntg/stockBlack/batch-add" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
+          <el-upload class="upload-demo" action="http://47.102.151.13/tn/mgr-api/tntg/stockBlack/batch-add" :headers="{Authorization:token}" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
             <div class="search-user">导入</div>
           </el-upload>
         </div>
@@ -95,7 +95,8 @@ export default {
       showAdd: false,
       addTitle: "新增",
       formInline: {},
-      blackIds: ""
+      blackIds: "",
+      token: ""
     };
   },
   computed: {
@@ -133,6 +134,7 @@ export default {
   },
   created() {
     this.getFundAccount();
+    this.token = localStorage.getItem("Authorization");
   },
   methods: {
     handleSelectionChange(val) {

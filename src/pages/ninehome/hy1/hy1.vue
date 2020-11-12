@@ -28,7 +28,7 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID"  width="100" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="100" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="银行名称" prop="bankName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="省份名称" prop="provinceName" align="center"></el-table-column>
@@ -118,27 +118,27 @@
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="账户：">
             <el-select v-model="formInline.accountCode">
-              <el-option v-for="(item,index) in accountList" :key="index" :label="item.value" :value="item.key"></el-option>
+              <el-option v-for="(item,index) in accountList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开户银行：">
             <el-select v-model="formInline.bankId">
-              <el-option v-for="(item,index) in banksList" :key="index" :label="item.value" :value="item.key"></el-option>
+              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开户银行省份：">
             <el-select v-model="formInline.provinceId">
-              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.value" :value="item.key"></el-option>
+              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开户银行城市：">
             <el-select v-model="formInline.cityId">
-              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.value" :value="item.key"></el-option>
+              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="开户银行支行：">
             <el-select v-model="formInline.subBranchId">
-              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.value" :value="item.key"></el-option>
+              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="卡号：">

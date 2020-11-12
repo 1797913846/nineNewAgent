@@ -6,6 +6,7 @@
       <div class="template-top">
         <div class="title" @click="jiaNow">添加</div>
         <div class="title" style="margin-left:7px;" @click="mouseOver">我的二维码</div>
+        <div class="title" style="margin-left:7px;" @click="huishou">回收站</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="agentId" />
@@ -73,7 +74,7 @@
           <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="150" prop="thirdBoardSingleStockPositionRatio" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriodDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="管理费率" prop="manageFeeRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="盈利分成率" prop="separateFeeRate" align="center" width="140"></el-table-column>
@@ -118,6 +119,41 @@
       </div>
       <div class="pagination" v-if="!nullTable">
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
+    </div>
+    <div class="addForm" v-if="hsbool">
+      <div class="addContent addcontenths">
+        <div class="reset-scroll-style">
+          <div class="title">
+            <span class="tl">回收站</span>
+            <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closehs">
+          </div>
+          <el-table :border="true" :highlight-current-row="colorBool" :data="tableData1" key="desingerTable2" stripe class="user-table" style="width:100%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+            <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="会员ID" prop="accountId" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="会员状态" prop="statusDesc" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="产品" prop="productCode" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="单边佣金" prop="commission" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="账户余额" prop="balance" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="期初规模" prop="allottedScale" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="可用资金" prop="ableScale" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="手动冻结资金" prop="freezeScale" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="总盈亏" prop="profit" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="平仓线（金额）" prop="flatLine" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="警戒线（金额）" prop="cordonLine" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="个股持仓比例" prop="positionRatio" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="创业板持仓比例" prop="secondBoardPositionRatio" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="科创板持仓比例" prop="thirdBoardPositionRatio" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="下单权限" prop="orderPermissionDesc" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="融资比例" prop="financeRatio" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriodDesc" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="管理费率" prop="manageFeeDealRate" align="center"></el-table-column>
+            <el-table-column show-overflow-tooltip label="建仓费率" prop="manageMakeFeeRate" align="center"></el-table-column>
+          </el-table>
+        </div>
       </div>
     </div>
     <!--表单-->
@@ -248,17 +284,17 @@
               <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="开户银行省份：" v-if="radio1==1" >
+          <el-form-item label="开户银行省份：" v-if="radio1==1">
             <el-select v-model="formInline.provinceId" :disabled="true">
               <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="开户银行城市：" v-if="radio1==1" >
+          <el-form-item label="开户银行城市：" v-if="radio1==1">
             <el-select v-model="formInline.cityId" :disabled="true">
               <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="开户银行支行：" v-if="radio1==1" >
+          <el-form-item label="开户银行支行：" v-if="radio1==1">
             <el-select v-model="formInline.subBranchId" :disabled="true">
               <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
             </el-select>
@@ -655,6 +691,7 @@ export default {
   },
   data() {
     return {
+      hsbool: false,
       tableData: [],
       colorBool: false,
       agentName: "",
@@ -677,6 +714,7 @@ export default {
         accountName: "",
         productCode: "",
         productGroupId: "",
+        level: "",
         levelName: "",
         commissionCfgId: "",
         ableCrud: "",
@@ -710,7 +748,11 @@ export default {
         subBranchId: "",
         cardNo: "",
         userName: "",
-        identityNo: ""
+        identityNo: "",
+        bankName: "",
+        provinceName: "",
+        cityName: "",
+        subBranchName: ""
       },
       radio1: 0,
       productList: [],
@@ -743,7 +785,10 @@ export default {
       setBool: false,
       eList: [],
       whoid: "",
-      whowho: ""
+      whowho: "",
+      tableData1: "",
+      total1: "",
+      nullTable1: false
     };
   },
   computed: {
@@ -799,6 +844,54 @@ export default {
     this.getEList();
   },
   methods: {
+    huishou() {
+      this.hsbool = true;
+      this.getHS();
+    },
+    closehs() {
+      this.hsbool = false;
+    },
+    formatterday(index, row) {
+      if (row) {
+        if (row.financePeriod == "day") {
+          return "天";
+        } else if (row.financePeriod == "week") {
+          return "周";
+        } else if (row.financePeriod == "month") {
+          return "月";
+        } else if (row.financePeriod == "single") {
+          return "单";
+        } else {
+          return "-";
+        }
+      }
+    },
+    getHS() {
+      this.axios
+        .post("/tn/mgr-api/account/garbageList")
+        .then(res => {
+          if (res.data.code == 200) {
+            let rows = res.data.data.rows;
+            if (rows.length > 0) {
+              this.tableData1 = res.data.data.rows;
+            } else {
+              this.tableData1 = [];
+            }
+            this.total1 = res.data.data.total;
+          } else {
+            this.tableData1 = [];
+          }
+          if (this.tableData1.length <= 0) {
+            this.nullTable1 = true;
+            this.tableData1 = new Array(this.pageSize);
+          } else {
+            this.nullTable1 = false;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getBanksList() {
       this.axios
         .post("/tn/mgr-api/account/banks")
@@ -1265,6 +1358,26 @@ export default {
       this.jia = false;
     },
     onSubmit2(formName) {
+      this.banksList.map(item => {
+        if (this.formInline.bankId == item.value) {
+          this.formInline.bankName = item.text;
+        }
+      });
+      this.provincesList.map(item => {
+        if (this.formInline.provinceId == item.value) {
+          this.formInline.provinceName = item.text;
+        }
+      });
+      this.citiesList.map(item => {
+        if (this.formInline.cityId == item.value) {
+          this.formInline.cityName = item.text;
+        }
+      });
+      this.branchesList.map(item => {
+        if (this.formInline.subBranchId == item.value) {
+          this.formInline.subBranchName = item.text;
+        }
+      });
       this.axios
         .post("/tn/mgr-api/account/save", {
           accountId: this.formInline.accountId,
@@ -1290,9 +1403,13 @@ export default {
             .thirdBoardSingleStockPositionRatio,
           agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
           bankId: this.formInline.bankId || 0,
+          bankName: this.formInline.bankName,
           provinceId: this.formInline.provinceId || 0,
+          provinceName: this.formInline.provinceName,
           cityId: this.formInline.cityId || 0,
+          cityName: this.formInline.cityName,
           subBranchId: this.formInline.subBranchId || 0,
+          subBranchName: this.formInline.subBranchName,
           cardNo: this.formInline.cardNo,
           userName: this.formInline.userName,
           identityNo: this.formInline.identityNo
@@ -1319,6 +1436,26 @@ export default {
         });
     },
     onSubmit(formName) {
+      this.banksList.map(item => {
+        if (this.formInline.bankId == item.value) {
+          this.formInline.bankName = item.text;
+        }
+      });
+      this.provincesList.map(item => {
+        if (this.formInline.provinceId == item.value) {
+          this.formInline.provinceName = item.text;
+        }
+      });
+      this.citiesList.map(item => {
+        if (this.formInline.cityId == item.value) {
+          this.formInline.cityName = item.text;
+        }
+      });
+      this.branchesList.map(item => {
+        if (this.formInline.subBranchId == item.value) {
+          this.formInline.subBranchName = item.text;
+        }
+      });
       this.axios
         .post("/tn/mgr-api/account/update", {
           accountId: this.formInline.accountId,
@@ -1344,9 +1481,13 @@ export default {
             .thirdBoardSingleStockPositionRatio,
           agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
           bankId: this.formInline.bankId || 0,
+          bankName: this.formInline.bankName,
           provinceId: this.formInline.provinceId || 0,
+          provinceName: this.formInline.provinceName,
           cityId: this.formInline.cityId || 0,
+          cityName: this.formInline.cityName,
           subBranchId: this.formInline.subBranchId || 0,
+          subBranchName: this.formInline.subBranchName,
           cardNo: this.formInline.cardNo,
           userName: this.formInline.userName,
           identityNo: this.formInline.identityNo

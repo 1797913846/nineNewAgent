@@ -879,7 +879,11 @@ input:-ms-input-placeholder {
     transform: translate(-50%, -50%);
     border-radius: 10px;
 }
-
+.addcontenths{
+    width:90%!important;
+    box-sizing: border-box;
+    padding-left:30px;
+}
 .addContent .title {
     overflow: hidden;
 }

@@ -878,7 +878,7 @@ export default {
       this.inviteCode = inviteCode;
       this.showQrcode1 = true;
       document.getElementById("qrcode1").innerHTML = "";
-      document.getElementById("qrcode2").style.top = 220 + 35 * index + "px";
+      document.getElementById("qrcode2").style.top = 220 + 50 * index + "px";
       let inviteCodeUrl = localStorage.getItem("inviteCodeUrl") + inviteCode;
       this.creatQrCode1(inviteCodeUrl);
     },
@@ -1229,7 +1229,7 @@ export default {
   border-radius: 5px;
   border: 1px solid #ccc;
   position: absolute;
-  left: 1060px;
+  left: 1260px;
   top: 0px;
 }
 
@@ -1270,9 +1270,10 @@ export default {
   display: block;
 }
 .smallcode {
-  width: 10px;
-  height: 10px;
-  margin-left: 36px;
+  width: 20px;
+  height: 20px;
+  margin-left: 22px;
+  cursor: pointer;
 }
 </style>
 <style>
