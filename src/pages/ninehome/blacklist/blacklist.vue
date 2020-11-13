@@ -70,17 +70,23 @@
         </div>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
+      deleteBool: false,
+      deleteRight: false,
+      deleteTitle: "确认删除吗?",
       tableData: [],
       colorBool: false,
       keyword: "",
@@ -266,29 +272,37 @@ export default {
     refresh() {
       this.getFundAccount();
     },
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/tntg/stockBlack/delete", {
+            id: this.id
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     deleteNow(index, row) {
-      console.log(222);
-      console.log("13点", index, row);
+      this.deleteBool = true;
       this.id = row.id;
-      this.axios
-        .post("/tn/mgr-api/tntg/stockBlack/delete", {
-          id: this.id
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
     },
     search() {
       this.currentPage = 1;
