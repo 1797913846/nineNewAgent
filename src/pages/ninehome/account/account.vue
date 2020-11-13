@@ -272,8 +272,8 @@ export default {
 .jiankong .el-table__body tr td {
   background: none !important;
 }
-.jiankong .el-table__body tr.el-table__row--striped td {
-  background: #fff !important;
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: none !important;
 }
 </style>
 

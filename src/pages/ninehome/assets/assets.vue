@@ -29,7 +29,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table zichan" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <el-table-column label="操作" align="center" width="260">
             <template slot-scope="scope">
               <div class="operation">
@@ -44,9 +44,25 @@
           <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center" width="140"></el-table-column>
           <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column> -->
+          <el-table-column label="状态" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span v-if="scope.row.onlineStatusDesc=='在线'" style="color:green">{{scope.row.onlineStatusDesc}}</span>
+                <span v-if="scope.row.onlineStatusDesc=='离线'" style="color:red">{{scope.row.onlineStatusDesc}}</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="账号类型" prop="usertype" align="center" :formatter="formatter"></el-table-column>
-          <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="开仓控制" prop="operateStatusDesc" align="center"></el-table-column> -->
+          <el-table-column label="开仓控制" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span v-if="scope.row.operateStatusDesc=='允许操作'" style="color:green">{{scope.row.operateStatusDesc}}</span>
+                <span v-if="scope.row.operateStatusDesc=='禁止操作'" style="color:red">{{scope.row.operateStatusDesc}}</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="产品佣金" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip width="120" label="期初可分配金额" prop="marketcap" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="券商名称" prop="brokerName" align="center" width="120"></el-table-column>
@@ -320,6 +336,15 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    tableRowClassName({ row, rowIndex }) {
+      console.log("我啊", row);
+      if (row["onlineStatusDesc"] == "在线") {
+        return "colorgreen";
+      } else if (row["onlineStatusDesc"] == "离线") {
+        return "red";
+      }
+      return "";
+    },
     getmoney() {
       this.axios
         .get("/tn/mgr-api/itg/product/balance/refresh-all")
@@ -668,7 +693,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style>
+.el-table .colorgreen {
+  background-color: #dff0d8 !important;
+}
+.el-table .yellow {
+  background-color: #fcf8e3 !important;
+}
+.el-table .red {
+  background-color: #f2dede !important;
+}
+.zichan .el-table__body tr td {
+  background: none !important;
+}
 </style>
 
 
