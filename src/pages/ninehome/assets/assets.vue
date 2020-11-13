@@ -210,17 +210,24 @@
         </el-form>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
+      deleteBool: false,
+      deleteRight: false,
+      productCode: "",
+      deleteTitle: "确认删除吗?",
       tableData: [],
       colorBool: false,
       keyword: "",
@@ -336,6 +343,39 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/productInfo/delete", {
+            productcode: this.productCode
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+          this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     tableRowClassName({ row, rowIndex }) {
       console.log("我啊", row);
       if (row["onlineStatusDesc"] == "在线") {
@@ -531,31 +571,9 @@ export default {
         });
     },
     deleteNow(index, row) {
+      this.deleteBool = true;
       let productCode = row.productcode;
-      this.axios
-        .post("/tn/mgr-api/productInfo/delete", {
-          productcode: productCode
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.productCode = productCode;
     },
     onSubmitChange(formName) {
       this.$refs[formName].validate(valid => {
