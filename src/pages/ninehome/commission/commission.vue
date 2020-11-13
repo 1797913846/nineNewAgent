@@ -94,17 +94,23 @@
         </el-form>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
+      deleteBool: false,
+      deleteRight: false,
+      deleteTitle: "确认删除吗?",
       tableData: [],
       colorBool: false,
       cfgName: "",
@@ -281,29 +287,37 @@ export default {
           console.log(err);
         });
     },
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/commissionCfgs/delete", {
+            id: this.id
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     deleteNow(index, row) {
-      console.log(222);
-      console.log("13点", index, row);
+      this.deleteBool = true;
       this.id = row.id;
-      this.axios
-        .post("/tn/mgr-api/commissionCfgs/delete", {
-          id: this.id
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
     },
     setIt(index, row) {
       console.log(222);
@@ -332,14 +346,14 @@ export default {
     showAddNow() {
       this.addTitle = "新增";
       this.showAdd = true;
-      this.formInline.cfgName="";
-      this.formInline.dayCommission="";
-      this.formInline.dayManageFeeDealRate="";
-      this.formInline.singleCommission="";
-      this.formInline.singleManageFeeDealRate="";
-      this.formInline.singleDividedRate="";
-      this.formInline.monthCommission="";
-      this.formInline.monthManageFeeDealRate="";
+      this.formInline.cfgName = "";
+      this.formInline.dayCommission = "";
+      this.formInline.dayManageFeeDealRate = "";
+      this.formInline.singleCommission = "";
+      this.formInline.singleManageFeeDealRate = "";
+      this.formInline.singleDividedRate = "";
+      this.formInline.monthCommission = "";
+      this.formInline.monthManageFeeDealRate = "";
     },
     closeAdd() {
       this.showAdd = false;
