@@ -187,6 +187,9 @@ export default {
       console.log("最终的", this.entruststatusList);
     },
     activeNow(num) {
+      this.accountcode="";
+      this.accountName="";
+      this.dealno="";
       this.topActive = num;
       if (num == 1) {
         this.getFundAccount("today");

@@ -312,6 +312,10 @@ export default {
       console.log("最终的", this.entruststatusList);
     },
     activeNow(num) {
+      this.accountCode = "";
+      this.accountName = "";
+      this.orderno = "";
+      this.checkList = [];
       this.topActive = num;
       if (num == 1) {
         this.getFundAccount("today");

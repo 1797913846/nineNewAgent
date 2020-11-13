@@ -45,8 +45,8 @@
           <el-table-column label="操作" width="180" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span v-if="isAdminGroup==true&&scope.row.auditResult==0" @click.stop="tong1(scope.$index, scope.row)" class="addSameClass ">通过</span>
-                <span v-if="isAdminGroup==true&&scope.row.auditResult==0" @click.stop="ju1(scope.$index, scope.row)" class="addSameClass ">拒绝</span>
+                <span v-if="isAdminGroup=='true' && scope.row.auditResult==0" @click.stop="tong1(scope.$index, scope.row)" class="addSameClass ">通过</span>
+                <span v-if="isAdminGroup=='true' && scope.row.auditResult==0" @click.stop="ju1(scope.$index, scope.row)" class="addSameClass ">拒绝</span>
                 <span v-if="scope.row.auditResult==1" style="color:rgb(0, 128, 0);">已通过</span>
                 <span v-if="scope.row.auditResult==-1" style="color:rgb(255, 0, 0);">已拒绝</span>
               </div>
@@ -166,8 +166,8 @@ export default {
       deep: true
     }
   },
-  created() {
-    this.isAdminGroup = localStorage.getItem("isAdminGroup");
+  created() {},
+  mounted() {
     this.getFundAccount();
   },
   methods: {
@@ -262,6 +262,7 @@ export default {
       this.getFundAccount();
     },
     getFundAccount() {
+      this.isAdminGroup = localStorage.getItem("isAdminGroup");
       this.axios
         .post("/tn/mgr-api/payOrder/list", {
           orderType: "OUT",
