@@ -1,6 +1,7 @@
 <template>
     <div class="bigalert">
         <div class="alertbox">
+            <img class="close" src="../assets/nine/closeform.png" alt="" @click="noDelete">
             <div class="topalert">
                 <img src="../assets/nine/wen.png" alt="" v-if="sure==true">
                 <img src="../assets/nine/nosure.png" alt="" v-if="nosure==true">
@@ -49,11 +50,11 @@ export default {
   z-index: 100000;
 }
 .alertbox {
-  width: 626px;
-  height: 271px;
+  width: 422px;
+  height: 177px;
   background: #ffffff;
   border: 1px solid #e7e7e7;
-  border-radius: 10px;
+  border-radius: 4px;
   position: absolute;
   left: 50%;
   right: 0px;
@@ -61,32 +62,37 @@ export default {
   bottom: 0px;
   transform: translate(-50%, -50%);
 }
+.alertbox .close {
+  width: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
 .topalert {
 }
 .topalert img {
-  width: 62px;
-  height: 54px;
-  margin-left: 150px;
-  margin-top: 100px;
+  width: 40px;
+  margin-left: 120px;
+  margin-top: 60px;
   float: left;
 }
 .topalert span {
   float: left;
   color: #333333;
   font-size: 19px;
-  margin-top: 110px;
+  margin-top: 60px;
   margin-left: 20px;
 }
 .bottomalert {
 }
 .bottomalert span {
-  width: 80px;
-  height: 30px;
+  width: 60px;
+  height: 26px;
   border-radius: 15px;
-  line-height: 30px;
-  font-size: 14px;
+  line-height: 26px;
+  font-size: 12px;
   padding: 0px;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 26px;
   display: inline-block;
   text-align: center;
@@ -95,7 +101,7 @@ export default {
 
 .bottomalert .savebt {
   background: #2562ee;
-  margin-left: 335px;
+  margin-left: 235px;
   color: #fff;
   margin-right: 20px;
 }
