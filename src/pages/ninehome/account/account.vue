@@ -213,6 +213,7 @@ export default {
     search() {
       this.sort = "";
       this.order = "";
+      this.currentPage = 1;
       this.getFundAccount();
     },
     refresh() {

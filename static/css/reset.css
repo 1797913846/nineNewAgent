@@ -951,15 +951,18 @@ input:-ms-input-placeholder {
     width: 343px;
     height: 40px;
     line-height: 40px;
-    border: 0px;
     outline: none;
-    background: rgba(233, 239, 243, 0.3);
+    background-color: #fff;
+    border: 1px solid #9aa5aa;
+    /* background: rgba(233, 239, 243, 0.3); */
     color: #9aa5aa;
     font-size: 12px;
     padding-left: 30px;
     box-sizing: border-box;
 }
-
+.addForm .el-input__inner:focus{
+    border-color:#2662ee;
+}
 .addForm .el-input__inner::placeholder {
     color: #9aa5aa;
 }
@@ -1134,7 +1137,7 @@ input:-ms-input-placeholder {
 /*输入框禁用*/
 
 .el-input.is-disabled .el-input__inner {
-    color: #2662EE!important;
+    /* color: #2662EE!important; */
 }
 
 /*统计*/

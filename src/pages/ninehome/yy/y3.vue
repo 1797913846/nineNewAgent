@@ -411,6 +411,7 @@ export default {
       this.formInline.orderno = row.orderno;
     },
     search() {
+      this.currentPage = 1;
       if (this.topActive == 1) {
         this.getFundAccount("today");
       } else {

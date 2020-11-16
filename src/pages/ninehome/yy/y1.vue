@@ -273,6 +273,7 @@ export default {
       this.lastPrice = row.lastPrice;
     },
     search() {
+      this.currentPage = 1;
       this.getFundAccount();
     },
     exportExcel() {

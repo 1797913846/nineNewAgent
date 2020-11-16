@@ -150,6 +150,7 @@ export default {
       this.changeNow = false;
     },
     search() {
+      this.currentPage = 1;
       this.getFundAccount();
     },
     getFundAccount() {
