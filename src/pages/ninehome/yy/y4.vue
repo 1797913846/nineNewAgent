@@ -84,7 +84,7 @@
           <el-table-column show-overflow-tooltip label="委托编号" prop="orderno" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="nullTable==false">
+      <div class="pagination">
         <div class="tongji">
           <span>成交金额 : {{ext.totalDealAmount}}</span>
           <span>成交数量 : {{ext.totalDealCnt}}</span>

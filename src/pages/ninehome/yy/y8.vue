@@ -71,7 +71,7 @@
           <el-table-column show-overflow-tooltip label="结算方式" prop="settleTypeDesc" :formatter="formatter" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="nullTable==false">
+      <div class="pagination">
         <div class="tongji">
           <span>佣金总和 : {{ext.totalCommissionCnt	}}</span>
         </div>

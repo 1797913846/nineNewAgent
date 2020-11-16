@@ -43,7 +43,14 @@
           <el-table-column label="序号" type="index" width="50" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="等级" prop="level" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="等级名称" prop="levelName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" width="120" prop="accountId" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="会员ID" width="120" prop="accountId" align="center"></el-table-column> -->
+          <el-table-column label="会员ID" align="center" width="120">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span  style="color:#2662ee;" @click.stop="y1(scope.$index,scope.row)">{{scope.row.accountId}}</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" width="120" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="140">
@@ -475,12 +482,12 @@
     <!--邀请码二维码-->
     <div :class="{'show-qrcode': showQrcode==true,addForm:true,'qrcode':true,}" @click="mouseOut">
       <div :class="{'qrbox':true}">
-        <span>邀请码：</span>
+        <span>邀请码：{{inviteCode}}</span>
         <div id="qrcode" ref="qrcode"></div>
       </div>
     </div>
     <div :class="{'qrbox1':true,'show-qrcode1': showQrcode1==true,'qrcode1':true}" id="qrcode2">
-      <span>邀请码：</span>
+      <span>邀请码：{{inviteCode}}</span>
       <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
@@ -517,7 +524,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="佣金方案(单边)：">
-            <el-select v-model="formInline.commissionCfgId" :disabled="true">
+            <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -857,6 +864,15 @@ export default {
     );
   },
   methods: {
+    y1(index, row) {
+      let accountId = row.accountCode;
+      this.$router.push({
+        path: "/ninehome/y1",
+        query: {
+          accountId: accountId
+        }
+      });
+    },
     huishou() {
       this.hsbool = true;
       this.getHS();
@@ -1155,7 +1171,12 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/accountList/export",
-        data: {}
+        data: {
+          accountId: this.agentId,
+          accountName: this.agentName,
+          queryChild: this.checked,
+          pageNo: -1
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -1575,7 +1596,7 @@ export default {
       console.log("谁", row);
       let accountId = row.accountId;
       this.axios
-        .post("/tn/mgr-api/account/agent/agentList", {
+        .post("/tn/mgr-api/account/resetPassword", {
           accountId: accountId
         })
         .then(res => {

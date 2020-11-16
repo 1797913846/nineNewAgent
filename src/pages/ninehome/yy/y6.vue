@@ -54,13 +54,12 @@
           <el-table-column show-overflow-tooltip label="总卖出发生金额" prop="dealAmountSell" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="nullTable==false">
+      <div class="pagination">
         <div class="tongji">
-          <span>发生金额 : {{ext.totalHappenAmount }}</span>
-          <span>委托数量 : {{ext.totalStockCnt }}</span>
-          <span>成交金额 : {{ext.totalDealAmount }}</span>
-          <span>手续费 : {{ext.totalCommission }}</span>
-          <span>成交数量 : {{ext.totalDealCnt }}</span>
+          <span>总买入数量 : {{ext.dealCntBuy }}</span>
+          <span>总买入发生金额 : {{ext.dealAmountBuy }}</span>
+          <span>总卖出数量 : {{ext.dealCntSell }}</span>
+          <span>总卖出发生金额 : {{ext.dealAmountSell }}</span>
         </div>
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>

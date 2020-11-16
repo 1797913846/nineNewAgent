@@ -9,6 +9,14 @@
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入产品编号" v-model="productCode" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="search-box">
+            <input type="text" placeholder="请输入股票代码" v-model="stockNo" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
           <div class="search-user" @click="search">查询</div>
           <div class="search-user" @click="exportExcel">导出</div>
         </div>
@@ -49,7 +57,7 @@
           <el-table-column show-overflow-tooltip label="参考盈亏" prop="profit" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="!nullTable">
+      <div class="pagination">
         <div class="tongji">
           <span>总持仓数量 : {{ext.stockCnt }}</span>
           <span>总参考盈亏 : {{ext.profit }}</span>
@@ -99,6 +107,7 @@ export default {
       nullTable: false,
       accountCode: "",
       productCode: "",
+      stockNo:"",
       stockCode: "",
       lastPrice: "",
       setArray: [
@@ -282,7 +291,10 @@ export default {
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/hold/export",
         data: {
-          accountCode: this.accountCode
+          accountCode: this.accountCode,
+          productCode:this.productCode,
+          stockNo:this.stockNo,
+          pageNo:-1
         }
       }).then(
         res => {
@@ -307,6 +319,8 @@ export default {
       this.axios
         .post("/tn/mgr-api/account/hold", {
           accountCode: this.accountCode,
+          productCode:this.productCode,
+          stockNo:this.stockNo,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })

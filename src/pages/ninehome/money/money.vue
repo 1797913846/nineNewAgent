@@ -281,6 +281,7 @@ export default {
       this.formInline.accountCode = row.accountCode;
       this.formInline.accountName = row.accountName;
       this.formInline.adjustmentType = 3;
+      this.formInline.remark="";
     },
     set2(index, row) {
       this.changeNow = true;

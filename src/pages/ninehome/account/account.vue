@@ -167,7 +167,8 @@ export default {
         });
     },
     money(index, row) {
-      let accountId = row.accountId;
+      console.log('钱',row)
+      let accountId = row.accountCode;
       this.$router.push({
         path: "/ninehome/money",
         query: {
@@ -189,7 +190,12 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/risk/management/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode,
+          stockCode: this.stockCode,
+          sort: this.sort,
+          order: this.order
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];

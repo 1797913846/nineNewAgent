@@ -466,7 +466,7 @@ export default {
         }
       });
       this.axios
-        .post("/tn/mgr-api/productInfo/update", {
+        .post("/tn/mgr-api/account/bankCard/save", {
           accountCode: this.formInline.accountCode,
           bankId: this.formInline.bankId,
           bankName: this.formInline.bankName,

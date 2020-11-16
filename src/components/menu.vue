@@ -167,12 +167,12 @@ export default {
   watch: {
     $route(to, from) {
       console.log("to", to, "from", from);
-      if (to.path == "/ninehome/money") {
-        this.whichIndex = "5-1";
-      }
-      if (to.path == "/ninehome/y1") {
-        this.whichIndex = "7-1";
-      }
+      // if (to.path == "/ninehome/money") {
+      //   this.whichIndex = "5-1";
+      // }
+      // if (to.path == "/ninehome/y1") {
+      //   this.whichIndex = "7-1";
+      // }
     },
     where: {
       handler(newVal, oldVal) {

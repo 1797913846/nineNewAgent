@@ -378,7 +378,7 @@
     <!--邀请码二维码-->
     <div :class="{'show-qrcode': showQrcode==true,addForm:true,'qrcode':true,}" @click="mouseOut">
       <div :class="{'qrbox':true}">
-        <span>邀请码：{{inviteCode}}</span>
+        <span>邀请码：{{inviteCode1}}</span>
         <div id="qrcode" ref="qrcode"></div>
       </div>
     </div>
@@ -424,7 +424,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="佣金方案(单边)：" class="smallfont" prop=" commissionCfgId">
-            <el-select v-model="formInline.commissionCfgId" :disabled="true">
+            <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.id+'~'+item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
@@ -588,6 +588,7 @@ export default {
       jia: false,
       userId: "",
       userName: "",
+      inviteCode1:"",
       inviteCode: "",
       inviteCodeUrl: "",
       showQrcode: false,
@@ -595,7 +596,12 @@ export default {
       checked: false,
       rules: {
         accountId: [
-          { required: true, message: "请输入代理ID", trigger: "blur" }
+          { required: true, message: "请输入代理ID", trigger: "blur" },
+          {
+            pattern: /^1[0-9]{10}$/,
+            message: "代理ID必须是手机号",
+            trigger: "blur"
+          }
         ],
         accountName: [
           { required: true, message: "请输入代理名称", trigger: "blur" }
@@ -812,7 +818,13 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/account/agent/agentList/export",
-        data: {}
+        data: {
+          accountId: this.agentId,
+          accountName: this.agentName,
+          pageSize: this.pageSize,
+          pageNo: -1,
+          queryChild: this.checked
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];
@@ -936,6 +948,7 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+            this.inviteCode1=res.data.data.inviteCode;
             console.log("我是等级", this.agentLevel);
             //取出客户
             this.agentLevel.map(item => {
@@ -1137,7 +1150,7 @@ export default {
       console.log("谁", row);
       let accountId = row.accountId;
       this.axios
-        .post("/tn/mgr-api/account/agent/agentList", {
+        .post("/tn/mgr-api/account/resetPassword", {
           accountId: accountId
         })
         .then(res => {
@@ -1145,7 +1158,7 @@ export default {
             this.$alert("重置密码成功", "提示", {
               confirmButtonText: "确定",
               center: true,
-              type: "error"
+              type: "success"
             });
             this.getFundAccount();
           } else {

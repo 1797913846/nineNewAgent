@@ -42,7 +42,7 @@
           </el-table-column>
           <el-table-column show-overflow-tooltip label="产品编号" prop="productcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品名称" prop="productname" align="center" width="140"></el-table-column>
-          <el-table-column show-overflow-tooltip label="资金账号" prop="userid" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="资金账号" width="120" prop="userid" align="center"></el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="优先级" prop="priority" align="center"></el-table-column> -->
           <!-- <el-table-column show-overflow-tooltip label="状态" prop="onlineStatusDesc" align="center"></el-table-column> -->
           <el-table-column label="状态" align="center">
@@ -412,7 +412,13 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/productInfo/export",
-        data: {}
+        data: {
+          productcodeLike: this.productcodeLike,
+          productname: this.productname,
+          userid: this.userid,
+          brokerName: this.brokerName,
+          pageNo:-1
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];

@@ -87,7 +87,7 @@
           <el-table-column show-overflow-tooltip label="结算金额" prop="deliverAmount" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="!nullTable">
+      <div class="pagination">
         <div class="tongji">
           <span>合计买卖总金额买卖总数量 : {{ext.totalDealAmount }}</span>
           <span>合计买卖总数量 : {{ext.totalDealCnt }}</span>

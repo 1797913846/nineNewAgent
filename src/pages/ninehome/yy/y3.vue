@@ -109,7 +109,7 @@
           <el-table-column show-overflow-tooltip label="备注信息" prop="memo" align="center"></el-table-column>
         </el-table>
       </div>
-      <div class="pagination" v-if="nullTable==false">
+      <div class="pagination">
         <div class="tongji">
           <span>发生金额 : {{ext.totalHappenAmount}}</span>
           <span>委托数量 : {{ext.totalStockCnt}}</span>
@@ -419,7 +419,7 @@ export default {
       }
     },
     exportExcel() {
-      let url;
+      let url,options;
       if (this.topActive == 1) {
         url = "/tn/mgr-api/history/entrustCurrent/export";
         options = {
