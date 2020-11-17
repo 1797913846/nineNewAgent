@@ -731,9 +731,10 @@ export default {
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
-      if (row.profit > 0) {
+      console.log('布偶',row.profit);
+      if (Number(row.profit) > 0) {
         return "red";
-      } else if (row.profit < 0) {
+      } else if (Number(row.profit) < 0) {
         return "colorgreen";
       }
       return "";
@@ -1327,7 +1328,7 @@ export default {
   background: none !important;
 }
 .daili .el-table__body tr.el-table__row--striped td {
-  background: #fff !important;
+  background: transparent !important;
 }
 .fnn .el-form-item__label {
   width: 160px;

@@ -865,7 +865,7 @@ export default {
   },
   methods: {
     y1(index, row) {
-      let accountId = row.accountCode;
+      let accountId = row.accountId;
       this.$router.push({
         path: "/ninehome/y1",
         query: {
@@ -1789,7 +1789,7 @@ export default {
 }
 
 .huiyuan .el-table__body tr.el-table__row--striped td {
-  background: #fff !important;
+  background: transparent !important;
 }
 </style>
 

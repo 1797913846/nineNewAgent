@@ -1,62 +1,62 @@
 <!--操作日志-->
 <template>
-    <div class="bigestbox">
-        <topNav></topNav>
-        <div class="container" @click="colorBool = false">
-            <div class="template-top">
-                <div class="operate-btn">
-                    <div class="search-box">
-                        <input type="text" placeholder="请输入操作账号" v-model="accountCode" />
-                        <img src="../../../assets/nine/search.png" class="search-img" />
-                    </div>
-                    <div class="selectbox">
-                        <el-form :inline="true">
-                            <el-form-item label="操作类型：">
-                                <el-select v-model="type" clearable>
-                                    <el-option v-for="(item,index) in typesList" :key="index" :label="item.key" :value="item.value"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                    <div class="search-boxv">
-                        <span class="bu"> 从：</span>
-                        <div class="selectbox">
-                            <el-date-picker v-model="createTimeStart" type="date" format="yyyy-MM-dd" value-format="timestamp">
-                            </el-date-picker>
-                        </div>
-                        <span class="bu">&nbsp; 至：</span>
-                        <div class="selectbox">
-                            <el-date-picker v-model="createTimeEnd" type="date" format="yyyy-MM-dd" value-format="timestamp">
-                            </el-date-picker>
-                        </div>
-                    </div>
-                    <div class="search-user" @click="search">查询</div>
-                </div>
+  <div class="bigestbox">
+    <topNav></topNav>
+    <div class="container" @click="colorBool = false">
+      <div class="template-top">
+        <div class="operate-btn">
+          <div class="search-box">
+            <input type="text" placeholder="请输入操作账号" v-model="accountCode" />
+            <img src="../../../assets/nine/search.png" class="search-img" />
+          </div>
+          <div class="selectbox">
+            <el-form :inline="true">
+              <el-form-item label="操作类型：">
+                <el-select v-model="type" clearable>
+                  <el-option v-for="(item,index) in typesList" :key="index" :label="item.key" :value="item.value"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </div>
+          <div class="search-boxv">
+            <span class="bu"> 从：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeStart" type="date" format="yyyy-MM-dd" value-format="timestamp">
+              </el-date-picker>
             </div>
-            <!--表格-->
-            <div class="reset-scroll-style">
-                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="ID" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作账号" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作类型" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作内容" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作时间" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="IP地址" align="center"></el-table-column>
-                </el-table>
-                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-                    <el-table-column show-overflow-tooltip label="ID" prop="id" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作账号" prop="accountCode" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作类型" prop="optTypeStr" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作内容" prop="optContent" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="操作时间" prop="optTime" align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip label="IP地址" prop="optIp" align="center"></el-table-column>
-                </el-table>
+            <span class="bu">&nbsp; 至：</span>
+            <div class="selectbox">
+              <el-date-picker v-model="createTimeEnd" type="date" format="yyyy-MM-dd" value-format="timestamp">
+              </el-date-picker>
             </div>
-            <div class="pagination" v-if="nullTable==false">
-                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-            </div>
+          </div>
+          <div class="search-user" @click="search">查询</div>
         </div>
+      </div>
+      <!--表格-->
+      <div class="reset-scroll-style">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="ID" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作账号" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作类型" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作内容" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作时间" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="IP地址" align="center"></el-table-column>
+        </el-table>
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+          <el-table-column show-overflow-tooltip label="ID" prop="id" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作账号" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作类型" prop="optTypeStr" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作内容" prop="optContent" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="操作时间" prop="optTime" :formatter="formatterTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="IP地址" prop="optIp" align="center"></el-table-column>
+        </el-table>
+      </div>
+      <div class="pagination" v-if="nullTable==false">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -148,6 +148,33 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    formatterTime(row, column) {
+      var time = new Date(parseInt(row.optTime));
+      var y = time.getFullYear(); //年
+      var m = time.getMonth() + 1; //月
+      if (m < 10) {
+        m = "0" + m;
+      }
+      var d = time.getDate(); //日
+      if (d < 10) {
+        d = "0" + d;
+      }
+      var h = time.getHours(); //时
+      if (h < 10) {
+        h = "0" + h;
+      }
+      var mm = time.getMinutes(); //分
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
+      var s = time.getSeconds(); //秒
+      if (s < 10) {
+        s = "0" + s;
+      }
+      var timeStr = y + "-" + m + "-" + d + " " + h + ":" + mm + ":" + s;
+      console.log("我是时间", timeStr);
+      return timeStr;
+    },
     getTypesList() {
       this.axios
         .post("/tn/mgr-api/opt-log/search-pre")

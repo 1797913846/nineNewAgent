@@ -111,7 +111,7 @@
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" class="demo-form-inline">
           <el-form-item label="券商编码：" prop="brokerid">
-            <el-input v-model="formInline.brokerid" placeholder="券商编码"></el-input>
+            <el-input v-model="formInline.brokerid" placeholder="券商编码" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="券商名称：" prop="brokername">
             <el-input v-model="formInline.brokername" placeholder="券商名称"></el-input>
