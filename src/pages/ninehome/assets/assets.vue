@@ -448,6 +448,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
+            this.getFundAccount();
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
               center: true,
@@ -475,6 +476,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
+            this.getFundAccount();
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
               center: true,

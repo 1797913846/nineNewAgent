@@ -507,14 +507,14 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="会员ID：">
-            <el-input v-model="formInline.accountId" placeholder="会员ID"></el-input>
+          <el-form-item label="手机号：">
+            <el-input v-model="formInline.accountId" placeholder="手机号"></el-input>
           </el-form-item>
           <el-form-item label="会员名称：">
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：">
-            <el-select v-model="formInline.productGroupId" :disabled="true">
+            <el-select v-model="formInline.productGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
