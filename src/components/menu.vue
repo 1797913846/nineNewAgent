@@ -292,6 +292,7 @@ export default {
       this.$router.push({
         path: where
       });
+      location.reload();
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);

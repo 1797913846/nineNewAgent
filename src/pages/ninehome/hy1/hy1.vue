@@ -33,7 +33,7 @@
           <el-table-column show-overflow-tooltip label="银行名称" prop="bankName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="省份名称" prop="provinceName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="城市名称" prop="cityName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="支行名称" prop="subBranchName" align="center" :formatter="formatter"></el-table-column>
+          <el-table-column show-overflow-tooltip label="支行名称" prop="subBranchName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="卡号" prop="cardNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="开户名" prop="userName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="身份证号" prop="identityNo" align="center"></el-table-column>

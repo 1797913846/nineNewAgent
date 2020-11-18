@@ -51,7 +51,7 @@
           <el-table-column show-overflow-tooltip label="成交时间" prop="orderTime" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品编号" prop="productCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托编号" prop="orderNo" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" width="160" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资周期" prop="financePeriod" :formatter="formatterday" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockNo" align="center"></el-table-column>

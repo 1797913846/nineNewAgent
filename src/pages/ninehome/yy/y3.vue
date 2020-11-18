@@ -90,7 +90,7 @@
             </template>
           </el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="委托时间" width="220" prop="orderDateDesc" align="center"></el-table-column> -->
-          <el-table-column show-overflow-tooltip label="委托编号" width="80" prop="orderno" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="委托编号" width="130" prop="orderno" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托PK" width="90" prop="pkorder" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="产品编号" width="80" prop="productcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" width="110" prop="accountcode" align="center"></el-table-column>
