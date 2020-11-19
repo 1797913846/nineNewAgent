@@ -1156,7 +1156,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
-            this.$alert("重置密码成功", "提示", {
+            this.$alert("重置密码成功,密码是账户后六位", "提示", {
               confirmButtonText: "确定",
               center: true,
               type: "success"

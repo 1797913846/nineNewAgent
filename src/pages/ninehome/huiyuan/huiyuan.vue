@@ -47,12 +47,22 @@
           <el-table-column label="会员ID" align="center" width="120">
             <template slot-scope="scope">
               <div class="operation">
-                <span  style="color:#2662ee;" @click.stop="y1(scope.$index,scope.row)">{{scope.row.accountId}}</span>
+                <span style="color:#2662ee;" @click.stop="y1(scope.$index,scope.row)">{{scope.row.accountId}}</span>
               </div>
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" width="120" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="会员状态" prop="accountStatus" :class="{red:accountStatus==2}" :formatter="formatter" align="center"></el-table-column> -->
+          <el-table-column label="会员状态" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span style="color:red;" v-if="scope.row.accountStatus==2">停机</span>
+                <span style="color:green;" v-if="scope.row.accountStatus==1">正常</span>
+                <span style="color:red;" v-if="scope.row.accountStatus==0">失效</span>
+                <span style="color:red;" v-if="scope.row.accountStatus==-1">删除</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="下级默认资金池" align="center" width="140">
             <template slot-scope="scope">
               {{getDefaultGroupName(scope.row.defaultChildGroupId)}}
@@ -1601,7 +1611,7 @@ export default {
         })
         .then(res => {
           if (res.data.code == 200) {
-            this.$alert("重置密码成功", "提示", {
+            this.$alert("重置密码成功,密码是账户后六位", "提示", {
               confirmButtonText: "确定",
               center: true,
               type: "success"
@@ -1784,8 +1794,8 @@ export default {
   margin-left: 0px !important;
 }
 .fnn .el-form-item__label {
-  width: 180px!important;
-  margin-left: 24px!important;
+  width: 180px !important;
+  margin-left: 24px !important;
 }
 
 .huiyuan .el-table__body tr.el-table__row--striped td {
