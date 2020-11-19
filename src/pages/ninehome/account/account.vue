@@ -20,7 +20,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'profit', order: 'descending'}" @sort-change="sortChange" v-if="nullTable==false">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'riskTip', order: 'desc'}" @sort-change="sortChange" v-if="nullTable==false">
           <el-table-column label="操作" width="130" align="center">
             <template slot-scope="scope">
               <div class="operation">
@@ -33,7 +33,7 @@
           <el-table-column label="序号" type="index" width="50" align="center">
           </el-table-column>
           <el-table-column show-overflow-tooltip label="母账户ID" prop="productCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center" width="130"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center" width="150"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="借款额" prop="borrowing" align="center"></el-table-column>
@@ -90,8 +90,8 @@ export default {
       total: 10,
       nullTable: false,
       accountCode: "",
-      sort: "profit",
-      order: "descending",
+      sort: "riskTip",
+      order: "asc",
       stockCode: ""
     };
   },
@@ -128,7 +128,11 @@ export default {
     sortChange({ column, prop, order }) {
       console.log("排序", column, prop, order);
       this.sort = prop;
-      this.order = order;
+      if(this.order=='desc'){
+        this.order='asc'
+      }else{
+        this.order='desc'
+      }
       this.getFundAccount();
     },
     tableRowClassName({ row, rowIndex }) {
