@@ -268,7 +268,7 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="代理ID：" prop="accountId">
+          <el-form-item label="代理ID：">
             <el-input v-model="formInline.accountId" :disabled="true" placeholder="代理ID"></el-input>
           </el-form-item>
           <el-form-item label="代理名称：" prop="accountName">
