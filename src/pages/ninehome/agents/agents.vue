@@ -128,7 +128,7 @@
     </div>
     <!--表单-->
     <div class="addForm fnn" v-if="showAdd==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
@@ -252,7 +252,7 @@
 
     <!--修改表单-->
     <div class="addForm fnn" v-if="changeNow==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
@@ -388,7 +388,7 @@
     </div>
     <!--添加表单-->
     <div class="addForm fnn" v-if="jia==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
@@ -557,8 +557,8 @@ export default {
         manageFeeRate: "",
         manageMakeFeeRate: "",
         financePeriod: "",
-        orderPermission: "",
-        accountStatus: "",
+        orderPermission: 0,
+        accountStatus: 1,
         createTime: "",
         commissionCfgList: [],
         productList: [],
@@ -588,7 +588,7 @@ export default {
       jia: false,
       userId: "",
       userName: "",
-      inviteCode1:"",
+      inviteCode1: "",
       inviteCode: "",
       inviteCodeUrl: "",
       showQrcode: false,
@@ -731,7 +731,7 @@ export default {
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {
-      console.log('布偶',row.profit);
+      console.log("布偶", row.profit);
       if (Number(row.profit) > 0) {
         return "red";
       } else if (Number(row.profit) < 0) {
@@ -892,8 +892,8 @@ export default {
       this.formInline.thirdBoardPositionRatio = "";
       this.formInline.manageFeeRate = "";
       this.formInline.manageMakeFeeRate = "";
-      this.formInline.orderPermission = "";
-      this.formInline.accountStatus = "";
+      this.formInline.orderPermission = 0;
+      this.formInline.accountStatus = 1;
       this.formInline.defaultChildGroupId = "";
       this.formInline.defaultChildCommissionCfgId = "";
       this.formInline.secondBoardSingleStockPositionRatio = "";
@@ -949,7 +949,7 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
-            this.inviteCode1=res.data.data.inviteCode;
+            this.inviteCode1 = res.data.data.inviteCode;
             console.log("我是等级", this.agentLevel);
             //取出客户
             this.agentLevel.map(item => {
@@ -1331,8 +1331,8 @@ export default {
   background: transparent !important;
 }
 .fnn .el-form-item__label {
-  width: 160px;
-  margin-left: 24px;
+  width: 180px !important;
+  margin-left: 24px !important;
 }
 .daili .operation span {
   margin-right: 4px;

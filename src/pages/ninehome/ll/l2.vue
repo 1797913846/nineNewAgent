@@ -38,7 +38,7 @@
     </div>
     <!--表单-->
     <div class="addForm" v-if="showAdd==true">
-      <div class="addContent">
+      <div class="addContent gg1">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">

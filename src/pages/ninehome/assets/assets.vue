@@ -96,7 +96,7 @@
     </div>
     <!--添加表单-->
     <div class="addForm" v-if="jia==true">
-      <div class="addContent">
+      <div class="addContent gg4">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
@@ -154,7 +154,7 @@
     </div>
     <!--修改表单-->
     <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
+      <div class="addContent gg4">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">

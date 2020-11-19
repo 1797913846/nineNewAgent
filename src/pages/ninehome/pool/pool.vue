@@ -80,7 +80,7 @@
                   <template slot-scope="scope">
                     <div class="operation">
                       <!-- <el-input v-model="scope.row.priority"></el-input> -->
-                      <el-input v-model="accountGroup[scope.$index].priority"></el-input>
+                      <el-input class="gg5" v-model="accountGroup[scope.$index].priority"></el-input>
                     </div>
                   </template>
                 </el-table-column>
@@ -574,7 +574,7 @@ export default {
   height: 40px;
   line-height: 40px;
   width: 120px;
-  text-align: left;
+  text-align: right;
   margin-left: 44px;
   float: left;
 }
@@ -592,10 +592,11 @@ export default {
   color: #586982;
   font-size: 14px;
   font-weight: 500;
-  height: 40px;
-  line-height: 40px;
+  height: 60px;
+  line-height: 60px;
   width: 120px;
-  margin-left: 44px;
+  margin-left: 80px;
+  margin-bottom:30px;
 }
 .buycontent {
   margin-left: 44px;
@@ -606,6 +607,7 @@ export default {
 }
 .selectMoney .s1 {
   float: left;
+  margin-left:10px;
 }
 .selectMoney .s2 {
   float: left;

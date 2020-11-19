@@ -168,7 +168,7 @@
     </div>
     <!--表单-->
     <div class="addForm fnn" v-if="showAdd==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
@@ -324,7 +324,7 @@
 
     <!--修改表单-->
     <div class="addForm fnn" v-if="changeNow==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
@@ -492,7 +492,7 @@
     </div>
     <!--添加表单-->
     <div class="addForm fnn" v-if="jia==true">
-      <div class="addContent addContent2">
+      <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
@@ -742,8 +742,8 @@ export default {
         manageFeeRate: "",
         manageMakeFeeRate: "",
         financePeriod: "",
-        orderPermission: "",
-        accountStatus: "",
+        orderPermission: 0,
+        accountStatus: 1,
         createTime: "",
         commissionCfgList: [],
         productList: [],
@@ -1243,8 +1243,8 @@ export default {
       this.formInline.thirdBoardPositionRatio = "";
       this.formInline.manageFeeRate = "";
       this.formInline.manageMakeFeeRate = "";
-      this.formInline.orderPermission = "";
-      this.formInline.accountStatus = "";
+      this.formInline.orderPermission = 0;
+      this.formInline.accountStatus = 1;
       this.formInline.defaultChildGroupId = "";
       this.formInline.defaultChildCommissionCfgId = "";
       this.formInline.parentAccountCode = this.loginName;
@@ -1784,8 +1784,8 @@ export default {
   margin-left: 0px !important;
 }
 .fnn .el-form-item__label {
-  width: 160px;
-  margin-left: 24px;
+  width: 180px!important;
+  margin-left: 24px!important;
 }
 
 .huiyuan .el-table__body tr.el-table__row--striped td {

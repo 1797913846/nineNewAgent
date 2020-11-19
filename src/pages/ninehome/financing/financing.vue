@@ -55,7 +55,7 @@
     </div>
     <!--表单-->
     <div class="addForm fnn" v-if="showAdd==true">
-      <div class="addContent">
+      <div class="addContent gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
@@ -520,8 +520,8 @@ export default {
 </style>
 <style>
 .fnn .el-form-item__label {
-  width: 160px;
-  margin-left: 24px;
+  width: 180px!important;
+  margin-left: 24px!important;
 }
 </style>
 
