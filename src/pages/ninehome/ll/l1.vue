@@ -15,7 +15,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="编号" width="100" prop="roleId" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="角色名称" prop="roleName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="描述" prop="roleDesc" align="center"></el-table-column>
@@ -31,7 +31,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="编号" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="角色名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="描述" align="center"></el-table-column>

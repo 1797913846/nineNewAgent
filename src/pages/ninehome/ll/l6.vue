@@ -35,7 +35,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作账号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作类型" align="center"></el-table-column>
@@ -43,7 +43,7 @@
           <el-table-column show-overflow-tooltip label="操作时间" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="IP地址" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="ID" prop="id" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作账号" prop="accountCode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="操作类型" prop="optTypeStr" align="center"></el-table-column>

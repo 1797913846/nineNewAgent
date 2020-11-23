@@ -5,7 +5,7 @@
         <div class="container" @click="colorBool = false">
             <!--表格-->
             <div class="reset-scroll-style">
-                <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="700" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
                     <el-table-column show-overflow-tooltip label="等级标识" prop="level" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="等级名称" prop="levelName" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="是否代理" prop="isProxyDesc" align="center"></el-table-column>

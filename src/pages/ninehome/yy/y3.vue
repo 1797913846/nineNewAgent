@@ -53,7 +53,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="570" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="委托时间" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托PK" align="center"></el-table-column>
@@ -73,7 +73,7 @@
           <el-table-column show-overflow-tooltip label="委托状态" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注信息" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table weituo" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table weituo" style="width:98.4%;background-color:#ffffff;" height="570" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="操作" align="center" width="80" v-if="topActive==1">
             <template slot-scope="scope">
               <div class="operation">
@@ -419,7 +419,7 @@ export default {
       }
     },
     exportExcel() {
-      let url,options;
+      let url, options;
       if (this.topActive == 1) {
         url = "/tn/mgr-api/history/entrustCurrent/export";
         options = {
@@ -526,7 +526,11 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.getFundAccount();
+      if (this.topActive == 1) {
+        this.getFundAccount("today");
+      } else {
+        this.getFundAccount();
+      }
     }
   }
 };

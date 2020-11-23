@@ -40,13 +40,13 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
           <el-table-column label="操作" width="180" align="center">
             <template slot-scope="scope">
               <div class="operation">
-                <span v-if="isAdminGroup=='true'&&scope.row.auditResult==0" @click.stop="tong1(scope.$index, scope.row)" class="addSameClass " style="color:rgb(0, 128, 0);">通过</span>
-                <span v-if="isAdminGroup=='true'&&scope.row.auditResult==0" @click.stop="ju1(scope.$index, scope.row)" class="addSameClass " style="color:rgb(255, 0, 0);">拒绝</span>
+                <span v-if="scope.row.auditResult==0" @click.stop="tong1(scope.$index, scope.row)" class="addSameClass " style="color:#2662ee">通过</span>
+                <span v-if="scope.row.auditResult==0" @click.stop="ju1(scope.$index, scope.row)" class="addSameClass " style="color:#2662ee">拒绝</span>
                 <span v-if="scope.row.auditResult==1" style="color:rgb(0, 128, 0);">已通过</span>
                 <span v-if="scope.row.auditResult==-1" style="color:rgb(255, 0, 0);">已拒绝</span>
               </div>
@@ -69,7 +69,7 @@
           <el-table-column show-overflow-tooltip label="支付状态" prop="payStatusDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="备注" prop="remark" align="center"></el-table-column>
         </el-table>
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
           <el-table-column show-overflow-tooltip label="申请时间" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="类型" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>

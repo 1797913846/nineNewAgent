@@ -15,7 +15,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="cfgName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="合作分成方案" width="430" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
@@ -32,7 +32,7 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="方案名称" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="日结方案" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="合作分成方案" align="center"></el-table-column>

@@ -48,7 +48,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="570" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="母账户编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
@@ -62,7 +62,7 @@
           <el-table-column show-overflow-tooltip label="成交编号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="委托编号" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="570" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="母账户编号" prop="productcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountcode" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
@@ -104,7 +104,7 @@ export default {
   data() {
     return {
       tableData: [],
-      ext:{},
+      ext: {},
       colorBool: false,
       id: "",
       keyword: "",
@@ -187,9 +187,9 @@ export default {
       console.log("最终的", this.entruststatusList);
     },
     activeNow(num) {
-      this.accountcode="";
-      this.accountName="";
-      this.dealno="";
+      this.accountcode = "";
+      this.accountName = "";
+      this.dealno = "";
       this.topActive = num;
       if (num == 1) {
         this.getFundAccount("today");
@@ -282,7 +282,7 @@ export default {
             let rows = res.data.data.rows;
             if (rows.length > 0) {
               this.tableData = res.data.data.rows;
-              this.ext=res.data.data.ext;
+              this.ext = res.data.data.ext;
             } else {
               this.tableData = [];
             }
@@ -303,7 +303,11 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.getFundAccount();
+      if (this.topActive == 1) {
+        this.getFundAccount("today");
+      } else {
+        this.getFundAccount();
+      }
     }
   }
 };

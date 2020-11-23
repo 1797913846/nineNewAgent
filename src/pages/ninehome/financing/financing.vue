@@ -8,7 +8,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="融资周期" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="递延周期" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资倍率" align="center"></el-table-column>
@@ -24,7 +24,7 @@
           <el-table-column show-overflow-tooltip label="科创板个股持仓比率" width="140" align="center"></el-table-column>
         </el-table>
       </div>
-      <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="600" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+      <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
         <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
         <el-table-column show-overflow-tooltip label="融资周期" width="100" prop="financePeriod" :formatter="formatter1" align="center"></el-table-column>
         <el-table-column show-overflow-tooltip label="递延周期" prop="financePeriod" :formatter="formatter" align="center"></el-table-column>
@@ -49,9 +49,9 @@
           </template>
         </el-table-column>
       </el-table>
-    </div>
-    <div class="pagination">
-      <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      <div class="pagination">
+        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+      </div>
     </div>
     <!--表单-->
     <div class="addForm fnn" v-if="showAdd==true">
@@ -145,7 +145,7 @@ export default {
         thirdBoardPositionRatio: "", //科创板持仓比率
         secondBoardSingleStockPositionRatio: "",
         thirdBoardSingleStockPositionRatio: "",
-        agentMaxLimitMoney:""
+        agentMaxLimitMoney: ""
       },
       rules: {
         financePeriod: [
@@ -520,8 +520,8 @@ export default {
 </style>
 <style>
 .fnn .el-form-item__label {
-  width: 180px!important;
-  margin-left: 24px!important;
+  width: 180px !important;
+  margin-left: 24px !important;
 }
 </style>
 

@@ -14,7 +14,7 @@ axios.defaults.timeout = 5000;
 //设置接口的域名
 //10.10.1.26  120.26.187.19
 // let burl = 'http://10.10.1.26:8080';
-let burl='http://47.102.151.13';
+let burl = 'http://47.102.151.13';
 axios.defaults.baseURL = burl;
 
 console.log('axios', axios.defaults.baseURL)
@@ -42,25 +42,30 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         // console.log(JSON.stringify(response))
-        if (response.data.code == 10002) {
-            router.replace({
-                path: '/login',
-                query: { redirect: router.currentRoute.fullPath }
-            });
-        }
+        // if (response.data.code == 10002) {
+        //     router.replace({
+        //         path: '/login',
+        //         query: { redirect: router.currentRoute.fullPath }
+        //     });
+        // }
         return response;
     },
     error => {
         console.log(error.response.status);  // 对响应错误做点什么
         if (error.response.status == 400) {
             // 401 清除token信息并跳转到登录页面
-            router.replace({
-                path: '/login',
-                query: { redirect: router.currentRoute.fullPath }
-            });
+            // router.replace({
+            //     path: '/login',
+            //     query: { redirect: router.currentRoute.fullPath }
+            // });
         }
         if (error.response.status == 401) {
-            // 401 清除token信息并跳转到登录页面
+            this.$alert("登录超时，请重新登录", "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+            });
+            //401 清除token信息并跳转到登录页面
             router.replace({
                 path: '/login',
                 query: { redirect: router.currentRoute.fullPath }
