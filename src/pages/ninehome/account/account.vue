@@ -18,6 +18,12 @@
           <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
+      <el-dialog title="持仓信息" :visible.sync="dialogTableVisible" v-dialogDrag :close-on-click-modal="false" :show-close="false">
+        <div>
+          <span>最大化</span>
+          <span>关闭</span>
+        </div>
+      </el-dialog>
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="700" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'riskTip', order: 'desc'}" @sort-change="sortChange" v-if="nullTable==false">
@@ -92,7 +98,8 @@ export default {
       accountCode: "",
       sort: "riskTip",
       order: "asc",
-      stockCode: ""
+      stockCode: "",
+      dialogTableVisible:true
     };
   },
   computed: {

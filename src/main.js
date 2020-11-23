@@ -9,6 +9,8 @@ Vue.use(ElementUI);
 import VueDND from 'awe-dnd'
 Vue.use(VueDND)
 
+import './util/tan.js'
+
 // 无限加载
 import infiniteScroll from 'vue-infinite-scroll'
 Vue.use(infiniteScroll)
