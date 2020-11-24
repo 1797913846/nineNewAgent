@@ -73,7 +73,7 @@
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeS">
         </div>
         <el-form :inline="true" class="demo-form-inline">
-          <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" ref="tree" highlight-current :props="defaultProps">
+          <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" :check-strictly="true" ref="tree" highlight-current :props="defaultProps">
           </el-tree>
           <br />
           <el-form-item>
@@ -153,6 +153,10 @@ export default {
     saveS() {
       console.log(this.$refs.tree.getCheckedKeys());
       let resIds = this.$refs.tree.getCheckedKeys();
+      let resIds1 = this.$refs.tree.getHalfCheckedKeys();
+      resIds = resIds.concat(resIds1);
+      console.log("权限", resIds, resIds1);
+      // resIds = resIds.push(resIds1);
       this.axios
         .post("/tn/mgr-api/sysmgr/saveRoleRes", {
           roleId: this.roleId,
@@ -199,8 +203,14 @@ export default {
             this.sdata.map(item => {
               if (item.checked == true) {
                 this.checkedbox.push(item.id);
+                item.children.map(item1 => {
+                  if (item1.checked == true) {
+                    this.checkedbox.push(item1.id);
+                  }
+                });
               }
             });
+            console.log("选中", this.checkedbox);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -399,7 +409,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
 
 
