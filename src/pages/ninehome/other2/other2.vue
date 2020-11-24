@@ -6,7 +6,7 @@
       <div class=" heightbox">
         <!--表单-->
         <div class="reset-scroll-style">
-          <div class="rbox rbox1">
+          <div class="rbox rbox1 rbox11">
             <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
               <!-- <el-form-item label="沪深主板禁止交易天数：">
                 <el-input v-model="formInline.stockIncreaseBuyLimit" placeholder="沪深主板禁止交易天数"></el-input>
@@ -243,5 +243,11 @@ export default {
 
 <style lang="scss" scoped>
 </style>
+<style>
+.rbox11 .nobt {
+  margin-left: 560px !important;
+}
+</style>
+
 
 

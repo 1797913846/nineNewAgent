@@ -268,7 +268,7 @@ input:-ms-input-placeholder {
 /* dialog */
 
 .el-dialog {
-    margin-top: 18vh !important;
+    /* margin-top: 18vh !important; */
     box-shadow: 0 1px 28px rgba(0, 0, 0, .3);
 }
 
@@ -1124,7 +1124,7 @@ input:-ms-input-placeholder {
 }
 
 .rbox1 .nobt {
-    margin-left: 580px;
+    margin-left: 630px;
 }
 
 .el-checkbox__input.is-checked .el-checkbox__inner {

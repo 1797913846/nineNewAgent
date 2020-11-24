@@ -60,16 +60,24 @@ axios.interceptors.response.use(
             // });
         }
         if (error.response.status == 401) {
-            this.$alert("登录超时，请重新登录", "提示", {
+            Vue.prototype.$alert("登录超时，请重新登录", "提示", {
                 confirmButtonText: "确定",
                 center: true,
-                type: "error"
+                type: "error",
+                callback: action => {
+                    router.replace({
+                        path: '/login',
+                        query: { redirect: router.currentRoute.fullPath }
+                    });
+                    return false;
+                }
             });
-            //401 清除token信息并跳转到登录页面
             router.replace({
                 path: '/login',
                 query: { redirect: router.currentRoute.fullPath }
             });
+            //401 清除token信息并跳转到登录页面
+            return false;
         }
         if (error.response.status == 403) {
             // 401 清除token信息并跳转到登录页面

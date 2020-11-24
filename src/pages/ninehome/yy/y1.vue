@@ -1,7 +1,7 @@
 <!--持仓信息-->
 <template>
   <div class="bigestbox">
-    <topNav></topNav>
+    <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
@@ -96,6 +96,7 @@ export default {
   },
   data() {
     return {
+      whoserouter: "",
       tableData: [],
       ext: {},
       colorBool: false,
@@ -107,7 +108,7 @@ export default {
       nullTable: false,
       accountCode: "",
       productCode: "",
-      stockNo:"",
+      stockNo: "",
       stockCode: "",
       lastPrice: "",
       setArray: [
@@ -159,6 +160,12 @@ export default {
       ]
     };
   },
+  props: {
+    accountId: {
+      type: String,
+      default: ""
+    }
+  },
   computed: {
     headerCellStyle() {
       return {
@@ -183,11 +190,19 @@ export default {
         this.getFundAccount();
       },
       deep: true
+    },
+    accountId: {
+      handler(newVal, oldVal) {
+        this.accountCode = newVal;
+        this.getFundAccount();
+      },
+      deep: true
     }
   },
   created() {
-    this.accountCode = this.$route.query.accountId || "";
-    console.log("是我啊", this.$route.query);
+    this.accountCode = this.$route.query.accountId || this.accountId || "";
+    this.whoserouter = this.$route.path;
+    console.log("是我啊", this.whoserouter, this.accountId);
     this.getFundAccount();
   },
   methods: {
@@ -292,9 +307,9 @@ export default {
         url: "/tn/mgr-api/account/hold/export",
         data: {
           accountCode: this.accountCode,
-          productCode:this.productCode,
-          stockNo:this.stockNo,
-          pageNo:-1
+          productCode: this.productCode,
+          stockNo: this.stockNo,
+          pageNo: -1
         }
       }).then(
         res => {
@@ -319,8 +334,8 @@ export default {
       this.axios
         .post("/tn/mgr-api/account/hold", {
           accountCode: this.accountCode,
-          productCode:this.productCode,
-          stockNo:this.stockNo,
+          productCode: this.productCode,
+          stockNo: this.stockNo,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })

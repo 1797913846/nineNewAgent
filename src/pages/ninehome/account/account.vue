@@ -18,12 +18,7 @@
           <div class="search-user" @click="exportExcel">导出</div>
         </div>
       </div>
-      <el-dialog title="持仓信息" :visible.sync="dialogTableVisible" v-dialogDrag :close-on-click-modal="false" :show-close="false">
-        <div>
-          <span>最大化</span>
-          <span>关闭</span>
-        </div>
-      </el-dialog>
+
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table jiankong" style="width:98.4%;background-color:#ffffff;" height="700" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" :default-sort="{prop: 'riskTip', order: 'desc'}" @sort-change="sortChange" v-if="nullTable==false">
@@ -77,14 +72,17 @@
         </el-table>
       </div>
     </div>
+    <myAlert :whotitle="whotitle" :visible="visible" :accountId="accountId" @childByValue="childByValue"></myAlert>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import myAlert from "@/components/mydialog";
 export default {
   components: {
-    topNav
+    topNav,
+    myAlert
   },
   data() {
     return {
@@ -97,9 +95,11 @@ export default {
       nullTable: false,
       accountCode: "",
       sort: "riskTip",
-      order: "asc",
+      order: "desc",
       stockCode: "",
-      dialogTableVisible:true
+      whotitle: "",
+      visible: false,
+      accountId: ""
     };
   },
   computed: {
@@ -132,13 +132,17 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.visible = childValue;
+    },
     sortChange({ column, prop, order }) {
       console.log("排序", column, prop, order);
       this.sort = prop;
-      if(this.order=='desc'){
-        this.order='asc'
-      }else{
-        this.order='desc'
+      if (this.order == "desc") {
+        this.order = "asc";
+      } else {
+        this.order = "desc";
       }
       this.getFundAccount();
     },
@@ -178,7 +182,7 @@ export default {
         });
     },
     money(index, row) {
-      console.log('钱',row)
+      console.log("钱", row);
       let accountId = row.accountCode;
       this.$router.push({
         path: "/ninehome/money",
@@ -189,12 +193,9 @@ export default {
     },
     y1(index, row) {
       let accountId = row.accountCode;
-      this.$router.push({
-        path: "/ninehome/y1",
-        query: {
-          accountId: accountId
-        }
-      });
+      this.accountId = accountId;
+      this.whotitle = "持仓信息";
+      this.visible = true;
     },
     exportExcel() {
       this.axios({
@@ -292,6 +293,42 @@ export default {
 }
 .el-table--striped .el-table__body tr.el-table__row--striped td {
   background: none !important;
+}
+.maxnow {
+  background: transparent;
+  border: 0px;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  right: 40px;
+  top: 7px;
+}
+.maxnow1 {
+  right: 60px;
+}
+</style>
+<style>
+.el-dialog .el-dialog__header {
+  background-color: rgba(233, 239, 243, 0.21)!important;
+}
+.el-dialog .el-dialog__body {
+  background-color: #fff!important;
+}
+.my-dialog-title {
+  color: #333 !important;
+}
+.el-dialog .el-dialog__headerbtn .el-dialog__close {
+  color: #333 !important;
+}
+.shouldwidth {
+  overflow: scroll;
+  width: 100%;
+  height: 100%;
+}
+.shouldwidth .container {
+  margin: 0px !important;
 }
 </style>
 

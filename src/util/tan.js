@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 Vue.directive('dialogDrag', {
 
     bind(el, binding, vnode, oldVnode) {
@@ -22,11 +23,11 @@ Vue.directive('dialogDrag', {
         //当前顶部高度
 
         let nowMarginTop = 0;
-
+        console.log('我是', el)
         //获取弹框头部（这部分可双击全屏）
-
         const dialogHeaderEl = el.querySelector('.el-dialog__header');
-
+        const maxnow = el.querySelector('.maxnow');
+        console.log('我是dom', dialogHeaderEl, maxnow);
         //弹窗
 
         const dragDom = el.querySelector('.el-dialog');
@@ -109,7 +110,7 @@ Vue.directive('dialogDrag', {
 
         //双击头部全屏效果
 
-        dialogHeaderEl.ondblclick = (e) => {
+        dialogHeaderEl.onclick = (e) => {
 
             if (isFullScreen == false) {
 
