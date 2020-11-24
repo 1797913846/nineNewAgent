@@ -7,7 +7,17 @@
           <el-row class="tac">
             <el-col>
               <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
-                <el-submenu index="8">
+                <el-submenu v-for="(item,index) in menuList" :key="index" :index="item.ext">
+                  <template slot="title">
+                    <i><img class="menu-icon menu-icon-noshow" :src="'../../static/nine/m'+item.ext+'-2.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" :src="'../../static/nine/m'+item.ext+'-1.png'" alt=""></i>
+                    <span>{{item.name}}</span>
+                  </template>
+                  <el-menu-item-group>
+                    <el-menu-item v-for="(item1,index1) in item.children" :key="index1" :index="item.ext+'-'+index1" @click="clickJump(item1.url)">{{item1.name}}</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+                <!-- <el-submenu index="8">
                   <template slot="title">
                     <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m9-2.png" alt=""></i>
                     <i><img class="menu-icon menu-icon-show" src="../assets/nine/m9-1.png" alt=""></i>
@@ -27,7 +37,6 @@
                   </template>
                   <el-menu-item-group>
                     <el-menu-item index="9-1" @click="clickJump('/ninehome/l1')">角色管理</el-menu-item>
-                    <!-- <el-menu-item index="9-2" @click="clickJump('/ninehome/l5')">手机号认证</el-menu-item> -->
                     <el-menu-item index="9-3" @click="clickJump('/ninehome/l6')">操作日志</el-menu-item>
                     <el-menu-item index="9-4" @click="clickJump('/ninehome/l7')">安全设置</el-menu-item>
                   </el-menu-item-group>
@@ -66,7 +75,6 @@
                 </el-submenu>
                 <el-submenu index="4">
                   <template slot="title">
-                    <!-- <i class="el-icon-location"></i> -->
                     <i><img class="menu-icon menu-icon-noshow" src="../assets/nine/m6-2.png" alt=""></i>
                     <i><img class="menu-icon menu-icon-show" src="../assets/nine/m6-1.png" alt=""></i>
                     <span>风控管理</span>
@@ -74,7 +82,6 @@
                   <el-menu-item-group>
                     <el-menu-item index="3-1" @click="clickJump('/ninehome/account')">分账户监管</el-menu-item>
                     <el-menu-item index="3-2" @click="clickJump('/ninehome/blacklist')">黑名单</el-menu-item>
-                    <!-- <el-menu-item index="3-3" @click="clickJump('/ninehome/other')">风控设置</el-menu-item> -->
                     <el-menu-item index="3-4" @click="clickJump('/ninehome/other1')">全局风控设置</el-menu-item>
                     <el-menu-item index="3-5" @click="clickJump('/ninehome/other2')">股票交易设置</el-menu-item>
                   </el-menu-item-group>
@@ -123,7 +130,7 @@
                     <el-menu-item index="7-10" @click="clickJump('/ninehome/y10')">持仓变动信息</el-menu-item>
                     <el-menu-item index="7-11" @click="clickJump('/ninehome/y11')">交割单信息</el-menu-item>
                   </el-menu-item-group>
-                </el-submenu>
+                </el-submenu> -->
               </el-menu>
             </el-col>
           </el-row>
@@ -153,10 +160,12 @@ export default {
       showQrcode: false,
       InviteCode: "",
       where: "",
-      whichIndex: ""
+      whichIndex: "",
+      menuList: ""
     };
   },
   created: function() {
+    this.getMenuList();
     eventBus.$on("modifyUserName", newName => {
       this.userName = newName;
     });
@@ -288,11 +297,30 @@ export default {
     // this.listenResize();
   },
   methods: {
+    getMenuList() {
+      this.axios
+        .get("/tn/mgr-api/menu-list")
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.menuList = res.data.data;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     clickJump(where) {
       this.$router.push({
         path: where
       });
-      if(where=='/ninehome/y3'){
+      if (where == "/ninehome/y3") {
         location.reload();
       }
     },
