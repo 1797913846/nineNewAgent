@@ -320,9 +320,9 @@ export default {
       this.$router.push({
         path: where
       });
-      if (where == "/ninehome/y3") {
-        location.reload();
-      }
+      // if (where == "/ninehome/y3") {
+      //   location.reload();
+      // }
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);

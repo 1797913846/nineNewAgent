@@ -35,7 +35,7 @@
                 <span @click.stop="look(scope.$index,scope.row)" class="addSameClass ">查看</span>
                 <span @click.stop="money(scope.$index,scope.row)" class="addSameClass ">资金</span>
                 <span v-if="scope.row.accountStatus == 2 || scope.row.balance < 0" @click.stop="ping(scope.$index,scope.row)" class="addSameClass ">平仓</span>
-                <span @click.stop="changeWho(scope.$index, scope.row)" class="addSameClass ">修改角色</span>
+                <span @click.stop="changeWho(scope.$index, scope.row)" class="addSameClass " v-if="isAdminGroup=='true'">修改角色</span>
                 <span class="addSameClass " @click.stop="changeSet(scope.$index, scope.row)">修改用户推荐人</span>
               </div>
             </template>
@@ -813,7 +813,8 @@ export default {
       loginName: "",
       defaultChildGroupId: "",
       defaultChildCommissionCfgId: "",
-      levelId: ""
+      levelId: "",
+      isAdminGroup: false
     };
   },
   computed: {
@@ -857,6 +858,7 @@ export default {
     }
   },
   created() {
+    this.isAdminGroup = localStorage.getItem("isAdminGroup");
     this.getBanksList();
     this.getProvincesList();
     this.getCitiesList();
