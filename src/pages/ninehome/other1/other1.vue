@@ -54,12 +54,12 @@
                   <el-option label="开启" :value="Number(1)"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="产品下单随机算法配置：">
+              <!-- <el-form-item label="产品下单随机算法配置：">
                 <el-select v-model="formInline.ctrlRoundRobinNumber">
                   <el-option label="【随机方式】匹配券商账户" :value="Number(1)"></el-option>
                   <el-option label="【可用资金方式】匹配券商账户" :value="Number(2)"></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="开启交易佣金自动结算到账户余额：">
                 <el-select v-model="formInline.autoClear">
                   <el-option label="关闭" :value="Number(0)"></el-option>
@@ -180,7 +180,7 @@ export default {
               // stockPrefixLimit: this.formInline.stockPrefixLimit,
               manageFeeMode: this.formInline.manageFeeMode,
               autoClosePosition: this.formInline.autoClosePosition,
-              ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,
+              // ctrlRoundRobinNumber: this.formInline.ctrlRoundRobinNumber,
               autoClear: this.formInline.autoClear,
               autoPolling: this.formInline.autoPolling,
               finishStrategyInAdvance: this.formInline.finishStrategyInAdvance,
