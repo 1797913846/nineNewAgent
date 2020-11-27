@@ -60,18 +60,19 @@ axios.interceptors.response.use(
             // });
         }
         if (error.response.status == 401) {
-            Vue.prototype.$alert("登录超时，请重新登录", "提示", {
-                confirmButtonText: "确定",
-                center: true,
-                type: "error",
-                callback: action => {
-                    router.replace({
-                        path: '/login',
-                        query: { redirect: router.currentRoute.fullPath }
-                    });
-                    return false;
-                }
-            });
+            // Vue.prototype.$alert("登录超时，请重新登录", "提示", {
+            //     confirmButtonText: "确定",
+            //     center: true,
+            //     type: "error",
+            //     callback: action => {
+            //         router.replace({
+            //             path: '/login',
+            //             query: { redirect: router.currentRoute.fullPath }
+            //         });
+            //         return false;
+            //     }
+            // });
+            localStorage.clear();
             router.replace({
                 path: '/login',
                 query: { redirect: router.currentRoute.fullPath }

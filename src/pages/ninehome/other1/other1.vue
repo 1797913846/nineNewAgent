@@ -81,13 +81,13 @@
               <el-form-item label="委托间隔时效（秒）：">
                 <el-input v-model="formInline.appointReqExpire" placeholder="委托间隔时效（秒）"></el-input>
               </el-form-item>
-              <span class="zhutext">注：数据为0时不拦截</span>
-              <el-form-item label="开启创业板注册制：">
+              <span class="zhutext">注：数据为0时不拦截</span><br />
+              <!-- <el-form-item label="开启创业板注册制：">
                 <el-select v-model="formInline.isRegBoard">
                   <el-option label="关闭" :value="Number(0)"></el-option>
                   <el-option label="开启" :value="Number(1)"></el-option>
                 </el-select>
-              </el-form-item><br />
+              </el-form-item> -->
               <el-form-item>
                 <el-button type="primary" class="nobt" @click="onSubmit('formInline')">保存</el-button>
               </el-form-item>
@@ -184,8 +184,8 @@ export default {
               autoClear: this.formInline.autoClear,
               autoPolling: this.formInline.autoPolling,
               finishStrategyInAdvance: this.formInline.finishStrategyInAdvance,
-              appointReqExpire: this.formInline.appointReqExpire,
-              isRegBoard: this.formInline.isRegBoard
+              appointReqExpire: this.formInline.appointReqExpire
+              // isRegBoard: this.formInline.isRegBoard
             })
             .then(res => {
               console.log("getFundAccount>>", res.data);
