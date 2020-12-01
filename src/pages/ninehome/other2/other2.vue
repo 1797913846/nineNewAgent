@@ -43,12 +43,12 @@
                 <el-input v-model="formInline.thirdStockDropBuyLimit" placeholder="科创板跌幅买入限制"></el-input>
               </el-form-item>
               <span class="zhutext">注：数据为0时无限制</span>
-              <el-form-item label="单客户单支股票市值规模限制：">
+              <!-- <el-form-item label="单客户单支股票市值规模限制：">
                 <el-input v-model="formInline.singlestockHoldLimit" placeholder="单客户单支股票市值规模限制"></el-input>
-              </el-form-item>
-              <el-form-item label="全平台单支股票市值规模限制：">
+              </el-form-item> -->
+              <!-- <el-form-item label="全平台单支股票市值规模限制：">
                 <el-input v-model="formInline.singlestockAllHoldLimit" placeholder="全平台单支股票市值规模限制"></el-input>
-              </el-form-item>
+              </el-form-item> -->
               <el-form-item label="交易股票限制：">
                 <el-input v-model="formInline.stockPrefixLimit" placeholder="交易股票限制"></el-input>
               </el-form-item>
@@ -184,8 +184,8 @@ export default {
               thirdStockIncreaseBuyLimit: this.formInline
                 .thirdStockIncreaseBuyLimit,
               thirdStockDropBuyLimit: this.formInline.thirdStockDropBuyLimit,
-              singlestockHoldLimit: this.formInline.singlestockHoldLimit,
-              singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit,
+              // singlestockHoldLimit: this.formInline.singlestockHoldLimit,
+              // singlestockAllHoldLimit: this.formInline.singlestockAllHoldLimit,
               stockPrefixLimit: this.formInline.stockPrefixLimit
               // manageFeeMode: this.formInline.manageFeeMode,
               // autoClosePosition: this.formInline.autoClosePosition,
