@@ -33,6 +33,7 @@ import ninehomey8 from '@/pages/ninehome/yy/y8'
 import ninehomey9 from '@/pages/ninehome/yy/y9'
 import ninehomey10 from '@/pages/ninehome/yy/y10'
 import ninehomey11 from '@/pages/ninehome/yy/y11'
+import ninehomey12 from '@/pages/ninehome/yy/y12'
 
 import ninehomel1 from '@/pages/ninehome/ll/l1'
 import ninehomel2 from '@/pages/ninehome/ll/l2'
@@ -285,6 +286,14 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomey11
+    },
+    {
+      path: '/ninehome/y12',
+      meta: {
+        title: '逐笔持仓对比',
+        requireAuth: true
+      },
+      component: ninehomey12
     },
     {
       path: '/ninehome/l1',

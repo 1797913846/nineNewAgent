@@ -14,7 +14,7 @@
                     <span>{{item.name}}</span>
                   </template>
                   <el-menu-item-group>
-                    <el-menu-item v-for="(item1,index1) in item.children" :key="index1" :index="item.ext+'-'+index1" @click="clickJump(item1.url)">{{item1.name}}</el-menu-item>
+                    <el-menu-item v-for="(item1,index1) in item.children" :key="index1" :index="item.ext+'-'+(index1+1)" @click="clickJump(item1.url)">{{item1.name}}</el-menu-item>
                   </el-menu-item-group>
                 </el-submenu>
                 <!-- <el-submenu index="8">
@@ -269,6 +269,9 @@ export default {
             break;
           case "/ninehome/y11":
             this.whichIndex = "7-11";
+            break;
+           case "/ninehome/y12":
+            this.whichIndex = "7-12";
             break;
           case "/ninehome/l1":
             this.whichIndex = "9-1";

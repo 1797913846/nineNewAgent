@@ -74,7 +74,7 @@
           <el-table-column show-overflow-tooltip label="股票代码" prop="stockNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="平仓日期" prop="orderSellDate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="平仓时间" prop="orderBuyTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="平仓时间" prop="orderSellTime" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="平仓编号" prop="sellOrderNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="平仓数量" prop="dealCnt" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="平仓均价" prop="dealAvrPrice" align="center"></el-table-column>
