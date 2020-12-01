@@ -339,7 +339,7 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
           </el-form-item>
@@ -352,30 +352,30 @@
           <el-form-item label="会员ID：">
             <el-input v-model="formInline.accountId" :disabled="true" placeholder="会员ID"></el-input>
           </el-form-item>
-          <el-form-item label="会员名称：">
+          <el-form-item label="会员名称：" prop="accountName">
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
-          <el-form-item label="资金池ID：">
+          <el-form-item label="资金池ID：" prop="productGroupId">
             <el-select v-model="formInline.productGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员等级：">
+          <el-form-item label="会员等级：" prop="level">
             <el-select v-model="formInline.level">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="佣金方案(单边)：">
+          <el-form-item label="佣金方案(单边)：" prop=" commissionCfgId">
             <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员管理权限：">
+          <el-form-item label="会员管理权限：" prop="ableCrud">
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商限额：">
+          <el-form-item label="代理商限额：" prop="agentMaxLimitMoney">
             <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="账户余额：">
@@ -396,28 +396,28 @@
           <el-form-item label="警戒线(金额)：">
             <el-input v-model="formInline.cordonLine" placeholder="警戒线(金额)"></el-input>
           </el-form-item>
-          <el-form-item label="个股持仓比例：">
+          <el-form-item label="个股持仓比例：" prop="positionRatio">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：" class="smallfont">
+          <el-form-item label="创业板持仓比例：" class="smallfont" prop="secondBoardPositionRatio">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：" class="smallfont">
+          <el-form-item label="科创板持仓比例：" class="smallfont" prop="thirdBoardPositionRatio">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板个股持仓比率：" class="smallfont">
+          <el-form-item label="创业板个股持仓比率：" class="smallfont" prop="secondBoardSingleStockPositionRatio">
             <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
-          <el-form-item label="科创板个股持仓比率：" class="smallfont">
+          <el-form-item label="科创板个股持仓比率：" class="smallfont" prop="thirdBoardSingleStockPositionRatio">
             <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
           </el-form-item>
-          <el-form-item label="管理费率：">
+          <el-form-item label="管理费率：" prop="manageFeeRate">
             <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
           </el-form-item>
-          <el-form-item label="建仓费率：">
+          <el-form-item label="建仓费率：" prop="manageMakeFeeRate">
             <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
           </el-form-item>
           <el-form-item label="融资周期：">
@@ -428,22 +428,22 @@
               <el-option label="单" value="single"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下单权限：">
+          <el-form-item label="下单权限：" prop="orderPermission">
             <el-select v-model="formInline.orderPermission">
               <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员状态：">
+          <el-form-item label="会员状态：" prop="accountStatus">
             <el-select v-model="formInline.accountStatus">
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -507,7 +507,7 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
           </el-form-item>
@@ -517,33 +517,33 @@
           <el-form-item label="推荐人佣金：">
             <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
           </el-form-item>
-          <el-form-item label="手机号：">
+          <el-form-item label="手机号：" prop="accountId">
             <el-input v-model="formInline.accountId" placeholder="手机号"></el-input>
           </el-form-item>
-          <el-form-item label="会员名称：">
+          <el-form-item label="会员名称：" prop="accountName">
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
-          <el-form-item label="资金池ID：">
+          <el-form-item label="资金池ID：" prop="productGroupId">
             <el-select v-model="formInline.productGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员等级：">
+          <el-form-item label="会员等级：" prop="level">
             <el-select v-model="formInline.level">
               <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="佣金方案(单边)：">
+          <el-form-item label="佣金方案(单边)：" prop=" commissionCfgId">
             <el-select v-model="formInline.commissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员管理权限：">
+          <el-form-item label="会员管理权限：" prop="ableCrud">
             <el-select v-model="formInline.ableCrud">
               <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="代理商限额：">
+          <el-form-item label="代理商限额：" prop="agentMaxLimitMoney">
             <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="账户余额：">
@@ -564,28 +564,28 @@
           <el-form-item label="警戒线(金额)：">
             <el-input v-model="formInline.cordonLine" :disabled="true" placeholder="警戒线(金额)"></el-input>
           </el-form-item>
-          <el-form-item label="个股持仓比例：">
+          <el-form-item label="个股持仓比例：" prop="positionRatio">
             <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板持仓比例：" class="smallfont">
+          <el-form-item label="创业板持仓比例：" class="smallfont" prop="secondBoardPositionRatio">
             <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="科创板持仓比例：" class="smallfont">
+          <el-form-item label="科创板持仓比例：" class="smallfont" prop="thirdBoardPositionRatio">
             <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
           </el-form-item>
-          <el-form-item label="创业板个股持仓比率：" class="smallfont">
+          <el-form-item label="创业板个股持仓比率：" class="smallfont" prop="secondBoardSingleStockPositionRatio">
             <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
-          <el-form-item label="科创板个股持仓比率：" class="smallfont">
+          <el-form-item label="科创板个股持仓比率：" class="smallfont" prop="thirdBoardSingleStockPositionRatio">
             <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
           </el-form-item>
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
           </el-form-item>
-          <el-form-item label="管理费率：">
+          <el-form-item label="管理费率："  prop="manageFeeRate">
             <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
           </el-form-item>
-          <el-form-item label="建仓费率：">
+          <el-form-item label="建仓费率：" prop="manageMakeFeeRate">
             <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
           </el-form-item>
           <el-form-item label="融资周期：">
@@ -596,22 +596,22 @@
               <el-option label="单" value="single"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下单权限：">
+          <el-form-item label="下单权限：" prop="orderPermission">
             <el-select v-model="formInline.orderPermission">
               <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="会员状态：">
+          <el-form-item label="会员状态：" prop="accountStatus">
             <el-select v-model="formInline.accountStatus">
               <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId">
+          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
             <el-select v-model="formInline.defaultChildGroupId">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId">
+          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
             <el-select v-model="formInline.defaultChildCommissionCfgId">
               <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
             </el-select>
@@ -814,7 +814,105 @@ export default {
       defaultChildGroupId: "",
       defaultChildCommissionCfgId: "",
       levelId: "",
-      isAdminGroup: false
+      isAdminGroup: false,
+      rules: {
+        accountId: [
+          { required: true, message: "必填项", trigger: "blur" },
+          {
+            pattern: /^1[0-9]{10}$/,
+            message: "手机号错误",
+            trigger: "blur"
+          }
+        ],
+        accountName: [
+          { required: true, message: "请输入会员名称", trigger: "blur" }
+        ],
+        agentMaxLimitMoney: [
+          { required: true, message: "请输入代理商限额", trigger: "blur" }
+        ],
+        productGroupId: [
+          { required: true, message: "请选择资金池ID", trigger: "change" }
+        ],
+        level: [
+          { required: true, message: "请选择会员等级", trigger: "change" }
+        ],
+        commissionCfgId: [
+          { required: true, message: "请选择佣金方案(单边)", trigger: "change" }
+        ],
+        ableCrud: [
+          { required: true, message: "请选择会员管理权限", trigger: "change" }
+        ],
+        positionRatio: [
+          { required: true, message: "请输入个股持仓比例", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        secondBoardPositionRatio: [
+          { required: true, message: "请输入创业板持仓比例", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        thirdBoardPositionRatio: [
+          { required: true, message: "请输入科创板持仓比例", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        secondBoardSingleStockPositionRatio: [
+          {
+            required: true,
+            message: "请输入创业板个股持仓比率",
+            trigger: "blur"
+          },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        thirdBoardSingleStockPositionRatio: [
+          {
+            required: true,
+            message: "请输入科创板个股持仓比率",
+            trigger: "blur"
+          },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        manageFeeRate: [
+          { required: true, message: "请输入管理费率", trigger: "blur" }
+        ],
+        manageMakeFeeRate: [
+          { required: true, message: "请输入建仓费率", trigger: "blur" }
+        ],
+        orderPermission: [
+          { required: true, message: "请选择下单权限", trigger: "change" }
+        ],
+        accountStatus: [
+          { required: true, message: "请选择会员状态", trigger: "change" }
+        ],
+        defaultChildGroupId: [
+          { required: true, message: "请选择下级默认资金池", trigger: "change" }
+        ],
+        defaultChildCommissionCfgId: [
+          {
+            required: true,
+            message: "请选择下级默认佣金方案",
+            trigger: "change"
+          }
+        ]
+      }
     };
   },
   computed: {
