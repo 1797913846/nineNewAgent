@@ -582,7 +582,7 @@
           <el-form-item label="融资比例：">
             <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
           </el-form-item>
-          <el-form-item label="管理费率："  prop="manageFeeRate">
+          <el-form-item label="管理费率：" prop="manageFeeRate">
             <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
           </el-form-item>
           <el-form-item label="建仓费率：" prop="manageMakeFeeRate">
@@ -1658,7 +1658,10 @@ export default {
               center: true,
               type: "success"
             });
-            this.getFundAccount();
+            this.currentPage = 1;
+            this.agentId = this.formInline.accountId;
+            this.getFundAccount(this.agentName, this.agentId);
+            // this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -1716,7 +1719,10 @@ export default {
               center: true,
               type: "success"
             });
-            this.getFundAccount();
+            this.currentPage = 1;
+            this.agentId = accountId;
+            this.getFundAccount(this.agentName, accountId);
+            // this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",

@@ -206,6 +206,13 @@ export default {
                 item.children.map(item1 => {
                   if (item1.checked == true) {
                     this.checkedbox.push(item1.id);
+                    if (item1.children && item1.children.length > 0) {
+                      item1.children.map(item2 => {
+                        if (item2.checked == true) {
+                          this.checkedbox.push(item2.id);
+                        }
+                      });
+                    }
                   }
                 });
               }
