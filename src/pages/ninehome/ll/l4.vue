@@ -152,17 +152,23 @@
         </el-form>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
+      deleteBool: false,
+      deleteTitle: "确认删除吗?",
+      deleteRight: false,
       tableData: [],
       colorBool: false,
       keyword: "",
@@ -247,7 +253,8 @@ export default {
           { required: true, message: "请输入IP地址", trigger: "blur" }
         ],
         ipport: [{ required: true, message: "请输入端口", trigger: "blur" }]
-      }
+      },
+      deletebrokerid: ""
     };
   },
   computed: {
@@ -299,6 +306,39 @@ export default {
     this.getBranchesList();
   },
   methods: {
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/sysmgr/brokerMgr/delete", {
+            brokerid: this.deletebrokerid
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert("删除成功", "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     getAccountList() {
       this.axios
         .post("/tn/mgr-api/account/bankCard/edit-pre")
@@ -471,36 +511,38 @@ export default {
     },
     deleteNow(index, row) {
       let brokerid = row.brokerid;
-      this.axios
-        .post("/tn/mgr-api/sysmgr/brokerMgr/delete", {
-          brokerid: brokerid
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert("删除成功", "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.deletebrokerid = brokerid;
+      this.deleteBool=true;
+      // this.axios
+      //   .post("/tn/mgr-api/sysmgr/brokerMgr/delete", {
+      //     brokerid: brokerid
+      //   })
+      //   .then(res => {
+      //     console.log("getFundAccount>>", res.data);
+      //     if (res.data.code == 200) {
+      //       this.$alert("删除成功", "提示", {
+      //         confirmButtonText: "确定",
+      //         center: true,
+      //         type: "success"
+      //       });
+      //       this.getFundAccount();
+      //     } else {
+      //       this.$alert(res.data.info, "提示", {
+      //         confirmButtonText: "确定",
+      //         center: true,
+      //         type: "error"
+      //       });
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     },
     onSubmitChange(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.axios
-            .post("/tn/mgr-api/sysmgr/brokerMgr/save", {
+            .post("/tn/mgr-api/sysmgr/brokerMgr/update", {
               brokerid: this.formInline.brokerid,
               brokername: this.formInline.brokername,
               brokertype: this.formInline.brokertype,
