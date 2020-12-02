@@ -92,6 +92,24 @@
         <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
       </div>
     </div>
+    <div class="addForm" v-if="juBool==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">拒绝理由</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJu">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+          <el-form-item label="拒绝理由：">
+            <el-input v-model="remark" placeholder="请输入拒绝理由"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button class="savebt" type="primary" @click="juNow">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeJu">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -137,7 +155,10 @@ export default {
         }
       ],
       createTimeStart: "",
-      createTimeEnd: ""
+      createTimeEnd: "",
+      juBool: false,
+      remark: "",
+      juId: ""
     };
   },
   computed: {
@@ -197,12 +218,23 @@ export default {
           console.log(err);
         });
     },
+    closeJu() {
+      this.remark = "";
+      this.juBool = false;
+    },
     ju1(index, row) {
+      this.juBool = true;
+      this.juId = row.id;
+    },
+    juNow() {
+      if (!this.remark) {
+        this.remark = "审核不通过";
+      }
       this.axios
         .post("/tn/mgr-api/payOrder/verify", {
-          id: row.id,
+          id: this.juId,
           result: "FAIL",
-          remark: "审核不通过"
+          remark: this.remark
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -212,6 +244,7 @@ export default {
               type: "success"
             });
             this.getFundAccount();
+            this.juBool = false;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
