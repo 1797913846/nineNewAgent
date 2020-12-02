@@ -109,6 +109,7 @@ export default {
           if (res.data.code == 200) {
             let data = res.data.data;
             localStorage.setItem("userId", data.userId);
+            localStorage.setItem("level", data.level);
             localStorage.setItem("userName", data.userName);
             localStorage.setItem("loginName", data.loginName);
             localStorage.setItem("isAdminGroup", data.isAdminGroup);

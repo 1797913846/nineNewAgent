@@ -73,7 +73,7 @@
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeS">
         </div>
         <el-form :inline="true" class="demo-form-inline">
-          <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" :check-strictly="true" ref="tree" highlight-current :props="defaultProps">
+          <el-tree :data="sdata" show-checkbox default-expand-all node-key="id" :default-checked-keys="checkedbox" :check-strictly="true" ref="tree" highlight-current :props="defaultProps" @check="checkChange">
           </el-tree>
           <br />
           <el-form-item>
@@ -150,6 +150,16 @@ export default {
     this.getFundAccount();
   },
   methods: {
+    checkChange(data) {
+      console.log('是我',data);
+      // const node = this.$refs.tree.getNode(data.id)
+      // this.setNode(node)
+      // if(data.isParent==true&&data.checked==true){
+      //   data.children.map(item=>{
+      //     this.checkedbox.push(item.id);
+      //   })
+      // }
+    },
     saveS() {
       console.log(this.$refs.tree.getCheckedKeys());
       let resIds = this.$refs.tree.getCheckedKeys();

@@ -6,7 +6,7 @@
       <div class="template-top">
         <div class="operate-btn">
           <div class="search-box">
-            <input type="text" placeholder="请输入会员编号" v-model="accountCode" />
+            <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
