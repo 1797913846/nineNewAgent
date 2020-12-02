@@ -196,37 +196,37 @@ export default {
             this.whichIndex = "2-1";
             break;
           case "/ninehome/assets":
-            this.whichIndex = "4-1";
-            break;
-          case "/ninehome/pool":
-            this.whichIndex = "4-2";
-            break;
-          case "/ninehome/account":
             this.whichIndex = "3-1";
             break;
-          case "/ninehome/blacklist":
+          case "/ninehome/pool":
             this.whichIndex = "3-2";
             break;
-          case "/ninehome/other":
-            this.whichIndex = "3-3";
+          case "/ninehome/account":
+            this.whichIndex = "4-1";
             break;
+          case "/ninehome/blacklist":
+            this.whichIndex = "4-2";
+            break;
+          // case "/ninehome/other":
+          //   this.whichIndex = "4-3";
+          //   break;
           case "/ninehome/other1":
-            this.whichIndex = "3-4";
+            this.whichIndex = "4-3";
             break;
           case "/ninehome/other2":
-            this.whichIndex = "3-5";
+            this.whichIndex = "4-4";
             break;
           case "/ninehome/money":
-            this.whichIndex = "5-1";
+            this.whichIndex = "5-4";
             break;
           case "/ninehome/topup":
-            this.whichIndex = "5-2";
+            this.whichIndex = "5-1";
             break;
           case "/ninehome/withdrawal":
-            this.whichIndex = "5-3";
+            this.whichIndex = "5-2";
             break;
           case "/ninehome/water":
-            this.whichIndex = "5-4";
+            this.whichIndex = "5-3";
             break;
           case "/ninehome/huiyuan":
             this.whichIndex = "6-1";
@@ -270,26 +270,26 @@ export default {
           case "/ninehome/y11":
             this.whichIndex = "7-11";
             break;
-           case "/ninehome/y12":
+          case "/ninehome/y12":
             this.whichIndex = "7-12";
             break;
           case "/ninehome/l1":
-            this.whichIndex = "9-1";
+            this.whichIndex = "9-2";
             break;
           case "/ninehome/l6":
-            this.whichIndex = "9-3";
+            this.whichIndex = "9-1";
             break;
           case "/ninehome/l7":
-            this.whichIndex = "9-4";
+            this.whichIndex = "9-3";
             break;
           case "/ninehome/l2":
-            this.whichIndex = "8-2";
+            this.whichIndex = "8-1";
             break;
           case "/ninehome/l3":
-            this.whichIndex = "8-3";
+            this.whichIndex = "8-2";
             break;
           case "/ninehome/l4":
-            this.whichIndex = "8-4";
+            this.whichIndex = "8-3";
             break;
         }
       },
