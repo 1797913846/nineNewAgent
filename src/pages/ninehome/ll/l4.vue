@@ -564,7 +564,7 @@ export default {
                 this.changeNow = false;
                 this.getFundAccount();
               } else {
-                this.changeNow = false;
+                // this.changeNow = false;
                 this.$alert(res.data.info, "提示", {
                   confirmButtonText: "确定",
                   center: true,
@@ -611,7 +611,7 @@ export default {
                 this.jia = false;
                 this.getFundAccount();
               } else {
-                this.jia = false;
+                // this.jia = false;
                 this.$alert(res.data.info, "提示", {
                   confirmButtonText: "确定",
                   center: true,
