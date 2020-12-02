@@ -58,7 +58,7 @@
           <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
           <el-table-column label="邀请码" align="center">
             <template slot-scope="scope">
-              <img class="smallcode" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
+              <img :class="{smallcode:true, codeborder:indexindex==scope.$index}" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center" width="140"></el-table-column>
@@ -527,7 +527,7 @@ export default {
       colorBool: false,
       agentName: "",
       agentId: "",
-      pageSize: 31,
+      pageSize: 13,
       currentPage: 1,
       total: 10,
       nullTable: false,
@@ -696,7 +696,8 @@ export default {
       loginName: "",
       defaultChildGroupId: "",
       defaultChildCommissionCfgId: "",
-      levelId: ""
+      levelId: "",
+      indexindex:""
     };
   },
   computed: {
@@ -901,6 +902,10 @@ export default {
     },
     showEveryCode(index, row) {
       console.log("index2", index);
+      this.indexindex=index;
+      if (index > 7) {
+        index = 7;
+      }
       let inviteCode = row.inviteCode;
       this.inviteCode = inviteCode;
       this.showQrcode1 = true;
@@ -1338,6 +1343,7 @@ export default {
   margin-right: 4px;
   font-weight: none !important;
 }
+.codeborder{border:2px solid #2662ee;border-radius: 50%;}
 </style>
 
 
