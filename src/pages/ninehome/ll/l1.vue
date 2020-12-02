@@ -151,14 +151,27 @@ export default {
   },
   methods: {
     checkChange(data) {
-      console.log('是我',data);
-      // const node = this.$refs.tree.getNode(data.id)
-      // this.setNode(node)
-      // if(data.isParent==true&&data.checked==true){
-      //   data.children.map(item=>{
-      //     this.checkedbox.push(item.id);
-      //   })
-      // }
+      if (this.checkedbox.length) {
+        let index = this.checkedbox.indexOf(data.id);
+        if (index > -1) {
+          if (data.isParent == true) {
+            data.children.map(item => {
+              let index1 = this.checkedbox.indexOf(item.id);
+              this.checkedbox.splice(index1, 1);
+            });
+          }
+          this.checkedbox.splice(index, 1);
+        } else {
+          this.checkedbox.push(data.id);
+          if (data.isParent == true) {
+            data.children.map(item => {
+              this.checkedbox.push(item.id);
+            });
+          }
+        }
+      }
+      console.log("我是数据", this.checkedbox);
+      this.$refs.tree.setCheckedKeys(this.checkedbox);
     },
     saveS() {
       console.log(this.$refs.tree.getCheckedKeys());
