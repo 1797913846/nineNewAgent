@@ -75,7 +75,7 @@
           <div class="buybox" v-if="accountGroup.length>0">
             <div class="buytitle">买入优先级：</div>
             <div class="buycontent">
-              <el-table :border="true" :highlight-current-row="colorBool" :data="accountGroup" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="accountGroup.length>0" :default-sort="{prop: 'priority', order: 'ascending'}">
+              <el-table :border="true" :highlight-current-row="colorBool" :data="accountGroup" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="400" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="accountGroup.length>0" :default-sort="{prop: 'priority', order: 'ascending'}">
                 <el-table-column label="优先级" align="center" width="100" sortable prop="priority">
                   <template slot-scope="scope">
                     <div class="operation">
@@ -206,12 +206,20 @@ export default {
         } else if (this.addTitle == "修改") {
           console.log("新旧", newVal, oldVal);
           this.oldSelectList = oldVal;
+          let arrNow = [];
+          this.accountGroup.map(item => {
+            arrNow.push(item.productCode);
+          });
+
           newVal.map(item => {
-            this.accountGroup.push({
-              priority: 0,
-              productCode: item,
-              enable: true
-            });
+            if (arrNow.indexOf(item) != -1) {
+            } else {
+              this.accountGroup.push({
+                priority: 0,
+                productCode: item,
+                enable: true
+              });
+            }
           });
         }
       },
@@ -241,7 +249,7 @@ export default {
   methods: {
     unique(a) {
       var res = a.filter(function(item, index, array) {
-        return array.indexOf(item) === index;
+        return array.indexOf(item) == index;
       });
       return res;
     },
@@ -276,24 +284,67 @@ export default {
       return false;
     },
     addSelectMoney() {
-      console.log("对的", this.selectValue);
-      this.selectlist.push(this.selectValue);
-      if (
-        this.isRepeat(this.selectlist) &&
-        this.selectlist.indexOf(this.selectValue) != -1
-      ) {
-        this.$alert("买入优先级中资金账号已存在，请勿重复操作", {
-          confirmButtonText: "确定",
-          center: true,
-          type: "error"
-        });
+      if (this.addTitle == "新增") {
+        if (!this.selectValue) {
+          this.$alert("请先选择资金账号", {
+            confirmButtonText: "确定",
+            center: true,
+            type: "error"
+          });
+        } else {
+          console.log("对的", this.selectlist, this.selectValue);
+          this.selectlist.push(this.selectValue);
+          if (
+            this.isRepeat(this.selectlist) &&
+            this.selectlist.indexOf(this.selectValue) != -1
+          ) {
+            this.$alert("买入优先级中资金账号已存在，请勿重复操作", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+          this.selectlist = this.unique(this.selectlist);
+          console.log(
+            "后面的数组",
+            this.selectlist,
+            this.selectlist.indexOf(this.selectValue)
+          );
+        }
+      } else if (this.addTitle == "修改") {
+        console.log("数据", this.selectValue);
+        if (!this.selectValue) {
+          this.$alert("请先选择资金账号", {
+            confirmButtonText: "确定",
+            center: true,
+            type: "error"
+          });
+        } else {
+          let arrNow = [];
+          this.realAccountGroup.map(item => {
+            arrNow.push(item.productCode);
+          });
+          if (arrNow.indexOf(this.selectValue) != -1) {
+            this.$alert("买入优先级中资金账号已存在，请勿重复操作", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          } else {
+            if (this.selectlist.indexOf(this.selectValue) != -1) {
+              this.$alert("买入优先级中资金账号已存在，请勿重复操作", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            } else {
+              console.log("我是数据666", this.selectValue, this.selectlist);
+              this.selectlist.push(this.selectValue);
+              this.selectlist = this.unique(this.selectlist);
+            }
+          }
+        }
       }
-      this.selectlist = this.unique(this.selectlist);
-      console.log(
-        "后面的数组",
-        this.selectlist,
-        this.selectlist.indexOf(this.selectValue)
-      );
     },
     add() {
       this.addBool = true;
@@ -466,6 +517,8 @@ export default {
       this.groupId = row.groupId;
       this.getContent(groupId);
       this.addTitle = "修改";
+      this.selectlist = [];
+      this.selectValue = "";
     },
     deleteNow(index, row) {
       let groupId = row.groupId;
@@ -596,7 +649,7 @@ export default {
   line-height: 60px;
   width: 120px;
   margin-left: 80px;
-  margin-bottom:30px;
+  margin-bottom: 30px;
 }
 .buycontent {
   margin-left: 44px;
@@ -607,7 +660,7 @@ export default {
 }
 .selectMoney .s1 {
   float: left;
-  margin-left:10px;
+  margin-left: 10px;
 }
 .selectMoney .s2 {
   float: left;
