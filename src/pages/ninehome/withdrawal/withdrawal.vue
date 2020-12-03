@@ -95,12 +95,12 @@
     <div class="addForm" v-if="juBool==true">
       <div class="addContent">
         <div class="title">
-          <span class="tl">拒绝理由</span>
+          <span class="tl">备注</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJu">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="拒绝理由：">
-            <el-input v-model="remark" placeholder="请输入拒绝理由"></el-input>
+          <el-form-item label="拒绝原因：">
+            <el-input v-model="remark" placeholder="请输入拒绝原因"></el-input>
           </el-form-item>
           <br />
           <el-form-item>
@@ -157,7 +157,7 @@ export default {
       createTimeStart: "",
       createTimeEnd: "",
       juBool: false,
-      remark: "",
+      remark: "审核不通过",
       juId: ""
     };
   },
