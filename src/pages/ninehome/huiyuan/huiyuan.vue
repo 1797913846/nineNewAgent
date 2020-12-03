@@ -785,9 +785,9 @@ export default {
         { key: 3, value: "禁买卖" }
       ],
       accountStatusList: [
-        { key: 0, value: "失效" },
-        { key: 1, value: "正常" },
-        { key: 2, value: "停机" }
+        { key: 0, value: "失效(立即生效)" },
+        { key: 1, value: "正常(用户在未达风控线，或非交易时间时生效)" },
+        { key: 2, value: "停机(用户达到风控线时生效)" }
       ],
       productCodeList: [{ key: 0, value: "否" }, { key: 1, value: "是" }],
       changeNow: false,
