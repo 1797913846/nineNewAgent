@@ -96,6 +96,8 @@ export default {
   },
   data() {
     return {
+      accountCode1: "",
+      productCode1: "",
       whoserouter: "",
       tableData: [],
       ext: {},
@@ -257,8 +259,8 @@ export default {
     onSubmitChange1(formName) {
       this.axios
         .post("/tn/mgr-api/itg/appoint/CLOSE", {
-          accountCode: this.formInline.accountCode,
-          productCode: this.productCode,
+          accountCode: this.accountCode1,
+          productCode: this.productCode1,
           stockCode: this.stockCode,
           appointPrice: this.lastPrice
         })
@@ -271,7 +273,8 @@ export default {
               type: "success"
             });
             this.changeNow = false;
-            this.getFundAccount();
+            // this.getFundAccount();
+            this.search();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -291,8 +294,10 @@ export default {
     set1(index, row) {
       this.changeNow = true;
       this.addTitle = "请输入平仓价格，默认以市价平仓";
-      this.formInline.accountCode = row.accountCode;
-      this.productCode = row.productCode;
+      // this.formInline.accountCode = row.accountCode;
+      // this.productCode = row.productCode;
+      this.accountCode1 = row.accountCode;
+      this.productCode1 = row.productCode;
       this.stockCode = row.stockCode;
       this.lastPrice = row.lastPrice;
     },

@@ -1658,10 +1658,7 @@ export default {
               center: true,
               type: "success"
             });
-            this.currentPage = 1;
-            this.agentId = this.formInline.accountId;
-            this.getFundAccount(this.agentName, this.agentId);
-            // this.getFundAccount();
+            this.search();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -1719,10 +1716,7 @@ export default {
               center: true,
               type: "success"
             });
-            this.currentPage = 1;
-            this.agentId = accountId;
-            this.getFundAccount(this.agentName, accountId);
-            // this.getFundAccount();
+            this.search();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",

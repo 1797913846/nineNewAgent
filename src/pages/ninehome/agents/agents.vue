@@ -1112,7 +1112,8 @@ export default {
                   center: true,
                   type: "success"
                 });
-                this.getFundAccount();
+                this.search();
+                // this.getFundAccount();
               } else {
                 this.$alert(res.data.info, "提示", {
                   confirmButtonText: "确定",
@@ -1169,7 +1170,8 @@ export default {
               center: true,
               type: "success"
             });
-            this.getFundAccount();
+            this.search();
+            // this.getFundAccount();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
