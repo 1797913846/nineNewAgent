@@ -58,7 +58,7 @@
           <el-table-column show-overflow-tooltip label="代理状态" prop="accountStatus" :formatter="formatter" align="center"></el-table-column>
           <el-table-column label="邀请码" align="center">
             <template slot-scope="scope">
-              <img :class="{smallcode:true, codeborder:indexindex==scope.$index}" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
+              <img :class="{smallcode:true, codeborder:indexindex==scope.$index&&showIndex==true}" src="../../../assets/ercode.png" alt="" @click.stop="showEveryCode(scope.$index,scope.row)">
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center" width="140"></el-table-column>
@@ -697,7 +697,8 @@ export default {
       defaultChildGroupId: "",
       defaultChildCommissionCfgId: "",
       levelId: "",
-      indexindex:""
+      indexindex:"",
+      showIndex:false
     };
   },
   computed: {
@@ -902,6 +903,7 @@ export default {
     },
     showEveryCode(index, row) {
       console.log("index2", index);
+      this.showIndex=true;
       this.indexindex=index;
       if (index > 7) {
         index = 7;
@@ -917,6 +919,7 @@ export default {
     hideEveryCode() {
       document.getElementById("qrcode1").innerHTML = "";
       this.showQrcode1 = false;
+      this.showIndex=false;
     },
     creatQrCode(url) {
       console.log("我是地址", url);
