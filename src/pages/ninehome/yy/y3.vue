@@ -374,7 +374,10 @@ export default {
               type: "success"
             });
             this.msg = false;
-            this.getFundAccount("today");
+            let that = this;
+            setTimeout(function() {
+              that.getFundAccount("today");
+            }, 1000);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
