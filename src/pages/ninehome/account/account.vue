@@ -99,7 +99,8 @@ export default {
       stockCode: "",
       whotitle: "",
       visible: false,
-      accountId: ""
+      accountId: "",
+      queryData: {}
     };
   },
   computed: {
@@ -129,7 +130,14 @@ export default {
     }
   },
   created() {
-    this.getFundAccount();
+    this.queryData = this.$route.query.queryData || "";
+    if (this.queryData) {
+      this.accountCode = this.queryData.accountCode || "";
+      this.stockCode = this.queryData.stockCode || "";
+      this.search();
+    } else {
+      this.getFundAccount();
+    }
   },
   methods: {
     childByValue: function(childValue) {
@@ -184,10 +192,16 @@ export default {
     money(index, row) {
       console.log("钱", row);
       let accountId = row.accountCode;
+      this.queryData = {
+        accountCode: this.accountCode,
+        stockCode: this.stockCode
+      };
       this.$router.push({
         path: "/ninehome/money",
         query: {
-          accountId: accountId
+          accountId: accountId,
+          from: "/ninehome/account",
+          queryData: this.queryData
         }
       });
     },
@@ -311,10 +325,10 @@ export default {
 </style>
 <style>
 .el-dialog .el-dialog__header {
-  background-color: rgba(233, 239, 243, 0.21)!important;
+  background-color: rgba(233, 239, 243, 0.21) !important;
 }
 .el-dialog .el-dialog__body {
-  background-color: #fff!important;
+  background-color: #fff !important;
 }
 .my-dialog-title {
   color: #333 !important;

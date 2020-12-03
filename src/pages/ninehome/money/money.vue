@@ -4,6 +4,7 @@
     <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
+        <div class="title" v-if="pathQuery" @click="back">返回</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
@@ -173,7 +174,9 @@ export default {
           key: 8,
           value: "8倍"
         }
-      ]
+      ],
+      pathQuery: "",
+      queryData:{}
     };
   },
   computed: {
@@ -202,10 +205,20 @@ export default {
   },
   created() {
     console.log("是我", this.$route.query);
+    this.pathQuery = this.$route.query.from || "";
+    this.queryData = this.$route.query.queryData || "";
     this.accountCode = this.$route.query.accountId || "";
     this.getFundAccount();
   },
   methods: {
+    back() {
+      this.$router.push({
+        path: this.pathQuery,
+        query:{
+          queryData: this.queryData
+        }
+      });
+    },
     closeChange1() {
       this.changeNow = false;
     },
@@ -281,7 +294,7 @@ export default {
       this.formInline.accountCode = row.accountCode;
       this.formInline.accountName = row.accountName;
       this.formInline.adjustmentType = 3;
-      this.formInline.remark="";
+      this.formInline.remark = "";
     },
     set2(index, row) {
       this.changeNow = true;

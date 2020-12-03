@@ -912,7 +912,8 @@ export default {
             trigger: "change"
           }
         ]
-      }
+      },
+      queryData: {}
     };
   },
   computed: {
@@ -956,13 +957,22 @@ export default {
     }
   },
   created() {
+    this.queryData = this.$route.query.queryData || "";
+    console.log('我是查询条件',this.queryData,this.$route.query.queryData)
+    if(this.queryData){
+      this.agentId=this.queryData.agentId||"";
+      this.checked=this.queryData.checked||"";
+      this.agentName=this.queryData.agentName||"";
+      this.search();
+    }else{
+      this.getFundAccount();
+    }
     this.isAdminGroup = localStorage.getItem("isAdminGroup");
     this.getBanksList();
     this.getProvincesList();
     this.getCitiesList();
     this.getBranchesList();
     this.getMsg();
-    this.getFundAccount();
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
@@ -976,10 +986,17 @@ export default {
   methods: {
     y1(index, row) {
       let accountId = row.accountId;
+      this.queryData = {
+        agentId: this.agentId,
+        checked: this.checked,
+        agentName: this.agentName
+      };
       this.$router.push({
         path: "/ninehome/y1",
         query: {
-          accountId: accountId
+          accountId: accountId,
+          from: "/ninehome/huiyuan",
+          queryData: this.queryData
         }
       });
     },
@@ -1251,10 +1268,17 @@ export default {
     },
     money(index, row) {
       let accountId = row.accountId;
+      this.queryData = {
+        agentId: this.agentId,
+        checked: this.checked,
+        agentName: this.agentName
+      };
       this.$router.push({
         path: "/ninehome/money",
         query: {
-          accountId: accountId
+          accountId: accountId,
+          from: "/ninehome/huiyuan",
+          queryData: this.queryData
         }
       });
     },

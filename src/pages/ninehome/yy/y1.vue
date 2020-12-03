@@ -4,6 +4,7 @@
     <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
+        <div class="title" v-if="pathQuery" @click="back">返回</div>
         <div class="operate-btn">
           <div class="search-box">
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
@@ -159,7 +160,9 @@ export default {
           key: 8,
           value: "8倍"
         }
-      ]
+      ],
+      pathQuery: "",
+      queryData: {}
     };
   },
   props: {
@@ -202,12 +205,23 @@ export default {
     }
   },
   created() {
+    this.pathQuery = this.$route.query.from || "";
+    this.queryData = this.$route.query.queryData || "";
     this.accountCode = this.$route.query.accountId || this.accountId || "";
     this.whoserouter = this.$route.path;
-    console.log("是我啊", this.whoserouter, this.accountId);
+    console.log("是我啊", this.queryData);
     this.getFundAccount();
   },
   methods: {
+    back() {
+      console.log("是他啊", this.queryData);
+      this.$router.push({
+        path: this.pathQuery,
+        query:{
+          queryData: this.queryData
+        }
+      });
+    },
     getSummaries(param) {
       console.log("是我", param);
       const { columns, data } = param;

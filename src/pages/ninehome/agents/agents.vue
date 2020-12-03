@@ -697,8 +697,9 @@ export default {
       defaultChildGroupId: "",
       defaultChildCommissionCfgId: "",
       levelId: "",
-      indexindex:"",
-      showIndex:false
+      indexindex: "",
+      showIndex: false,
+      queryData: {}
     };
   },
   computed: {
@@ -720,8 +721,16 @@ export default {
   },
   watch: {},
   created() {
+    this.queryData = this.$route.query.queryData || "";
     this.getMsg();
-    this.getFundAccount();
+    if (this.queryData) {
+      this.agentId = this.queryData.agentId || "";
+      this.checked = this.queryData.checked || "";
+      this.agentName = this.queryData.agentName || "";
+      this.search();
+    } else {
+      this.getFundAccount();
+    }
     this.getGroupIdList();
     this.userId = localStorage.getItem("userId");
     this.userName = localStorage.getItem("userName");
@@ -809,10 +818,17 @@ export default {
     },
     money(index, row) {
       let accountId = row.accountId;
+      this.queryData = {
+        agentId: this.agentId,
+        checked: this.checked,
+        agentName: this.agentName
+      };
       this.$router.push({
         path: "/ninehome/money",
         query: {
-          accountId: accountId
+          accountId: accountId,
+          from: "/ninehome/agents",
+          queryData: this.queryData
         }
       });
     },
@@ -903,8 +919,8 @@ export default {
     },
     showEveryCode(index, row) {
       console.log("index2", index);
-      this.showIndex=true;
-      this.indexindex=index;
+      this.showIndex = true;
+      this.indexindex = index;
       if (index > 7) {
         index = 7;
       }
@@ -919,7 +935,7 @@ export default {
     hideEveryCode() {
       document.getElementById("qrcode1").innerHTML = "";
       this.showQrcode1 = false;
-      this.showIndex=false;
+      this.showIndex = false;
     },
     creatQrCode(url) {
       console.log("我是地址", url);
@@ -1348,7 +1364,10 @@ export default {
   margin-right: 4px;
   font-weight: none !important;
 }
-.codeborder{border:2px solid #2662ee;border-radius: 50%;}
+.codeborder {
+  border: 2px solid #2662ee;
+  border-radius: 50%;
+}
 </style>
 
 
