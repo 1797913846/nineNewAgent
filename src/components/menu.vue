@@ -273,6 +273,9 @@ export default {
           case "/ninehome/y12":
             this.whichIndex = "7-12";
             break;
+          case "/ninehome/y13":
+            this.whichIndex = "7-13";
+            break;
           case "/ninehome/l1":
             this.whichIndex = "9-2";
             break;

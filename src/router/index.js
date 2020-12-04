@@ -34,6 +34,7 @@ import ninehomey9 from '@/pages/ninehome/yy/y9'
 import ninehomey10 from '@/pages/ninehome/yy/y10'
 import ninehomey11 from '@/pages/ninehome/yy/y11'
 import ninehomey12 from '@/pages/ninehome/yy/y12'
+import ninehomey13 from '@/pages/ninehome/yy/y13'
 
 import ninehomel1 from '@/pages/ninehome/ll/l1'
 import ninehomel2 from '@/pages/ninehome/ll/l2'
@@ -294,6 +295,14 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomey12
+    },
+    {
+      path: '/ninehome/y13',
+      meta: {
+        title: '股票静态信息',
+        requireAuth: true
+      },
+      component: ninehomey13
     },
     {
       path: '/ninehome/l1',

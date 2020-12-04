@@ -1,79 +1,71 @@
-<!--逐笔持仓对比-->
+<!--股票静态信息-->
 <template>
-  <div class="bigestbox">
-    <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
-    <div class="container" @click="colorBool = false">
-      <div class="template-top">
-        <div class="operate-btn">
-          <div class="search-box">
-            <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
-            <img src="../../../assets/nine/search.png" class="search-img" />
-          </div>
-          <div class="search-box">
-            <input type="text" placeholder="请输入股票代码" v-model="stockNo" />
-            <img src="../../../assets/nine/search.png" class="search-img" />
-          </div>
-          <div class="search-user" @click="search">查询</div>
-        </div>
-      </div>
-      <!--表格-->
-      <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="明细可用数量" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="持仓数量" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用数量" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考成本" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="市价" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考盈亏" align="center"></el-table-column>
-        </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
-          <el-table-column label="序号" type="index" width="50" align="center">
-          </el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="明细可用数量" prop="detailCntAble" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票代码" prop="stockCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="持仓数量" prop="stockCnt" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="可用数量" prop="stockCntAble" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考成本" prop="costPrice" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="市价" prop="lastPrice" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="参考盈亏" prop="profit" align="center"></el-table-column>
-        </el-table>
-      </div>
-      <div class="pagination">
-        <!-- <div class="tongji">
+    <div class="bigestbox">
+        <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
+        <div class="container" @click="colorBool = false">
+            <div class="template-top">
+                <div class="title" @click="refresh">刷新</div>
+                <div class="operate-btn">
+                    <div class="search-box">
+                        <input type="text" placeholder="请输入股票代码" v-model="stockCode" />
+                        <img src="../../../assets/nine/search.png" class="search-img" />
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="请输入股票名称" v-model="stockName" />
+                        <img src="../../../assets/nine/search.png" class="search-img" />
+                    </div>
+                    <div class="search-user" @click="search">查询</div>
+                </div>
+            </div>
+            <!--表格-->
+            <div class="reset-scroll-style">
+                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                    <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="昨日收盘价" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="更新时间" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="跌停价格" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="涨停价格" align="center"></el-table-column>
+                </el-table>
+                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                    <el-table-column show-overflow-tooltip label="股票代码" prop="stockCode" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="昨日收盘价" prop="preClosePrice" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="更新时间" prop="updateTime" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="跌停价格" prop="priceDownlimit" align="center"></el-table-column>
+                    <el-table-column show-overflow-tooltip label="涨停价格" prop="priceUplimit" align="center"></el-table-column>
+                </el-table>
+            </div>
+            <div class="pagination">
+                <!-- <div class="tongji">
                     <span>总持仓数量 : {{ext.stockCnt }}</span>
                     <span>总参考盈亏 : {{ext.profit }}</span>
                     <span>总持仓金额（市值）: {{ext.lastPrice }}</span>
                 </div> -->
-        <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
-      </div>
-    </div>
-    <!--修改表单-->
-    <div class="addForm" v-if="changeNow==true">
-      <div class="addContent">
-        <div class="title">
-          <span class="tl">{{addTitle}}</span>
-          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
+                <el-pagination :current-page.sync="currentPage" layout="prev, pager, next" :page-size="pageSize" :pager-count="5" :total="total" @current-change="handleCurrentChange"></el-pagination>
+            </div>
         </div>
-        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-          <el-form-item label="平仓价格：">
-            <el-input v-model="lastPrice" placeholder="平仓价格"></el-input>
-          </el-form-item>
-          <br />
-          <el-form-item>
-            <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
-            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+        <!--修改表单-->
+        <div class="addForm" v-if="changeNow==true">
+            <div class="addContent">
+                <div class="title">
+                    <span class="tl">{{addTitle}}</span>
+                    <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange1">
+                </div>
+                <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
+                    <el-form-item label="平仓价格：">
+                        <el-input v-model="lastPrice" placeholder="平仓价格"></el-input>
+                    </el-form-item>
+                    <br />
+                    <el-form-item>
+                        <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
+                        <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+        <div v-loading.fullscreen.lock="fullscreenLoading" :element-loading-text="loadingText" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)"></div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -84,6 +76,8 @@ export default {
   },
   data() {
     return {
+      fullscreenLoading: false,
+      loadingText: "数据量很大,拼命加载中,请耐心等待",
       whoserouter: "",
       tableData: [],
       ext: {},
@@ -98,6 +92,7 @@ export default {
       productCode: "",
       stockNo: "",
       stockCode: "",
+      stockName: "",
       lastPrice: "",
       setArray: [
         {
@@ -276,14 +271,6 @@ export default {
       this.$refs[formName].resetFields();
       this.changeNow = false;
     },
-    set1(index, row) {
-      this.changeNow = true;
-      this.addTitle = "请输入平仓价格，默认以市价平仓";
-      this.formInline.accountCode = row.accountCode;
-      this.productCode = row.productCode;
-      this.stockCode = row.stockCode;
-      this.lastPrice = row.lastPrice;
-    },
     search() {
       this.currentPage = 1;
       this.getFundAccount();
@@ -318,11 +305,31 @@ export default {
         }
       );
     },
+    refresh() {
+      this.fullscreenLoading = true;
+      this.axios
+        .post("/tn/mgr-api/static/stock/refresh")
+        .then(res => {
+          if (res.data.code == 200) {
+            let that = this;
+            setTimeout(function() {
+              that.loadingText = "后台正在处理中，请15秒之后刷新重试";
+            }, 2000);
+            setTimeout(function() {
+              that.getFundAccount();
+              that.fullscreenLoading = false;
+            }, 3000);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     getFundAccount() {
       this.axios
-        .post("/tn/mgr-api/account/diffHoldDetail", {
-          accountCode: this.accountCode,
-          stockNo: this.stockNo,
+        .post("/tn/mgr-api/static/stock/list", {
+          stockCode: this.stockCode,
+          stockName: this.stockName,
           pageSize: this.pageSize,
           pageNo: this.currentPage
         })
