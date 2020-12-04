@@ -1,7 +1,7 @@
 <!--股票静态信息-->
 <template>
     <div class="bigestbox">
-        <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
+        <topNav></topNav>
         <div class="container" @click="colorBool = false">
             <div class="template-top">
                 <div class="title" @click="refresh">刷新</div>
@@ -19,7 +19,7 @@
             </div>
             <!--表格-->
             <div class="reset-scroll-style">
-                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
                     <el-table-column show-overflow-tooltip label="股票代码" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="股票名称" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="昨日收盘价" align="center"></el-table-column>
@@ -27,7 +27,7 @@
                     <el-table-column show-overflow-tooltip label="跌停价格" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="涨停价格" align="center"></el-table-column>
                 </el-table>
-                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+                <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
                     <el-table-column show-overflow-tooltip label="股票代码" prop="stockCode" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="股票名称" prop="stockName" align="center"></el-table-column>
                     <el-table-column show-overflow-tooltip label="昨日收盘价" prop="preClosePrice" align="center"></el-table-column>

@@ -1,7 +1,7 @@
 <!--逐笔持仓对比-->
 <template>
   <div class="bigestbox">
-    <topNav v-if="whoserouter =='/ninehome/y1'"></topNav>
+    <topNav></topNav>
     <div class="container" @click="colorBool = false">
       <div class="template-top">
         <div class="operate-btn">
@@ -18,7 +18,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="会员ID" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="明细可用数量" align="center"></el-table-column>
@@ -30,7 +30,7 @@
           <el-table-column show-overflow-tooltip label="市价" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="参考盈亏" align="center"></el-table-column>
         </el-table>
-        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="720" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
+        <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column label="序号" type="index" width="50" align="center">
           </el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>

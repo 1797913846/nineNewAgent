@@ -9,8 +9,10 @@
               <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
                 <el-submenu v-for="(item,index) in menuList" :key="index" :index="item.ext">
                   <template slot="title">
-                    <i><img class="menu-icon menu-icon-noshow" :src="'../../static/nine/m'+item.ext+'-2.png'" alt=""></i>
-                    <i><img class="menu-icon menu-icon-show" :src="'../../static/nine/m'+item.ext+'-1.png'" alt=""></i>
+                    <!-- <i><img class="menu-icon menu-icon-noshow" :src="'../../static/nine/m'+item.ext+'-2.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" :src="'../../static/nine/m'+item.ext+'-1.png'" alt=""></i> -->
+                    <i><img class="menu-icon menu-icon-noshow" :src="'../../manager/static/nine/m'+item.ext+'-2.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" :src="'../../manager/static/nine/m'+item.ext+'-1.png'" alt=""></i>
                     <span>{{item.name}}</span>
                   </template>
                   <el-menu-item-group>
