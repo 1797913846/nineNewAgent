@@ -144,6 +144,14 @@ export default {
         {
           key: 5,
           value: "增加保证金"
+        },
+        {
+          key: 7,
+          value: "增加优先资金"
+        },
+        {
+          key: 6,
+          value: "减少优先资金"
         }
       ],
       changeNow: false,
@@ -176,7 +184,7 @@ export default {
         }
       ],
       pathQuery: "",
-      queryData:{}
+      queryData: {}
     };
   },
   computed: {
@@ -214,7 +222,7 @@ export default {
     back() {
       this.$router.push({
         path: this.pathQuery,
-        query:{
+        query: {
           queryData: this.queryData
         }
       });

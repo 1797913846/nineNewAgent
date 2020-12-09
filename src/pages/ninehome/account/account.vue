@@ -37,7 +37,7 @@
           <el-table-column show-overflow-tooltip label="子账户ID" prop="accountCode" align="center" width="130"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户名称" prop="accountName" align="center" width="150"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" prop="cashScale" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="借款额" prop="borrowing" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="优先资金" prop="borrowing" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="期初金额" prop="allottedScale" align="center" width="100" sortable="custom"></el-table-column>
           <el-table-column show-overflow-tooltip label="总资产" prop="totalScale" align="center" width="100" sortable="custom"></el-table-column>
           <el-table-column show-overflow-tooltip label="盈亏额" prop="profit" align="center" width="100" sortable="custom"></el-table-column>
@@ -56,7 +56,7 @@
           <el-table-column show-overflow-tooltip label="子账户ID" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="子账户名称" align="center" width="150"></el-table-column>
           <el-table-column show-overflow-tooltip label="保证金" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="借款额" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="优先资金" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="期初金额" align="center" width="100" sortable="custom"></el-table-column>
           <el-table-column show-overflow-tooltip label="总资产" align="center" width="100" sortable="custom"></el-table-column>
           <el-table-column show-overflow-tooltip label="盈亏额" align="center" width="100" sortable="custom"></el-table-column>

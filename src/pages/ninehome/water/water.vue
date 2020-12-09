@@ -121,7 +121,9 @@ export default {
       sourceList: [
         { key: "", value: "所有" },
         { key: 1, value: "账户余额" },
-        { key: 2, value: "可用资金" }
+        { key: 2, value: "可用资金" },
+        { key: 3, value: "保证金" },
+        { key: 4, value: "优先资金" }
       ],
       createTimeStart: "",
       createTimeEnd: ""
@@ -239,6 +241,10 @@ export default {
             return "账户余额";
           case 2:
             return "可用资金";
+          case 3:
+            return "保证金";
+          case 4:
+            return "优先资金";
         }
       }
     },
