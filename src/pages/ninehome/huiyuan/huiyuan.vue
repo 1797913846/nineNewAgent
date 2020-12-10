@@ -231,6 +231,9 @@
           <el-form-item label="保证金：">
             <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
           </el-form-item>
+          <el-form-item label="优先资金：">
+            <el-input v-model="formInline.borrowing" :disabled="true" placeholder="优先资金"></el-input>
+          </el-form-item>
           <el-form-item label="手动冻结金额：">
             <el-input v-model="formInline.freezeScale" :disabled="true" placeholder="手动冻结金额"></el-input>
           </el-form-item>
@@ -386,6 +389,9 @@
           </el-form-item>
           <el-form-item label="保证金：">
             <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
+          </el-form-item>
+          <el-form-item label="优先资金：">
+            <el-input v-model="formInline.borrowing" :disabled="true" placeholder="优先资金"></el-input>
           </el-form-item>
           <el-form-item label="手动冻结金额：">
             <el-input v-model="formInline.freezeScale" placeholder="手动冻结金额"></el-input>
@@ -742,6 +748,7 @@ export default {
         balance: "",
         allottedScale: "",
         cashScale: "",
+        borrowing:"",//优先资金
         freezeScale: "",
         flatLine: "",
         cordonLine: "",
