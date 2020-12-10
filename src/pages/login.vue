@@ -18,21 +18,21 @@
                 <img src="../assets/nine/u1.png" alt="" class="tu">
                 <div class="mt">account</div>
               </span>
-              <input v-model="form.username" type="text" placeholder="请输入用户名">
+              <input v-model="form.username" type="text" placeholder="请输入用户名" @keydown.enter="login()">
             </div>
             <div class="msgbox">
               <span class="m1">
                 <img src="../assets/nine/u2.png" alt="" class="tu">
                 <div class="mt">password</div>
               </span>
-              <input v-model="form.pwd" type="password" placeholder="请输入密码">
+              <input v-model="form.pwd" type="password" placeholder="请输入密码" @keydown.enter="login()">
             </div>
             <div class="msgbox">
               <span class="m1">
                 <img src="../assets/nine/u3.png" alt="" class="tu">
                 <div class="mt">Verification</div>
               </span>
-              <input v-model="form.code" placeholder="请输入验证码">
+              <input v-model="form.code" placeholder="请输入验证码" @keydown.enter="login()">
               <img class="code" :src="'http://47.102.151.13/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
             </div>
             <!-- <div class="errorbox" v-if="errMsg">
@@ -76,15 +76,21 @@ export default {
   created() {
     localStorage.clear();
     this.getCode();
-    let that = this;
-    document.onkeydown = function(e) {
-      var key = window.event.keyCode;
-      if (key == 13) {
-        that.login();
-      }
-    };
   },
   mounted: function() {
+    // let path = this.$route.path;
+    // if (path == "/login") {
+    //   let that = this;
+    //   document.onkeydown = function(e) {
+    //     var key = window.event.keyCode;
+    //     if (key == 13) {
+    //       that.login();
+    //       return false;
+    //     }
+    //   };
+    // } else {
+    //   return false;
+    // }
     this.listenResize();
     let height = $(window).height();
     $(".login-container").css("height", height + "px");
@@ -113,8 +119,14 @@ export default {
             localStorage.setItem("userName", data.userName);
             localStorage.setItem("loginName", data.loginName);
             localStorage.setItem("isAdminGroup", data.isAdminGroup);
-            localStorage.setItem("defaultChildGroupId",data.defaultChildGroupId);
-            localStorage.setItem("defaultChildCommissionCfgId",data.defaultChildCommissionCfgId);
+            localStorage.setItem(
+              "defaultChildGroupId",
+              data.defaultChildGroupId
+            );
+            localStorage.setItem(
+              "defaultChildCommissionCfgId",
+              data.defaultChildCommissionCfgId
+            );
           } else {
           }
         })
