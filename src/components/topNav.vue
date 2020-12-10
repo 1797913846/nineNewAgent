@@ -22,13 +22,13 @@
 export default {
   data() {
     return {
-      userName: localStorage.getItem("userName"),
+      userName: localStorage.getItem("loginName"),
       value1: true
     };
   },
   created() {},
   mounted() {
-    this.userName = localStorage.getItem("userName");
+    this.userName = localStorage.getItem("loginName");
     // this.getValue1();
   },
   methods: {
