@@ -17,9 +17,10 @@
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="方案名称" width="100" prop="cfgName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="日结方案" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="日结方案" width="300" prop="dayCommission" :formatter="formattera" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="合作分成方案" width="430" prop="singleCommission" :formatter="formatterb" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="月结方案" prop="monthCommission" :formatter="formatterc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="月结方案" width="370" prop="monthCommission" :formatter="formatterc" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="策略方案" prop="strategyCommission" :formatter="formatterd" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="用户注册默认" width="100" prop="isDefault" :formatter="formatter" align="center"></el-table-column>
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
@@ -87,7 +88,13 @@
               <el-input v-model="formInline.monthManageFeeDealRate" placeholder="管理费成交率"></el-input>
             </el-form-item>
           </div>
-          <el-form-item>
+          <div class="bt btlast">
+            <div class="smallTitle">策略方案：</div>
+            <el-form-item label="交易佣金率：" prop="strategyCommission">
+              <el-input v-model="formInline.strategyCommission" placeholder="交易佣金率"></el-input>
+            </el-form-item>
+          </div>
+          <el-form-item style="margin-top:-30px!important;">
             <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
             <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
           </el-form-item>
@@ -128,7 +135,8 @@ export default {
         singleManageFeeDealRate: "",
         singleDividedRate: "",
         monthCommission: "",
-        monthManageFeeDealRate: ""
+        monthManageFeeDealRate: "",
+        strategyCommission: ""
       },
       rules: {
         cfgName: [
@@ -184,6 +192,14 @@ export default {
         ],
         monthManageFeeDealRate: [
           { required: true, message: "请输入管理费成交率", trigger: "blur" },
+          {
+            pattern: /^(0.\d+|0|1)$/,
+            message: "请输入大于0小于等于1的数字",
+            trigger: "blur"
+          }
+        ],
+        strategyCommission: [
+          { required: true, message: "请输入交易佣金率", trigger: "blur" },
           {
             pattern: /^(0.\d+|0|1)$/,
             message: "请输入大于0小于等于1的数字",
@@ -254,6 +270,9 @@ export default {
         "%"
       );
     },
+    formatterd(row, column) {
+      return "交易佣金率：" + row.strategyCommission * 1000 + "‰ ;";
+    },
     getContent(index, row) {
       this.id = row.id;
       this.axios
@@ -280,6 +299,7 @@ export default {
             this.formInline.monthCommission = data.monthCommission;
             this.formInline.monthManageFeeDealRate =
               data.monthManageFeeDealRate;
+            this.formInline.strategyCommission = data.strategyCommission;
           } else {
           }
         })
@@ -354,6 +374,7 @@ export default {
       this.formInline.singleDividedRate = "";
       this.formInline.monthCommission = "";
       this.formInline.monthManageFeeDealRate = "";
+      this.formInline.strategyCommission = "";
     },
     closeAdd() {
       this.showAdd = false;
@@ -376,7 +397,8 @@ export default {
               singleManageFeeDealRate: this.formInline.singleManageFeeDealRate,
               singleDividedRate: this.formInline.singleDividedRate,
               monthCommission: this.formInline.monthCommission,
-              monthManageFeeDealRate: this.formInline.monthManageFeeDealRate
+              monthManageFeeDealRate: this.formInline.monthManageFeeDealRate,
+              strategyCommission: this.formInline.strategyCommission
             })
             .then(res => {
               console.log("getFundAccount>>", res.data);

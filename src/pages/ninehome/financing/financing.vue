@@ -67,17 +67,24 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="融资倍率：" prop="financeRatio">
-            <el-input v-model="formInline.financeRatio" placeholder="融资倍率"></el-input>
+          <el-form-item label="融资倍率：" prop="financeRatio" v-if="cannotChange==false">
+            <el-input v-model="formInline.financeRatio" :disabled="cannotChange" placeholder="融资倍率"></el-input>
+          </el-form-item>
+          <el-form-item label="融资倍率：" v-if="cannotChange==true">
+            <el-input v-model="formInline.financeRatio" :disabled="cannotChange" placeholder="融资倍率"></el-input>
           </el-form-item>
           <el-form-item label="融资费率：" prop="financeFeeRate">
             <el-input v-model="formInline.financeFeeRate" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
 
-          <el-form-item label="建仓费率：" prop="makeFeeRate">
-            <el-input v-model="formInline.makeFeeRate" placeholder="请输入0-1之间的小数"></el-input>
+          <el-form-item label="建仓费率：" prop="makeFeeRate" v-if="cannotChange==false">
+            <el-input v-model="formInline.makeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
+          </el-form-item>
+          <el-form-item label="建仓费率：" v-if="cannotChange==true">
+            <el-input v-model="formInline.makeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="利润分成比例：" prop="separateFeeRate">
             <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="请输入0-1之间的小数"></el-input>
@@ -253,7 +260,8 @@ export default {
             trigger: "blur"
           }
         ]
-      }
+      },
+      cannotChange: false
     };
   },
   computed: {
@@ -274,13 +282,20 @@ export default {
     }
   },
   watch: {
-    // keyword: {
-    //   handler(newVal, oldVal) {
-    //     this.currentPage = 1;
-    //     this.getFundAccount();
-    //   },
-    //   deep: true
-    // }
+    "formInline.financePeriod": {
+      handler(newVal, oldVal) {
+        if (newVal == "strategy") {
+          this.cannotChange = true;
+          this.formInline.financeRatio = 0;
+          this.formInline.makeFeeRate = 0;
+        } else {
+          this.cannotChange = false;
+          this.formInline.financeRatio = "";
+          this.formInline.makeFeeRate = "";
+        }
+      },
+      deep: true
+    }
   },
   created() {
     this.getFundAccount();
@@ -467,6 +482,8 @@ export default {
             return "T+30";
           case "single":
             return "T+5";
+          case "strategy":
+            return "T+1";
           default:
             return "T+0";
         }
@@ -484,6 +501,8 @@ export default {
             return "月";
           case "single":
             return "单";
+          case "strategy":
+            return "策略";
           default:
             return "默认";
         }

@@ -273,6 +273,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：">
@@ -432,6 +433,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：" prop="orderPermission">
@@ -600,6 +602,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：" prop="orderPermission">

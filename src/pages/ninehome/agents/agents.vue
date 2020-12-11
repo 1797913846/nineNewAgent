@@ -133,7 +133,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -224,6 +223,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：">
@@ -260,7 +260,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -351,6 +350,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：" prop="orderPermission">
@@ -399,7 +399,6 @@
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
-        <!--推荐人佣金，代理管理权限，融资周期字段不明确-->
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
           <el-form-item label="推荐人ID：">
             <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
@@ -487,6 +486,7 @@
               <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
+              <el-option label="策略" value="strategy"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="下单权限：" prop="orderPermission">
@@ -553,7 +553,7 @@ export default {
         balance: "",
         allottedScale: "",
         cashScale: "",
-        borrowing:"",
+        borrowing: "",
         freezeScale: "",
         flatLine: "",
         cordonLine: "",

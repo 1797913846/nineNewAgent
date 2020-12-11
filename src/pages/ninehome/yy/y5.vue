@@ -210,6 +210,9 @@ export default {
           case "single":
             return "单";
             break;
+          case "strategy":
+            return "策略";
+            break;
           default:
             return "所有";
             break;
