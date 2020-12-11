@@ -41,6 +41,7 @@
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="set1(scope.$index, scope.row)" style="margin-left:20px;text-decoration: underline;color:#d9534f;">平仓</span>
+                <span @click.stop="removeSet(scope.$index, scope.row)" style="margin-left:20px;text-decoration: underline;color:#d9534f;">移仓</span>
               </div>
             </template>
           </el-table-column>
@@ -82,6 +83,38 @@
           <el-form-item>
             <el-button class="savebt" type="primary" @click="onSubmitChange1('formInline')">保存</el-button>
             <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+    <div class="addForm" v-if="removeBool==true">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">移仓</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeRemove">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" :rules="rules" class="demo-form-inline">
+          <el-form-item label="证券代码：">
+            <el-input v-model="formInline.stockCodeRemove" placeholder="证券代码" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="用户：">
+            <el-input v-model="formInline.accountCodeRemove" placeholder="用户" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="原产品编号：">
+            <el-input v-model="formInline.srcProductIdRemove" placeholder="券商类型" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="目标产品编号：" prop="dstProductIdRemove">
+            <el-select v-model="formInline.dstProductIdRemove">
+              <el-option v-for="(item,index) in dstProductIdRemoveList" :key="index" :label="item" :value="item"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="持仓数量：">
+            <el-input v-model="formInline.transferCountRemove" placeholder="持仓数量" :disabled="true"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button type="primary" class="savebt" @click="onSubmitRmove">保存</el-button>
+            <el-button type="primary" class="nobt" @click="closeRemove">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -141,7 +174,12 @@ export default {
         money: "",
         remark: "",
         financeRatio: "",
-        amount: 0
+        amount: 0,
+        accountCodeRemove: "",
+        stockCodeRemove: "",
+        srcProductIdRemove: "",
+        dstProductIdRemove: "",
+        transferCountRemove: ""
       },
       financeRatioList: [
         {
@@ -162,7 +200,14 @@ export default {
         }
       ],
       pathQuery: "",
-      queryData: {}
+      queryData: {},
+      dstProductIdRemoveList: [],
+      removeBool: false,
+      rules: {
+        dstProductIdRemove: [
+          { required: true, message: "请选择目标产品编号", trigger: "change" }
+        ]
+      }
     };
   },
   props: {
@@ -211,13 +256,14 @@ export default {
     this.whoserouter = this.$route.path;
     console.log("是我啊", this.queryData);
     this.getFundAccount();
+    this.getDstProductIdRemoveList();
   },
   methods: {
     back() {
       console.log("是他啊", this.queryData);
       this.$router.push({
         path: this.pathQuery,
-        query:{
+        query: {
           queryData: this.queryData
         }
       });
@@ -267,6 +313,42 @@ export default {
       // console.log('是我',sums)
       return newsums;
     },
+    closeRemove() {
+      this.formInline.dstProductIdRemove = "";
+      this.removeBool = false;
+    },
+    onSubmitRmove() {
+      this.axios
+        .post("/tn/mgr-api/account/transferHold", {
+          accountCode: this.formInline.accountCodeRemove,
+          stockCode: this.formInline.stockCodeRemove,
+          srcProductId: this.formInline.srcProductIdRemove,
+          dstProductId: this.formInline.dstProductIdRemove,
+          transferCount: this.formInline.transferCountRemove
+        })
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "success"
+            });
+            this.removeBool = false;
+            // this.getFundAccount();
+            this.search();
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     closeChange1() {
       this.changeNow = false;
     },
@@ -315,6 +397,13 @@ export default {
       this.stockCode = row.stockCode;
       this.lastPrice = row.lastPrice;
     },
+    removeSet(index, row) {
+      this.removeBool = true;
+      this.formInline.accountCodeRemove = row.accountCode;
+      this.formInline.stockCodeRemove = row.stockCode;
+      this.formInline.srcProductIdRemove = row.productCode;
+      this.formInline.transferCountRemove = row.stockCnt;
+    },
     search() {
       this.currentPage = 1;
       this.getFundAccount();
@@ -348,6 +437,18 @@ export default {
           var res = JSON.parse(enc.decode(new Uint8Array(err.data))); //转化成json对象
         }
       );
+    },
+    getDstProductIdRemoveList() {
+      this.axios
+        .post("/tn/mgr-api/productInfo/productIdList", {
+          brokerName: ""
+        })
+        .then(res => {
+          this.dstProductIdRemoveList = res.data.data.rows;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     getFundAccount() {
       this.axios

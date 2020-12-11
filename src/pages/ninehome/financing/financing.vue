@@ -76,10 +76,12 @@
           <el-form-item label="融资倍率：" v-if="cannotChange==true">
             <el-input v-model="formInline.financeRatio" :disabled="cannotChange" placeholder="融资倍率"></el-input>
           </el-form-item>
-          <el-form-item label="融资费率：" prop="financeFeeRate">
-            <el-input v-model="formInline.financeFeeRate" placeholder="请输入0-1之间的小数"></el-input>
+          <el-form-item label="融资费率：" prop="financeFeeRate" v-if="cannotChange==false">
+            <el-input v-model="formInline.financeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
-
+          <el-form-item label="融资费率：" v-if="cannotChange==true">
+            <el-input v-model="formInline.financeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
+          </el-form-item>
           <el-form-item label="建仓费率：" prop="makeFeeRate" v-if="cannotChange==false">
             <el-input v-model="formInline.makeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
@@ -288,10 +290,12 @@ export default {
           this.cannotChange = true;
           this.formInline.financeRatio = 0;
           this.formInline.makeFeeRate = 0;
+          this.formInline.financeFeeRate = 0;
         } else {
           this.cannotChange = false;
           this.formInline.financeRatio = "";
           this.formInline.makeFeeRate = "";
+          this.formInline.financeFeeRate = "";
         }
       },
       deep: true

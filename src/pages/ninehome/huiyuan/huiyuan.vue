@@ -360,7 +360,7 @@
             <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：" prop="productGroupId">
-            <el-select v-model="formInline.productGroupId">
+            <el-select v-model="formInline.productGroupId" :disabled="formInline.dischange==true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
@@ -751,7 +751,7 @@ export default {
         balance: "",
         allottedScale: "",
         cashScale: "",
-        borrowing:"",//优先资金
+        borrowing: "", //优先资金
         freezeScale: "",
         flatLine: "",
         cordonLine: "",
@@ -783,7 +783,8 @@ export default {
         bankName: "",
         provinceName: "",
         cityName: "",
-        subBranchName: ""
+        subBranchName: "",
+        dischange: false
       },
       radio1: 0,
       productList: [],
@@ -968,13 +969,13 @@ export default {
   },
   created() {
     this.queryData = this.$route.query.queryData || "";
-    console.log('我是查询条件',this.queryData,this.$route.query.queryData)
-    if(this.queryData){
-      this.agentId=this.queryData.agentId||"";
-      this.checked=this.queryData.checked||"";
-      this.agentName=this.queryData.agentName||"";
+    console.log("我是查询条件", this.queryData, this.$route.query.queryData);
+    if (this.queryData) {
+      this.agentId = this.queryData.agentId || "";
+      this.checked = this.queryData.checked || "";
+      this.agentName = this.queryData.agentName || "";
       this.search();
-    }else{
+    } else {
       this.getFundAccount();
     }
     this.isAdminGroup = localStorage.getItem("isAdminGroup");

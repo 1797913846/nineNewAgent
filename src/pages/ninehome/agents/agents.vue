@@ -280,7 +280,7 @@
             <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
           </el-form-item>
           <el-form-item label="资金池ID：" prop="productGroupId">
-            <el-select v-model="formInline.productGroupId">
+            <el-select v-model="formInline.productGroupId" :disabled="formInline.dischange==true">
               <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
             </el-select>
           </el-form-item>
@@ -574,7 +574,8 @@ export default {
         defaultChildCommissionCfgId: "",
         agentMaxLimitMoney: "",
         secondBoardSingleStockPositionRatio: "",
-        thirdBoardSingleStockPositionRatio: ""
+        thirdBoardSingleStockPositionRatio: "",
+        dischange:false
       },
       groupIdList: [],
       productList: [],

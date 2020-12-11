@@ -140,7 +140,8 @@ export default {
         { key: "", value: "所有" },
         { key: 1, value: "委托成交" },
         { key: 2, value: "送股转赠股" },
-        { key: 3, value: " 持仓调整" }
+        { key: 3, value: " 持仓调整" },
+        { key: 4, value: " 移仓" }
       ],
       accountName: "",
       createTimeStart: "",
@@ -204,6 +205,8 @@ export default {
             return "送股转赠股";
           case 3:
             return "持仓调整";
+          case 4:
+            return "移仓";
           default:
             return "所有";
         }

@@ -166,7 +166,8 @@ export default {
         { key: "", value: "所有" },
         { key: 1, value: "委托成交" },
         { key: 2, value: "送股转赠股" },
-        { key: 3, value: " 持仓调整" }
+        { key: 3, value: " 持仓调整" },
+        { key: 4, value: " 移仓" }
       ],
       bstype: "",
       bstypeList: [
