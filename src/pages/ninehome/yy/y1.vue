@@ -108,8 +108,11 @@
               <el-option v-for="(item,index) in dstProductIdRemoveList" :key="index" :label="item" :value="item"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="持仓数量：">
-            <el-input v-model="formInline.transferCountRemove" placeholder="持仓数量" :disabled="true"></el-input>
+          <el-form-item label="可用数量：">
+            <el-input v-model="formInline.transferCountRemove1" placeholder="可用数量" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="移仓数量：">
+            <el-input v-model="formInline.transferCountRemove" placeholder="移仓数量"></el-input>
           </el-form-item>
           <br />
           <el-form-item>
@@ -256,7 +259,6 @@ export default {
     this.whoserouter = this.$route.path;
     console.log("是我啊", this.queryData);
     this.getFundAccount();
-    this.getDstProductIdRemoveList();
   },
   methods: {
     back() {
@@ -318,36 +320,47 @@ export default {
       this.removeBool = false;
     },
     onSubmitRmove() {
-      this.axios
-        .post("/tn/mgr-api/account/transferHold", {
-          accountCode: this.formInline.accountCodeRemove,
-          stockCode: this.formInline.stockCodeRemove,
-          srcProductId: this.formInline.srcProductIdRemove,
-          dstProductId: this.formInline.dstProductIdRemove,
-          transferCount: this.formInline.transferCountRemove
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.removeBool = false;
-            // this.getFundAccount();
-            this.search();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
+      if (
+        Number(this.formInline.transferCountRemove) >
+        Number(this.formInline.transferCountRemove1)
+      ) {
+        this.$alert("移仓数量大于可用数量", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
         });
+      } else {
+        this.axios
+          .post("/tn/mgr-api/account/transferHold", {
+            accountCode: this.formInline.accountCodeRemove,
+            stockCode: this.formInline.stockCodeRemove,
+            srcProductId: this.formInline.srcProductIdRemove,
+            dstProductId: this.formInline.dstProductIdRemove,
+            transferCount: this.formInline.transferCountRemove
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.removeBool = false;
+              // this.getFundAccount();
+              this.search();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     closeChange1() {
       this.changeNow = false;
@@ -399,10 +412,13 @@ export default {
     },
     removeSet(index, row) {
       this.removeBool = true;
+      this.formInline.dstProductIdRemove = "";
       this.formInline.accountCodeRemove = row.accountCode;
       this.formInline.stockCodeRemove = row.stockCode;
       this.formInline.srcProductIdRemove = row.productCode;
       this.formInline.transferCountRemove = row.stockCnt;
+      this.formInline.transferCountRemove1 = row.stockCnt;
+      this.getDstProductIdRemoveList();
     },
     search() {
       this.currentPage = 1;
@@ -441,7 +457,7 @@ export default {
     getDstProductIdRemoveList() {
       this.axios
         .post("/tn/mgr-api/productInfo/productIdList", {
-          brokerName: ""
+          accountCode: this.formInline.accountCodeRemove
         })
         .then(res => {
           this.dstProductIdRemoveList = res.data.data.rows;

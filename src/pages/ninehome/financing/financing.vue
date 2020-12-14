@@ -88,8 +88,11 @@
           <el-form-item label="建仓费率：" v-if="cannotChange==true">
             <el-input v-model="formInline.makeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
-          <el-form-item label="利润分成比例：" prop="separateFeeRate">
+          <el-form-item label="利润分成比例：" prop="separateFeeRate" v-if="cannotChange==false">
             <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="请输入0-1之间的小数"></el-input>
+          </el-form-item>
+          <el-form-item label="利润分成比例：" v-if="cannotChange==true">
+            <el-input v-model="formInline.separateFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="警戒线比率：" prop="cordonLineRate">
             <el-input v-model="formInline.cordonLineRate" placeholder="请输入0-1之间的小数"></el-input>
@@ -169,8 +172,8 @@ export default {
         financeRatio: [
           { required: true, message: "请输入融资倍率", trigger: "blur" },
           {
-            pattern: /^[1-9]\d*$/,
-            message: "融资倍率需为正整数",
+            pattern: /^([1-9]\d*|[0]{1,1})$/,
+            message: "融资倍率需为0或正整数",
             trigger: "blur"
           }
         ],
@@ -291,11 +294,13 @@ export default {
           this.formInline.financeRatio = 0;
           this.formInline.makeFeeRate = 0;
           this.formInline.financeFeeRate = 0;
+          this.formInline.separateFeeRate = 0;
         } else {
           this.cannotChange = false;
           this.formInline.financeRatio = "";
           this.formInline.makeFeeRate = "";
           this.formInline.financeFeeRate = "";
+          // this.formInline.separateFeeRate = "";
         }
       },
       deep: true

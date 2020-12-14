@@ -105,8 +105,24 @@
           <el-table-column show-overflow-tooltip label="手续费" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="发生金额" prop="happenAmount" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="买卖方向" prop="subtypeDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="委托状态" prop="entruststatusDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="备注信息" prop="memo" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="委托状态" prop="entruststatusDesc" align="center"></el-table-column> -->
+          <el-table-column label="委托状态" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span v-if="scope.row.entruststatusDesc!='委托失败'">{{scope.row.entruststatusDesc}}</span>
+                <span v-if="scope.row.entruststatusDesc=='委托失败'" style="color:red;">{{scope.row.entruststatusDesc}}</span>
+              </div>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="备注信息" prop="memo" align="center"></el-table-column> -->
+          <el-table-column label="备注信息" align="center" width="240">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span v-if="scope.row.entruststatusDesc!='委托失败'" style="text-align:left;">{{scope.row.memo}}</span>
+                <span v-if="scope.row.entruststatusDesc=='委托失败'" style="color:red;text-align:left;">{{scope.row.memo}}</span>
+              </div>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div class="pagination">
