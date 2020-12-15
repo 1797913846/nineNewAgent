@@ -34,6 +34,7 @@
               </span>
               <input v-model="form.code" placeholder="请输入验证码" @keydown.enter="login()">
               <img class="code" :src="'http://47.102.151.13/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
+              <!-- <img class="code" :src="'/tn/mgr-api/get-code?uuid='+num" @click="getCode()"> -->
             </div>
             <!-- <div class="errorbox" v-if="errMsg">
               <img src="../assets/loginimg/error.png" alt="">

@@ -967,6 +967,15 @@ input:-ms-input-placeholder {
     margin-left: 375px!important;
 }
 
+.addForm .gg3333 {
+    width: 1000px!important;
+    height: 900px!important;
+}
+
+.addForm .gg3333 .savebt {
+    margin-left: 770px!important;
+}
+
 .addForm .gg4 .el-form-item__label {
     width: 150px!important;
 }
@@ -1175,9 +1184,11 @@ input:-ms-input-placeholder {
     color: red;
     line-height: 38px;
 }
-.red{
+
+.red {
     color: red;
 }
+
 /*输入框禁用*/
 
 .el-input.is-disabled .el-input__inner {

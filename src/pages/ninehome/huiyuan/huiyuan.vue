@@ -509,155 +509,198 @@
       <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
-    <div class="addForm fnn" v-if="jia==true">
-      <div class="addContent addContent2 gg3">
+    <div class="addForm ggf3" v-if="jia==true">
+      <div class="addContent addContent2 gg3333">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
           <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia">
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
-          <el-form-item label="推荐人ID：">
-            <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐人名称：">
-            <el-input v-model="formInline.parentAccountName" :disabled="true" placeholder="推荐人名称"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐人佣金：">
-            <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号：" prop="accountId">
-            <el-input v-model="formInline.accountId" placeholder="手机号"></el-input>
-          </el-form-item>
-          <el-form-item label="会员名称：" prop="accountName">
-            <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
-          </el-form-item>
-          <el-form-item label="资金池ID：" prop="productGroupId">
-            <el-select v-model="formInline.productGroupId">
-              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="会员等级：" prop="level">
-            <el-select v-model="formInline.level">
-              <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="佣金方案(单边)：" prop=" commissionCfgId">
-            <el-select v-model="formInline.commissionCfgId">
-              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="会员管理权限：" prop="ableCrud">
-            <el-select v-model="formInline.ableCrud">
-              <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="代理商限额：" prop="agentMaxLimitMoney">
-            <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
-          </el-form-item>
-          <el-form-item label="账户余额：">
-            <el-input v-model="formInline.balance" :disabled="true" placeholder="账户余额"></el-input>
-          </el-form-item>
-          <el-form-item label="初期规模：">
-            <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
-          </el-form-item>
-          <el-form-item label="保证金：">
-            <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
-          </el-form-item>
-          <el-form-item label="手动冻结金额：">
-            <el-input v-model="formInline.freezeScale" :disabled="true" placeholder="手动冻结金额"></el-input>
-          </el-form-item>
-          <el-form-item label="平仓线(金额)：">
-            <el-input v-model="formInline.flatLine" :disabled="true" placeholder="平仓线(金额)"></el-input>
-          </el-form-item>
-          <el-form-item label="警戒线(金额)：">
-            <el-input v-model="formInline.cordonLine" :disabled="true" placeholder="警戒线(金额)"></el-input>
-          </el-form-item>
-          <el-form-item label="个股持仓比例：" prop="positionRatio">
-            <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
-          </el-form-item>
-          <el-form-item label="创业板持仓比例：" class="smallfont" prop="secondBoardPositionRatio">
-            <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
-          </el-form-item>
-          <el-form-item label="科创板持仓比例：" class="smallfont" prop="thirdBoardPositionRatio">
-            <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
-          </el-form-item>
-          <el-form-item label="创业板个股持仓比率：" class="smallfont" prop="secondBoardSingleStockPositionRatio">
-            <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
-          </el-form-item>
-          <el-form-item label="科创板个股持仓比率：" class="smallfont" prop="thirdBoardSingleStockPositionRatio">
-            <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
-          </el-form-item>
-          <el-form-item label="融资比例：">
-            <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
-          </el-form-item>
-          <el-form-item label="管理费率：" prop="manageFeeRate">
-            <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
-          </el-form-item>
-          <el-form-item label="建仓费率：" prop="manageMakeFeeRate">
-            <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
-          </el-form-item>
-          <el-form-item label="融资周期：">
-            <el-select v-model="formInline.financePeriod" :disabled="true">
-              <el-option label="天" value="day"></el-option>
-              <el-option label="周" value="week"></el-option>
-              <el-option label="月" value="month"></el-option>
-              <el-option label="单" value="single"></el-option>
-              <el-option label="策略" value="strategy"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下单权限：" prop="orderPermission">
-            <el-select v-model="formInline.orderPermission">
-              <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="会员状态：" prop="accountStatus">
-            <el-select v-model="formInline.accountStatus">
-              <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
-            <el-select v-model="formInline.defaultChildGroupId">
-              <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
-            <el-select v-model="formInline.defaultChildCommissionCfgId">
-              <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="添加开户银行：">
-            <el-radio v-model="radio1" :label="1">是</el-radio>
-            <el-radio v-model="radio1" :label="0">否</el-radio>
-          </el-form-item>
-          <el-form-item label="开户银行：" v-if="radio1==1">
-            <el-select v-model="formInline.bankId">
-              <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开户银行省份：" v-if="radio1==1">
-            <el-select v-model="formInline.provinceId">
-              <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开户银行城市：" v-if="radio1==1">
-            <el-select v-model="formInline.cityId">
-              <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开户银行支行：" v-if="radio1==1">
-            <el-select v-model="formInline.subBranchId">
-              <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="卡号：" v-if="radio1==1">
-            <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
-          </el-form-item>
-          <el-form-item label="开户名：" v-if="radio1==1">
-            <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
-          </el-form-item>
-          <el-form-item label="身份证：" v-if="radio1==1">
-            <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
-          </el-form-item>
+          <div class="gbbox">
+            <div class="gbtitle">基本信息</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="推荐人ID：">
+                  <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
+                </el-form-item>
+                <el-form-item label="推荐人名称：">
+                  <el-input v-model="formInline.parentAccountName" :disabled="true" placeholder="推荐人名称"></el-input>
+                </el-form-item>
+                <el-form-item label="推荐人佣金：">
+                  <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号：" prop="accountId">
+                  <el-input v-model="formInline.accountId" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="会员名称：" prop="accountName">
+                  <el-input v-model="formInline.accountName" placeholder="会员名称"></el-input>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="资金池ID：" prop="productGroupId">
+                  <el-select v-model="formInline.productGroupId">
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="会员等级：" prop="level">
+                  <el-select v-model="formInline.level">
+                    <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="后台登录权限：" prop="ableCrud">
+                  <el-select v-model="formInline.ableCrud">
+                    <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="会员状态：" prop="accountStatus">
+                  <el-select v-model="formInline.accountStatus">
+                    <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <div class="gbbox">
+            <div class="gbtitle">资金方案</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="方案选择：">
+                  <el-select v-model="formInline.fangan">
+                    <el-option label="天" value="day"></el-option>
+                    <el-option label="周" value="week"></el-option>
+                    <el-option label="月" value="month"></el-option>
+                    <el-option label="单" value="single"></el-option>
+                    <el-option label="策略" value="strategy"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="账户余额：">
+                  <el-input v-model="formInline.balance" placeholder="账户余额" :disabled="!formInline.fangan"></el-input>
+                </el-form-item>
+                <el-form-item label="融资倍率：">
+                  <el-select v-model="formInline.beilv" :disabled="!formInline.fangan">
+                    <el-option v-for="(item,index) in beilvList" :key="index" :label="item.financeRatio+'倍'" :value="item.financeRatio"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="初期规模：">
+                  <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
+                </el-form-item>
+                <el-form-item label="保证金：">
+                  <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="融资比例：">
+                  <el-input v-model="formInline.financeRatio" :disabled="true" placeholder="融资比例"></el-input>
+                </el-form-item>
+                <el-form-item label="佣金方案(单边)：" prop=" commissionCfgId">
+                  <el-select v-model="formInline.commissionCfgId">
+                    <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="管理费率：" prop="manageFeeRate">
+                  <el-input v-model="formInline.manageFeeRate" placeholder="管理费率"></el-input>
+                </el-form-item>
+                <el-form-item label="建仓费率：" prop="manageMakeFeeRate">
+                  <el-input v-model="formInline.manageMakeFeeRate" placeholder="建仓费率"></el-input>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <div class="gbbox">
+            <div class="gbtitle">风控设置</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="平仓线(金额)：">
+                  <el-input v-model="formInline.flatLine" :disabled="true" placeholder="平仓线(金额)"></el-input>
+                </el-form-item>
+                <el-form-item label="警戒线(金额)：">
+                  <el-input v-model="formInline.cordonLine" :disabled="true" placeholder="警戒线(金额)"></el-input>
+                </el-form-item>
+                <el-form-item label="手动冻结金额：">
+                  <el-input v-model="formInline.freezeScale" :disabled="true" placeholder="手动冻结金额"></el-input>
+                </el-form-item>
+                <el-form-item label="代理商限额：" prop="agentMaxLimitMoney">
+                  <el-input v-model="formInline.agentMaxLimitMoney" placeholder="数据为0时无限制"></el-input>
+                </el-form-item>
+                <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
+                  <el-select v-model="formInline.defaultChildGroupId">
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
+                  <el-select v-model="formInline.defaultChildCommissionCfgId">
+                    <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="个股持仓比例：" prop="positionRatio">
+                  <el-input v-model="formInline.positionRatio" placeholder="个股持仓比例"></el-input>
+                </el-form-item>
+                <el-form-item label="创业板持仓比例：" class="smallfont" prop="secondBoardPositionRatio">
+                  <el-input v-model="formInline.secondBoardPositionRatio" placeholder="创业板持仓比例"></el-input>
+                </el-form-item>
+                <el-form-item label="科创板持仓比例：" class="smallfont" prop="thirdBoardPositionRatio">
+                  <el-input v-model="formInline.thirdBoardPositionRatio" placeholder="科创板持仓比例"></el-input>
+                </el-form-item>
+                <el-form-item label="创业板个股持仓比率：" class="smallfont" prop="secondBoardSingleStockPositionRatio">
+                  <el-input v-model="formInline.secondBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+                </el-form-item>
+                <el-form-item label="科创板个股持仓比率：" class="smallfont" prop="thirdBoardSingleStockPositionRatio">
+                  <el-input v-model="formInline.thirdBoardSingleStockPositionRatio" placeholder="请输入0-1之间的数字"></el-input>
+                </el-form-item>
+                <el-form-item label="下单权限：" prop="orderPermission">
+                  <el-select v-model="formInline.orderPermission">
+                    <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <div class="gbbox">
+            <div class="gbtitle">银行卡信息</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="添加开户银行：">
+                  <el-radio v-model="radio1" :label="1">是</el-radio>
+                  <el-radio v-model="radio1" :label="0">否</el-radio>
+                </el-form-item>
+                <el-form-item label="开户银行：" v-if="radio1==1">
+                  <el-select v-model="formInline.bankId">
+                    <el-option v-for="(item,index) in banksList" :key="index" :label="item.text" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="开户银行省份：" v-if="radio1==1">
+                  <el-select v-model="formInline.provinceId">
+                    <el-option v-for="(item,index) in provincesList" :key="index" :label="item.text" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="开户银行城市：" v-if="radio1==1">
+                  <el-select v-model="formInline.cityId">
+                    <el-option v-for="(item,index) in citiesList" :key="index" :label="item.text" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="开户银行支行：" v-if="radio1==1">
+                  <el-select v-model="formInline.subBranchId">
+                    <el-option v-for="(item,index) in branchesList" :key="index" :label="item.text" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <div style="height:60px;overflow:hidden;"></div>
+                <el-form-item label="卡号：" v-if="radio1==1">
+                  <el-input v-model="formInline.cardNo" placeholder="卡号"></el-input>
+                </el-form-item>
+                <el-form-item label="开户名：" v-if="radio1==1">
+                  <el-input v-model="formInline.userName" placeholder="开户名"></el-input>
+                </el-form-item>
+                <el-form-item label="身份证：" v-if="radio1==1">
+                  <el-input v-model="formInline.identityNo" placeholder="身份证"></el-input>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+
           <br />
           <el-form-item>
             <el-button class="savebt" type="primary" @click="onSubmit2('formInline')">保存</el-button>
@@ -720,6 +763,7 @@ export default {
   },
   data() {
     return {
+      fangan: "",
       checked: false,
       hsbool: false,
       tableData: [],
@@ -784,7 +828,9 @@ export default {
         provinceName: "",
         cityName: "",
         subBranchName: "",
-        dischange: false
+        dischange: false,
+        fangan: "",
+        beilv: ""
       },
       radio1: 0,
       productList: [],
@@ -924,7 +970,9 @@ export default {
           }
         ]
       },
-      queryData: {}
+      queryData: {},
+      financeScheme: "",
+      beilvList: ""
     };
   },
   computed: {
@@ -963,6 +1011,22 @@ export default {
     "formInline.cityId": {
       handler(newVal, oldVal) {
         this.getBranchesList();
+      },
+      deep: true
+    },
+    "formInline.fangan": {
+      handler(newVal, oldVal) {
+        if (newVal) {
+          this.formInline.beilv = "";
+          for (let key in this.financeScheme) {
+            //if(arr.hasOwnProperty(key))
+            //console.log(key); //键名
+            //console.log(this.financeScheme[key]); //键值
+            if (newVal == key) {
+              this.beilvList = this.financeScheme[key];
+            }
+          }
+        }
       },
       deep: true
     }
@@ -1414,6 +1478,8 @@ export default {
       this.formInline.cardNo = "";
       this.formInline.userName = "";
       this.formInline.identityNo = "";
+      this.formInline.fangan = "";
+      this.formInline.beilv = "";
     },
     showEveryCode(index, row) {
       console.log("index2", index);
@@ -1480,6 +1546,7 @@ export default {
             this.commissionCfgList = res.data.data.commissionCfgList;
             this.productList = res.data.data.productList;
             this.agentLevel = res.data.data.agentLevel;
+            this.financeScheme = res.data.data.financeScheme;
             //取出客户
             this.agentLevel.map(item => {
               if (item.levelName == "客户") {
@@ -1604,7 +1671,10 @@ export default {
           identityNo: this.formInline.identityNo,
           freezeScale: this.formInline.freezeScale,
           flatLine: this.formInline.flatLine,
-          cordonLine: this.formInline.cordonLine
+          cordonLine: this.formInline.cordonLine,
+          financePeriod: this.formInline.fangan,
+          financeRatio: this.formInline.beilv,
+          balance: this.formInline.balance
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -1899,6 +1969,28 @@ export default {
   margin-left: 33px;
   margin-right: 33px;
 }
+.gbbox {
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.gbtitle {
+  color: #586982;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.gbcontent {
+}
+.gbspan {
+  display: inline-block;
+  float: left;
+  width: 49%;
+}
+.gbspan:last-child {
+  margin-left: 2%;
+}
 </style>
 <style>
 .el-table .colorgreen {
@@ -1930,11 +2022,14 @@ export default {
 .tradio {
   margin-left: 0px !important;
 }
-.fnn .el-form-item__label {
-  width: 180px !important;
-  margin-left: 24px !important;
+.ggf3 .el-form-item__label {
+  width: 170px !important;
+  text-align: left!important;
+  margin-left: 0px !important;
 }
-
+.ggf3 .el-input__inner {
+  width: 270px!important;
+}
 .huiyuan .el-table__body tr.el-table__row--striped td {
   background: transparent !important;
 }
