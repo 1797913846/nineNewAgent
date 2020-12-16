@@ -33,8 +33,8 @@
                 <div class="mt">Verification</div>
               </span>
               <input v-model="form.code" placeholder="请输入验证码" @keydown.enter="login()">
-              <!-- <img class="code" :src="'http://47.102.151.13/tn/mgr-api/get-code?uuid='+num" @click="getCode()"> -->
-              <img class="code" :src="'/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
+              <img class="code" :src="burl+'/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
+              <!-- <img class="code" :src="'/tn/mgr-api/get-code?uuid='+num" @click="getCode()"> -->
             </div>
             <!-- <div class="errorbox" v-if="errMsg">
               <img src="../assets/loginimg/error.png" alt="">
@@ -70,11 +70,13 @@ export default {
       app: "",
       appUrl: "",
       Expire_Day: "",
-      num: 2345
+      num: 2345,
+      burl:""
     };
   },
   watch: {},
   created() {
+    window.location.host != 'localhost:8080' ? this.burl = "http://" + window.location.host : this.burl = "http://47.102.151.13"
     localStorage.clear();
     this.getCode();
   },

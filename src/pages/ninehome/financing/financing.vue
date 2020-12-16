@@ -297,9 +297,9 @@ export default {
           this.formInline.separateFeeRate = 0;
         } else {
           this.cannotChange = false;
-          this.formInline.financeRatio = "";
-          this.formInline.makeFeeRate = "";
-          this.formInline.financeFeeRate = "";
+          // this.formInline.financeRatio = "";
+          // this.formInline.makeFeeRate = "";
+          // this.formInline.financeFeeRate = "";
           // this.formInline.separateFeeRate = "";
         }
       },

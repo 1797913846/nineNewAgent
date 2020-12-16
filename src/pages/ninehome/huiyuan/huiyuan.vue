@@ -270,7 +270,6 @@
           <el-form-item label="融资周期：">
             <el-select v-model="formInline.financePeriod" :disabled="true">
               <el-option label="天" value="day"></el-option>
-              <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
               <el-option label="策略" value="strategy"></el-option>
@@ -430,7 +429,6 @@
           <el-form-item label="融资周期：">
             <el-select v-model="formInline.financePeriod" :disabled="true">
               <el-option label="天" value="day"></el-option>
-              <el-option label="周" value="week"></el-option>
               <el-option label="月" value="month"></el-option>
               <el-option label="单" value="single"></el-option>
               <el-option label="策略" value="strategy"></el-option>
@@ -570,7 +568,6 @@
                 <el-form-item label="方案选择：">
                   <el-select v-model="formInline.fangan">
                     <el-option label="天" value="day"></el-option>
-                    <el-option label="周" value="week"></el-option>
                     <el-option label="月" value="month"></el-option>
                     <el-option label="单" value="single"></el-option>
                     <el-option label="策略" value="strategy"></el-option>
@@ -1471,10 +1468,10 @@ export default {
       this.formInline.manageMakeFeeRate = "";
       this.formInline.orderPermission = 0;
       this.formInline.accountStatus = 1;
-      this.formInline.defaultChildGroupId = "";
-      this.formInline.defaultChildCommissionCfgId = "";
+      this.formInline.defaultChildGroupId = Number(localStorage.getItem("defaultChildGroupId"))||"";
+      this.formInline.defaultChildCommissionCfgId = Number(localStorage.getItem("defaultChildCommissionCfgId"))||"";
       this.formInline.parentAccountCode = this.loginName;
-      this.formInline.parentAccountName = this.userName;
+      this.formInline.parentAccountName = this.loginName;
       this.formInline.balance = 0;
       this.formInline.allottedScale = 0;
       this.formInline.cashScale = 0;
@@ -1571,7 +1568,7 @@ export default {
             this.inviteCode = res.data.data.inviteCode;
             this.inviteCodeUrl = res.data.data.inviteCodeUrl;
             localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);
-            this.creatQrCode(this.inviteCodeUrl);
+            this.creatQrCode(this.inviteCodeUrl+this.inviteCode);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",

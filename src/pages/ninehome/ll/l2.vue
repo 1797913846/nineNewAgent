@@ -62,16 +62,19 @@
         </el-form>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue1"></alertWindows>
   </div>
 </template>
 
 <script>
 import editor from "@/components/editor";
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
     topNav,
-    editor
+    editor,
+    alertWindows
   },
   data() {
     return {
@@ -90,7 +93,11 @@ export default {
         content: ""
       },
       id: "",
-      addTitle: "新增"
+      addTitle: "新增",
+      deleteId: "",
+      deleteBool: false,
+      deleteTitle: "确认删除吗?",
+      deleteRight: false
     };
   },
   computed: {
@@ -163,27 +170,38 @@ export default {
       this.addTitle = "修改";
       this.showAdd = true;
     },
+    childByValue1: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/sysmgr/bulltinMgr/delete", {
+            id: this.deleteId
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     deleteNow(index, row) {
       let id = row.id;
-      this.axios
-        .post("/tn/mgr-api/sysmgr/bulltinMgr/delete", {
-          id: id
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.deleteId = id;
+      this.deleteBool = true;
     },
     setIt(index, row) {
       console.log(222);

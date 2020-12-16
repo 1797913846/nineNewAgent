@@ -158,14 +158,17 @@
         </el-form>
       </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue1"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
@@ -203,7 +206,11 @@ export default {
       provinceId: "",
       cityId: "",
       changeNow: false,
-      id: ""
+      id: "",
+      deleteId: "",
+      deleteBool: false,
+      deleteTitle: "确认删除吗?",
+      deleteRight: false
     };
   },
   computed: {
@@ -416,32 +423,43 @@ export default {
           console.log(err);
         });
     },
+    childByValue1: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/account/deleteCard", {
+            id: this.deleteId
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.getFundAccount();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     deleteNow(index, row) {
       let id = row.id;
-      this.axios
-        .post("/tn/mgr-api/account/deleteCard", {
-          id: id
-        })
-        .then(res => {
-          console.log("getFundAccount>>", res.data);
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.deleteId = id;
+      this.deleteBool = true;
     },
     onSubmitChange(formName) {
       //name需要用id去列表取
