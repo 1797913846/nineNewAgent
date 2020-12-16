@@ -557,6 +557,9 @@
                     <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
                   </el-select>
                 </el-form-item>
+                <el-form-item label="账户余额：">
+                  <el-input v-model="formInline.balance" placeholder="账户余额" :disabled="true"></el-input>
+                </el-form-item>
               </span>
             </div>
           </div>
@@ -573,19 +576,19 @@
                     <el-option label="策略" value="strategy"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="账户余额：">
-                  <el-input v-model="formInline.balance" placeholder="账户余额" :disabled="!formInline.fangan"></el-input>
-                </el-form-item>
                 <el-form-item label="融资倍率：">
                   <el-select v-model="formInline.beilv" :disabled="!formInline.fangan">
                     <el-option v-for="(item,index) in beilvList" :key="index" :label="item.financeRatio+'倍'" :value="item.financeRatio"></el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="初期规模：">
-                  <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
+                <el-form-item label="优先资金：">
+                  <el-input v-model="formInline.borrowing" :disabled="!formInline.fangan" placeholder="优先资金"></el-input>
                 </el-form-item>
                 <el-form-item label="保证金：">
-                  <el-input v-model="formInline.cashScale" :disabled="true" placeholder="保证金"></el-input>
+                  <el-input v-model="formInline.cashScale" :disabled="!formInline.fangan" placeholder="保证金"></el-input>
+                </el-form-item>
+                <el-form-item label="初期规模：">
+                  <el-input v-model="formInline.allottedScale" :disabled="true" placeholder="初期规模"></el-input>
                 </el-form-item>
               </span>
               <span class="gbspan">
@@ -1027,6 +1030,18 @@ export default {
             }
           }
         }
+      },
+      deep: true
+    },
+    "formInline.borrowing": {
+      handler(newVal, oldVal) {
+        this.formInline.allottedScale=Number(newVal)+Number(this.formInline.cashScale);
+      },
+      deep: true
+    },
+    "formInline.cashScale": {
+      handler(newVal, oldVal) {
+        this.formInline.allottedScale=Number(newVal)+Number(this.formInline.borrowing);
       },
       deep: true
     }
@@ -1674,7 +1689,9 @@ export default {
           cordonLine: this.formInline.cordonLine,
           financePeriod: this.formInline.fangan,
           financeRatio: this.formInline.beilv,
-          balance: this.formInline.balance
+          balance: this.formInline.balance,
+          cashScale: this.formInline.cashScale,
+          borrowing: this.formInline.borrowing
         })
         .then(res => {
           if (res.data.code == 200) {
@@ -2024,11 +2041,11 @@ export default {
 }
 .ggf3 .el-form-item__label {
   width: 170px !important;
-  text-align: left!important;
+  text-align: left !important;
   margin-left: 0px !important;
 }
 .ggf3 .el-input__inner {
-  width: 270px!important;
+  width: 270px !important;
 }
 .huiyuan .el-table__body tr.el-table__row--striped td {
   background: transparent !important;

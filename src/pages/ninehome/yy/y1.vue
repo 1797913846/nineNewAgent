@@ -417,7 +417,7 @@ export default {
       this.formInline.stockCodeRemove = row.stockCode;
       this.formInline.srcProductIdRemove = row.productCode;
       this.formInline.transferCountRemove = row.stockCnt;
-      this.formInline.transferCountRemove1 = row.stockCnt;
+      this.formInline.transferCountRemove1 = row.stockCntAble;
       this.getDstProductIdRemoveList();
     },
     search() {
