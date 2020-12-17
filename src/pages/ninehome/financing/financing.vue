@@ -88,11 +88,8 @@
           <el-form-item label="建仓费率：" v-if="cannotChange==true">
             <el-input v-model="formInline.makeFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
-          <el-form-item label="利润分成比例：" prop="separateFeeRate" v-if="cannotChange==false">
-            <el-input v-model="formInline.separateFeeRate" :disabled="addTitle=='修改'" placeholder="请输入0-1之间的小数"></el-input>
-          </el-form-item>
-          <el-form-item label="利润分成比例：" v-if="cannotChange==true">
-            <el-input v-model="formInline.separateFeeRate" :disabled="cannotChange" placeholder="请输入0-1之间的小数"></el-input>
+          <el-form-item label="利润分成比例：">
+            <el-input v-model="formInline.separateFeeRate" :disabled="lirunCan!=true" placeholder="请输入0-1之间的小数"></el-input>
           </el-form-item>
           <el-form-item label="警戒线比率：" prop="cordonLineRate">
             <el-input v-model="formInline.cordonLineRate" placeholder="请输入0-1之间的小数"></el-input>
@@ -153,7 +150,7 @@ export default {
       formInline: {
         financePeriod: "day", //融资周期
         financeRatio: "", //融资倍率
-        separateFeeRate: "", //分成比例
+        separateFeeRate: 0, //分成比例
         makeFeeRate: "", //建仓费率
         financeFeeRate: "", //融资费率
         cordonLineRate: "", //警戒线比率
@@ -266,7 +263,8 @@ export default {
           }
         ]
       },
-      cannotChange: false
+      cannotChange: false,
+      lirunCan:false
     };
   },
   computed: {
@@ -301,6 +299,12 @@ export default {
           // this.formInline.makeFeeRate = "";
           // this.formInline.financeFeeRate = "";
           // this.formInline.separateFeeRate = "";
+        }
+        if(newVal=='single'){
+          this.lirunCan = true;
+        }else{
+          this.lirunCan = false;
+          this.formInline.separateFeeRate=0
         }
       },
       deep: true
@@ -369,7 +373,7 @@ export default {
       this.formInline.financeRatio = "";
       this.formInline.financeFeeRate = "";
       this.formInline.makeFeeRate = "";
-      this.formInline.separateFeeRate = "";
+      this.formInline.separateFeeRate = 0;
       this.formInline.cordonLineRate = "";
       this.formInline.flatLineRate = "";
       this.formInline.positionRatio = "";
