@@ -140,7 +140,7 @@ export default {
   },
   created() {
     this.getFundAccount();
-    this.token = localStorage.getItem("Authorization");
+    this.token = localStorage.getItem("managerAuthorization");
   },
   methods: {
     handleSelectionChange(val) {

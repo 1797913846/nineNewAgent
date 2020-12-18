@@ -33,39 +33,41 @@
       <div class="reset-scroll-style">
         <el-table v-if="nullTable==true" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="700" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="订单日期" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理账户ID" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理账户名称" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员账户ID" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员账户名称" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理账户ID" align="center" width="110"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理账户名称" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员账户ID" align="center" width="110"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员账户名称" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资方案" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖成交金额" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="买入数量" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买入成交金额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买入手续费" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买入成交金额" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买入手续费" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="卖出数量" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="卖出成交金额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="卖出手续费" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易佣金返利" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="管理费返利" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买卖成交金额" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="利润分成返利" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卖出成交金额" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卖出手续费" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="交易佣金返利" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="管理费返利" align="center" width="90"></el-table-column>
+          <el-table-column show-overflow-tooltip label="利润分成返利" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理收益" align="center"></el-table-column>
         </el-table>
         <el-table v-if="nullTable==false" :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="700" :cell-style="cellStyle" :header-cell-style="headerCellStyle">
           <el-table-column show-overflow-tooltip label="订单日期" prop="orderDate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理账户ID" prop="agentAccountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="代理账户名称" prop="agentAccountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员账户ID" prop="accountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员账户名称" prop="accountName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理账户ID" prop="agentAccountCode" align="center" width="110"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理账户名称" prop="agentAccountName" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员账户ID" prop="accountCode" align="center" width="110"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员账户名称" prop="accountName" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="融资方案" :formatter="formatterday" prop="financePeriod" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买卖成交金额" prop="dealAmountBuy" :formatter="formattera" align="center" width="100"></el-table-column>
           <el-table-column show-overflow-tooltip label="买入数量" prop="dealCntBuy" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买入成交金额" prop="dealAmountBuy" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买入手续费" prop="commissionBuy" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买入成交金额" prop="dealAmountBuy" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="买入手续费" prop="commissionBuy" align="center" width="100"></el-table-column>  
           <el-table-column show-overflow-tooltip label="卖出数量" prop="dealCntSell" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="卖出成交金额" prop="dealAmountSell" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="卖出手续费" prop="commissionSell" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="交易佣金返利" prop="commissionRebate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="管理费返利" prop="managerRebate" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="买卖成交金额" prop="dealAmountBuy" :formatter="formattera" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="利润分成返利" prop="profitRebate" :formatter="formatterb" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卖出成交金额" prop="dealAmountSell" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="卖出手续费" prop="commissionSell" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="交易佣金返利" prop="commissionRebate" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="管理费返利" prop="managerRebate" align="center" width="90"></el-table-column>
+          <el-table-column show-overflow-tooltip label="利润分成返利" prop="profitRebate" align="center" width="100"></el-table-column>
+          <el-table-column show-overflow-tooltip label="代理收益" prop="profitRebate" :formatter="formatterb" align="center"></el-table-column>
         </el-table>
       </div>
       <div class="pagination" v-if="nullTable==false">

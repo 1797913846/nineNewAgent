@@ -366,7 +366,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   window.document.title = '管理系统';
   window.scrollTo(0, 0);
-  var token = localStorage.getItem("Authorization");
+  var token = localStorage.getItem("managerAuthorization");
   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
     if (token) {
       next();

@@ -147,7 +147,7 @@ export default {
           console.log("login>>", res.data);
           if (res.data.code == 200) {
             let Authorization = res.data.data.token;
-            localStorage.setItem("Authorization", Authorization);
+            localStorage.setItem("managerAuthorization", Authorization);
             let toVerifyCode = res.data.data.toVerifyCode;
             this.getMsg();
             let that = this;

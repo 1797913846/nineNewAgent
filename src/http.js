@@ -27,7 +27,7 @@ console.log('axios', axios.defaults.baseURL)
 axios.interceptors.request.use(
     config => {
         //如果存在token,请求头里面设置
-        var token = localStorage.getItem('Authorization');
+        var token = localStorage.getItem('managerAuthorization');
         if (token) {
             config.headers.Authorization = token;
         }
