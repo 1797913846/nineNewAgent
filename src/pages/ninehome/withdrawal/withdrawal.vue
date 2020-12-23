@@ -42,7 +42,7 @@
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <!-- <el-table-column type="selection" width="23" align="center"></el-table-column> -->
-          <el-table-column label="操作" width="180" align="center">
+          <el-table-column label="操作" width="100" align="center">
             <template slot-scope="scope">
               <div class="operation">
                 <span v-if=" scope.row.auditResult==0" @click.stop="tong1(scope.$index, scope.row)" class="addSameClass " style="color:#2662ee">通过</span>
@@ -52,18 +52,18 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip label="申请时间" prop="createTime" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="申请时间" prop="createTime" width="150" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="类型" prop="orderTypeDesc" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="金额（元）" prop="totalAmount" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip :formatter="formatter" label="手续费" prop="commission" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="费率" prop="commissionStr" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="收款开户行" prop="bankName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="收款支行" prop="subBranchName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="收款开户名" prop="userName" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" width="120" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" width="120" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode"  width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName"  width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="金额（元）" prop="totalAmount" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip :formatter="formatter" label="手续费" width="60" prop="commission" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="费率" prop="commissionStr" width="50" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="收款开户行" prop="bankName" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="收款支行" prop="subBranchName" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="收款开户名" prop="userName" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="收款卡号" prop="cardNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="支付方式" prop="channelDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="支付状态" prop="payStatusDesc" align="center"></el-table-column>
