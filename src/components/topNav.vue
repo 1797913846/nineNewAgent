@@ -9,21 +9,51 @@
         <span style="cursor: pointer;" @click="loginOut">退出</span>
       </span>
       <span class="r3">|</span>
+      <span class="r2" style="cursor: pointer;" @click="changePassword">修改密码</span>
       <!-- <span class="r5">
         <el-switch v-model="value1" active-text="开" inactive-text="关" @change="changeVal">
         </el-switch>
       </span> -->
       <img class="r4" src="../assets/nine/chi.png" alt="">
     </div>
+    <div class="addForm" v-if="changeNow==true" style="z-index:2000;">
+      <div class="addContent">
+        <div class="title">
+          <span class="tl">修改密码</span>
+          <img class="tr" src="../assets/nine/closeform.png" alt="" @click="closeChange1">
+        </div>
+        <el-form :inline="true" ref="formInline" class="demo-form-inline">
+          <el-form-item label="旧密码：">
+            <el-input v-model="p1" type="password" placeholder="请输入原密码"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码：">
+            <el-input v-model="p2" type="password" placeholder="请输入新密码"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码：">
+            <el-input v-model="p3" type="password" placeholder="请确认密码"></el-input>
+          </el-form-item>
+          <br />
+          <el-form-item>
+            <el-button class="savebt" type="primary" @click="onSubmitChange('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeChange('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import md5 from "js-md5";
 export default {
   data() {
     return {
       userName: localStorage.getItem("loginName"),
-      value1: true
+      value1: true,
+      changeNow: false,
+      p1: "",
+      p2: "",
+      p3: ""
     };
   },
   created() {},
@@ -32,6 +62,52 @@ export default {
     // this.getValue1();
   },
   methods: {
+    closeChange1() {
+      this.changeNow = false;
+    },
+    closeChange(formName) {
+      this.$refs[formName].resetFields();
+      this.changeNow = false;
+    },
+    onSubmitChange(formName) {
+      if (this.p2 !== this.p3) {
+        this.$alert("确认密码与新密码不一致", "提示", {
+          confirmButtonText: "确定",
+          center: true,
+          type: "error"
+        });
+      } else {
+        this.axios
+          .post("/tn/mgr-api/sysmgr/updatePwd", {
+            pwdOldMd5: md5(this.p1),
+            pwdNewMd5: md5(this.p2)
+          })
+          .then(res => {
+            console.log("getFundAccount>>", res.data);
+            if (res.data.code == 200) {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              localStorage.clear();
+              this.$router.push({
+                path: "/login"
+              });
+              this.changeNow = false;
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
     getValue1() {
       this.axios
         .post("/tn/mgr-api/sysmgr/get-mobile-config")
@@ -83,6 +159,12 @@ export default {
           }
         })
         .catch(() => {});
+    },
+    changePassword() {
+      this.changeNow = true;
+      this.p1 = "";
+      this.p2 = "";
+      this.p3 = "";
     }
   }
 };
