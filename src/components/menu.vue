@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <div class="logo">LOGO</div>
+    <div class="logo">掌上宝</div>
     <div class="smenu">
       <div class="boxmenu">
         <div class="smallmenu">

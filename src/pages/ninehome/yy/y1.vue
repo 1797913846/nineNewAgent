@@ -10,8 +10,9 @@
             <input type="text" placeholder="请输入会员ID" v-model="accountCode" />
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
-          <div class="search-box">
-            <input type="text" placeholder="请输入产品编号" v-model="productCode" />
+          <div class="search-box selects">
+            <!-- <input type="text" placeholder="请输入产品编号" v-model="productCode" /> -->
+            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入产品编号" @select="handleSelect" clearable @clear="clearCode"></el-autocomplete>
             <img src="../../../assets/nine/search.png" class="search-img" />
           </div>
           <div class="search-box">
@@ -133,6 +134,9 @@ export default {
   },
   data() {
     return {
+      restaurants: [],
+      state: "",
+      timeout: null,
       accountCode1: "",
       productCode1: "",
       whoserouter: "",
@@ -259,8 +263,63 @@ export default {
     this.whoserouter = this.$route.path;
     console.log("是我啊", this.queryData);
     this.getFundAccount();
+    this.getList();
   },
+  mounted() {},
   methods: {
+    querySearchAsync(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString
+        ? restaurants.filter(this.createStateFilter(queryString))
+        : restaurants;
+      console.log("数据啊", results);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(results);
+      }, 1000 * Math.random());
+    },
+    createStateFilter(queryString) {
+      console.log("数据666", queryString);
+      return state => {
+        return (
+          state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        );
+      };
+    },
+    handleSelect(item) {
+      console.log("是我啊", item);
+      if (JSON.stringify(item) != "{}") {
+        this.productCode = item.key;
+      } else {
+        this.productCode = "";
+      }
+    },
+    clearCode() {
+      this.productCode = "";
+    },
+    getList() {
+      this.axios
+        .post("/tn/mgr-api/productInfo/list", {
+          pageSize: 0,
+          pageNo: 1
+        })
+        .then(res => {
+          let data = res.data.data.rows;
+          let newdata = [];
+          data.map((item, index) => {
+            newdata.push({
+              value: item.productcode + "~~" + item.productname,
+              address: item.productname,
+              key: item.productcode
+            });
+          });
+          this.restaurants = newdata;
+          console.log("我是数组", this.restaurants);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     back() {
       console.log("是他啊", this.queryData);
       this.$router.push({
@@ -507,7 +566,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.selects .el-input__inner {
+  height: 35px !important;
+  border: 0px !important;
+}
 </style>
 
 

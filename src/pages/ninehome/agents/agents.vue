@@ -127,7 +127,7 @@
       </div>
     </div>
     <!--表单-->
-    <div class="addForm fnn" v-if="showAdd==true">
+    <!-- <div class="addForm fnn" v-if="showAdd==true">
       <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -250,10 +250,10 @@
           </el-form-item>
         </el-form>
       </div>
-    </div>
+    </div> -->
 
     <!--修改表单-->
-    <div class="addForm fnn" v-if="changeNow==true">
+    <!-- <div class="addForm fnn" v-if="changeNow==true">
       <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -378,7 +378,7 @@
           </el-form-item>
         </el-form>
       </div>
-    </div>
+    </div> -->
     <!--邀请码二维码-->
     <div :class="{'show-qrcode': showQrcode==true,addForm:true,'qrcode':true,}" @click="mouseOut">
       <div :class="{'qrbox':true}">
@@ -391,7 +391,7 @@
       <div id="qrcode1" ref="qrcode1"></div>
     </div>
     <!--添加表单-->
-    <div class="addForm fnn" v-if="jia==true">
+    <!-- <div class="addForm fnn" v-if="jia==true">
       <div class="addContent addContent2 gg3">
         <div class="title">
           <span class="tl">{{addTitle}}</span>
@@ -513,19 +513,146 @@
           </el-form-item>
         </el-form>
       </div>
+    </div> -->
+    <div class="addForm ggf3" v-if="jia==true||changeNow==true||showAdd==true">
+      <div class="addContent addContent2 gg3333">
+        <div class="title">
+          <span class="tl">{{addTitle}}</span>
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeJia" v-if="jia==true">
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeChange" v-if="changeNow==true">
+          <img class="tr" src="../../../assets/nine/closeform.png" alt="" @click="closeAdd" v-if="showAdd==true">
+        </div>
+        <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline" :rules="rules">
+          <div class="gbbox">
+            <div class="gbtitle">基本信息</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="推荐人ID：">
+                  <el-input v-model="formInline.parentAccountCode" :disabled="true" placeholder="推荐人ID"></el-input>
+                </el-form-item>
+                <el-form-item label="推荐人名称：">
+                  <el-input v-model="formInline.parentAccountName" :disabled="true" placeholder="推荐人名称"></el-input>
+                </el-form-item>
+                <el-form-item label="推荐人佣金：">
+                  <el-input v-model="formInline.commission" :disabled="true" placeholder="推荐人佣金"></el-input>
+                </el-form-item>
+                <el-form-item label="代理商ID：" v-if="changeNow==true||showAdd==true">
+                  <el-input v-model="formInline.accountId" :disabled="changeNow==true||showAdd==true" placeholder="代理商ID"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号：" prop="accountId" v-if="jia==true">
+                  <el-input v-model="formInline.accountId" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="代理商名称：" prop="accountName">
+                  <el-input v-model="formInline.accountName" placeholder="代理商名称" :disabled="showAdd==true"></el-input>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="账户余额：">
+                  <el-input v-model="formInline.balance" placeholder="账户余额" :disabled="true"></el-input>
+                </el-form-item>
+                <el-form-item label="佣金方案(单边)：" prop=" commissionCfgId">
+                  <el-select v-model="formInline.commissionCfgId" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="资金池ID：" prop="productGroupId">
+                  <el-select v-model="formInline.productGroupId" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="代理商状态：" prop="accountStatus">
+                  <el-select v-model="formInline.accountStatus" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in accountStatusList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <div class="gbbox">
+            <div class="gbtitle">代理商等级设置</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="代理商等级：" prop="level">
+                  <el-select v-model="formInline.level" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in agentLevel" :key="index" :label="item.levelName" :value="item.level"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="后台登录权限：" prop="ableCrud">
+                  <el-select v-model="formInline.ableCrud" :disabled="showAdd==true||formInline.level==levelId">
+                    <el-option v-for="(item,index) in productCodeList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="代理商限额：" prop="agentMaxLimitMoney" v-if="formInline.level!=levelId">
+                  <el-input v-model="formInline.agentMaxLimitMoney" :disabled="showAdd==true" placeholder="数据为0时无限制"></el-input>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
+                  <el-select v-model="formInline.defaultChildGroupId" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
+                  <el-select v-model="formInline.defaultChildCommissionCfgId" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in commissionCfgList" :key="index" :label="item.cfgName" :value="item.id"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <div class="gbbox">
+            <div class="gbtitle">风控设置</div>
+            <div class="gbcontent">
+              <span class="gbspan">
+                <el-form-item label="平仓线(金额)：">
+                  <el-input v-model="formInline.flatLine" :disabled="jia==true||showAdd==true" placeholder="平仓线(金额)"></el-input>
+                </el-form-item>
+                <el-form-item label="警戒线(金额)：">
+                  <el-input v-model="formInline.cordonLine" :disabled="jia==true||showAdd==true" placeholder="警戒线(金额)"></el-input>
+                </el-form-item>
+              </span>
+              <span class="gbspan">
+                <el-form-item label="手动冻结金额：">
+                  <el-input v-model="formInline.freezeScale" :disabled="jia==true||showAdd==true" placeholder="手动冻结金额"></el-input>
+                </el-form-item>
+                <el-form-item label="下单权限：" prop="orderPermission">
+                  <el-select v-model="formInline.orderPermission" :disabled="showAdd==true">
+                    <el-option v-for="(item,index) in orderPermissionList" :key="index" :label="item.value" :value="item.key"></el-option>
+                  </el-select>
+                </el-form-item>
+              </span>
+            </div>
+          </div>
+          <br />
+          <el-form-item v-if="jia==true">
+            <el-button class="savebt" type="primary" @click="onSubmit2('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd2('formInline')">取消</el-button>
+          </el-form-item>
+          <el-form-item v-if="changeNow==true">
+            <el-button class="savebt" type="primary" @click="onSubmit('formInline')">保存</el-button>
+            <el-button class="nobt" type="primary" @click="closeAdd1('formInline')">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
+    <alertWindows v-if="deleteBool==true" :deleteTitle="deleteTitle" @childByValue="childByValue"></alertWindows>
   </div>
 </template>
 
 <script>
 import topNav from "@/components/topNav";
+import alertWindows from "@/components/alertWindows";
 import QRCode from "qrcodejs2"; // 引入qrcode
 export default {
   components: {
-    topNav
+    topNav,
+    alertWindows
   },
   data() {
     return {
+      deleteBool: false,
+      deleteRight: false,
+      deleteTitle: "确认重置密码吗?",
       tableData: [],
       colorBool: false,
       agentName: "",
@@ -572,7 +699,7 @@ export default {
         agentMaxLimitMoney: "",
         secondBoardSingleStockPositionRatio: "",
         thirdBoardSingleStockPositionRatio: "",
-        dischange:false
+        dischange: false
       },
       groupIdList: [],
       productList: [],
@@ -704,7 +831,8 @@ export default {
       levelId: "",
       indexindex: "",
       showIndex: false,
-      queryData: {}
+      queryData: {},
+      resetAccount: ""
     };
   },
   computed: {
@@ -724,7 +852,16 @@ export default {
       };
     }
   },
-  watch: {},
+  watch: {
+    "formInline.level": {
+      handler(newVal, oldVal) {
+        if (newVal == this.levelId) {
+          this.formInline.ableCrud = 0;
+        }
+      },
+      deep: true
+    }
+  },
   created() {
     this.queryData = this.$route.query.queryData || "";
     this.getMsg();
@@ -917,8 +1054,10 @@ export default {
       this.formInline.manageMakeFeeRate = "";
       this.formInline.orderPermission = 0;
       this.formInline.accountStatus = 1;
-      this.formInline.defaultChildGroupId = Number(localStorage.getItem("defaultChildGroupId"))||"";
-      this.formInline.defaultChildCommissionCfgId = Number(localStorage.getItem("defaultChildCommissionCfgId"))||"";
+      this.formInline.defaultChildGroupId =
+        Number(localStorage.getItem("defaultChildGroupId")) || "";
+      this.formInline.defaultChildCommissionCfgId =
+        Number(localStorage.getItem("defaultChildCommissionCfgId")) || "";
       this.formInline.secondBoardSingleStockPositionRatio = "";
       this.formInline.thirdBoardSingleStockPositionRatio = "";
     },
@@ -989,7 +1128,7 @@ export default {
             this.inviteCode = res.data.data.inviteCode;
             this.inviteCodeUrl = res.data.data.inviteCodeUrl;
             localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);
-            this.creatQrCode(this.inviteCodeUrl+this.inviteCode);
+            this.creatQrCode(this.inviteCodeUrl + this.inviteCode);
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -1053,21 +1192,18 @@ export default {
               commissionCfgId: this.formInline.commissionCfgId,
               ableCrud: this.formInline.ableCrud,
               agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
-              positionRatio: this.formInline.positionRatio,
-              secondBoardPositionRatio: this.formInline
-                .secondBoardPositionRatio,
-              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
-              manageFeeRate: this.formInline.manageFeeRate,
-              manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+              positionRatio: 0,
+              secondBoardPositionRatio: 0,
+              thirdBoardPositionRatio: 0,
+              manageFeeRate: 0,
+              manageMakeFeeRate: 0,
               orderPermission: this.formInline.orderPermission,
               accountStatus: this.formInline.accountStatus,
               defaultChildGroupId: this.formInline.defaultChildGroupId,
               defaultChildCommissionCfgId: this.formInline
                 .defaultChildCommissionCfgId,
-              secondBoardSingleStockPositionRatio: this.formInline
-                .secondBoardSingleStockPositionRatio,
-              thirdBoardSingleStockPositionRatio: this.formInline
-                .thirdBoardSingleStockPositionRatio,
+              secondBoardSingleStockPositionRatio: 0,
+              thirdBoardSingleStockPositionRatio: 0,
               bankId: 0
             })
             .then(res => {
@@ -1108,21 +1244,18 @@ export default {
               commissionCfgId: this.formInline.commissionCfgId,
               ableCrud: this.formInline.ableCrud,
               agentMaxLimitMoney: this.formInline.agentMaxLimitMoney,
-              positionRatio: this.formInline.positionRatio,
-              secondBoardPositionRatio: this.formInline
-                .secondBoardPositionRatio,
-              thirdBoardPositionRatio: this.formInline.thirdBoardPositionRatio,
-              manageFeeRate: this.formInline.manageFeeRate,
-              manageMakeFeeRate: this.formInline.manageMakeFeeRate,
+              positionRatio: 0,
+              secondBoardPositionRatio: 0,
+              thirdBoardPositionRatio: 0,
+              manageFeeRate: 0,
+              manageMakeFeeRate: 0,
               orderPermission: this.formInline.orderPermission,
               accountStatus: this.formInline.accountStatus,
               defaultChildGroupId: this.formInline.defaultChildGroupId,
               defaultChildCommissionCfgId: this.formInline
                 .defaultChildCommissionCfgId,
-              secondBoardSingleStockPositionRatio: this.formInline
-                .secondBoardSingleStockPositionRatio,
-              thirdBoardSingleStockPositionRatio: this.formInline
-                .thirdBoardSingleStockPositionRatio,
+              secondBoardSingleStockPositionRatio: 0,
+              thirdBoardSingleStockPositionRatio: 0,
               bankId: 0
             })
             .then(res => {
@@ -1133,6 +1266,7 @@ export default {
                   center: true,
                   type: "success"
                 });
+                this.getMsg666();
                 this.search();
                 // this.getFundAccount();
               } else {
@@ -1151,6 +1285,31 @@ export default {
           return false;
         }
       });
+    },
+    getMsg666() {
+      this.axios
+        .get("/tn/mgr-api/account-info")
+        .then(res => {
+          console.log("login>>", res.data);
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            localStorage.setItem("userId", data.userId);
+            localStorage.setItem("level", data.level);
+            localStorage.setItem("userName", data.userName);
+            localStorage.setItem("loginName", data.loginName);
+            localStorage.setItem("isAdminGroup", data.isAdminGroup);
+            localStorage.setItem(
+              "defaultChildGroupId",
+              data.defaultChildGroupId
+            );
+            localStorage.setItem(
+              "defaultChildCommissionCfgId",
+              data.defaultChildCommissionCfgId
+            );
+          } else {
+          }
+        })
+        .catch(() => {});
     },
     closeAdd() {
       this.showAdd = false;
@@ -1177,33 +1336,43 @@ export default {
           console.log(err);
         });
     },
+    childByValue: function(childValue) {
+      // childValue就是子组件传过来的值
+      this.deleteRight = childValue;
+      if (this.deleteRight == true) {
+        this.axios
+          .post("/tn/mgr-api/account/resetPassword", {
+            accountId: this.resetAccount
+          })
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$alert("重置密码成功,密码是账户后六位", "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.search();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.deleteBool = false;
+      } else {
+        this.deleteBool = false;
+      }
+    },
     resetPassWord(index, row) {
       console.log("谁", row);
       let accountId = row.accountId;
-      this.axios
-        .post("/tn/mgr-api/account/resetPassword", {
-          accountId: accountId
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert("重置密码成功,密码是账户后六位", "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.search();
-            // this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.resetAccount = accountId;
+      this.deleteBool = true;
     },
     search() {
       this.currentPage = 1;
@@ -1344,6 +1513,33 @@ export default {
   margin-left: 22px;
   cursor: pointer;
 }
+.changewho {
+  margin-left: 33px;
+  margin-right: 33px;
+}
+.gbbox {
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.gbtitle {
+  color: #586982;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.gbcontent {
+}
+.gbspan {
+  display: inline-block;
+  float: left;
+  width: 49%;
+}
+.gbspan:last-child {
+  margin-left: 2%;
+}
 </style>
 <style>
 .el-table .colorgreen {
@@ -1372,6 +1568,34 @@ export default {
 .codeborder {
   border: 2px solid #2662ee;
   border-radius: 50%;
+}
+.changewho .el-radio__input.is-checked + .el-radio__label {
+  color: #2562ee;
+}
+.changewho .el-radio__label {
+  font-size: 15px;
+}
+.changewho .el-radio__input.is-checked .el-radio__inner {
+  border-color: #2562ee;
+  background: #2562ee;
+}
+.changewho .el-radio__inner {
+  width: 17px;
+  height: 17px;
+}
+.tradio {
+  margin-left: 0px !important;
+}
+.ggf3 .el-form-item__label {
+  width: 170px !important;
+  text-align: right !important;
+  margin-left: 0px !important;
+}
+.ggf3 .el-input__inner {
+  width: 270px !important;
+}
+.daili .el-table__body tr.el-table__row--striped td {
+  background: transparent !important;
 }
 </style>
 

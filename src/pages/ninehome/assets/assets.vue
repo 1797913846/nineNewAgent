@@ -125,10 +125,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="交易密码：" prop="passwordtrade">
-            <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
+            <el-input v-model="formInline.passwordtrade" type="password" placeholder="交易密码"></el-input>
           </el-form-item>
           <el-form-item label="通讯密码：" prop="passwordcom">
-            <el-input v-model="formInline.passwordcom" placeholder="交易密码"></el-input>
+            <el-input v-model="formInline.passwordcom" type="password" placeholder="交易密码"></el-input>
           </el-form-item>
           <el-form-item label="券商：" prop="brokerid">
             <el-select v-model="formInline.brokerid">
@@ -183,10 +183,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="交易密码：" prop="passwordtrade">
-            <el-input v-model="formInline.passwordtrade" placeholder="交易密码"></el-input>
+            <el-input v-model="formInline.passwordtrade" type="password" placeholder="交易密码"></el-input>
           </el-form-item>
           <el-form-item label="通讯密码：" prop="passwordcom">
-            <el-input v-model="formInline.passwordcom" placeholder="通讯密码"></el-input>
+            <el-input v-model="formInline.passwordcom" type="password" placeholder="通讯密码"></el-input>
           </el-form-item>
           <el-form-item label="券商：" prop="brokerid">
             <el-select v-model="formInline.brokerid">
