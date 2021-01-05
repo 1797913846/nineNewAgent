@@ -296,6 +296,12 @@ export default {
           case "/ninehome/l4":
             this.whichIndex = "8-3";
             break;
+          case "/orderSttleInvite":
+            this.whichIndex = "10-1";
+            break;
+          case "/inviteList":
+            this.whichIndex = "10-2";
+            break;
         }
       },
       deep: true

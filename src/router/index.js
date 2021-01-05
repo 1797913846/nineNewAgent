@@ -44,6 +44,9 @@ import ninehomel5 from '@/pages/ninehome/ll/l5'
 import ninehomel6 from '@/pages/ninehome/ll/l6'
 import ninehomel7 from '@/pages/ninehome/ll/l7'
 
+import orderSttleInvite from '@/pages/ninehome/statistics/orderSttleInvite'
+import inviteList from '@/pages/ninehome/statistics/inviteList'
+
 Vue.use(Router)
 
 const router = new Router({
@@ -359,6 +362,24 @@ const router = new Router({
         requireAuth: true
       },
       component: ninehomel7
+    }
+    ,
+    {
+      path: '/orderSttleInvite',
+      meta: {
+        title: '会员直推统计',
+        requireAuth: true
+      },
+      component: orderSttleInvite
+    }
+    ,
+    {
+      path: '/inviteList',
+      meta: {
+        title: '会员直推关系',
+        requireAuth: true
+      },
+      component: inviteList
     }
   ]
 })
