@@ -115,6 +115,7 @@ export default {
   },
   data() {
     return {
+      isDefault:"",
       deleteBool: false,
       deleteRight: false,
       deleteTitle: "确认删除吗?",
@@ -275,6 +276,7 @@ export default {
     },
     getContent(index, row) {
       this.id = row.id;
+      this.isDefault=row.isDefault;
       this.axios
         .get("/tn/mgr-api/commissionCfgs/getById", {
           params: {
@@ -398,7 +400,8 @@ export default {
               singleDividedRate: this.formInline.singleDividedRate,
               monthCommission: this.formInline.monthCommission,
               monthManageFeeDealRate: this.formInline.monthManageFeeDealRate,
-              strategyCommission: this.formInline.strategyCommission
+              strategyCommission: this.formInline.strategyCommission,
+              isDefault:this.isDefault
             })
             .then(res => {
               console.log("getFundAccount>>", res.data);
