@@ -282,7 +282,7 @@ export default {
       console.log("数据666", queryString);
       return state => {
         return (
-          state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+          state.value.toLowerCase().indexOf(queryString.toLowerCase()) >= 0
         );
       };
     },
