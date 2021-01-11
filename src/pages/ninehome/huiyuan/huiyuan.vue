@@ -1408,6 +1408,9 @@ export default {
           this.formInline.subBranchName = item.text;
         }
       });
+      if(this.formInline.level==this.levelId){
+        this.formInline.defaultChildGroupId="";
+      }
       this.axios
         .post("/tn/mgr-api/account/save", {
           accountId: this.formInline.accountId,
@@ -1591,28 +1594,28 @@ export default {
       this.deleteRight = childValue;
       if (this.deleteRight == true) {
         this.axios
-        .post("/tn/mgr-api/account/resetPassword", {
-          accountId: this.resetAccount
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert("重置密码成功,密码是账户后六位", "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
-            });
-            this.search();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          .post("/tn/mgr-api/account/resetPassword", {
+            accountId: this.resetAccount
+          })
+          .then(res => {
+            if (res.data.code == 200) {
+              this.$alert("重置密码成功,密码是账户后六位", "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "success"
+              });
+              this.search();
+            } else {
+              this.$alert(res.data.info, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
         this.deleteBool = false;
       } else {
         this.deleteBool = false;
