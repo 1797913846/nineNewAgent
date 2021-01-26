@@ -976,6 +976,15 @@ input:-ms-input-placeholder {
     margin-left: 770px!important;
 }
 
+.addForm .gg4444 {
+    width: 1000px!important;
+    height: 430px!important;
+}
+
+.addForm .gg4444 .savebt {
+    margin-left: 770px!important;
+}
+
 .addForm .gg4 .el-form-item__label {
     width: 150px!important;
 }

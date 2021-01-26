@@ -47,6 +47,11 @@ import ninehomel7 from '@/pages/ninehome/ll/l7'
 import orderSttleInvite from '@/pages/ninehome/statistics/orderSttleInvite'
 import inviteList from '@/pages/ninehome/statistics/inviteList'
 
+import organizationManagement from '@/pages/ninehome/organizationManagement/organizationManagement'
+
+
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -380,6 +385,14 @@ const router = new Router({
         requireAuth: true
       },
       component: inviteList
+    },
+    {
+      path: '/organizationManagement',
+      meta: {
+        title: '机构管理',
+        requireAuth: true
+      },
+      component: organizationManagement
     }
   ]
 })
