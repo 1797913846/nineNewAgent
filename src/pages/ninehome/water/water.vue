@@ -156,7 +156,13 @@ export default {
     }
   },
   created() {
-    this.isAdminGroup = localStorage.getItem("isAdminGroup");
+    let allhref = window.location.href;
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      let data = localStorage.getItem("babyData" + getmMatchResult);
+      data = JSON.parse(data);
+      this.isAdminGroup = data.isAdminGroup;
+    }
     this.createTimeStart = this.getNowFormatDate();
     this.createTimeEnd = this.getNowFormatDate();
     this.getFundAccount();

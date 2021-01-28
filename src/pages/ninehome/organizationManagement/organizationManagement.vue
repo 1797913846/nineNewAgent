@@ -15,7 +15,7 @@
       </div>
       <!--表格-->
       <div class="reset-scroll-style">
-        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table huiyuan" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" :row-class-name="tableRowClassName" v-if="!nullTable">
+        <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table huiyuan" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="!nullTable">
           <el-table-column label="操作" align="center">
             <template slot-scope="scope">
               <div class="operation">
@@ -30,7 +30,14 @@
             </template>
           </el-table-column>
           <el-table-column show-overflow-tooltip label="用户名" prop="accountName" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="机构ID" prop="brokerId" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="机构ID" prop="brokerId" align="center"></el-table-column> -->
+          <el-table-column label="操作" align="center">
+            <template slot-scope="scope">
+              <div class="operation">
+                <span style="color:#2662EE;" @click.stop="getToken(scope.$index,scope.row)">{{scope.row.brokerId}}</span>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column show-overflow-tooltip label="机构名称" prop="brokerName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="创建时间" prop="createTime" align="center" width="160"></el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="状态" prop="status" align="center" :formatter="formatter"></el-table-column> -->
@@ -108,11 +115,11 @@
                     </el-select>
                   </el-form-item>
                 </div>
-                <el-form-item label="联系电话：" prop="contactPersonMobile">
-                  <el-input v-model="formInline.contactPersonMobile" placeholder="联系电话"></el-input>
+                <el-form-item label="手机号：" prop="contactPersonMobile">
+                  <el-input v-model="formInline.contactPersonMobile" placeholder="手机号"></el-input>
                 </el-form-item>
                 <el-form-item label="服务截止：" prop="endDate">
-                  <el-date-picker v-model="formInline.endDate" format="yyyy-MM-dd" type="date" placeholder="选择日期">
+                  <el-date-picker v-model="formInline.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
               </span>
@@ -194,7 +201,7 @@ export default {
       nullTable: false,
       showAdd: false,
       addTitle: "查看",
-      brokerId:"",
+      brokerId: "",
       formInline: {
         accountName: "",
         password: "",
@@ -203,14 +210,14 @@ export default {
         brokerName: "",
         provinceId: "",
         cityId: "",
-        endDate: ""
+        endDate: "",
+        remark:""
       },
       changeNow: false,
       jia: false,
       userId: "",
       userName: "",
       inviteCode: "",
-      inviteCodeUrl: "",
       showQrcode: false,
       showQrcode1: false,
       groupIdList: [],
@@ -233,6 +240,9 @@ export default {
       queryData: {},
       financeScheme: "",
       financeRatioList: "",
+      whoestoken: "",
+      firstrouter: "",
+      menuList: "",
       rules: {
         accountName: [
           { required: true, message: "请输入用户名", trigger: "blur" }
@@ -285,7 +295,13 @@ export default {
   watch: {
     "formInline.provinceId": {
       handler(newVal, oldVal) {
-        this.formInline.cityId = "";
+        // this.formInline.cityId = "";
+        if (this.addTitle == "新增机构") {
+          this.formInline.cityId = "";
+        }
+        if (oldVal != "" && newVal) {
+          this.formInline.cityId = "";
+        }
         this.getCitiesList();
       },
       deep: true
@@ -404,13 +420,31 @@ export default {
       this.whowho = parentCode;
       this.setBool = true;
     },
-    tableRowClassName({ row, rowIndex }) {
-      if (row.profit > 0) {
-        return "red";
-      } else if (row.profit < 0) {
-        return "colorgreen";
-      }
-      return "";
+    getToken(index, row) {
+      let brokerId = row.brokerId;
+      this.axios
+        .post("/tn/mgr-api/agency/login", {
+          brokerId: brokerId
+        })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.whoestoken = "newbaby" + brokerId + "~" + res.data.data.token;
+            this.firstrouter = res.data.data.menuList[0].children[0].url;
+            window.open(
+              "http://localhost:8080/#" +
+                this.firstrouter +
+                "?token=" +
+                this.whoestoken,
+              "_blank"
+            );
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        });
     },
     closeMsg() {
       this.msg = false;
@@ -576,6 +610,7 @@ export default {
       this.formInline.provinceId = "";
       this.formInline.cityId = "";
       this.formInline.endDate = "";
+      this.formInline.remark = "";
     },
     getGroupIdList() {
       this.axios
@@ -595,43 +630,11 @@ export default {
           console.log(err);
         });
     },
-    getMsg() {
-      this.axios
-        .post("/tn/mgr-api/account/agent/edit-pre")
-        .then(res => {
-          if (res.data.code == 200) {
-            this.commissionCfgList = res.data.data.commissionCfgList;
-            this.productList = res.data.data.productList;
-            this.agentLevel = res.data.data.agentLevel;
-            this.financeScheme = res.data.data.financeScheme;
-            //取出客户
-            this.agentLevel.map(item => {
-              if (item.levelName == "客户") {
-                this.levelId = item.level;
-                this.formInline.agentMaxLimitMoney = 0;
-              }
-            });
-            this.inviteCode = res.data.data.inviteCode;
-            this.inviteCodeUrl = res.data.data.inviteCodeUrl;
-            localStorage.setItem("inviteCodeUrl", this.inviteCodeUrl);
-            this.creatQrCode(this.inviteCodeUrl + this.inviteCode);
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     changeMsg(index, row) {
-      this.changeNow=true;
+      this.changeNow = true;
       this.addTitle = "修改机构";
       let brokerId = row.brokerId;
-      this.brokerId=brokerId;
+      this.brokerId = brokerId;
       this.formInline.accountName = row.accountName;
       this.formInline.password = row.password;
       this.formInline.contactPerson = row.contactPerson;
@@ -640,7 +643,7 @@ export default {
       this.formInline.provinceId = row.provinceId;
       this.formInline.cityId = row.cityId;
       this.formInline.endDate = row.endDate;
-      console.log('我是日期',this.formInline.endDate)
+      console.log("我是日期", this.formInline.endDate);
     },
     closeJia() {
       this.jia = false;
@@ -659,7 +662,7 @@ export default {
     onSubmit2(formName) {
       this.axios
         .post("/tn/mgr-api/agency/save", {
-          brokerId:"",
+          brokerId: "",
           accountName: this.formInline.accountName,
           password: this.formInline.password,
           contactPerson: this.formInline.contactPerson,
@@ -694,7 +697,7 @@ export default {
     onSubmit(formName) {
       this.axios
         .post("/tn/mgr-api/agency/save", {
-          brokerId:this.brokerId,
+          brokerId: this.brokerId,
           accountName: this.formInline.accountName,
           password: this.formInline.password,
           contactPerson: this.formInline.contactPerson,

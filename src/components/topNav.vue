@@ -48,7 +48,7 @@ import md5 from "js-md5";
 export default {
   data() {
     return {
-      userName: localStorage.getItem("loginName"),
+      userName: "",
       value1: true,
       changeNow: false,
       p1: "",
@@ -56,9 +56,36 @@ export default {
       p3: ""
     };
   },
-  created() {},
+  beforeCreate() {
+    // let allhref = window.location.href;
+    // if (allhref.indexOf("newbaby") != -1) {
+    //   let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+    //   let data = localStorage.getItem("babyData" + getmMatchResult);
+    //   let that = this;
+    //   setTimeout(function() {
+    //     if (getmMatchResult != "admin") {
+    //       that.userName = JSON.parse(data).loginName;
+    //     } else {
+    //       that.userName = localStorage.getItem("loginName");
+    //     }
+    //   }, 1000);
+    // }
+  },
+  created() {
+    let allhref = window.location.href;
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      let data = localStorage.getItem("babyData" + getmMatchResult);
+      let that = this;
+      if (getmMatchResult != "admin") {
+        that.userName = getmMatchResult;
+      } else {
+        that.userName = localStorage.getItem("loginName");
+      }
+    }
+  },
   mounted() {
-    this.userName = localStorage.getItem("loginName");
+    // this.userName = localStorage.getItem("loginName");
     // this.getValue1();
   },
   methods: {
@@ -151,7 +178,7 @@ export default {
         .then(res => {
           console.log("login>>", res.data);
           if (res.data.code == 200) {
-            localStorage.clear();
+            // localStorage.clear();
             this.$router.push({
               path: "/login"
             });

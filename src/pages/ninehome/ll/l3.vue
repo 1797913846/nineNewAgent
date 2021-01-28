@@ -88,7 +88,13 @@ export default {
   },
   watch: {},
   created() {
-    this.level = localStorage.getItem("level");
+    let allhref = window.location.href;
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      let data = localStorage.getItem("babyData" + getmMatchResult);
+      data = JSON.parse(data);
+      this.level = data.level;
+    }
     this.getFundAccount();
   },
   methods: {

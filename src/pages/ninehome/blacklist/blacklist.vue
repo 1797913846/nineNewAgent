@@ -17,7 +17,7 @@
           </div>
           <div class="search-user" @click="search()">查询</div>
           <div class="search-user" @click="exportExcel">下载</div>
-          <!-- <el-upload class="upload-demo" action="http://47.102.151.13/tn/mgr-api/tntg/stockBlack/batch-add" :headers="{Authorization:token}" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
+          <!-- <el-upload class="upload-demo" action="http://10.10.1.26:8081/tn/mgr-api/tntg/stockBlack/batch-add" :headers="{Authorization:token}" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
             <div class="search-user">导入</div>
           </el-upload> -->
           <el-upload class="upload-demo" action="/tn/mgr-api/tntg/stockBlack/batch-add" :headers="{Authorization:token}" multiple :show-file-list="false" :on-success="handleAvatarSuccess">
@@ -140,7 +140,18 @@ export default {
   },
   created() {
     this.getFundAccount();
-    this.token = localStorage.getItem("managerAuthorization");
+    //取自己的token哦
+    let allhref = window.location.href;
+    let token;
+    //如果存在token,请求头里面设置
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      token = localStorage.getItem("baby" + getmMatchResult);
+    }
+    token
+      ? (token = token)
+      : (token = localStorage.getItem("managerAuthorization"));
+    this.token = token;
   },
   methods: {
     handleSelectionChange(val) {

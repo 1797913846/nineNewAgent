@@ -400,7 +400,14 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   window.document.title = '管理系统';
   window.scrollTo(0, 0);
-  var token = localStorage.getItem("managerAuthorization");
+  let allhref = window.location.href;
+  let token
+  //如果存在token,请求头里面设置
+  if (allhref.indexOf("newbaby") != -1) {
+    let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+    token = localStorage.getItem("baby" + getmMatchResult);
+  }
+  token ? token = token : token = localStorage.getItem('managerAuthorization');
   if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
     if (token) {
       next();

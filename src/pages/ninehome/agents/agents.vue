@@ -874,13 +874,18 @@ export default {
       this.getFundAccount();
     }
     this.getGroupIdList();
-    this.userId = localStorage.getItem("userId");
-    this.userName = localStorage.getItem("userName");
-    this.loginName = localStorage.getItem("loginName");
-    this.defaultChildGroupId = localStorage.getItem("defaultChildGroupId");
-    this.defaultChildCommissionCfgId = localStorage.getItem(
-      "defaultChildCommissionCfgId"
-    );
+    //取自己的数据
+    let allhref = window.location.href;
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      let data = localStorage.getItem("babyData" + getmMatchResult);
+      data = JSON.parse(data);
+      this.userId = data.userId;
+      this.userName = data.userName;
+      this.loginName = data.loginName;
+      this.defaultChildGroupId = data.defaultChildGroupId;
+      this.defaultChildCommissionCfgId = data.defaultChildCommissionCfgId;
+    }
   },
   methods: {
     tableRowClassName({ row, rowIndex }) {

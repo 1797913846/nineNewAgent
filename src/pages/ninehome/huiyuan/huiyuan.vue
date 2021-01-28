@@ -787,21 +787,25 @@ export default {
     } else {
       this.getFundAccount();
     }
-    this.isAdminGroup = localStorage.getItem("isAdminGroup");
+    let allhref = window.location.href;
+    if (allhref.indexOf("newbaby") != -1) {
+      let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+      let data = localStorage.getItem("babyData" + getmMatchResult);
+      data = JSON.parse(data);
+      this.isAdminGroup = data.isAdminGroup;
+      this.userId = data.userId;
+      this.userName = data.userName;
+      this.loginName = data.loginName;
+      this.defaultChildGroupId = data.defaultChildGroupId;
+      this.defaultChildCommissionCfgId = data.defaultChildCommissionCfgId;
+    }
     this.getBanksList();
     this.getProvincesList();
     this.getCitiesList();
     this.getBranchesList();
     this.getMsg();
     this.getGroupIdList();
-    this.userId = localStorage.getItem("userId");
-    this.userName = localStorage.getItem("userName");
-    this.loginName = localStorage.getItem("loginName");
     this.getEList();
-    this.defaultChildGroupId = localStorage.getItem("defaultChildGroupId");
-    this.defaultChildCommissionCfgId = localStorage.getItem(
-      "defaultChildCommissionCfgId"
-    );
   },
   methods: {
     y1(index, row) {
@@ -1226,10 +1230,17 @@ export default {
       this.formInline.manageMakeFeeRate = 0;
       this.formInline.orderPermission = 0;
       this.formInline.accountStatus = 1;
-      this.formInline.defaultChildGroupId =
-        Number(localStorage.getItem("defaultChildGroupId")) || "";
+      let allhref = window.location.href;
+      if (allhref.indexOf("newbaby") != -1) {
+        let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+        let data = localStorage.getItem("babyData" + getmMatchResult);
+        data = JSON.parse(data);
+        this.userId = data.userId;
+        this.userName = data.userName;
+        this.loginName = data.loginName;
+        this.formInline.defaultChildGroupId = data.defaultChildGroupId || "";
+      }
       this.formInline.defaultChildCommissionCfgId = "";
-      // Number(localStorage.getItem("defaultChildCommissionCfgId")) || "";
       this.formInline.parentAccountCode = this.loginName;
       this.formInline.parentAccountName = this.loginName;
       this.formInline.balance = 0;
@@ -1408,8 +1419,8 @@ export default {
           this.formInline.subBranchName = item.text;
         }
       });
-      if(this.formInline.level==this.levelId){
-        this.formInline.defaultChildGroupId="";
+      if (this.formInline.level == this.levelId) {
+        this.formInline.defaultChildGroupId = "";
       }
       this.axios
         .post("/tn/mgr-api/account/save", {

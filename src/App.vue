@@ -25,7 +25,6 @@ export default {
     };
   },
   created() {
-    //this.who = localStorage.getItem("whoesApp");
     var _this = this;
     eventBus.$on("ExpireDay", function(expireDay) {
       _this.Expire_Day = expireDay;

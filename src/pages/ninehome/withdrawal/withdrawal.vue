@@ -56,8 +56,8 @@
           <el-table-column show-overflow-tooltip label="类型" prop="orderTypeDesc" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员ID" prop="accountCode" width="120" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="会员名称" prop="accountName" width="120" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode"  width="100" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName"  width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人ID" prop="parentAccountCode" width="100" align="center"></el-table-column>
+          <el-table-column show-overflow-tooltip label="推荐人名称" prop="parentAccountName" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="金额（元）" prop="totalAmount" width="100" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip :formatter="formatter" label="手续费" width="60" prop="commission" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="费率" prop="commissionStr" width="50" align="center"></el-table-column>
@@ -296,7 +296,13 @@ export default {
       this.getFundAccount();
     },
     getFundAccount() {
-      this.isAdminGroup = localStorage.getItem("isAdminGroup");
+      let allhref = window.location.href;
+      if (allhref.indexOf("newbaby") != -1) {
+        let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+        let data = localStorage.getItem("babyData" + getmMatchResult);
+        data = JSON.parse(data);
+        this.isAdminGroup = data.isAdminGroup;
+      }
       this.axios
         .post("/tn/mgr-api/payOrder/list", {
           orderType: "OUT",

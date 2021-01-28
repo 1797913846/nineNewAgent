@@ -9,10 +9,10 @@
               <el-menu :default-active="whichIndex" class="el-menu-vertical-demo" :unique-opened="true" @open="handleOpen" @close="handleClose">
                 <el-submenu v-for="(item,index) in menuList" :key="index" :index="item.ext">
                   <template slot="title">
-                    <!-- <i><img class="menu-icon menu-icon-noshow" :src="'../../static/nine/m'+item.ext+'-2.png'" alt=""></i>
-                    <i><img class="menu-icon menu-icon-show" :src="'../../static/nine/m'+item.ext+'-1.png'" alt=""></i> -->
-                    <i><img class="menu-icon menu-icon-noshow" :src="'../../manager/static/nine/m'+item.ext+'-2.png'" alt=""></i>
-                    <i><img class="menu-icon menu-icon-show" :src="'../../manager/static/nine/m'+item.ext+'-1.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-noshow" :src="'../../static/nine/m'+item.ext+'-2.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" :src="'../../static/nine/m'+item.ext+'-1.png'" alt=""></i>
+                    <!-- <i><img class="menu-icon menu-icon-noshow" :src="'../../manager/static/nine/m'+item.ext+'-2.png'" alt=""></i>
+                    <i><img class="menu-icon menu-icon-show" :src="'../../manager/static/nine/m'+item.ext+'-1.png'" alt=""></i> -->
                     <span>{{item.name}}</span>
                   </template>
                   <el-menu-item-group>
@@ -312,8 +312,33 @@ export default {
   },
   mounted: function() {
     // this.listenResize();
+    this.getMsg();
   },
   methods: {
+    getMsg() {
+      this.axios
+        .get("/tn/mgr-api/account-info")
+        .then(res => {
+          console.log("login>>", res.data);
+          if (res.data.code == 200) {
+            let data = res.data.data;
+            // for (var i in data) {
+            //   console.log("对对", i); //输出属性
+            //   console.log("对对2", data[i]); //输出属性对应的值
+            // }
+            let allhref = window.location.href;
+            if (allhref.indexOf("newbaby") != -1) {
+              let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+              localStorage.setItem(
+                "babyData" + getmMatchResult,
+                JSON.stringify(data)
+              );
+            }
+          } else {
+          }
+        })
+        .catch(() => {});
+    },
     getMenuList() {
       this.axios
         .get("/tn/mgr-api/menu-list")
@@ -334,8 +359,18 @@ export default {
         });
     },
     clickJump(where) {
+      let allhref = window.location.href;
+      let token;
+      if (allhref.indexOf("newbaby") != -1) {
+        let getmMatchResult = allhref.match(/newbaby(\S*)~/)[1];
+        token = localStorage.getItem("baby" + getmMatchResult);
+        token = "newbaby" + getmMatchResult + "~" + token;
+      }
       this.$router.push({
-        path: where
+        path: where,
+        query: {
+          token: token
+        }
       });
       // if (where == "/ninehome/y3") {
       //   location.reload();

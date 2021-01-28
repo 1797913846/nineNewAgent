@@ -71,12 +71,17 @@ export default {
       appUrl: "",
       Expire_Day: "",
       num: 2345,
-      burl:""
+      burl: "",
+      menuList: [],
+      firstrouter: ""
     };
   },
   watch: {},
   created() {
-    window.location.host != 'localhost:8080' ? this.burl = "http://" + window.location.host : this.burl = "http://47.102.151.13"
+    window.location.host != "localhost:8080" &&
+    window.location.host != "10.10.1.17:8080"
+      ? (this.burl = "http://" + window.location.host)
+      : (this.burl = "http://10.10.1.26:8081");
     localStorage.clear();
     this.getCode();
   },
@@ -135,6 +140,26 @@ export default {
         })
         .catch(() => {});
     },
+    getMenuList() {
+      this.axios
+        .get("/tn/mgr-api/menu-list")
+        .then(res => {
+          console.log("getFundAccount>>", res.data);
+          if (res.data.code == 200) {
+            this.menuList = res.data.data;
+            this.firstrouter = this.menuList[0].children[0].url;
+          } else {
+            this.$alert(res.data.info, "提示", {
+              confirmButtonText: "确定",
+              center: true,
+              type: "error"
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     login() {
       this.axios
         .post("/tn/mgr-api/login", {
@@ -151,9 +176,17 @@ export default {
             let toVerifyCode = res.data.data.toVerifyCode;
             this.getMsg();
             let that = this;
+            //跳第一个到导航
+            this.getMenuList();
             setTimeout(function() {
               that.$router.push({
-                path: "/ninehome/commission"
+                path: that.firstrouter,
+                query: {
+                  token:
+                    "newbaby" +
+                    localStorage.getItem("loginName") +"~"+
+                    Authorization
+                }
               });
             }, 800);
           } else {
