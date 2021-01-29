@@ -172,6 +172,7 @@ export default {
           console.log("login>>", res.data);
           if (res.data.code == 200) {
             let Authorization = res.data.data.token;
+
             localStorage.setItem("managerAuthorization", Authorization);
             let toVerifyCode = res.data.data.toVerifyCode;
             this.getMsg();
@@ -179,12 +180,20 @@ export default {
             //跳第一个到导航
             this.getMenuList();
             setTimeout(function() {
+              //存存好老兄
+              localStorage.setItem(
+                "baby" + localStorage.getItem("loginName"),
+                Authorization
+              );
+            }, 500);
+            setTimeout(function() {
               that.$router.push({
                 path: that.firstrouter,
                 query: {
                   token:
                     "newbaby" +
-                    localStorage.getItem("loginName") +"~"+
+                    localStorage.getItem("loginName") +
+                    "~" +
                     Authorization
                 }
               });

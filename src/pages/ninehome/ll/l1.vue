@@ -151,7 +151,8 @@ export default {
   },
   methods: {
     checkChange(data) {
-      if (this.checkedbox.length) {
+      console.log('我是点击的',data);
+      // if (this.checkedbox.length) {
         let index = this.checkedbox.indexOf(data.id);
         if (index > -1) {
           if (data.isParent == true) {
@@ -169,7 +170,7 @@ export default {
             });
           }
         }
-      }
+      // }
       console.log("我是数据", this.checkedbox);
       this.$refs.tree.setCheckedKeys(this.checkedbox);
     },
