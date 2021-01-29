@@ -81,7 +81,7 @@ export default {
     window.location.host != "localhost:8080" &&
     window.location.host != "10.10.1.17:8080"
       ? (this.burl = "http://" + window.location.host)
-      : (this.burl = "http://10.10.1.26:8081");
+      : (this.burl = "http://47.102.151.13");
     localStorage.clear();
     this.getCode();
   },

@@ -31,7 +31,7 @@
           </el-table-column>
           <el-table-column show-overflow-tooltip label="用户名" prop="accountName" align="center"></el-table-column>
           <!-- <el-table-column show-overflow-tooltip label="机构ID" prop="brokerId" align="center"></el-table-column> -->
-          <el-table-column label="操作" align="center">
+          <el-table-column label="机构ID" align="center">
             <template slot-scope="scope">
               <div class="operation">
                 <span style="color:#2662EE;" @click.stop="getToken(scope.$index,scope.row)">{{scope.row.brokerId}}</span>
@@ -431,7 +431,7 @@ export default {
             this.whoestoken = "newbaby" + brokerId + "~" + res.data.data.token;
             this.firstrouter = res.data.data.menuList[0].children[0].url;
             window.open(
-              "http://localhost:8080/#" +
+              "http://47.102.151.13/manager/#" +
                 this.firstrouter +
                 "?token=" +
                 this.whoestoken,

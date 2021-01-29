@@ -13,11 +13,11 @@ import router from './router'
 axios.defaults.timeout = 5000;
 //设置接口的域名
 //10.10.1.26  120.26.187.19
-// let burl = 'http://10.10.1.26:8081';  
-// let burl = 'http://10.10.1.26:8081';
+// let burl = 'http://47.102.151.13';  
+// let burl = 'http://10.10.1.26:808X';
 let burl;
 console.log('地址', window.location.href)
-window.location.host != 'localhost:8080' && window.location.host != "10.10.1.17:8080" ? burl = "http://" + window.location.host : burl = "http://10.10.1.26:8081"
+window.location.host != 'localhost:8080' && window.location.host != "10.10.1.17:8080" ? burl = "http://" + window.location.host : burl = "http://47.102.151.13"
 // let burl='/';
 axios.defaults.baseURL = burl;
 
