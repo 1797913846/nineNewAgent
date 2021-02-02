@@ -67,9 +67,10 @@
         </div>
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <el-form-item label="账户：">
-            <el-select v-model="formInline.accountCode">
+            <!-- <el-select v-model="formInline.accountCode">
               <el-option v-for="(item,index) in accountList" :key="index" :label="item.accountId+'~'+item.accountName" :value="item.accountId"></el-option>
-            </el-select>
+            </el-select> -->
+            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="账户" @select="handleSelect" clearable @clear="clearCode"></el-autocomplete>
           </el-form-item>
           <el-form-item label="开户银行：">
             <el-select v-model="formInline.bankId">
@@ -210,7 +211,10 @@ export default {
       deleteId: "",
       deleteBool: false,
       deleteTitle: "确认删除吗?",
-      deleteRight: false
+      deleteRight: false,
+      restaurants: [],
+      state: "",
+      timeout: null
     };
   },
   computed: {
@@ -262,12 +266,49 @@ export default {
     this.getBranchesList();
   },
   methods: {
+    querySearchAsync(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString
+        ? restaurants.filter(this.createStateFilter(queryString))
+        : restaurants;
+      console.log("数据啊", results);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(results);
+      }, 1000 * Math.random());
+    },
+    createStateFilter(queryString) {
+      console.log("数据666", queryString);
+      return state => {
+        return (
+          state.value.toLowerCase().indexOf(queryString.toLowerCase()) >= 0
+        );
+      };
+    },
+    handleSelect(item) {
+      console.log("是我啊", item);
+      if (JSON.stringify(item) != "{}") {
+        this.formInline.accountCode = item.key;
+      } else {
+        this.formInline.accountCode = "";
+      }
+    },
     getAccountList() {
       this.axios
         .post("/tn/mgr-api/account/bankCard/edit-pre")
         .then(res => {
           if (res.data.code == 200) {
             this.accountList = res.data.data.accountList;
+            let data = this.accountList;
+            let newdata = [];
+            data.map((item, index) => {
+              newdata.push({
+                value: item.accountId + "~~" + item.accountName,
+                address: item.accountName,
+                key: item.accountId
+              });
+            });
+            this.restaurants = newdata;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
