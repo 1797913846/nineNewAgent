@@ -37,7 +37,7 @@
           <el-table-column show-overflow-tooltip label="卡号" prop="cardNo" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="开户名" prop="userName" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="身份证号" prop="identityNo" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="手机号" prop="mobile" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="注册时间" prop="createTime" width="150" align="center"></el-table-column>
         </el-table>
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable1" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" v-if="nullTable">
@@ -50,7 +50,7 @@
           <el-table-column show-overflow-tooltip label="卡号" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="开户名" align="center"></el-table-column>
           <el-table-column show-overflow-tooltip label="身份证号" align="center"></el-table-column>
-          <el-table-column show-overflow-tooltip label="手机号" align="center"></el-table-column>
+          <!-- <el-table-column show-overflow-tooltip label="手机号" align="center"></el-table-column> -->
           <el-table-column show-overflow-tooltip label="注册时间" align="center"></el-table-column>
         </el-table>
       </div>

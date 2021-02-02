@@ -188,7 +188,15 @@ export default {
         method: "post",
         responseType: "arraybuffer",
         url: "/tn/mgr-api/payOrder/fundStream/list/export",
-        data: {}
+        data: {
+          accountCode: this.accountCode,
+          queryChild: this.checked,
+          accountName: this.accountName,
+          type: this.type,
+          source: this.source,
+          createTimeStart: this.createTimeStart,
+          createTimeEnd: this.createTimeEnd
+        }
       }).then(
         res => {
           var disposition = res.headers["content-disposition"];

@@ -95,13 +95,16 @@
                 <el-form-item label="联系人：" prop="contactPerson">
                   <el-input v-model="formInline.contactPerson" placeholder="联系人"></el-input>
                 </el-form-item>
-                <el-form-item label="备注信息：" prop="remark">
+                <el-form-item label="备注信息：">
                   <el-input v-model="formInline.remark" placeholder="备注信息"></el-input>
                 </el-form-item>
               </span>
               <span class="gbspan">
-                <el-form-item label="登录密码：" prop="password">
+                <el-form-item label="登录密码：" prop="password" v-if="addTitle=='新增机构'">
                   <el-input v-model="formInline.password" type="password" placeholder="登录密码"></el-input>
+                </el-form-item>
+                <el-form-item label="登录密码：" v-if="addTitle=='修改机构'">
+                  <el-input v-model="formInline.password" type="password" placeholder="不填默认密码不修改"></el-input>
                 </el-form-item>
                 <div class="ssbale">
                   <el-form-item label="省份：" prop="provinceId">
@@ -211,7 +214,7 @@ export default {
         provinceId: "",
         cityId: "",
         endDate: "",
-        remark:""
+        remark: ""
       },
       changeNow: false,
       jia: false,
@@ -660,39 +663,43 @@ export default {
       this.jia = false;
     },
     onSubmit2(formName) {
-      this.axios
-        .post("/tn/mgr-api/agency/save", {
-          brokerId: "",
-          accountName: this.formInline.accountName,
-          password: this.formInline.password,
-          contactPerson: this.formInline.contactPerson,
-          contactPersonMobile: this.formInline.contactPersonMobile,
-          brokerName: this.formInline.brokerName,
-          provinceId: this.formInline.provinceId,
-          cityId: this.formInline.cityId,
-          endDate: this.formInline.endDate,
-          remark: this.formInline.remark
-        })
-        .then(res => {
-          if (res.data.code == 200) {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "success"
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/tn/mgr-api/agency/save", {
+              brokerId: "",
+              accountName: this.formInline.accountName,
+              password: this.formInline.password,
+              contactPerson: this.formInline.contactPerson,
+              contactPersonMobile: this.formInline.contactPersonMobile,
+              brokerName: this.formInline.brokerName,
+              provinceId: this.formInline.provinceId,
+              cityId: this.formInline.cityId,
+              endDate: this.formInline.endDate,
+              remark: this.formInline.remark
+            })
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "success"
+                });
+                this.jia = false;
+                this.getFundAccount();
+              } else {
+                this.$alert(res.data.info, "提示", {
+                  confirmButtonText: "确定",
+                  center: true,
+                  type: "error"
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
             });
-            this.jia = false;
-            this.getFundAccount();
-          } else {
-            this.$alert(res.data.info, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+        }
+      });
     },
     onSubmit(formName) {
       this.axios

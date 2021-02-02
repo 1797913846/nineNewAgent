@@ -231,7 +231,7 @@
                 </el-form-item>
                 <el-form-item label="资金池ID：" prop="productGroupId">
                   <el-select v-model="formInline.productGroupId" :disabled="showAdd==true">
-                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupName" :value="item.groupId"></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="会员状态：" prop="accountStatus">
@@ -1216,12 +1216,11 @@ export default {
       this.addTitle = "添加";
       this.formInline.accountId = "";
       this.formInline.accountName = "";
-      this.formInline.productGroupId = Number(this.defaultChildGroupId);
+      this.formInline.productGroupId = Number(this.defaultChildGroupId) || "";
       this.formInline.level = "";
       this.formInline.commission = 0;
-      this.formInline.commissionCfgId = Number(
-        this.defaultChildCommissionCfgId
-      );
+      this.formInline.commissionCfgId =
+        Number(this.defaultChildCommissionCfgId) || "";
       this.formInline.ableCrud = "";
       this.formInline.positionRatio = 0;
       this.formInline.secondBoardPositionRatio = 0;

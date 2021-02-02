@@ -25,6 +25,20 @@ Vue.prototype.axios = axios
 
 import layer from 'vue-layer'
 Vue.prototype.$layer = layer(Vue);
+
+Vue.directive('throttle', { 
+  inserted(el, binding) { 
+      el.addEventListener('click', () => { 
+          el.style.pointerEvents = 'none'; 
+          if (!el.disabled) { 
+              setTimeout(() => { 
+                  el.style.pointerEvents = 'auto'; 
+              }, binding.value || 2000); 
+          } 
+      }); 
+  } 
+});
+
 //解决IE下面的promise报错
 import "babel-polyfill"
 

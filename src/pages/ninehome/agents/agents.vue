@@ -1044,12 +1044,11 @@ export default {
       this.formInline.financeRatio = 0;
       this.formInline.accountId = "";
       this.formInline.accountName = "";
-      this.formInline.productGroupId = Number(this.defaultChildGroupId);
+      this.formInline.productGroupId = Number(this.defaultChildGroupId) || "";
       this.formInline.level = "";
       this.formInline.commission = 0;
-      this.formInline.commissionCfgId = Number(
-        this.defaultChildCommissionCfgId
-      );
+      this.formInline.commissionCfgId =
+        Number(this.defaultChildCommissionCfgId) || "";
       this.formInline.ableCrud = "";
       this.formInline.agentMaxLimitMoney = "";
       this.formInline.positionRatio = "";

@@ -18,21 +18,21 @@
                 <img src="../assets/nine/u1.png" alt="" class="tu">
                 <div class="mt">account</div>
               </span>
-              <input v-model="form.username" type="text" placeholder="请输入用户名" @keydown.enter="login()">
+              <input v-model="form.username" type="text" placeholder="请输入用户名" @keyup.enter="login()">
             </div>
             <div class="msgbox">
               <span class="m1">
                 <img src="../assets/nine/u2.png" alt="" class="tu">
                 <div class="mt">password</div>
               </span>
-              <input v-model="form.pwd" type="password" placeholder="请输入密码" @keydown.enter="login()">
+              <input v-model="form.pwd" type="password" placeholder="请输入密码" @keyup.enter="login()">
             </div>
             <div class="msgbox">
               <span class="m1">
                 <img src="../assets/nine/u3.png" alt="" class="tu">
                 <div class="mt">Verification</div>
               </span>
-              <input v-model="form.code" placeholder="请输入验证码" @keydown.enter="login()">
+              <input v-model="form.code" placeholder="请输入验证码" @keyup.enter="login()">
               <img class="code" :src="burl+'/tn/mgr-api/get-code?uuid='+num" @click="getCode()">
               <!-- <img class="code" :src="'/tn/mgr-api/get-code?uuid='+num" @click="getCode()"> -->
             </div>
@@ -40,7 +40,7 @@
               <img src="../assets/loginimg/error.png" alt="">
               <div>{{errMsg}}</div>
             </div> -->
-            <div class="loginbtn" @click="login()">登 &nbsp;录</div>
+            <div class="loginbtn" @click="login()" v-throttle="1500">登 &nbsp;录</div>
           </div>
         </div>
       </div>
@@ -73,7 +73,8 @@ export default {
       num: 2345,
       burl: "",
       menuList: [],
-      firstrouter: ""
+      firstrouter: "",
+      isBool: true
     };
   },
   watch: {},
@@ -82,7 +83,7 @@ export default {
     window.location.host != "10.10.1.17:8080"
       ? (this.burl = "http://" + window.location.host)
       : (this.burl = "http://47.102.151.13");
-    localStorage.clear();
+    // localStorage.clear();
     this.getCode();
   },
   mounted: function() {
@@ -111,9 +112,11 @@ export default {
       });
     },
     getCode() {
-      let out = Math.floor(Math.random() * 10000);
-      console.log("我啊", out);
-      this.num = out;
+      if (this.isBool == true) {
+        let out = Math.floor(Math.random() * 10000);
+        console.log("我啊", out);
+        this.num = out;
+      }
     },
     getMsg() {
       this.axios
@@ -161,54 +164,58 @@ export default {
         });
     },
     login() {
-      this.axios
-        .post("/tn/mgr-api/login", {
-          username: this.form.username,
-          password: md5(this.form.pwd),
-          code: this.form.code,
-          uuid: this.num
-        })
-        .then(res => {
-          console.log("login>>", res.data);
-          if (res.data.code == 200) {
-            let Authorization = res.data.data.token;
+      if (this.isBool == true) {
+        this.axios
+          .post("/tn/mgr-api/login", {
+            username: this.form.username,
+            password: md5(this.form.pwd),
+            code: this.form.code,
+            uuid: this.num
+          })
+          .then(res => {
+            console.log("login>>", res.data);
+            if (res.data.code == 200) {
+              this.isBool = false;
+              let Authorization = res.data.data.token;
 
-            localStorage.setItem("managerAuthorization", Authorization);
-            let toVerifyCode = res.data.data.toVerifyCode;
-            this.getMsg();
-            let that = this;
-            //跳第一个到导航
-            this.getMenuList();
-            setTimeout(function() {
-              //存存好老兄
-              localStorage.setItem(
-                "baby" + localStorage.getItem("loginName"),
-                Authorization
-              );
-            }, 500);
-            setTimeout(function() {
-              that.$router.push({
-                path: that.firstrouter,
-                query: {
-                  token:
-                    "newbaby" +
-                    localStorage.getItem("loginName") +
-                    "~" +
-                    Authorization
-                }
+              localStorage.setItem("managerAuthorization", Authorization);
+              let toVerifyCode = res.data.data.toVerifyCode;
+              this.getMsg();
+              let that = this;
+              //跳第一个到导航
+              this.getMenuList();
+              setTimeout(function() {
+                //存存好老兄
+                localStorage.setItem(
+                  "baby" + localStorage.getItem("loginName"),
+                  Authorization
+                );
+              }, 500);
+              setTimeout(function() {
+                that.$router.push({
+                  path: that.firstrouter,
+                  query: {
+                    token:
+                      "newbaby" +
+                      localStorage.getItem("loginName") +
+                      "~" +
+                      Authorization
+                  }
+                });
+              }, 800);
+            } else {
+              this.isBool = true;
+              this.errMsg = res.data.info;
+              this.getCode();
+              this.$alert(this.errMsg, "提示", {
+                confirmButtonText: "确定",
+                center: true,
+                type: "error"
               });
-            }, 800);
-          } else {
-            this.errMsg = res.data.info;
-            this.getCode();
-            this.$alert(this.errMsg, "提示", {
-              confirmButtonText: "确定",
-              center: true,
-              type: "error"
-            });
-          }
-        })
-        .catch(() => {});
+            }
+          })
+          .catch(() => {});
+      }
     }
   }
 };

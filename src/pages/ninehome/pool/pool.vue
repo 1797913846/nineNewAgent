@@ -33,7 +33,7 @@
       <!--表格-->
       <div class="reset-scroll-style">
         <el-table :border="true" :highlight-current-row="colorBool" :data="tableData" key="desingerTable" stripe class="user-table" style="width:98.4%;background-color:#ffffff;" height="650" :cell-style="cellStyle" :header-cell-style="headerCellStyle" @selection-change="handleSelectionChange">
-          <el-table-column label="操作" align="center" width="180">
+          <el-table-column label="操作" align="center" width="180" v-if="!nullTable">
             <template slot-scope="scope">
               <div class="operation">
                 <span @click.stop="getEdit(scope.$index,scope.row)" class="addSameClass ">修改</span>
