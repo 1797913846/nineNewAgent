@@ -180,7 +180,8 @@ export default {
           if (res.data.code == 200) {
             // localStorage.clear();
             this.$router.push({
-              path: "/login"
+              path: "/login",
+              query: {}
             });
           } else {
           }
