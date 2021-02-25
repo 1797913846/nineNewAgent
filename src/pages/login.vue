@@ -151,6 +151,7 @@ export default {
           if (res.data.code == 200) {
             this.menuList = res.data.data;
             this.firstrouter = this.menuList[0].children[0].url;
+            this.isBool = false;
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -175,31 +176,24 @@ export default {
           .then(res => {
             console.log("login>>", res.data);
             if (res.data.code == 200) {
-              this.isBool = false;
               let Authorization = res.data.data.token;
-
               localStorage.setItem("managerAuthorization", Authorization);
               let toVerifyCode = res.data.data.toVerifyCode;
               this.getMsg();
               let that = this;
               //跳第一个到导航
               this.getMenuList();
+              // this.isBool = false;
+              let loginName = localStorage.getItem("loginName") || "admin";
               setTimeout(function() {
                 //存存好老兄
-                localStorage.setItem(
-                  "baby" + localStorage.getItem("loginName"),
-                  Authorization
-                );
+                localStorage.setItem("baby" + loginName, Authorization);
               }, 500);
               setTimeout(function() {
                 that.$router.push({
                   path: that.firstrouter,
                   query: {
-                    token:
-                      "newbaby" +
-                      localStorage.getItem("loginName") +
-                      "~" +
-                      Authorization
+                    token: "newbaby" + loginName + "~" + Authorization
                   }
                 });
               }, 800);
@@ -216,6 +210,7 @@ export default {
           })
           .catch(() => {});
       }
+      console.log("我是布尔值", this.isBool);
     }
   }
 };

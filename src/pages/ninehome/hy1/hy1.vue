@@ -293,6 +293,9 @@ export default {
         this.formInline.accountCode = "";
       }
     },
+    clearCode() {
+      this.formInline.accountCode = "";
+    },
     getAccountList() {
       this.axios
         .post("/tn/mgr-api/account/bankCard/edit-pre")

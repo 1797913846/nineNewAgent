@@ -263,7 +263,7 @@
               <span class="gbspan">
                 <el-form-item label="下级默认资金池：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildGroupId">
                   <el-select v-model="formInline.defaultChildGroupId" :disabled="showAdd==true">
-                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupId+'~'+item.groupName" :value="item.groupId"></el-option>
+                    <el-option v-for="(item,index) in groupIdList" :key="index" :label="item.groupName" :value="item.groupId"></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="下级默认佣金方案：" class="smallfont" v-if="formInline.level!=levelId" prop="defaultChildCommissionCfgId">
@@ -435,10 +435,13 @@
         <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
           <div>
             <el-form-item label="推荐人：">
-              <el-select v-model="whowho">
+              <!-- <el-select v-model="whowho">
                 <el-option v-for="(item,index) in eList" :key="index" :label="item.accountId+'~'+item.accountName" :value="item.accountId"></el-option>
-              </el-select>
+              </el-select> -->
+              <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="账户" @select="handleSelect" clearable @clear="clearCode"></el-autocomplete>
             </el-form-item>
+            <!--here-->
+            <!-- <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="账户" @select="handleSelect" clearable @clear="clearCode"></el-autocomplete> -->
           </div>
           <br />
           <el-form-item>
@@ -463,6 +466,9 @@ export default {
   },
   data() {
     return {
+      restaurants: [],
+      state: "",
+      timeout: null,
       deleteBool: false,
       deleteRight: false,
       deleteTitle: "确认重置密码吗?",
@@ -752,26 +758,37 @@ export default {
     },
     "formInline.borrowing": {
       handler(newVal, oldVal) {
-        this.formInline.allottedScale =
-          Number(newVal) + Number(this.formInline.cashScale);
+        if (this.addTitle == "添加") {
+          this.formInline.allottedScale =
+            Number(newVal) + Number(this.formInline.cashScale);
+          console.log("执行1", this.formInline.allottedScale);
+        }
       },
       deep: true
     },
     "formInline.cashScale": {
       handler(newVal, oldVal) {
-        this.formInline.borrowing =
-          Number(newVal) * Number(this.formInline.financeRatio);
-        this.formInline.allottedScale =
-          Number(this.formInline.cashScale) + Number(this.formInline.borrowing);
+        if (this.addTitle == "添加") {
+          this.formInline.borrowing =
+            Number(newVal) * Number(this.formInline.financeRatio);
+          this.formInline.allottedScale =
+            Number(this.formInline.cashScale) +
+            Number(this.formInline.borrowing);
+          console.log("执行2", this.formInline.allottedScale);
+        }
       },
       deep: true
     },
     "formInline.financeRatio": {
       handler(newVal, oldVal) {
-        this.formInline.borrowing =
-          Number(newVal) * Number(this.formInline.cashScale);
-        this.formInline.allottedScale =
-          Number(this.formInline.cashScale) + Number(this.formInline.borrowing);
+        if (this.addTitle == "添加") {
+          this.formInline.borrowing =
+            Number(newVal) * Number(this.formInline.cashScale);
+          this.formInline.allottedScale =
+            Number(this.formInline.cashScale) +
+            Number(this.formInline.borrowing);
+          console.log("执行3", this.formInline.allottedScale);
+        }
       },
       deep: true
     }
@@ -808,6 +825,36 @@ export default {
     this.getEList();
   },
   methods: {
+    querySearchAsync(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString
+        ? restaurants.filter(this.createStateFilter(queryString))
+        : restaurants;
+      console.log("数据啊", results);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        cb(results);
+      }, 1000 * Math.random());
+    },
+    createStateFilter(queryString) {
+      console.log("数据666", queryString);
+      return state => {
+        return (
+          state.value.toLowerCase().indexOf(queryString.toLowerCase()) >= 0
+        );
+      };
+    },
+    handleSelect(item) {
+      console.log("是我啊", item);
+      if (JSON.stringify(item) != "{}") {
+        this.whowho = item.key;
+      } else {
+        this.whowho = "";
+      }
+    },
+    clearCode() {
+      this.whowho = "";
+    },
     y1(index, row) {
       let accountId = row.accountId;
       this.queryData = {
@@ -957,6 +1004,16 @@ export default {
       this.axios.post("/tn/mgr-api/account/edit-pre").then(res => {
         if (res.data.code == 200) {
           this.eList = res.data.data.accountList;
+          let data = this.eList;
+          let newdata = [];
+          data.map((item, index) => {
+            newdata.push({
+              value: item.accountId + "~~" + item.accountName,
+              address: item.accountName,
+              key: item.accountId
+            });
+          });
+          this.restaurants = newdata;
         } else {
           this.$alert(res.data.info, "提示", {
             confirmButtonText: "确定",
@@ -1000,6 +1057,11 @@ export default {
       this.whoid = accountCode;
       this.whowho = parentCode;
       this.setBool = true;
+      this.restaurants.map(item => {
+        if (item.key == this.whowho) {
+          this.state = item.value;
+        }
+      });
     },
     tableRowClassName({ row, rowIndex }) {
       if (row.profit > 0) {
@@ -1556,6 +1618,7 @@ export default {
             });
             this.getMsg666();
             this.search();
+            this.getEList();
           } else {
             this.$alert(res.data.info, "提示", {
               confirmButtonText: "确定",
@@ -1582,6 +1645,7 @@ export default {
           if (res.data.code == 200) {
             this.showAdd = true;
             this.formInline = res.data.data;
+            console.log("初期规模", this.formInline.allottedScale);
             if (this.formInline.bankId == 0) {
               this.radio1 = 0;
             } else {
